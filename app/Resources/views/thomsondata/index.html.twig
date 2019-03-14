@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Thomsondatas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Rank</th>
+                <th>Title</th>
+                <th>Totalcites</th>
+                <th>Journalimpactfactor</th>
+                <th>Eigenfactorscore</th>
+                <th>Issn</th>
+                <th>Eissn</th>
+                <th>Categoryname</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for thomsonDatum in thomsonDatas %}
+            <tr>
+                <td><a href="{{ path('thomsondata_show', { 'id': thomsonDatum.id }) }}">{{ thomsonDatum.id }}</a></td>
+                <td>{{ thomsonDatum.rank }}</td>
+                <td>{{ thomsonDatum.title }}</td>
+                <td>{{ thomsonDatum.totalCites }}</td>
+                <td>{{ thomsonDatum.journalImpactFactor }}</td>
+                <td>{{ thomsonDatum.eigenfactorScore }}</td>
+                <td>{{ thomsonDatum.iSSN }}</td>
+                <td>{{ thomsonDatum.eISSN }}</td>
+                <td>{{ thomsonDatum.categoryname }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('thomsondata_show', { 'id': thomsonDatum.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('thomsondata_edit', { 'id': thomsonDatum.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('thomsondata_new') }}">Create a new thomsonDatum</a>
+        </li>
+    </ul>
+{% endblock %}
