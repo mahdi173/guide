@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <h1 style="color: #5eb5e0">About Guide journal</h1>
+<p style="text-align: justify; padding-top: 10px">
+                GuideJournal is a free web site created by a group of researchers,
+
+                Our goal for GuideJournal is to bring all sources of data together in one place to give authors a simple way to choose
+
+                the best journal for their research using Machine learning techniques.
+
+                Our data sources include two important indexing services Scopus and Thomson reuters.
+
+                We are just getting started, but we will continually expand our database to include more indexing services.
+
+                Using a recommender system techniques, our tool offer severals ways and options to
+
+                to help to help you find the best
+
+                and apropriate journal for your paper in any area.
+</p>
+            </div>
+            <div class="col-lg-6">
+
+<img src="{{ asset('assets/images/logo1.png') }}" style="margin-top: 55px; align-content: center" height="200px" width="200px">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <img src="{{ asset('assets/images/scopus3.png') }}"  style="margin-top: 55px" height="200px" width="200px">
+            </div>
+            <div class="col-lg-6">
+                <h1 style="color: #5eb5e0">What is Scopus Preview ?</h1>
+                <p style="text-align: justify; padding-top: 10px">
+                    Scopus is the largest abstract and citation database of peer-reviewed literature: scientific journals, books and conference proceedings. Delivering a comprehensive overview of the world's research output in the fields of science, technology, medicine, social sciences, and arts and humanities, Scopus features smart tools to track, analyze and visualize research.
+
+                    Scopus offers free features to non-subscribed users, and is available through Scopus Preview. Researchers may use Scopus to assist with their research, such as searching authors, and learning more about Scopus content coverage and source metrics.
+
+                    For more information, see <a href="https://service.elsevier.com/app/answers/detail/a_id/15100/supporthub/scopus/">What is Scopus about? </a>
+                </p>
+            </div>
+
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <h1 style="color: #5eb5e0">Journal Citation Reports (JCR)</h1>
+                <p style="text-align: justify; padding-top: 10px">
+                    Journal impact factors are found in Journal Citation Reports (JCR). JCR is a unique database which is used to determine the
+                    relative importance of journals within their subject categories.
+
+                    An impact factor is one measure of the quality of a journal. This is calculated by the number of
+                    citations received by the journal, from other journals within the Web of Science database.
+                </p>
+            </div>
+            <div class="col-lg-6">
+
+                <img src="{{ asset('assets/images/thomson1.png') }}" style="margin-top: 55px; align-content: center" height="200px" width="200px">
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

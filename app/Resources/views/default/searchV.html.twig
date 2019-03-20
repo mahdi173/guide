@@ -8,10 +8,11 @@
         <div class="container-fluid">
             <div class="row" style="height: 20px">
             </div>
-            <div class="row" style="background:url({{ asset('assets/images/bg.jpg') }}); height: 400px;width: 100%">
+            <div class="row" style="background:url({{ asset('assets/images/dsk.jpg') }}); height: 400px;">
                 <div class="col-sm-12" style="height: 60px"></div>
                 <div class="col-lg-2 col-sm-1"></div>
                 <div class="col-lg-8">
+
                     {{ form_start(form) }}
 <div class="row">
 
@@ -21,7 +22,8 @@
                         'placeholder': 'Title, word, ISSN' }}) }}
 </div>
     <div class="col-lg-4">
-{{ form_widget(form.submit) }}
+{{ form_widget(form.submit,{ 'attr': {
+    'class': 'btn btn-info' }}) }}
     </div>
                     {{ form_end(form) }}
 
@@ -35,8 +37,13 @@
                <div class="row">
                    <div class="col-lg-2"></div>
                    <div class="col-lg-8">
-            <table class="table table-striped">
-                <thead class="thead-light">
+                       <div class="row" style="height: 50px">
+                           <div class="col-lg-12">
+                               <h3 align="center">The following title(s) matched your request</h3>
+                           </div>
+                       </div>
+                       <table class="table table-striped tabResult">
+                           <thead class="thead-light">
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">E-ISSN</th>
@@ -67,12 +74,18 @@
                    </div>
                    <div class="col-lg-2"></div>
                </div>
-
-            <div class="row" style="height: 20px"></div>
-
+            {%  if data_reuter | length ==1 or data_t_scopus | length==1 %}
+            <div class="row" style="height: 50px">
+                <div class="col-lg-12">
+                    <h3 align="center">The following title(s) matched your request</h3>
+                </div>
+            </div>
+{% endif %}
             <div class="row">
+
                 <div class="col-lg-1 col-sm-1"></div>
                 <div class="col-lg-5 col-sm-5">
+
                     {%  if data_reuter | length ==1 %}
                         {% set test=0 %}
 
