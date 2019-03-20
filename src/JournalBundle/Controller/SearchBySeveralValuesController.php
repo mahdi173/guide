@@ -15,64 +15,64 @@ class SearchBySeveralValuesController extends Controller
      *
      * @Route("/", name="data_search_by_several_values")
      */
-    public function searchByValue(Request $request){
+    public function searchByValue(Request $request)
+    {
 
-        $objet= new Search();
-        $data_t_scopus =null;
-        $data_reuters=null;
+        $objet = new Search();
+        $data_t_scopus = null;
+        $data_reuters = null;
         $form = $this->createForm('JournalBundle\Form\SearchType', $objet);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eISSN=$form->get("searchValue")->getData();
+            $eISSN = $form->get("searchValue")->getData();
             $emS = $this->getDoctrine()->getManager();
             $em = new data_t_scopus();
-            $em2=new data_reuters();
+            $em2 = new data_reuters();
             $eISSNT = $eISSN;
             $eISSNS = $eISSN;
             $pos = strpos($eISSN, "-");
-            $c_number= preg_match('/\\d/', $eISSN);
-            if($c_number==1) {
-                if(strlen($eISSN)==9 || strlen($eISSN)==8){
-                if ($pos !== false) {
-                    $eISSNS = str_replace("-", "", $eISSN);
+            $c_number = preg_match('/\\d/', $eISSN);
+            if ($c_number == 1) {
+                if (strlen($eISSN) == 9 || strlen($eISSN) == 8) {
+                    if ($pos !== false) {
+                        $eISSNS = str_replace("-", "", $eISSN);
 
-                } else {
+                    } else {
 
-                    $eISSNT = substr_replace($eISSN, "-", 4, 0);
-                    $eISSNS = str_replace("-", "", $eISSN);
-                }
-                $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-
-                if ($data_t_scopus == null && $data_reuters != null) {
-                    if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
-                    if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
-
-                    $eISSNS = str_replace("-", "", $eISSNS);
-
+                        $eISSNT = substr_replace($eISSN, "-", 4, 0);
+                        $eISSNS = str_replace("-", "", $eISSN);
+                    }
                     $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                }
-                if ($data_t_scopus != null && $data_reuters == null) {
-
-                    if ($data_t_scopus->getEISSN() == $eISSNS && $data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
-                    if ($data_t_scopus->getPrintISSN() == $eISSNS && $data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
-                    $eISSNT = substr_replace($eISSNT, "-", 4, 0);
                     $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-                    if ($data_reuters == null) {
-                        $eISSNT = $data_t_scopus->getTitle();
-                        $eISSNT = str_replace("&", "and", $eISSNT);
-                        $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+
+                    if ($data_t_scopus == null && $data_reuters != null) {
+                        if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
+                        if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
+
+                        $eISSNS = str_replace("-", "", $eISSNS);
+
+                        $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                    }
+                    if ($data_t_scopus != null && $data_reuters == null) {
+
+                        if ($data_t_scopus->getEISSN() == $eISSNS && $data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
+                        if ($data_t_scopus->getPrintISSN() == $eISSNS && $data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
+                        $eISSNT = substr_replace($eISSNT, "-", 4, 0);
+                        $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                        if ($data_reuters == null) {
+                            $eISSNT = $data_t_scopus->getTitle();
+                            $eISSNT = str_replace("&", "and", $eISSNT);
+                            $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                        }
+
                     }
 
                 }
-
-            }
-            }
-            else {
+            } else {
                 $data_t_scopus = $em->findScopusSeveralResultByTitle($eISSNS, $emS);
-                if(sizeof($data_t_scopus)==1) {
+                if (sizeof($data_t_scopus) == 1) {
                     $eISSNT = str_replace("&", "and", $eISSN);
 
                     $data_t_scopus = $em->findInScopusByTitle($eISSNS, $emS);
@@ -110,20 +110,22 @@ class SearchBySeveralValuesController extends Controller
             }
         }
 
-        return $this->render(':default:searchV.html.twig',[
-            'form'=>$form->createView(),
-            'data_reuter' => $data_reuters, 'data_t_scopus'=>$data_t_scopus
+        return $this->render(':default:searchV.html.twig', [
+            'form' => $form->createView(),
+            'data_reuter' => $data_reuters, 'data_t_scopus' => $data_t_scopus
         ]);
     }
+
     /**
      * Lists all data_t_scopus entities.
      *
      * @Route("/{eISSN}", name="data_t_scopus_results")
      */
-    public function findValue($eISSN, Request $request){
-        $objet= new Search();
-        $data_t_scopus =array();
-        $data_reuters=array();
+    public function findValue($eISSN, Request $request)
+    {
+        $objet = new Search();
+        $data_t_scopus = array();
+        $data_reuters = array();
         $form = $this->createForm('JournalBundle\Form\SearchType', $objet);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -131,67 +133,36 @@ class SearchBySeveralValuesController extends Controller
         }
         $emS = $this->getDoctrine()->getManager();
         $em = new data_t_scopus();
-        $em2=new data_reuters();
+        $em2 = new data_reuters();
         $eISSNT = $eISSN;
         $eISSNS = $eISSN;
         $pos = strpos($eISSN, "-");
-        $c_number= preg_match('/\\d/', $eISSN);
-        if($c_number==1 && strlen($eISSN)==9 || strlen($eISSN)==8) {
-            if ($pos !== false) {
-                $eISSNS = str_replace("-", "", $eISSN);
+        $c_number = preg_match('/\\d/', $eISSN);
+        if ($c_number == 1) {
+            if (strlen($eISSN) == 9 || strlen($eISSN) == 8) {
+                if ($pos !== false) {
+                    $eISSNS = str_replace("-", "", $eISSN);
 
-            } else {
+                } else {
 
-                $eISSNT = substr_replace($eISSN, "-", 4, 0);
-                $eISSNS = str_replace("-", "", $eISSN);
-            }
-            $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-            $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-
-            if($data_t_scopus==null && $data_reuters!=null){
-                if($data_reuters->getEISSN()==$eISSNT && $data_reuters->getISSN()!=null)$eISSNS=$data_reuters->getISSN();
-                if($data_reuters->getISSN()==$eISSNT && $data_reuters->getEISSN()!=null)$eISSNS=$data_reuters->getEISSN();
-
-                $eISSNS = str_replace("-", "", $eISSNS);
-
-                $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-            }
-            if($data_t_scopus!=null && $data_reuters==null){
-                if($data_t_scopus->getEISSN()==$eISSNS && $data_t_scopus->getPrintISSN()!=null)$eISSNT=$data_t_scopus->getPrintISSN();
-                if($data_t_scopus->getPrintISSN()==$eISSNS && $data_t_scopus->getEISSN()!=null)$eISSNT=$data_t_scopus->getEISSN();
-                $eISSNT = substr_replace($eISSNT, "-", 4, 0);
-              $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-                if ($data_reuters == null) {
-                    $eISSNT = $data_t_scopus->getTitle();
-                    $eISSNT = str_replace("&", "and", $eISSNT);
-                    $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                    $eISSNT = substr_replace($eISSN, "-", 4, 0);
+                    $eISSNS = str_replace("-", "", $eISSN);
                 }
-            }
-        }
-        else {
-
-            $eISSNT = str_replace("&", "and", $eISSN);
-
-            $data_t_scopus = $em->findInScopusByTitle($eISSNS, $emS);
-
-            $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
-            if ($data_t_scopus == null && $data_reuters != null) {
-
-                if ($data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
-                $eISSNS = str_replace("-", "", $eISSNS);
                 $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                if ($data_t_scopus) {
-                    if ($data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
+                $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+
+                if ($data_t_scopus == null && $data_reuters != null) {
+                    if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
+                    if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
+
                     $eISSNS = str_replace("-", "", $eISSNS);
+
                     $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
                 }
-            }
-            if ($data_t_scopus != null && $data_reuters == null) {
-                if ($data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
-                $eISSNT = substr_replace($eISSNT, "-", 4, 0);
-                $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-                if ($data_reuters == null) {
-                    if ($data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
+                if ($data_t_scopus != null && $data_reuters == null) {
+
+                    if ($data_t_scopus->getEISSN() == $eISSNS && $data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
+                    if ($data_t_scopus->getPrintISSN() == $eISSNS && $data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
                     $eISSNT = substr_replace($eISSNT, "-", 4, 0);
                     $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
                     if ($data_reuters == null) {
@@ -199,16 +170,53 @@ class SearchBySeveralValuesController extends Controller
                         $eISSNT = str_replace("&", "and", $eISSNT);
                         $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
                     }
+
                 }
-            }
-            if ($data_t_scopus == null){
-                $data_t_scopus = $em->findScopusSeveralResultByTitle($eISSNS, $emS);
 
             }
+        } else {
+            $data_t_scopus = $em->findScopusSeveralResultByTitle($eISSNS, $emS);
+            if (sizeof($data_t_scopus) == 1) {
+                $eISSNT = str_replace("&", "and", $eISSN);
+
+                $data_t_scopus = $em->findInScopusByTitle($eISSNS, $emS);
+
+                $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                if ($data_t_scopus == null && $data_reuters != null) {
+
+                    if ($data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
+                    $eISSNS = str_replace("-", "", $eISSNS);
+                    $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                    if ($data_t_scopus) {
+                        if ($data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
+                        $eISSNS = str_replace("-", "", $eISSNS);
+                        $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                    }
+                }
+                if ($data_t_scopus != null && $data_reuters == null) {
+                    if ($data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
+                    $eISSNT = substr_replace($eISSNT, "-", 4, 0);
+                    $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                    if ($data_reuters == null) {
+                        if ($data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
+                        $eISSNT = substr_replace($eISSNT, "-", 4, 0);
+                        $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                    }
+                    if ($data_reuters == null) {
+                        $eISSNT = $data_t_scopus->getTitle();
+                        $eISSNT = $eISSNT = str_replace("&", "and", $eISSN);
+                        $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                    }
+
+                }
+            }
+
         }
-        return $this->render(':default:searchV.html.twig',[
-            'form'=>$form->createView(),
-            'data_reuter' => $data_reuters, 'data_t_scopus'=>$data_t_scopus
+
+
+        return $this->render(':default:searchV.html.twig', [
+            'form' => $form->createView(),
+            'data_reuter' => $data_reuters, 'data_t_scopus' => $data_t_scopus
         ]);
     }
 }
