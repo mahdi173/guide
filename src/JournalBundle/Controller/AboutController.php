@@ -10,7 +10,7 @@ class AboutController extends Controller
     /**
      * Lists all data_t_scopus entities.
      *
-     * @Route("/about", name="about_guidejournal")
+     * @Route("/aboutguidejournal", name="about_guidejournal")
      */
 public function returnAbout(){
     return $this->render(':about:about.html.twig');
