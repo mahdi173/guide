@@ -50,9 +50,7 @@ class SearchBySeveralValuesController extends Controller
                     if ($data_t_scopus == null && $data_reuters != null) {
                         if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
                         if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
-
                         $eISSNS = str_replace("-", "", $eISSNS);
-
                         $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
                     }
                     if ($data_t_scopus != null && $data_reuters == null) {

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new JournalBundle\JournalBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new SearchJournalBundle\SearchJournalBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
