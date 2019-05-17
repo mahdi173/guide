@@ -2,24 +2,29 @@
 
 {% block body %}
 {% set test=-1 %}
+    {% set compteur=0 %}
+    {% set compteur1=0 %}
     {% set tests=-1 %}
 
     {% set issn="" %}
         <div class="container-fluid">
-            <div class="row" style="height: 20px">
-            </div>
+
+
             <div class="row" style="background-image:url({{ asset('assets/images/dsk.jpg') }}); height: 400px;background-size: 120%">
-                <div class="col-sm-12" style="height: 60px"></div>
+                <div class="col-sm-12"> </div>
                 <div class="col-lg-2 col-sm-1"></div>
                 <div class="col-lg-8">
-
+                    <div class="row col-lg-12 "> <h2 class="text-info">Find the best journal for your research</h2></div>
                     {{ form_start(form) }}
 <div class="row">
 
 
     <div class="col-lg-8">
+
+
                     {{ form_widget(form.searchValue,{ 'attr': {
                         'placeholder': 'Title, word, ISSN' }}) }}
+
 </div>
     <div class="col-lg-4">
 {{ form_widget(form.submit,{ 'attr': {
@@ -31,17 +36,52 @@
                 </div>
                 <div class="col-lg-2 col-sm-1"></div>
             </div>
+            <div class="row" >
+                <div class="col-sm-2">
+
+                    <!-- ajouter pour la publicité -->
+                    {%  if data_t_scopus | length >1 %}
+
+
+                        <!-- Publicité  -->
+                        <div class="row" style=" margin-bottom: 2px">
+                            <!--  <h1 align="center">Bonjour ici mettre votre publicité 4 </h1> -->
+                         </div>
+                         <!-- Publicité  -->
+
+
+                    {% endif %}
+
+                    <!-- fin publicité -->
+                </div>
+                <div class="col-sm-8">
+                    <!-- Publicité  -->
+                    <div class="row col-sm-12" style="height: 50px"></div>
+                    <div class="row">
+
+                        <div class="col-sm-12" >
+                            <!--   <h1 align="center">Bonjour ici mettre votre publicité 2 </h1>-->
+                          </div>
+
+                      </div>
+                      <!-- Publicité  -->
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
             {%  if data_t_scopus | length >1 %}
                 {% set test=0 %}
                 {% set tests=0 %}
                <div class="row">
-                   <div class="col-lg-2"></div>
+                   <div class="col-lg-2">
+                   </div>
                    <div class="col-lg-8">
                        <div class="row" style="height: 50px">
                            <div class="col-lg-12">
                                <h3 align="center">The following title(s) matched your request</h3>
                            </div>
                        </div>
+
+
                        <table class="table table-striped tabResult">
                            <thead class="thead-light">
                 <tr>
@@ -54,11 +94,13 @@
                 </thead>
                 <tbody>
                 {% for t in data_t_scopus %}
+                    {% set compteur=compteur+1 %}
                     {% if(t.eISSN) !=" " %}
                         {% set issn=t.eISSN %}
                     {% elseif (t.eISSN) ==" " %}
                         {% set issn=t.printISSN %}
                     {% endif %}
+
                     <tr>
                         <td><a href={{issn}}>{{ t.title }}</a> </td>
                         <td>{{ t.eISSN }}</td>
@@ -72,17 +114,33 @@
 
             {% endif %}
                    </div>
-                   <div class="col-lg-2"></div>
+                   <div class="col-lg-2">
+                       <!-- ajouter pour la publicité -->
+                       {%  if data_t_scopus | length >1 %}
+                           <div class="row" ></div>
+
+                                   <!-- Publicité  -->
+                                   <div class="row" style="margin-bottom: 2px">
+                                       <!--  <h1 align="center">Bonjour ici mettre votre publicité 4 </h1>-->
+                                    </div>
+                                    <!-- Publicité  -->
+
+
+                       {% endif %}
+
+                       <!-- fin publicité -->
+                   </div>
                </div>
             {%  if data_reuter | length ==1 or data_t_scopus | length==1 %}
-            <div class="row" style="height: 50px">
+            <div class="row" >
                 <div class="col-lg-12">
                     <h3 align="center">The following title(s) matched your request</h3>
                 </div>
             </div>
+
+
 {% endif %}
             <div class="row">
-
                 <div class="col-lg-1 col-sm-1"></div>
                 <div class="col-lg-5 col-sm-5">
 
@@ -183,8 +241,30 @@
                     </div>
 
                 </div>
-                <div class="col-lg-1 col-sm-1"></div>
+
+
+
+
+
             </div>
+            {%  if data_reuter | length ==1 or data_t_scopus | length==1 %}
+               <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <!-- Publicité  -->
+                    <div class="row">
+
+                        <div class="col-sm-12" >
+                           <!-- <h1 align="center">Bonjour ici mettre votre publicité 2 </h1>-->
+                        </div>
+
+                    </div>
+                    <!-- Publicité  -->
+                </div>
+                <div class="col-sm-2"></div>
+
+            {% endif %}
+        </div>
         </div>
 
 
