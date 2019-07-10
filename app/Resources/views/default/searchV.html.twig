@@ -95,10 +95,10 @@
                 <tbody>
                 {% for t in data_t_scopus %}
                     {% set compteur=compteur+1 %}
-                    {% if(t.eISSN) !="" %}
-                        {% set issn=t.eISSN %}
-                    {% elseif (t.eISSN) =="" %}
+                    {% if (t.eISSN) =="" %}
                         {% set issn=t.printISSN %}
+                    {% elseif(t.eISSN) !="" %}
+                        {% set issn=t.eISSN %}
                     {% endif %}
 
                     <tr>
