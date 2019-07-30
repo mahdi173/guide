@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DataTScopus
  *
  * @ORM\Table(name="data_t_scopus")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DataTScopusRepository")
  */
 class DataTScopus
 {

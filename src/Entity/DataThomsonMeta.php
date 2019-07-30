@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DataThomsonMeta
  *
  * @ORM\Table(name="data_thomson_meta")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DataThomsonMetaRepository")
  */
 class DataThomsonMeta
 {

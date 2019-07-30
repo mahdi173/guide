@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DataReuters
  *
  * @ORM\Table(name="data_reuters")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DataReutersRepository")
  */
 class DataReuters
 {

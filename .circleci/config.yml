@@ -2,21 +2,21 @@ version: 2
 jobs:
     test:
         docker:
-            - image: circleci/php:7.2-apache-node-browsers
+            - image: circleci/php:7.1-apache-node-browsers
               environment:
                   APP_ENV: test
                   APP_DEBUG: true
-                  APP_KEY: kjcndjjksddwdwdw
+                  APP_KEY: tertfgvgeeazrtu
                   DB_CONNECTION: mysql
                   DB_HOST: 127.0.0.1
                   DB_PORT: 3306
-                  DB_DATABASE: alliance_logistics_db
+                  DB_DATABASE: guidejournal
                   DB_USERNAME: root
-                  DB_PASSWORD: alliance_logistics_db
+                  DB_PASSWORD: guidejournal
             - image: mariadb:10.0.34
               environment:
-                  MYSQL_DATABASE: alliance_logistics_db
-                  MYSQL_ROOT_PASSWORD: alliance_logistics_db
+                  MYSQL_DATABASE: guidejournal
+                  MYSQL_ROOT_PASSWORD: guidejournal
         working_directory: ~/alliancelogistics
         steps:
             - checkout

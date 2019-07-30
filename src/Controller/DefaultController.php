@@ -16,6 +16,6 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
-        return $this->render('base.html.twig');
+        return $this->forward('App\Controller\SearchController::searchByValue');
     }
 }

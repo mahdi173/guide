@@ -9,6 +9,7 @@ fi
 
 # yarn
 yarn install
+yarn run build
 
 php bin/console d:s:u -f
 
