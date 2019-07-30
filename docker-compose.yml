@@ -1,7 +1,4 @@
-version: "3"
-# First install : SETUP_DB=1 RUN_COMPOSE=1 RUN_YARN=1 DUMP_ROUTES=1 docker-compose up
-# Simple Run : docker-compose up -d
-
+version: '3'
 services:
   web:
     build: docker
@@ -15,19 +12,15 @@ services:
       DB_DATABASE: guidejournal
       DB_USERNAME: guidejournal
       DB_PASSWORD: guidejournal
-      RUN_COMPOSE: ${RUN_COMPOSE}
-      SETUP_DB: ${SETUP_DB}
-      RUN_YARN: ${RUN_YARN}
-      DUMP_ROUTES: ${DUMP_ROUTES}
-      INSTALL_FCK: ${INSTALL_FCK}
     depends_on:
       - mariadb
       - maildev
     ports:
-      - 80:80
+      - 81:80
       - 8000:8000
     volumes:
       - ./docker/docker-entrypoint.sh:/docker-entrypoint.sh
+      - ./docker/get-pip.py:/get-pip.py
       - ./docker/vhosts:/etc/apache2/sites-enabled
       - ./docker/envvars:/etc/apache2/envvars
       - ./docker/php.ini:/usr/local/etc/php/conf.d/99-php-custom.ini
@@ -36,15 +29,15 @@ services:
     user: ${CUID}:${CGID}
 
   mariadb:
-    image: mysql:5.7.25
+    image: mariadb:10.4.4
+    restart: always
     environment:
       MYSQL_DATABASE: guidejournal
-      MYSQL_USER: sa_eko
+      MYSQL_USER: guidejournal
       MYSQL_PASSWORD: guidejournal
       MYSQL_ROOT_PASSWORD: guidejournal
     volumes:
       - db-data:/var/lib/mysql
-
   adminer:
     image: adminer
     restart: "no"
@@ -55,10 +48,6 @@ services:
     restart: "no"
     ports:
       - 1080:80
-  redis:
-    image: redis:latest
-    restart: always
-    ports:
-      - 6379:6379
 volumes:
   db-data:
+  db-data-test:
