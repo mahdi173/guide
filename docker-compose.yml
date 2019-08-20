@@ -16,7 +16,7 @@ services:
       - mariadb
       - maildev
     ports:
-      - 81:80
+      - 80:80
       - 8000:8000
     volumes:
       - ./docker/docker-entrypoint.sh:/docker-entrypoint.sh
