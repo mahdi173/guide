@@ -7,12 +7,11 @@ class DataTScopusRepository extends BaseRepository
 {
     public function findInScopusByIssn($value, $em)
     {
-
-        $data_t_scopus = $this->findOneBy(array('eISSN' => $value));
+        $data_t_scopus = $this->findOneBy(array('eissn' => $value));
         if ($data_t_scopus == null) {
-            $data_t_scopus = $this->findOneBy(array('printISSN' => $value));
-
+            $data_t_scopus = $this->findOneBy(array('printissn' => $value));
         }
+
         return $data_t_scopus;
     }
     public function findInScopusByTitle($value, $em)

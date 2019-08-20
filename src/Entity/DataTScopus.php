@@ -232,7 +232,7 @@ class DataTScopus
 
     public function getPrintissn(): ?string
     {
-        return $this->printissn;
+        return trim($this->printissn);
     }
 
     public function setPrintissn(?string $printissn): self
@@ -244,7 +244,7 @@ class DataTScopus
 
     public function getEissn(): ?string
     {
-        return $this->eissn;
+        return trim($this->eissn);
     }
 
     public function setEissn(?string $eissn): self

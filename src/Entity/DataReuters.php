@@ -144,7 +144,7 @@ class DataReuters
 
     public function getIssn(): ?string
     {
-        return $this->issn;
+        return trim($this->issn);
     }
 
     public function setIssn(string $issn): self
@@ -156,7 +156,7 @@ class DataReuters
 
     public function getEissn(): ?string
     {
-        return $this->eissn;
+        return trim($this->eissn);
     }
 
     public function setEissn(string $eissn): self
