@@ -1,0 +1,158 @@
+version: 2
+jobs:
+    test:
+        docker:
+            - image: circleci/php:7.1-apache-node-browsers
+              environment:
+                  APP_ENV: test
+                  APP_DEBUG: true
+                  APP_KEY: tertfgvgeeazrtu
+                  DB_CONNECTION: mysql
+                  DB_HOST: 127.0.0.1
+                  DB_PORT: 3306
+                  DB_DATABASE: guidejournal
+                  DB_USERNAME: root
+                  DB_PASSWORD: guidejournal
+            - image: mariadb:10.0.34
+              environment:
+                  MYSQL_DATABASE: guidejournal
+                  MYSQL_ROOT_PASSWORD: guidejournal
+        working_directory: ~/alliancelogistics
+        steps:
+            - checkout
+            - run:
+                  name: Install System Packages
+                  command: |
+                      sudo apt install unzip zlib1g-dev libicu-dev libsqlite3-dev sqlite3 libfreetype6-dev libjpeg62-turbo-dev libpng-dev 
+            - run:
+                  name: Install PHP Extensions
+                  command: |
+                      sudo -E docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl gd
+
+
+            - restore_cache:
+                  key: dependency-cache-{{ checksum "composer.lock" }}
+
+            - run:
+                  name: Install php dependencies
+                  command: |
+                      cp .circleci/.env.local .
+                      php -r "file_put_contents('composer.phar', file_get_contents('https://getcomposer.org/composer.phar'));"
+                      php -d memory_limit=-1 composer.phar self-update --no-interaction
+                      php -d memory_limit=-1 composer.phar  install -n
+
+            - save_cache:
+                  key: dependency-cache-{{ checksum "composer.lock" }}
+                  paths:
+                      - vendor
+            - run:
+                  name: Run Database Migrations
+                  command: |
+                      # php bin/console doctrine:migrations:migrate -n --env=test
+                      php bin/console d:s:u -f --env=test
+
+            - run:
+                  name: Load Database Fixtures
+                  command: |
+                      ls
+                      # php bin/console hautelook:fixtures:load -n --env=test
+
+            - restore_cache:
+                  key: dependency-cache-{{ checksum "yarn.lock" }}
+
+            - run:
+                  name: Install npm dependencies
+                  command: |
+                      yarn install
+                      yarn run encore dev
+
+            - save_cache:
+                  key: dependency-cache-{{ checksum "yarn.lock" }}
+                  paths:
+                      - node_modules
+            - run:
+                  name: Warm up cache
+                  command: |
+                      php -d memory_limit=-1 bin/console cache:warmup --env=test
+
+            - run:
+                  name: Run Symfony Tests
+                  command: |
+                      sudo mkdir -p $CIRCLE_TEST_REPORTS/phpunit
+                      php -d memory_limit=-1 vendor/bin/phpunit
+
+            - run:
+                  name: Run Codecept Tests
+                  command: |
+                      php bin/console server:start
+                      # ./vendor/bin/codecept run --steps
+            - run:
+                  name: javascript tests
+                  command: |
+                      yarn run test --coverage
+            - run:
+                  name: Run Security Check
+                  command: php bin/console security:check
+    deploy_staging:
+        docker:
+            - image: circleci/ruby:2.3.7-node-browsers-legacy
+        working_directory: ~/alliancelogistics
+        steps:
+            - checkout
+            - run:
+                  name: Prepare deployment
+                  command: |
+                      cd scripts/.deploy
+                      bundle check || bundle install
+                      bundle exec cap staging deploy
+                      bundle exec cap staging deploy:grant_access
+    deploy_preprod:
+        docker:
+            - image: circleci/ruby:2.3.7-node-browsers-legacy
+        working_directory: ~/alliancelogistics
+        steps:
+            - checkout
+            - run:
+                  name: Prepare deployment
+                  command: |
+                      cd scripts/.deploy
+                      bundle check || bundle install
+                      bundle exec cap preprod deploy
+                      bundle exec cap preprod deploy:grant_access
+workflows:
+    version: 2
+    testing_pr:
+        jobs:
+            - test:
+                  filters:
+                      branches:
+                          only:
+                              - /pull\/.*/
+    deploy_staging:
+        jobs:
+            - test:
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - deploy_staging:
+                  filters:
+                      branches:
+                          only:
+                              - master
+                  requires:
+                      - test
+    deploy_preprod:
+        jobs:
+            - test:
+                  filters:
+                      branches:
+                          only:
+                              - stable
+            - deploy_preprod:
+                  filters:
+                      branches:
+                          only:
+                              - stable
+                  requires:
+                      - test

@@ -1,0 +1,51 @@
+version: '3'
+services:
+  web:
+    build: docker
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: "true"
+      APP_KEY: hkgfdfghjmklm
+      DB_CONNECTION: mysql
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_DATABASE: guidejournal
+      DB_USERNAME: guidejournal
+      DB_PASSWORD: guidejournal
+    depends_on:
+      - mariadb
+      - maildev
+    ports:
+      - 81:80
+      - 8000:8000
+    volumes:
+      - ./docker/docker-entrypoint.sh:/docker-entrypoint.sh
+      - ./docker/vhosts:/etc/apache2/sites-enabled
+      - ./docker/envvars:/etc/apache2/envvars
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/99-php-custom.ini
+      - .:/api:cached
+    working_dir: /api
+    user: ${CUID}:${CGID}
+
+  mariadb:
+    image: mariadb:10.4.4
+    restart: always
+    environment:
+      MYSQL_DATABASE: guidejournal
+      MYSQL_USER: guidejournal
+      MYSQL_PASSWORD: guidejournal
+      MYSQL_ROOT_PASSWORD: guidejournal
+    volumes:
+      - db-data:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: "no"
+    ports:
+      - 8080:8080
+  maildev:
+    image: djfarrelly/maildev:0.14.0
+    restart: "no"
+    ports:
+      - 1080:80
+volumes:
+  db-data:
