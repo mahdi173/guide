@@ -19,21 +19,18 @@
         </div>
 
         <!-- Fin pub 0001-->
-        <div class="row" style="background-image:url({{ asset('assets/images/dsk.jpg') }}); height: 400px; background-repeat:no-repeat; background-size:cover  ">
+        <div class="row" style="background-image:url({{ asset('assets/images/dsk.jpg') }}); height: 400px;
+                background-repeat:no-repeat; background-size:cover  ">
             <div class="col-sm-12"> </div>
             <div class="col-lg-2 col-sm-1"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-8" style="margin-top: 40px">
+
                 <div class="row col-lg-12 "> <h2 class="text-info">Find the best journal for your research</h2></div>
                 {{ form_start(form) }}
                 <div class="row">
-
-
                     <div class="col-lg-8">
-
-
                         {{ form_widget(form.searchValue,{ 'attr': {
                             'placeholder': 'Title, word, ISSN' }}) }}
-
                     </div>
                     <div class="col-lg-4">
                         {{ form_widget(form.submit,{ 'attr': {
@@ -41,7 +38,24 @@
                     </div>
                     {{ form_end(form) }}
 
+                    <!-- publicité adSense 1-->
+                    <div style="margin-top: 20px;">
+
+
+                        <!-- horizontal_apres_zone_recherche -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:728px;height:90px"
+                             data-ad-client="ca-pub-9897811061542650"
+                             data-ad-slot="5854996173"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+
                 </div>
+
+
+                <!-- fin publicité adSense 1-->
             </div>
             <div class="col-lg-2 col-sm-1"></div>
         </div>
@@ -103,7 +117,6 @@
         {%  if data_t_scopus | length >1 %}
         {% set test=0 %}
         {% set tests=0 %}
-
         <div class="row">
             <div class="col-lg-2">
             </div>
@@ -128,9 +141,9 @@
                     <tbody>
                     {% for t in data_t_scopus %}
                         {% set compteur=compteur+1 %}
-                        {% if (t.eISSN) is empty  %}
+                        {% if (t.eISSN) =="" %}
                             {% set issn=t.printISSN %}
-                        {% elseif(t.eISSN) is not empty%}
+                        {% elseif(t.eISSN) !="" %}
                             {% set issn=t.eISSN %}
                         {% endif %}
 
@@ -243,7 +256,7 @@
                                 <div class="col-sm-6 col-lg-6">Open Access : {{ data_t_scopus.openAccess }} </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-lg-6">Cite Score : {{ data_t_scopus.citeScore }}</div>
+                                <div class="col-sm-6 col-lg-6">Quartile : {{ data_t_scopus.quartile }}</div>
                                 <div class="col-sm-6 col-lg-6">Citation Count : {{ data_t_scopus.citationCount }} </div>
                             </div>
                             <div class="row">
@@ -261,14 +274,35 @@
                         <div class="alert bg-light" style="height: 95%;width: 95%">
                             <h3><img src="{{ asset('assets/images/scopus3.png') }}" style="width: 3rem; height: 3rem;"> Scopus Database</h3>
                             <h1>Not Found </h1>
+
                         </div>
                     {% endif %}
+
+
+
                 </div>
+
             </div>
+
         </div>
         {%  if data_reuter | length ==1 or data_t_scopus | length==1 %}
         <div class="row">
-            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <!-- ad sense publicite 2-->
+
+                <!-- carre_un_resultat_gauche -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-9897811061542650"
+                     data-ad-slot="6788803898"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <!-- fin ad sense publicite 2-->
+
+            </div>
             <div class="col-sm-8">
                 <!-- Publicité  -->
                 <div class="row" name="pub2" id="pub2">
@@ -282,12 +316,31 @@
                             </script>
                         </div>
                     </div>
+
                 </div>
                 <!-- Publicité  -->
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+
+                <!-- ad sense publicite 3-->
+
+                <!-- carre_un_resultat_droit -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-9897811061542650"
+                     data-ad-slot="5966676816"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <!-- fin ad sense publicite 3-->
+
+            </div>
 
             {% endif %}
         </div>
     </div>
+
+
 {% endblock %}
