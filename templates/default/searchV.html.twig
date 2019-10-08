@@ -342,8 +342,10 @@
                     {% set url = absolute_url(path('data_t_scopus_results', {'eISSN': eISSN})) %}
                     {%  if data_reuter | length ==1 %}
                         {% set text_to_share = data_reuter.title %}
-                    {%  else %}
+                    {%  elseif data_t_scopus | length ==1 %}
                         {% set text_to_share = data_t_scopus.title %}
+                    {% else %}
+                        {% set text_to_share = 'Journal : ' %}
                     {% endif %}
                     <div class="fb-share-button center"
                          data-href="{{ url }}"
