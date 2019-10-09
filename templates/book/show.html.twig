@@ -1,0 +1,50 @@
+{% extends 'member.html.twig' %}
+
+{% block title %}GuideJournal: Books{% endblock %}
+
+{% block member_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Book</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ book.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ book.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Publisher</th>
+                        <td>{{ book.publisher }}</td>
+                    </tr>
+                    <tr>
+                        <th>Url</th>
+                        <td>{{ book.url }}</td>
+                    </tr>
+                    <tr>
+                        <th>Authors</th>
+                        <td>{{ book.authors }}</td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>{{ book.year }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{{ path('book_index') }}">back to list</a>
+
+            <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
+
+            {{ include('book/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -6,13 +6,15 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/post")
+ * @IsGranted("ROLE_ADMIN")
+ * @Route("/post")
  */
 class PostController extends AbstractController
 {
@@ -83,6 +85,11 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($image = $request->files->get('post')['imageUrl']){
+                $imageUrl = $this->fileUploader->upload($image);
+                $post->setImageUrl($imageUrl);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('post_index');

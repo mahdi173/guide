@@ -19,7 +19,7 @@ class PostType extends AbstractType
             ->add('imageUrl', FileType::class, [
                 'label' => 'Choose an image',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '5M',

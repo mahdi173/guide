@@ -1,0 +1,17 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+    <h3>reset password request</h3>
+    <p>{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}</p>
+
+    <a href="{{ path('homepage') }}">Home Page</a>
+
+    <div style="text-align: center;">
+        <p>Email send by guidejournal.net</p>
+        <p>copyrights © 2017 guidejournal.net.   All rights reserved.</p>
+    </div>
+
+{% endblock %}
