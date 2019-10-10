@@ -1,0 +1,51 @@
+{% extends 'member.html.twig' %}
+
+{% block title %}GuideJournal: Chapters{% endblock %}
+
+{% block member_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Chapter index</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>InBook</th>
+                        <th>Url</th>
+                        <th>Authors</th>
+                        <th>Year</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for chapter in chapters %}
+                    <tr>
+                        <td>{{ chapter.id }}</td>
+                        <td>{{ chapter.title }}</td>
+                        <td>{{ chapter.inBook }}</td>
+                        <td>{{ chapter.url }}</td>
+                        <td>{{ chapter.authors }}</td>
+                        <td>{{ chapter.year }}</td>
+                        <td>
+                            <a href="{{ path('chapter_show', {'id': chapter.id}) }}">show</a>
+                            <a href="{{ path('chapter_edit', {'id': chapter.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ path('chapter_new') }}">Create new</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

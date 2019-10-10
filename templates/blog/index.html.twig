@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GuideJournal : Blog{% endblock %}
+
+{% block stylesheets %}
+    <!-- Custom fonts for this template -->
+    <link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('assets/css/clean-blog.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url({{ asset('assets/images/dsk.jpg') }})">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h1>Guide Joural</h1>
+                        <span class="subheading">A Good Shirt Description Should Go Here... </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto">
+                {% for post in posts %}
+                    <div class="post-preview">
+                        <a href="{{ path('blog_show', {id: post.id}) }}">
+                            <h2 class="post-title">
+                                {{ post.title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                                {{ post.content[:35] ~ '...' }}
+                            </h3>
+                        </a>
+                        <p class="post-meta">Posted by
+                            <a href="{{ path('homepage') }}">Guide Journal</a>
+                            on September 24, 2019
+                        </p>
+                    </div>
+                    <hr>
+                {% endfor %}
+
+                <!-- Pager -->
+                <div class="clearfix">
+                    <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/clean-blog.min.js') }}"></script>
+{% endblock %}

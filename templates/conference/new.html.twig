@@ -1,0 +1,19 @@
+{% extends 'member.html.twig' %}
+
+{% block title %}GuideJournal: Conferences{% endblock %}
+
+{% block member_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Create new Conference</h1>
+
+            {{ include('conference/_form.html.twig') }}
+
+            <a href="{{ path('conference_index') }}">back to list</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

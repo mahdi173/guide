@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        .margin-top{
+            margin-top: 30px;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        #sidebar-wrapper {
+            min-height: 80vh;
+            margin-left: -15rem;
+            -webkit-transition: margin .25s ease-out;
+            -moz-transition: margin .25s ease-out;
+            -o-transition: margin .25s ease-out;
+            transition: margin .25s ease-out;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+        }
+
+        #sidebar-wrapper .list-group {
+            width: 15rem;
+        }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
+    </style>
+
+    <div class="container margin-top">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img style="max-height: 150px;max-width: 150px;" src="{{ asset('assets/images/avatar.png') }}" alt="" class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-sm-6 col-md-8">
+                            <h4>{{ app.user }} | <a href="{{ path('fos_user_security_logout') }}">Logout</a> </h4>
+                            <small>
+                                <cite title="{{ app.user.fullAdress }}"> {{ app.user.fullAdress }} <i class="glyphicon glyphicon-map-marker"></i></cite>
+                            </small>
+                            <p>
+                                {{ app.user.email }}
+                                <br />
+                                <a href="{{ path('fos_user_profile_edit') }}">Edit Profile</a> | <a href="{{ path('fos_user_change_password') }}">Change Password</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container margin-top">
+        <div class="row">
+            <div class="d-flex" id="wrapper">
+
+                <!-- Sidebar -->
+                <div class="bg-light border-right" id="sidebar-wrapper">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="sidebar-heading">Blog</div>
+                        <div class="list-group list-group-flush">
+                            <a href="{{ path('post_index') }}" class="list-group-item list-group-item-action bg-light">Posts</a>
+                            <a href="{{ path('category_index') }}" class="list-group-item list-group-item-action bg-light">Categories</a>
+                            <a href="{{ path('tag_index') }}" class="list-group-item list-group-item-action bg-light">Tags</a>
+                        </div>
+                    {% endif %}
+                    <div class="sidebar-heading">Guide Journal</div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action bg-light">Infos</a>
+                        <a href="{{ path('publication_index') }}" class="list-group-item list-group-item-action bg-light">Publications</a>
+                        <a href="{{ path('book_index') }}" class="list-group-item list-group-item-action bg-light">Books</a>
+                        <a href="{{ path('chapter_index') }}" class="list-group-item list-group-item-action bg-light">Chapters</a>
+                        <a href="{{ path('conference_index') }}" class="list-group-item list-group-item-action bg-light">Conferences</a>
+                        <a href="#" class="list-group-item list-group-item-action bg-light">My Journals List</a>
+                    </div>
+                </div>
+                <!-- /#sidebar-wrapper -->
+
+                <!-- Page Content -->
+                <div id="page-content-wrapper">
+                    <div class="container-fluid">
+                        {% block member_content %}
+                            <h1 class="mt-4">Simple Sidebar</h1>
+                            <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
+                            <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+                        {% endblock %}
+                    </div>
+                </div>
+                <!-- /#page-content-wrapper -->
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

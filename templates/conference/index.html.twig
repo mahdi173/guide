@@ -1,0 +1,55 @@
+{% extends 'member.html.twig' %}
+
+{% block title %}GuideJournal: Conferences{% endblock %}
+
+{% block member_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Conference index</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>ConferenceName</th>
+                        <th>Url</th>
+                        <th>ConferenceDate</th>
+                        <th>Year</th>
+                        <th>Adresse</th>
+                        <th>Authors</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for conference in conferences %}
+                    <tr>
+                        <td>{{ conference.id }}</td>
+                        <td>{{ conference.title }}</td>
+                        <td>{{ conference.conferenceName }}</td>
+                        <td>{{ conference.url }}</td>
+                        <td>{{ conference.conferenceDate ? conference.conferenceDate|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ conference.year }}</td>
+                        <td>{{ conference.adresse }}</td>
+                        <td>{{ conference.authors }}</td>
+                        <td>
+                            <a href="{{ path('conference_show', {'id': conference.id}) }}">show</a>
+                            <a href="{{ path('conference_edit', {'id': conference.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ path('conference_new') }}">Create new</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

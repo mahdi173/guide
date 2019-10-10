@@ -1,0 +1,51 @@
+{% extends 'member.html.twig' %}
+
+{% block title %}GuideJournal: Chapters{% endblock %}
+
+{% block member_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Chapter</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ chapter.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ chapter.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>InBook</th>
+                        <td>{{ chapter.inBook }}</td>
+                    </tr>
+                    <tr>
+                        <th>Url</th>
+                        <td>{{ chapter.url }}</td>
+                    </tr>
+                    <tr>
+                        <th>Authors</th>
+                        <td>{{ chapter.authors }}</td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>{{ chapter.year }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{{ path('chapter_index') }}">back to list</a>
+
+            <a href="{{ path('chapter_edit', {'id': chapter.id}) }}">edit</a>
+
+            {{ include('chapter/_delete_form.html.twig') }}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

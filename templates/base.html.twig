@@ -105,6 +105,23 @@
                         <li class="list-inline-item">
                             <a href="/scopus/topjournallist">Top journals list</a>
                         </li>
+                        {#<li class="list-inline-item">
+                            <a href="/blog">Blog</a>
+                        </li>#}
+                        {% if app.user %}
+                            {% if is_granted("ROLE_USER") %}
+                                <li class="list-inline-item">
+                                    <a href="{{ path('member_area') }}">Member Area</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="list-inline-item">
+                                <a href="{{ path('fos_user_security_login') }}">Login</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="{{ path('fos_user_registration_register') }}">Register</a>
+                            </li>
+                        {% endif %}
                     </ul>
 
                 </div>

@@ -1,0 +1,58 @@
+{% extends 'member.html.twig' %}
+
+{% block title %}GuideJournal: Conferences{% endblock %}
+
+{% block member_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Conference</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ conference.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ conference.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>ConferenceName</th>
+                        <td>{{ conference.conferenceName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Url</th>
+                        <td>{{ conference.url }}</td>
+                    </tr>
+                    <tr>
+                        <th>ConferenceDate</th>
+                        <td>{{ conference.conferenceDate ? conference.conferenceDate|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>{{ conference.year }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ conference.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <th>Authors</th>
+                        <td>{{ conference.authors }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{{ path('conference_index') }}">back to list</a>
+
+            <a href="{{ path('conference_edit', {'id': conference.id}) }}">edit</a>
+
+            {{ include('conference/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
