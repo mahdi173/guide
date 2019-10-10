@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_ADMIN")
- * @Route("/post")
+ * @Route("/admin/post")
  */
 class PostController extends AbstractController
 {

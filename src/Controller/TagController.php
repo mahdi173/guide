@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_ADMIN")
- * @Route("/tag")
+ * @Route("/admin/tag")
  */
 class TagController extends AbstractController
 {

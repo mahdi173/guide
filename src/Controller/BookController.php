@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/book")
+ * @Route("/member/book")
  */
 class BookController extends AbstractController
 {

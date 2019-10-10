@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GuideJournal : Blog{% endblock %}
+
+{% block stylesheets %}
+    <!-- Custom fonts for this template -->
+    <link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('assets/css/clean-blog.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url( '{{ app.request.getSchemeAndHttpHost() ~ blog_files ~ post.imageUrl }}' )">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        <h2 class="subheading">{{ post.content[:35] ~ '...' }}</h2>
+                        <span class="meta">Posted by
+                          <a href="#">Start Bootstrap</a>
+                          {{ post.publishedAt|date }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-10 mx-auto">
+                    {{ post.content }}
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/clean-blog.min.js') }}"></script>
+{% endblock %}

@@ -105,14 +105,13 @@
                         <li class="list-inline-item">
                             <a href="/scopus/topjournallist">Top journals list</a>
                         </li>
+                        <li class="list-inline-item">
+                            <a href="/blog">Blog</a>
+                        </li>
                         {% if app.user %}
-                            {% if is_granted("ROLE_AMDIN") %}
+                            {% if is_granted("ROLE_USER") %}
                                 <li class="list-inline-item">
-                                    <a href="{{ path('admin_home') }}">Admin Area</a>
-                                </li>
-                            {% else %}
-                                <li class="list-inline-item">
-                                    <a href="{{ path('member_home') }}">Member Area</a>
+                                    <a href="{{ path('member_area') }}">Member Area</a>
                                 </li>
                             {% endif %}
                         {% else %}
