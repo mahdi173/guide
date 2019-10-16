@@ -2,19 +2,17 @@
 
 <h4>Set new password </h4>
 <p>Enter your new password</p>
-{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 's12' } }) }}
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}) }) }}
 <div class="container">
     <div class="row">
-        <div class="col-10">
-            {{ form_widget(form.plainPassword) }}
-        </div>
-    </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{ form_widget(form.plainPassword) }}
+            </div>
 
-    <div class="row">
-        <div class="col-4 text-right">
-            <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" class="waves-effect waves-light log-in-btn">
+            <button type="submit" class="btn btn-success">{{ 'resetting.reset.submit'|trans }}</button>
+
         </div>
     </div>
-    <div style="clear: both"></div>
 </div>
 {{ form_end(form) }}
