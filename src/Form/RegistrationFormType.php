@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('fullName',TextType::class)
-            ->add('country',TextType::class)
+            ->add('country',CountryType::class)
             ->add('institution',TextType::class)
             ->add('departement',TextType::class)
             ->add('speciality',TextType::class)

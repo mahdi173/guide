@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Intl\Countries;
 
 /**
  * User
@@ -304,8 +305,10 @@ class User extends BaseUser
 
     public function getFullAdress()
     {
-        $str = '';
+        if (Countries::exists($this->getCountry())) {
+            return Countries::getName($this->getCountry());
+        }
 
-        return $this->getCountry();
+        return '';
     }
 }

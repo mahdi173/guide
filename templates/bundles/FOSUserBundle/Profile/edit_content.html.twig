@@ -1,4 +1,6 @@
-<style>
+
+<div class="col-12" style="margin: 50px auto;">
+    <style>
     .margin-top{
         margin-top: 30px;
     }
@@ -49,82 +51,85 @@
     }
 </style>
 
-<div class="container margin-top">
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
-            <div class="well well-sm">
-                <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                        <img style="max-height: 150px;max-width: 150px;" src="{{ asset('assets/images/avatar.png') }}" alt="" class="img-rounded img-responsive" />
-                    </div>
-                    <div class="col-sm-6 col-md-8">
-                        <h4>{{ app.user }} | <a href="{{ path('fos_user_security_logout') }}">Logout</a> </h4>
-                        <small>
-                            <cite title="{{ app.user.fullAdress }}"> {{ app.user.fullAdress }} <i class="glyphicon glyphicon-map-marker"></i></cite>
-                        </small>
-                        <p>
-                            {{ app.user.email }}
-                            <br />
-                            <a href="{{ path('fos_user_profile_edit') }}">Edit Profile</a> | <a href="{{ path('fos_user_change_password') }}">Change Password</a>
-                        </p>
+    <div class="container margin-top">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img style="max-height: 150px;max-width: 150px;" src="{{ asset('assets/images/avatar.png') }}" alt="" class="img-rounded img-responsive" />
+                        </div>
+                        <div class="col-sm-6 col-md-8">
+                            <h4>{{ app.user }} | <a href="{{ path('fos_user_security_logout') }}">Logout</a> </h4>
+                            <small>
+                                <cite title="{{ app.user.fullAdress }}"> {{ app.user.fullAdress }} <i class="glyphicon glyphicon-map-marker"></i></cite>
+                            </small>
+                            <p>
+                                {{ app.user.email }}
+                                <br />
+                                <a href="{{ path('fos_user_profile_edit') }}">Edit Profile</a> | <a href="{{ path('fos_user_change_password') }}">Change Password</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container margin-top">
-    <div class="row">
-        <div class="d-flex" id="wrapper">
-            <!-- Sidebar -->
-            <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading">Guide Journal</div>
-                <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Infos</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Publications</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Books</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Chapters</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Conferences</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">My Journals List</a>
+    <div class="container margin-top">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex" id="wrapper">
+                    <!-- Sidebar -->
+                    <div class="bg-light border-right" id="sidebar-wrapper">
+                        <div class="sidebar-heading">Guide Journal</div>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Infos</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Publications</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Books</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Chapters</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Conferences</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">My Journals List</a>
+                        </div>
+                    </div>
+                    <!-- /#sidebar-wrapper -->
+
+                    <!-- Page Content -->
+                    <div id="page-content-wrapper">
+                        <div class="container-fluid">
+                            <h2>Edit Profile</h2>
+
+                            {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'col s12' } }) }}
+                                <div class="form-group">
+                                    {{ form_row(form.fullName, { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.email , { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.country , { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.institution , { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.departement , { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.speciality , { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.current_password, { 'attr': { 'class': 'validate' } }) }}
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                    <!-- /#page-content-wrapper -->
                 </div>
             </div>
-            <!-- /#sidebar-wrapper -->
-
-            <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <div class="container-fluid">
-                    <h2>Edit Profile</h2>
-
-                    {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'col s12' } }) }}
-                        <div class="form-group">
-                            {{ form_row(form.fullName, { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.email , { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.country , { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.institution , { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.departement , { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.speciality , { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.current_password, { 'attr': { 'class': 'validate' } }) }}
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Submit" class="" />
-                        </div>
-                    {{ form_end(form) }}
-                </div>
-            </div>
-            <!-- /#page-content-wrapper -->
         </div>
     </div>
 </div>

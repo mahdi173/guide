@@ -36,77 +36,77 @@
 
 </style>
 
+<div class="col-6" style="margin: 50px auto;">
+    <h4>Create an Account</h4>
+    <p>Don't have an account? Create your account. It's take less then a minutes</p>
 
-<h4>Create an Account</h4>
-<p>Don't have an account? Create your account. It's take less then a minutes</p>
-
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 's12', 'id': 'regForm'}}) }}
-    <div class="tab">
-        <div class="text-right"><h4>Step 1</h4></div><div style="clear:both;"></div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.fullName) }}
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 's12', 'id': 'regForm'}}) }}
+        <div class="tab">
+            <div class="text-right"><h4>Step 1</h4></div><div style="clear:both;"></div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.fullName) }}
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.email) }}
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.plainPassword) }}
+                </div>
             </div>
         </div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.email) }}
-            </div>
-        </div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.plainPassword) }}
-            </div>
-        </div>
-    </div>
 
-    <div class="tab">
-        <div class="text-right"><h4>Step 2</h4></div><div style="clear:both;"></div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.country) }}
+        <div class="tab">
+            <div class="text-right"><h4>Step 2</h4></div><div style="clear:both;"></div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.country) }}
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.institution) }}
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.departement) }}
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.speciality) }}
+                </div>
+            </div>
+            <div>
+                <div class="input-field s12">
+                    {{ form_row(form.termsAccepted) }}
+                </div>
             </div>
         </div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.institution) }}
+
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
             </div>
         </div>
+
+        <div style="text-align:center;margin-top:40px;visibility: hidden;">
+            <span class="step"></span>
+            <span class="step"></span>
+        </div>
+
         <div>
-            <div class="input-field s12">
-                {{ form_row(form.departement) }}
-            </div>
+            <div class="input-field s12"> <a href="{{ path('fos_user_security_login') }}">Are you a already member ? Login</a> </div>
         </div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.speciality) }}
-            </div>
-        </div>
-        <div>
-            <div class="input-field s12">
-                {{ form_row(form.termsAccepted) }}
-            </div>
-        </div>
-    </div>
 
-    <div style="overflow:auto;">
-        <div style="float:right;">
-            <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-            <button class="btn btn-primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-        </div>
-    </div>
-
-    <div style="text-align:center;margin-top:40px;visibility: hidden;">
-        <span class="step"></span>
-        <span class="step"></span>
-    </div>
-
-    <div>
-        <div class="input-field s12"> <a href="{{ path('fos_user_security_login') }}">Are you a already member ? Login</a> </div>
-    </div>
-
-{{ form_widget(form._token) }}
-
+    {{ form_widget(form._token) }}
+</div>
 {# multi step script#}
 <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
