@@ -11,7 +11,7 @@ use Symfony\Component\Intl\Countries;
 /**
  * User
  *
- * @ORM\Table(name="se_users")
+ * @ORM\Table(name="app_users")
  * @ORM\Entity
  */
 class User extends BaseUser
