@@ -128,10 +128,10 @@ class SearchController extends BaseController
 
                     }
                 }
-
             }
         }
 
+        dump($data_reuters, $data_t_scopus);
         return $this->render('default/searchV.html.twig', [
             'form' => $form->createView(),
             'data_reuter' => $data_reuters,

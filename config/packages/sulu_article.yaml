@@ -1,0 +1,32 @@
+sulu_route:
+  mappings:
+    Sulu\Bundle\ArticleBundle\Document\ArticleDocument:
+      generator: "schema"
+      options:
+        route_schema: "/articles/{object.getTitle()}"
+    Sulu\Bundle\ArticleBundle\Document\ArticlePageDocument:
+      generator: "article_page"
+      options:
+        route_schema: "/{translator.trans(\"page\")}-{object.getPageNumber()}"
+        parent: "{object.getParent().getRoutePath()}"
+
+sulu_core:
+  content:
+    structure:
+      default_type:
+        article: "default"
+
+sulu_article:
+  default_main_webspace: 'guidejournal'
+  index_name: su_articles
+  hosts: ['elasticsearch:9200']
+
+# config/packages/ongr_elasticsearch.yaml
+ongr_elasticsearch:
+  analysis:
+    tokenizer:
+      pathTokenizer:
+        type: path_hierarchy
+    analyzer:
+      pathAnalyzer:
+        tokenizer: pathTokenizer

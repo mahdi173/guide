@@ -25,7 +25,7 @@ class DataTScopusRepository extends BaseRepository
         return
 
             $this->createQueryBuilder('data_tscopus')
-                ->addSelect("data_tscopus")
+                ->select("data_tscopus")
                 ->where("data_tscopus.title LIKE :value")
                 ->setParameter('value', '%'.$value.'%')
                 ->getQuery()
