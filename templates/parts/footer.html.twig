@@ -1,0 +1,71 @@
+{% set snippets = sulu_snippet_load_by_area('footer_area') %}
+<footer class="new_footer_area bg_color" id="{{ snippets.content.title }}">
+    <div class="new_footer_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    {% if snippets.content.showColumn1 %}
+                        <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s">
+                            <h3 class="f-title f_600 t_color f_size_18"> {{snippets.content.blockColumn1.title}}</h3>
+                            <p class="f_400 f_size_15">{{snippets.content.blockColumn1.AdressL1}}<br/> {{snippets.content.blockColumn1.AdressL2}}<br/>  {{snippets.content.blockColumn1.AdressL3}}<br/> {{snippets.content.blockColumn1.AdressL4}}</p>
+                            <p class="f_400 f_size_15"><span class="f_400 t_color3">{{snippets.content.blockColumn1.Phone}}</span></p>
+                            <p class="f_400 f_size_15"><span class="f_400 t_color3">{{snippets.content.blockColumn1.Email}}</span></p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    {% if snippets.content.showC2 %}
+                        <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s">
+                            <h3 class="f-title f_600 t_color f_size_18"> {{snippets.content.titleC2}}</h3>
+                            <ul class="list-unstyled f_list">
+                                {% for service in snippets.content.blockColumn2 %}
+                                    <li><a href=" {{ service.urlElementNav}}">{{service.title}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    {%if snippets.content.showC3 %}
+                        <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s">
+                            <h3 class="f-title f_600 t_color f_size_18">{{ snippets.content.titleC3}}</h3>
+                            <ul class="list-unstyled f_list">
+                                {% for service in snippets.content.blockColumn2 %}
+                                    <li><a href=" {{ service.urlElementNav}}">{{service.title}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    {%if snippets.content.showC4 %}
+                        <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s">
+                            <h3 class="f-title f_600 t_color f_size_18">{{ snippets.content.titleC3}}</h3>
+                            <div class="f_social_icon">
+                                {% for service in snippets.content.blockColumn4 %}
+                                    <a href=" {{ service.urlElementNav}}" class="ti-{{ service.networkName }}"></a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_bg"  {% if snippets.content.img_back  %}style="background: url({{ snippets.content.img_back.url }}) no-repeat scroll center 0;"{% endif %}>
+            <div class="footer_bg_one"  {% if snippets.content.img_move1  %}style="background: url({{ snippets.content.img_move1.url }}) no-repeat center center;"{% endif %}></div>
+            <div class="footer_bg_two"  {% if snippets.content.img_move2  %}style="background: url({{ snippets.content.img_move2.url }}) no-repeat center center;"{% endif %}></div>
+        </div>
+    </div>
+    <div class="footer_bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-sm-7">
+                    <p class="mb-0 f_400">©IOPLUME {{ 'now'|date('Y') }} All rights reserved, based on <a href="https://sulu">SULU</a></p>
+                </div>
+                <div class="col-lg-6 col-sm-5 text-right">
+                    <p>Made with <i class="icon_heart"></i> in <a href="#">IOPLUME </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

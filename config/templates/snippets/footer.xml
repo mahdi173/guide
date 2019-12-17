@@ -1,0 +1,385 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>footer</key>
+    <meta>
+        <title lang="en">Footer</title>
+        <title lang="de">Footer</title>
+        <title lang="fr">Footer</title>
+    </meta>
+    <areas>
+        <area key="footer_area">
+            <meta>
+                <title lang="en">Footer Standard</title>
+                <title lang="de">Footer Default</title>
+                <title lang="fr">Footer Défaut</title>
+            </meta>
+        </area>
+    </areas>
+
+
+    <properties>
+        <property name="title" type="text_line">
+            <meta>
+                <title lang="en">Title</title>
+                <title lang="de">Titel</title>
+                <title lang="en">Titre</title>
+            </meta>
+            <tag name="sulu.node.name"/>
+        </property>
+        <property name="img_back" type="single_media_selection" colspan="6">
+            <meta>
+                <title lang="de">Bilder bg</title>
+                <title lang="en">Background Image</title>
+                <title lang="fr">Image de fond</title>
+            </meta>
+            <params>
+                <param name="type" value="image"/>
+                <param name="displayOptions" type="collection">
+                    <param name="leftTop" value="true"/>
+                    <param name="top" value="true"/>
+                    <param name="rightTop" value="true"/>
+                    <param name="left" value="true"/>
+                    <param name="middle" value="true"/>
+                    <param name="right" value="true"/>
+                    <param name="leftBottom" value="true"/>
+                    <param name="bottom" value="true"/>
+                    <param name="rightBottom" value="true"/>
+                </param>
+            </params>
+        </property >
+        <property name="img_move1" type="single_media_selection" colspan="6">
+            <meta>
+                <title lang="de">Bilder bg</title>
+                <title lang="en">Moving Image 1</title>
+                <title lang="fr">Image mobile 1</title>
+            </meta>
+            <params>
+                <param name="type" value="image"/>
+                <param name="displayOptions" type="collection">
+                    <param name="leftTop" value="true"/>
+                    <param name="top" value="true"/>
+                    <param name="rightTop" value="true"/>
+                    <param name="left" value="true"/>
+                    <param name="middle" value="true"/>
+                    <param name="right" value="true"/>
+                    <param name="leftBottom" value="true"/>
+                    <param name="bottom" value="true"/>
+                    <param name="rightBottom" value="true"/>
+                </param>
+            </params>
+        </property >
+        <property name="img_move2" type="single_media_selection" colspan="6">
+            <meta>
+                <title lang="de">Bilder moving</title>
+                <title lang="en">Moving Image 2</title>
+                <title lang="fr">Image movible 2</title>
+            </meta>
+            <params>
+                <param name="type" value="image"/>
+                <param name="displayOptions" type="collection">
+                    <param name="leftTop" value="true"/>
+                    <param name="top" value="true"/>
+                    <param name="rightTop" value="true"/>
+                    <param name="left" value="true"/>
+                    <param name="middle" value="true"/>
+                    <param name="right" value="true"/>
+                    <param name="leftBottom" value="true"/>
+                    <param name="bottom" value="true"/>
+                    <param name="rightBottom" value="true"/>
+                </param>
+            </params>
+        </property >
+        <section name="column1">
+            <meta>
+                <title lang="en">Column 1</title>
+                <title lang="fr">Colonne 1</title>
+            </meta>
+            <properties>
+                <property name="showColumn1" type="checkbox">
+                    <meta>
+                        <title lang="en">Show this column</title>
+                        <title lang="fr">Afficher cette colonne</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="true"/>
+                    </params>
+                </property>
+                <block name="blockColumn1" default-type="content_element" minOccurs="1" maxOccurs="1" >
+                    <meta>
+                        <title lang="en">Column 1</title>
+                        <title lang="fr">Colonne 1</title>
+                        <title lang="de">Column 1</title>
+                    </meta>
+                    <types>
+                        <type name="content_element" >
+                            <meta>
+                                <title lang="en">Define element</title>
+                                <title lang="fr">Définir les éléments</title>
+                                <title lang="de">Define element</title>
+                            </meta>
+                            <properties>
+                                <property name="title" type="text_line" >
+                                    <meta>
+                                        <title lang="en">Title</title>
+                                        <title lang="fr">Titre</title>
+                                    </meta>
+                                    <params>
+                                        <param name="headline" value="true"/>
+                                    </params>
+                                </property>
+                                <property name="AdressL1" type="text_line" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Adress L1</title>
+                                        <title lang="fr">Adress L1</title>
+                                    </meta>
+                                </property>
+                                <property name="AdressL2" type="text_line" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Adress L2</title>
+                                        <title lang="fr">Adress L2</title>
+                                    </meta>
+                                </property>
+                                <property name="AdressL3" type="text_line" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Adress L3</title>
+                                        <title lang="fr">Adress L3</title>
+                                    </meta>
+                                </property>
+                                <property name="AdressL4" type="text_line" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Adress L4</title>
+                                        <title lang="fr">Adress L4</title>
+                                    </meta>
+                                </property>
+                                <property name="Phone" type="text_line" colspan="6"  >
+                                    <meta>
+                                        <title lang="en">Phone Number</title>
+                                        <title lang="fr">Numéro de tel.</title>
+                                    </meta>
+                                </property>
+                                <property name="Email" type="text_line" colspan="6"  >
+                                    <meta>
+                                        <title lang="en">Email</title>
+                                        <title lang="fr">Email</title>
+                                    </meta>
+                                </property>
+
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
+        <section name="column2">
+            <meta>
+                <title lang="en">Column 2</title>
+                <title lang="fr">Colonne 2</title>
+            </meta>
+            <properties>
+                <property name="showC2" type="checkbox">
+                    <meta>
+                        <title lang="en">Show this column</title>
+                        <title lang="fr">Afficher cette colonne</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="true"/>
+                    </params>
+                </property>
+                <property name="titleC2" type="text_line" >
+                    <meta>
+                        <title lang="en">Title</title>
+                        <title lang="fr">Titre</title>
+                    </meta>
+                    <params>
+                        <param name="headline" value="true"/>
+                    </params>
+                </property>
+                <block name="blockColumn2" default-type="column_element" minOccurs="1" >
+                    <meta>
+                        <title lang="en">Column content</title>
+                        <title lang="fr">Colonne content</title>
+                        <title lang="de">Column content</title>
+                    </meta>
+                    <types>
+                        <type name="column_element" >
+                            <meta>
+                                <title lang="en">Define elements</title>
+                                <title lang="fr">Définir les éléments</title>
+                                <title lang="de">Define elements</title>
+                            </meta>
+                            <properties>
+                                <property name="title" type="text_line" >
+                                    <meta>
+                                        <title lang="en">Title element Nav</title>
+                                        <title lang="fr">Titre de l'élément</title>
+                                    </meta>
+                                    <params>
+                                        <param name="headline" value="true"/>
+                                    </params>
+                                </property>
+                                <property name="urlElementNav" type="url" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Element Nav Link</title>
+                                        <title lang="fr">Lien de l'élement </title>
+                                    </meta>
+                                    <params>
+                                        <param name="defaults" type="collection">
+                                            <param name="scheme" value="https://"/>
+                                            <param name="specific_part" value="www.wikipedia.fr"/>
+                                        </param>
+                                        <param name="schemes" type="collection">
+                                            <param name="https://"/>
+                                            <param name="http://"/>
+                                        </param>
+                                    </params>
+                                </property>
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
+        <section name="column3">
+            <meta>
+                <title lang="en">Column 3</title>
+                <title lang="fr">Colonne 3</title>
+            </meta>
+            <properties>
+                <property name="showC3" type="checkbox">
+                    <meta>
+                        <title lang="en">Show this column</title>
+                        <title lang="fr">Afficher cette colonne</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="true"/>
+                    </params>
+                </property>
+                <property name="titleC3" type="text_line" >
+                    <meta>
+                        <title lang="en">Title</title>
+                        <title lang="fr">Titre</title>
+                    </meta>
+                    <params>
+                        <param name="headline" value="true"/>
+                    </params>
+                </property>
+                <block name="blockColumn3" default-type="column_element" minOccurs="1" >
+                    <meta>
+                        <title lang="en">Column content</title>
+                        <title lang="fr">Colonne content</title>
+                        <title lang="de">Column content</title>
+                    </meta>
+                    <types>
+                        <type name="column_element" >
+                            <meta>
+                                <title lang="en">Define elements</title>
+                                <title lang="fr">Définir les éléments</title>
+                                <title lang="de">Define elements</title>
+                            </meta>
+                            <properties>
+                                <property name="title" type="text_line" >
+                                    <meta>
+                                        <title lang="en">Title element Nav</title>
+                                        <title lang="fr">Titre de l'élément</title>
+                                    </meta>
+                                    <params>
+                                        <param name="headline" value="true"/>
+                                    </params>
+                                </property>
+                                <property name="urlElementNav" type="url" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Element Nav Link</title>
+                                        <title lang="fr">Lien de l'élement </title>
+                                    </meta>
+                                    <params>
+                                        <param name="defaults" type="collection">
+                                            <param name="scheme" value="https://"/>
+                                            <param name="specific_part" value="www.wikipedia.fr"/>
+                                        </param>
+                                        <param name="schemes" type="collection">
+                                            <param name="https://"/>
+                                            <param name="http://"/>
+                                        </param>
+                                    </params>
+                                </property>
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
+        <section name="column4">
+            <meta>
+                <title lang="en">Column 4</title>
+                <title lang="fr">Colonne 4</title>
+            </meta>
+            <properties>
+                <property name="showC4" type="checkbox">
+                    <meta>
+                        <title lang="en">Show this column</title>
+                        <title lang="fr">Afficher cette colonne</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="true"/>
+                    </params>
+                </property>
+                <property name="titleC4" type="text_line" >
+                    <meta>
+                        <title lang="en">Title</title>
+                        <title lang="fr">Titre</title>
+                    </meta>
+                    <params>
+                        <param name="headline" value="true"/>
+                    </params>
+                </property>
+                <block name="blockColumn4" default-type="column_element" minOccurs="1" >
+                    <meta>
+                        <title lang="en">Social network link</title>
+                        <title lang="fr">Lien réseau social</title>
+                        <title lang="de">Social network link</title>
+                    </meta>
+                    <types>
+                        <type name="column_element" >
+                            <meta>
+                                <title lang="en">Define elements</title>
+                                <title lang="fr">Définir les éléments</title>
+                                <title lang="de">Define elements</title>
+                            </meta>
+                            <properties>
+                                <property name="networkName" type="text_line" >
+                                    <meta>
+                                        <title lang="en">Name network (ex: facebook, linkedin..)</title>
+                                        <title lang="fr">Nom réseau social (ex: facebook, linkedin..)</title>
+                                    </meta>
+                                </property>
+                                <property name="urlElementNav" type="url" colspan="6" >
+                                    <meta>
+                                        <title lang="en">Link social account</title>
+                                        <title lang="fr">Lien compte réseau social</title>
+                                    </meta>
+                                    <params>
+                                        <param name="defaults" type="collection">
+                                            <param name="scheme" value="https://"/>
+                                            <param name="specific_part" value="www.wikipedia.fr"/>
+                                        </param>
+                                        <param name="schemes" type="collection">
+                                            <param name="https://"/>
+                                            <param name="http://"/>
+                                        </param>
+                                    </params>
+                                </property>
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
+    </properties>
+</template>

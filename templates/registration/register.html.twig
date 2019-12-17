@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <section class="seo_features_one sec_pad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div>
+                        {{ form_start(form) }}
+                        {{ form_row(form) }}
+                        <button type="submit">Submit</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

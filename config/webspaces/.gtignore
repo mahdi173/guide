@@ -1,0 +1,3 @@
+*.xml
+!ioplume.xml
+!.gitignore

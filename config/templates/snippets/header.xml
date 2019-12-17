@@ -1,0 +1,185 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>header</key>
+    <meta>
+        <title lang="en">Header</title>
+        <title lang="de">Header</title>
+        <title lang="fr">Header</title>
+    </meta>
+    <areas>
+        <area key="header_area">
+            <meta>
+                <title lang="en">Header</title>
+                <title lang="de">Header</title>
+                <title lang="fr">Header</title>
+            </meta>
+        </area>
+    </areas>
+    <properties>
+        <property name="title" type="text_line">
+            <meta>
+                <title lang="en">Snippet title snippet</title>
+                <title lang="de">Titel snippet</title>
+                <title lang="fr">Titre du snippet</title>
+            </meta>
+            <tag name="sulu.node.name"/>
+        </property>
+        <section name="logoAndHeader">
+            <meta>
+                <title lang="en">Logo et favicon</title>
+                <title lang="fr">Logo et favicon</title>
+            </meta>
+            <properties>
+                <property name="useParticularLogo" type="checkbox">
+                    <meta>
+                        <title lang="en">Use particular logo</title>
+                        <title lang="fr">Utiliser logotypage particulier</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="false"/>
+                    </params>
+                </property>
+                <property name="favicon_header" type="single_media_selection" colspan="6" spaceAfter="2">
+                    <meta>
+                        <title lang="de">Favicon(18x18)</title>
+                        <title lang="en">Favicon(18x18)</title>
+                        <title lang="fr">Favicon(18x18)</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="image"/>
+                        <param name="displayOptions" type="collection">
+                            <param name="leftTop" value="true"/>
+                            <param name="top" value="true"/>
+                            <param name="rightTop" value="true"/>
+                            <param name="left" value="true"/>
+                            <param name="middle" value="true"/>
+                            <param name="right" value="true"/>
+                            <param name="leftBottom" value="true"/>
+                            <param name="bottom" value="true"/>
+                            <param name="rightBottom" value="true"/>
+                        </param>
+                    </params>
+                </property >
+                <property name="logo_header" type="single_media_selection" colspan="6" spaceAfter="2">
+                    <meta>
+                        <title lang="de">Logo</title>
+                        <title lang="en">Logo</title>
+                        <title lang="fr">Logo</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="image"/>
+                        <param name="displayOptions" type="collection">
+                            <param name="leftTop" value="true"/>
+                            <param name="top" value="true"/>
+                            <param name="rightTop" value="true"/>
+                            <param name="left" value="true"/>
+                            <param name="middle" value="true"/>
+                            <param name="right" value="true"/>
+                            <param name="leftBottom" value="true"/>
+                            <param name="bottom" value="true"/>
+                            <param name="rightBottom" value="true"/>
+                        </param>
+                    </params>
+                </property >
+                <property name="alt_logo" type="text_line" colspan="6"  >
+                    <meta>
+                        <title lang="en">Logo alt description</title>
+                        <title lang="fr">Logo alt de l'image</title>
+                    </meta>
+                </property>
+                <property name="logo_url" type="url" colspan="6">
+                    <meta>
+                        <title lang="en">Url onclick logo</title>
+                        <title lang="fr">Lien si click sur le logo</title>
+                    </meta>
+                    <params>
+                        <param name="defaults" type="collection">
+                            <param name="scheme" value="https://"/>
+                            <param name="specific_part" value="wikipedia.fr"/>
+                        </param>
+                        <param name="schemes" type="collection">
+                            <param name="https://"/>
+                            <param name="http://"/>
+                        </param>
+                    </params>
+                </property>
+            </properties>
+        </section>
+        <section name="mainNav">
+            <meta>
+                <title lang="en">Menu principal</title>
+                <title lang="fr">Menu principal</title>
+            </meta>
+            <properties>
+                <property name="useParticularMenu" type="checkbox">
+                    <meta>
+                        <title lang="en">Use particular menu</title>
+                        <title lang="fr">Utiliser ce menu particulier</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="false"/>
+                    </params>
+                </property>
+                <property name="color_navigation" type="color" colspan="4">
+                    <meta>
+                        <title lang="fr">Color police nav</title>
+                        <title lang="en">Font color nav</title>
+                    </meta>
+                </property>
+                <property name="color_navigation_2" type="color" colspan="4">
+                    <meta>
+                        <title lang="fr">Color background sur certains éléments</title>
+                        <title lang="en">Font background</title>
+                    </meta>
+                </property>
+                <block name="blockMainNav" default-type="menuLevel1" minOccurs="1">
+                    <meta>
+                        <title lang="en">First level</title>
+                        <title lang="fr">Premier niveau</title>
+                        <title lang="de">Level ein</title>
+                    </meta>
+                    <types>
+                        <type name="menuLevel1" >
+                            <meta>
+                                <title lang="en">First level nav</title>
+                                <title lang="fr">Onglet de premier niveau</title>
+                                <title lang="de">First level nav</title>
+                            </meta>
+                            <properties>
+                                <property name="title_nav" type="text_line" colspan="4">
+                                    <meta>
+                                        <title lang="de">Title nav</title>
+                                        <title lang="en">Title nav</title>
+                                        <title lang="fr">Titre onglet</title>
+                                    </meta>
+                                </property>
+                                <property name="url_title_nav" type="url"  colspan="4" >
+                                    <meta>
+                                        <title lang="en">Nav link</title>
+                                        <title lang="fr">Lien de navigation</title>
+                                        <info_text lang="fr" >l'url ou l'url+/#titre_section_renvoi (ex : oplume.com/#titre_de_la_section1</info_text>
+                                    </meta>
+                                    <params>
+                                        <param name="defaults" type="collection">
+                                            <param name="scheme" value="https://"/>
+                                            <param name="specific_part" value="ioplume.com"/>
+                                        </param>
+                                        <param name="schemes" type="collection">
+                                            <param name="https://"/>
+                                            <param name="http://"/>
+                                        </param>
+                                    </params>
+                                </property>
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
+    </properties>
+</template>

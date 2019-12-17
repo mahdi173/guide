@@ -1,6 +1,7 @@
 version: '3'
 services:
-  web:
+  php:
+    container_name: guidejournal_php
     build: docker
     environment:
       APP_ENV: dev
@@ -21,15 +22,15 @@ services:
     volumes:
       - ./docker/docker-entrypoint.sh:/docker-entrypoint.sh
       - ./docker/vhosts:/etc/apache2/sites-enabled
-      - ./docker/envvars:/etc/apache2/envvars
       - ./docker/php.ini:/usr/local/etc/php/conf.d/99-php-custom.ini
       - .:/api:cached
     working_dir: /api
     user: ${CUID}:${CGID}
+    env_file:
+      - .env.local
 
   mariadb:
     image: mariadb:10.4.4
-    restart: always
     environment:
       MYSQL_DATABASE: guidejournal
       MYSQL_USER: guidejournal
@@ -39,12 +40,10 @@ services:
       - db-data:/var/lib/mysql
   adminer:
     image: adminer
-    restart: "no"
     ports:
       - 8080:8080
   maildev:
     image: djfarrelly/maildev:0.14.0
-    restart: "no"
     ports:
       - 1080:80
 volumes:

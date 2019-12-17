@@ -2,52 +2,42 @@
 
 namespace App;
 
-use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+/*
+ * This file is part of Sulu.
+ *
+ * (c) Sulu GmbH
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+use FOS\HttpCache\SymfonyCache\HttpCacheProvider;
+use Sulu\Bundle\HttpCacheBundle\Cache\SuluHttpCache;
+use Sulu\Component\HttpKernel\SuluKernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class Kernel extends BaseKernel
+class Kernel extends SuluKernel implements HttpCacheProvider
 {
-    use MicroKernelTrait;
+    /**
+     * @var HttpKernelInterface|null
+     */
+    private $httpCache;
 
-    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
-
-    public function registerBundles(): iterable
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
-        $contents = require $this->getProjectDir().'/config/bundles.php';
-        foreach ($contents as $class => $envs) {
-            if ($envs[$this->environment] ?? $envs['all'] ?? false) {
-                yield new $class();
-            }
-        }
-    }
-
-    public function getProjectDir(): string
-    {
-        return \dirname(__DIR__);
-    }
-
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
-    {
-        $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
         $container->setParameter('container.dumper.inline_class_loader', true);
-        $confDir = $this->getProjectDir().'/config';
 
-        $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+        parent::configureContainer($container, $loader);
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes): void
+    public function getHttpCache()
     {
-        $confDir = $this->getProjectDir().'/config';
+        if (!$this->httpCache) {
+            $this->httpCache = new SuluHttpCache($this);
+        }
 
-        $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+        return $this->httpCache;
     }
 }

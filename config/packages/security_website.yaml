@@ -1,0 +1,40 @@
+# To enable security bundle for website you need to change `config/bundles.php` file
+security:
+  access_decision_manager:
+    strategy: unanimous
+    allow_if_all_abstain: true
+
+  encoders:
+    Sulu\Bundle\SecurityBundle\Entity\User: bcrypt
+
+  providers:
+    sulu:
+      id: sulu_security.user_provider
+
+  access_control:
+    - { path: ^/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/security/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/_wdt, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/translations, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin, roles: ROLE_USER }
+
+  firewalls:
+    guidejournal: # Replace <webspace_key> with the key of your webspace
+      pattern: ^/
+      anonymous: ~
+      form_login:
+        login_path: sulu_community.login
+        check_path: sulu_community.login
+      logout:
+        path: sulu_community.logout
+        target: /
+      remember_me:
+        secret:   "%kernel.secret%"
+        lifetime: 604800 # 1 week in seconds
+        path:     /
+sulu_security:
+  checker:
+    enabled: true

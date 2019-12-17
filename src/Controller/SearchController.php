@@ -36,7 +36,7 @@ class SearchController extends BaseController
 
     /**
      *
-     * @Route("/search", name="data_search_by_several_values")
+     * @Route("/query", name="data_search_by_several_values")
      */
     public function searchByValue(Request $request)
     {
@@ -45,14 +45,15 @@ class SearchController extends BaseController
         $data_t_scopus = null;
         $data_reuters = null;
         $form = $this->createForm(SearchType::class, $objet);
-        $form->handleRequest($request);
+        //$form->handleRequest($request);
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $eISSN = $form->get("searchValue")->getData();
-            $emS = $this->getDoctrine()->getManager();
-            $em = $this->entityManager->getRepository(DataTScopus::class);
-            $em2 = $this->entityManager->getRepository(DataReuters::class);
+        if ($request->get("searchValue")) {
+            $eISSN = $request->get("searchValue");
+            $emS = $this->entityManager;
+
+            $em = $emS->getRepository(DataTScopus::class);
+            $em2 = $emS->getRepository(DataReuters::class);
             $eISSNT = $eISSN;
             $eISSNS = $eISSN;
             $pos = strpos($eISSN, "-");
@@ -133,14 +134,15 @@ class SearchController extends BaseController
 
         return $this->render('default/searchV.html.twig', [
             'form' => $form->createView(),
-            'data_reuter' => $data_reuters, 'data_t_scopus' => $data_t_scopus
+            'data_reuter' => $data_reuters,
+            'data_t_scopus' => $data_t_scopus
         ]);
     }
 
     /**
      * Lists all data_t_scopus entities.
      *
-     * @Route("/{eISSN}", name="data_t_scopus_results")
+     * @Route("/journal/{eISSN}", name="data_t_scopus_results")
      */
     public function findValue($eISSN, Request $request)
     {

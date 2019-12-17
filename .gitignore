@@ -17,10 +17,45 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-/.idea
+# var
+/var/*
+!/var/.gitkeep
 
+# web
+/public/bundles
+/public/uploads
+/public/admin/translations/*
+!/public/admin/translations/.gitkeep
+
+# composer
 /composer.phar
+composer.lock
+symfony.lock
+/vendor
 
+# npm
+package-lock.json
+node_modules
+
+# phpunit
+.phpunit
+/phpunit.xml
+
+# IDEs
+/.idea
+*.iml
+*~
+.web-server-pid
+/.vscode
+
+# System files
+.DS_Store
+
+# Core files
+.env
+/project
+/var
+/docker/letsencrypt
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

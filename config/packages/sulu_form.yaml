@@ -1,0 +1,4 @@
+sulu_form:
+  mail:
+    from: "%env(SULU_ADMIN_EMAIL)%"
+    to:   "%env(SULU_ADMIN_EMAIL)%"
