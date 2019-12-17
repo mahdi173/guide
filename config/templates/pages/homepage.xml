@@ -930,7 +930,5 @@
                 <param name="loadExcerpt" value="true"/>
             </params>
         </property>
-
-
     </properties>
 </template>
