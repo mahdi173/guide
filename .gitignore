@@ -28,7 +28,7 @@
 !/public/admin/translations/.gitkeep
 
 # composer
-/composer.phar
+composer.phar
 composer.lock
 symfony.lock
 /vendor
