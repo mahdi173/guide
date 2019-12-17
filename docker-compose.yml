@@ -16,6 +16,7 @@ services:
     depends_on:
       - mariadb
       - maildev
+      - elasticsearch
     ports:
       - 80:80
       - 8000:8000
@@ -28,6 +29,14 @@ services:
     user: ${CUID}:${CGID}
     env_file:
       - .env.local
+
+  elasticsearch:
+    build:
+      context: docker/elk/elasticsearch
+    volumes:
+      - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
 
   mariadb:
     image: mariadb:10.4.4

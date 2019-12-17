@@ -201,7 +201,7 @@
                         {% endif %}
 
                         <tr>
-                            <td><a href={{issn}}>{{ t.title }}</a> </td>
+                            <td><a href={{ path('data_t_scopus_results', {'eISSN': issn})}}>{{ t.title }}</a> </td>
                             <td>{{ t.eISSN }}</td>
                             <td>{{ t.printISSN }}</td>
                             <td>{{ t.openAccess }}</td>

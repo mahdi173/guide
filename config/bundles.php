@@ -48,4 +48,6 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
+    Sulu\Bundle\ArticleBundle\SuluArticleBundle::class => ['all' => true],
+    ONGR\ElasticsearchBundle\ONGRElasticsearchBundle::class => ['all' => true],
 ];

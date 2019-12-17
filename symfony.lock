@@ -631,9 +631,6 @@
     "symfony/templating": {
         "version": "v4.4.0"
     },
-    "symfony/thanks": {
-        "version": "v1.2.4"
-    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
