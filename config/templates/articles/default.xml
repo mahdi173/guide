@@ -41,13 +41,14 @@
         </property>
 
         <property name="description" type="text_editor">
+
             <meta>
                 <title lang="en">Article</title>
                 <title lang="fr">Artikel</title>
             </meta>
         </property>
 
-        <property name="image" type="single_media_selection">
+       <property name="image" type="single_media_selection">
             <meta>
                 <title lang="en">Image</title>
                 <title lang="fr">Image</title>

@@ -2,7 +2,6 @@
 
 {% block content %}
   {{ dump(content) }}
-
   {% for c in content.articles %}
     <p>{{ dump(c.title) }}</p>
   {% endfor %}
