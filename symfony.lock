@@ -2,6 +2,9 @@
     "aferrandini/urlizer": {
         "version": "1.0.0"
     },
+    "beberlei/doctrineextensions": {
+        "version": "v1.2.6"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -358,6 +361,9 @@
         "files": [
             "config/packages/stof_doctrine_extensions.yaml"
         ]
+    },
+    "sulu/community-bundle": {
+        "version": "2.0-dev"
     },
     "sulu/sulu": {
         "version": "2.0.2"

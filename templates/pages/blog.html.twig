@@ -2,4 +2,15 @@
 
 {% block content %}
   {{ dump(content) }}
+  {% for c in content.articles %}
+    <p>{{ dump(c.title) }}</p>
+  {% endfor %}
+
+  {% set articles = sulu_article_load_recent() %}
+
+  {% for article in articles %}
+    <h1>{{ article.title }}</h1>
+{#    {% set media = sulu_resolve_media(article.image, 'fr') %}#}
+{#    <img src="{{ media.thumbnails['sulu-400x400'] }}" class="image" alt="">#}
+  {% endfor %}
 {% endblock %}

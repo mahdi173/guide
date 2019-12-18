@@ -1,0 +1,16 @@
+sulu_community:
+  webspaces:
+    guidejournal:
+      from: "%env(SULU_ADMIN_EMAIL)%"
+      login:
+        embed_template: community/login-embed.html.twig
+        template: community/login.html.twig
+      registration:
+        activate_user: false
+        auto_login: true # only available when activate_user is true
+        email:
+          subject: Registration
+          user_template: community/registration-email.html.twig
+          admin_template: ~
+        redirect_to: ?send=true
+        template: community/registration-form.html.twig

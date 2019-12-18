@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+
+    <key>about</key>
+
+    <view>about/about</view>
+    <controller>Sulu\Bundle\WebsiteBundle\Controller\DefaultController::indexAction</controller>
+    <cacheLifetime>86400</cacheLifetime>
+
+    <meta>
+        <title lang="en">About</title>
+        <title lang="de">About</title>
+        <title lang="fr">About</title>
+    </meta>
+
+    <properties>
+
+        <property name="title" type="text_line" mandatory="true">
+            <meta>
+                <title lang="en">Title page</title>
+                <title lang="de">Titel page</title>
+                <title lang="fr">Titre page</title>
+            </meta>
+            <params>
+                <param name="headline" value="true"/>
+            </params>
+
+            <tag name="sulu.rlp.part"/>
+        </property>
+
+        <property name="url" type="resource_locator" mandatory="true">
+            <meta>
+                <title lang="en">Resourcelocator</title>
+                <title lang="de">Adresse</title>
+                <title lang="fr">Url</title>
+            </meta>
+
+            <tag name="sulu.rlp"/>
+        </property>
+    </properties>
+</template>
