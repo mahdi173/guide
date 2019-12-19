@@ -1,0 +1,59 @@
+{% extends 'profile.html.twig' %}
+
+{% block center_section %}
+    <div class="tz-2">
+        <div class="tz-2-com tz-2-main">
+            <h4>Profile</h4>
+            <div class="db-list-com tz-db-table">
+                <div class="ds-boar-title">
+                    <h2>Edit Profile</h2>
+                    <p>All the Lorem Ipsum generators on the All the Lorem Ipsum generators on the</p>
+                </div>
+                <div class="tz2-form-pay tz2-form-com">
+                    {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'col s12' } }) }}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_row(form.fullName, { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            {{ form_row(form.email , { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                        <div class="input-field col s12 m6">
+                            {{ form_row(form.country , { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 m4">
+                            {{ form_row(form.institution , { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                        <div class="input-field col s12 m4">
+                            {{ form_row(form.departement , { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                        <div class="input-field col s12 m4">
+                            {{ form_row(form.speciality , { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_row(form.current_password, { 'attr': { 'class': 'validate' } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="submit" value="Submit" class="waves-effect waves-light full-btn" />
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+                <div class="db-mak-pay-bot">
+                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
+                    </p>
+                    <a href="{{ path('fos_user_profile_show') }}" class="waves-effect waves-light btn-large">Profile Setting</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

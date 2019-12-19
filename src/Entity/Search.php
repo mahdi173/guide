@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Search
  *
  * @ORM\Table(name="search")
- * @ORM\Entity(repositoryClass="App\Repository\SearchRepository")
+ * @ORM\Entity
  */
 class Search
 {
