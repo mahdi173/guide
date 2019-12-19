@@ -1,17 +1,114 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-  {{ dump(content) }}
 
-  {% for c in content.articles %}
-    <p>{{ dump(c.title) }}</p>
-  {% endfor %}
 
-  {% set articles = sulu_article_load_recent() %}
 
-  {% for article in articles %}
-    <h1>{{ article.title }}</h1>
-{#    {% set media = sulu_resolve_media(article.image, 'fr') %}#}
-{#    <img src="{{ media.thumbnails['sulu-400x400'] }}" class="image" alt="">#}
-  {% endfor %}
+  {#start bootstrap blog#}
+
+  <div class="row">
+
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+
+      <h1 class="my-4">Guidejournal
+        <small>Blog</small>
+      </h1>
+
+      <!-- Blog Post -->
+      {% for c in content.articles %}
+        <div class="card mb-4">
+          {% if c.content.content.image %}<img class="card-img-top" src="{{ c.content.content.image.url }}" alt="Card image cap"> {% endif %}
+          <div class="card-body">
+            <h2 class="card-title"><a href="{{ c.routePath }}">{{ c.content.content.title }}</a></h2>
+            <div property="article">
+              {{ c.content.content.article| raw }}
+            </div>
+
+            <p class="card-text">{{ c.article|default()|raw }}</p>
+            <a href="{{ c.routePath }}" class="btn btn-primary">Read More →</a>
+          </div>
+          <div class="card-footer text-muted">
+            Posted on {{ c.content.published|date('D M Y') }} by
+            <a href="#">{{ c.content.creatorFullName }}
+            </a>
+          </div>
+        </div>
+
+        {#Button for share this#}
+        <div class="sharethis-inline-share-buttons"></div>
+      {% endfor %}
+
+
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
+
+      <!-- Search Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Search</h5>
+        <div class="card-body">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Categories</h5>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">Web Design</a>
+                </li>
+                <li>
+                  <a href="#">HTML</a>
+                </li>
+                <li>
+                  <a href="#">Freebies</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-6">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">JavaScript</a>
+                </li>
+                <li>
+                  <a href="#">CSS</a>
+                </li>
+                <li>
+                  <a href="#">Tutorials</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Side Widget</h5>
+        <div class="card-body">
+          You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  {#end bootstrap blog#}
+
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5dfba1bead112800124ec99e&product=inline-share-buttons" async="async"></script>
 {% endblock %}
