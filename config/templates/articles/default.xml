@@ -41,6 +41,7 @@
         </property>
 
         <property name="article" type="text_editor">
+
             <meta>
                 <title lang="en">description</title>
                 <title lang="fr">description</title>
@@ -54,7 +55,7 @@
             </meta>
         </property>
 
-        <property name="image" type="single_media_selection">
+       <property name="image" type="single_media_selection">
             <meta>
                 <title lang="en">Image</title>
                 <title lang="fr">Image</title>
