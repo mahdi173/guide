@@ -40,5 +40,15 @@
 
             <tag name="sulu.rlp"/>
         </property>
+
+<!--        <property name="contact" type="form_select">-->
+<!--            <meta>-->
+<!--                <title lang="en">Formulaire</title>-->
+<!--                <title lang="de">Formulaire</title>-->
+<!--                <title lang="fr">Formulaire</title>-->
+<!--            </meta>-->
+
+<!--            <tag name="sulu.rlp"/>-->
+<!--        </property>-->
     </properties>
 </template>

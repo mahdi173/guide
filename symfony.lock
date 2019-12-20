@@ -242,6 +242,12 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "knplabs/knp-components": {
+        "version": "v1.3.10"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v3.0.0"
+    },
     "layershifter/tld-database": {
         "version": "1.0.69"
     },
@@ -279,7 +285,7 @@
         "version": "v2.1.3"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.2"
     },
     "php-http/client-common": {
         "version": "2.1.0"

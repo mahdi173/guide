@@ -22,7 +22,7 @@
     {% set tests=-1 %}
 
     {% set issn="" %}
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Pubi 0001-->
 
@@ -98,6 +98,27 @@
 
             </div>
         </div>
+
+
+        <div class="row">
+            {% set recentarticles= sulu_article_load_recent(6) %}
+            {% for a in recentarticles %}
+                <div class="col-md-3">
+                    <div class="card mb-4 box-shadow">
+                        {% if a.content.content.image %}
+                            <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ a.content.content.image.url }}" src="{{ a.content.content.image.thumbnails['sulu-170x170'] }}" data-holder-rendered="true"></a>
+
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="alert text-info">Aucun article trouvé</p>
+            {% endfor %}
+        </div>
+
         {%  if data_t_scopus is defined and data_t_scopus | length >1 %}
         {% set test=0 %}
         {% set tests=0 %}

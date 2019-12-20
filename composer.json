@@ -51,7 +51,8 @@
         "symfony/twig-bundle": "^4.3",
         "symfony/webpack-encore-bundle": "^1.6",
         "zendframework/zend-stdlib": "^2.3",
-        "zendframework/zendsearch": "^2.0.0rc6"
+        "zendframework/zendsearch": "^2.0.0rc6",
+        "knplabs/knp-paginator-bundle": "^3.0"
     },
     "require-dev": {
         "phpcr/phpcr-shell": "^1.0",
