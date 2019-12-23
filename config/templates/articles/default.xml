@@ -60,6 +60,9 @@
                 <title lang="en">Image</title>
                 <title lang="fr">Image</title>
             </meta>
+           <params>
+               <param name="types" value="image"/>
+           </params>
         </property>
 
         <property name="tags" type="tag_selection">

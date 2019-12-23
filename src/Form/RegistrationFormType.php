@@ -8,6 +8,7 @@ use Sulu\Bundle\ContactBundle\Entity\EmailType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -53,14 +54,22 @@ class RegistrationFormType extends AbstractType
 
         $builder->add('plainPassword', PasswordType::class, [
             'mapped' => false,
+//            'type' => PasswordType::class,
+//            'first_name'  => ['label' => 'Password'],
+//            'second_name' => ['label' => 'Repeat Password'],
+            'required' => true
+
         ]);
 
         $builder->add('firstName', TextType::class, [
             'property_path' => 'contact.firstName',
+            'required' => false
         ]);
+
 
         $builder->add('lastName', TextType::class, [
             'property_path' => 'contact.lastName',
+            'required' => false
         ]);
 
         $builder->add(
@@ -71,8 +80,6 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
             ]
         );
-
-        $builder->add('submit', SubmitType::class);
     }
 
     /**

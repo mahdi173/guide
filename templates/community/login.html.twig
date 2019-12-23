@@ -3,9 +3,19 @@
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+
+     <style>
+         .form-signin {
+             width: 100%;
+             max-width: 330px;
+             padding: 15px;
+             margin: 0 auto;
+         }
+     </style>
+
 {#     <a href="#" class="pop-close" data-dismiss="modal"><img src={{ asset('/assets/images/logo1.png') }} alt="" /></a>#}
      <h4 class="text-center">Login</h4>
-    <form action="{{ path('sulu_community.login') }}" method="post" class="s12">
+    <form action="{{ path('sulu_community.login') }}" method="post" class="form-signin">
         <div class="tab">
 
             <div class="input-field s12">
@@ -31,15 +41,17 @@
                 <input type="hidden" name="_target_path" value="/account" />
             #}
 
-            <button type="submit" class="btn btn-lg btn-info mr-2 mr-lg-2" name="submit">login</button>
+            <button type="submit" class="btn btn-lg btn-info mr-2 mr-lg-2 mb-3" name="submit">login</button>
         </div>
 
-    </form>
-    <a class="mt-5 mb-3 text-muted" href="{{ path('sulu_community.password_forget') }}">
-        Password Forget
-    </a> <br/>
+        <a class="mt-5 mb-3 text-muted" href="{{ path('sulu_community.password_forget') }}">
+            Password Forget
+        </a> <br/>
 
-    <a class="mt-5 mb-3 text-muted" href="{{ path('sulu_community.registration') }}">
-        Registration
-    </a>
+        <a class="mt-5 mb-3 text-muted" href="{{ path('sulu_community.registration') }}">
+            Registration
+        </a>
+
+    </form>
+
  {% endblock security %}
