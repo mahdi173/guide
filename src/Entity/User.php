@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Sulu\Bundle\SecurityBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Intl\Countries;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 /**
  * User
@@ -22,6 +23,13 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @UserPassword(
+     *     message = "Wrong value for your current password"
+     * )
+     */
+    public $oldPassword;
 
     public function __construct()
     {

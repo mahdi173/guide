@@ -52,11 +52,12 @@ class RegistrationFormType extends AbstractType
 
         $builder->add('email', EmailType::class);
 
-        $builder->add('plainPassword', PasswordType::class, [
+        $builder->add('plainPassword', RepeatedType::class, [
             'mapped' => false,
-//            'type' => PasswordType::class,
-//            'first_name'  => ['label' => 'Password'],
-//            'second_name' => ['label' => 'Repeat Password'],
+            'first_options'  => ['label' => 'Password'],
+            'second_options' => ['label' => 'Repeat Password'],
+            'first_name' => 'first',
+            'second_name' => 'second',
             'required' => true
 
         ]);
