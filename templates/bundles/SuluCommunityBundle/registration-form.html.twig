@@ -4,7 +4,7 @@
     <h1 class="text-center">{{ 'Registration'|trans }}</h1>
 
     {% if app.request.get('send') == 'true' %}
-        <p>
+        <p class="alert alert-success">
             {{ 'registration_finished'|trans }}
         </p>
     {% else %}
@@ -17,26 +17,31 @@
         <div class="col">{{ form_errors(form) }}</div>
         <div class="form-label-group ">
             <label for="registration_username">First name :</label>
-            {{ form_widget(form.firstName, { 'attr': {'class': 'form-control form-control-lg  mr-lg-2'} }) }}
+            {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
         </div>
         <div class="form-label-group ">
             <label for="registration_lastName">Last name :</label>
-            {{ form_widget(form.lastName, { 'attr': {'class': 'form-control form-control-lg  mr-lg-2'} }) }}
+            {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
         </div>
         <div class="form-label-group ">
             <label for="registration_username">Username :</label>
-            {{ form_widget(form.username, { 'attr': {'class': 'form-control form-control-lg  mr-lg-2'} }) }}
+            {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
             {{ form_errors(form.username) }}
         </div>
         <div class="form-label-group ">
             <label for="registration_email">Email :</label>
-            {{ form_widget(form.email, { 'attr': {'class': 'form-control form-control-lg  mr-lg-2'} }) }}
+            {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
             {{ form_errors(form.email) }}
         </div>
         <div class="form-label-group ">
             <label for="registration_plainPassword">Password:</label>
-            {{ form_widget(form.plainPassword, { 'attr': {'class': 'form-control form-control-lg  mr-lg-2'} }) }}
-            {{ form_errors(form.plainPassword) }}
+            {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.plainPassword.first) }}
+        </div>
+        <div class="form-label-group ">
+            <label for="registration_plainPassword">Repeat password:</label>
+            {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.plainPassword.second) }}
         </div>
 {#        <div class="form-label-group">#}
 {#            <label for="registration_plainPassword">Confirm Password:</label>#}
@@ -52,41 +57,5 @@
 
         {{ form_end(form, {'render_rest': false}) }}
 
-{#        <form action="{{ path('sulu_community.registration') }}" method="post" class="form-signin">#}
-{#            <div class="form-label-group">#}
-{#                <label for="registration_username">Username:</label>#}
-{#                <input type="text" id="registration_username" name="_username" class="form-control form-control-lg  mr-lg-2" />#}
-{#            </div>#}
-
-{#            <div class="form-label-group">#}
-{#                <label for="registration_email">email:</label>#}
-{#                <input type="email" id="registration_email" name="_email" class="form-control form-control-lg  mr-lg-2" />#}
-{#            </div>#}
-
-{#            <div class="form-label-group">#}
-{#                <label for="registration_plainPassword">Plain password:</label>#}
-{#                <input type="password" id="registration_plainPassword" name="_plainPassword" class="form-control form-control-lg  mr-lg-2" />#}
-{#            </div>#}
-
-{#            <div class="form-label-group">#}
-{#                <label for="registration_firstName">First Name:</label>#}
-{#                <input type="text" id="registration_firstName" name="_firstName" class="form-control form-control-lg  mr-lg-2" />#}
-{#            </div>#}
-
-{#            <div class="form-label-group">#}
-{#                <label for="registration_lastName">Last Name:</label>#}
-{#                <input type="text" id="registration_lastName" name="_lastName" class="form-control form-control-lg  mr-lg-2" />#}
-{#            </div>#}
-
-{#            <div class="checkbox mb-3">#}
-
-{#                <label class="mr-lg-2">#}
-{#                    <input type="checkbox" id="registration_terms" name="_terms" checked />#}
-{#                    Terms#}
-{#                </label>#}
-{#            </div>#}
-
-{#            <button type="submit" id="registration_submit" class="btn btn-lg btn-info mr-2 mr-lg-2" name="submit">Registration</button>#}
-{#        </form>#}
     {% endif %}
 {% endblock %}

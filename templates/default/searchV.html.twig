@@ -164,7 +164,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for t in data_t_scopus %}
+                    {% for t in pagination %}
                         {% set compteur=compteur+1 %}
                         {% if (t.eISSN) =="" %}
                             {% set issn=t.printISSN %}
@@ -182,7 +182,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
                 {% endif %}
             </div>
             <div class="col-lg-2">
@@ -280,6 +282,7 @@
                             </tr>
                             </tbody>
                         </table>
+
                         {#end table#}
                     </div>
 
@@ -375,6 +378,7 @@
                         </tr>
                         </tbody>
                     </table>
+
                     {#end table#}
 
                     {% elseif data_t_scopus | length >1 %}

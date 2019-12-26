@@ -4,11 +4,11 @@
     <h1>{{ 'Profile'|trans }}</h1>
 
     {% if success %}
-        <p class="success">
+        <p class="success alert alert-success">
             {{ 'email_confirmation_finished'|trans }}
         </p>
     {% else %}
-        <p class="fail">
+        <p class="fail alert alert-danger">
             {{ 'email_confirmation_failed'|trans }}
         </p>
     {% endif %}

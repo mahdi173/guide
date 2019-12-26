@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Sulu\Bundle\ContactBundle\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -10,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdatePasswordType extends AbstractType
@@ -21,12 +23,12 @@ class UpdatePasswordType extends AbstractType
     {
 
         $builder->add('oldPassword', PasswordType::class, [
-            'mapped' => true,
+            'mapped' => false,
             'required' => true,
         ]);
 
         $builder->add('plainPassword', RepeatedType::class, [
-            'mapped' => true,
+            'mapped' => false,
             'required' => true,
             'type' => PasswordType::class,
             'first_options'  => ['label' => 'Password'],

@@ -4,11 +4,11 @@
     <h1>{{ 'Confirmation'|trans }}</h1>
 
     {% if success %}
-        <p>
+        <p class="alert alert-success">
             {{ 'confirmation_finished'|trans }}
         </p>
     {% else %}
-        <p>
+        <p class="alert alert-danger">
             {{ 'confirmation_failed'|trans }}
         </p>
     {% endif %}

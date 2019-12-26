@@ -12,63 +12,37 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 /**
  * User
  *
- * @ORM\Table(name="app_users")
+ * @ORM\Table(name="se_users")
  * @ORM\Entity
  */
 class User extends BaseUser
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $oldPassword;
 
     /**
-     * @UserPassword(
-     *     message = "Wrong value for your current password"
-     * )
-     */
-    public $oldPassword;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->publications = new ArrayCollection();
-        $this->books = new ArrayCollection();
-        $this->chapters = new ArrayCollection();
-        $this->conferences = new ArrayCollection();
-    }
-
-    public function setEmail($email)
-    {
-        $this->setUsername($email);
-
-        return parent::setEmail($email);
-    }
-
-    /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $fullName;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $country;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $institution;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $departement;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $speciality;
 
@@ -91,6 +65,23 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="App\Entity\Conference", mappedBy="user")
      */
     private $conferences;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->publications = new ArrayCollection();
+        $this->books = new ArrayCollection();
+        $this->chapters = new ArrayCollection();
+        $this->conferences = new ArrayCollection();
+    }
+
+    public function setEmail($email)
+    {
+        $this->setUsername($email);
+
+        return parent::setEmail($email);
+    }
 
     /**
      * @return mixed
@@ -303,11 +294,12 @@ class User extends BaseUser
 
     public function __toString()
     {
-        $str = $this->getFullName();
+        $str = ''.$this->getFullName();
 
         if (empty($str)) {
-            $str = parent::__toString();
+            $str = $this->getEmail();
         }
+
         return $str;
     }
 
@@ -319,4 +311,5 @@ class User extends BaseUser
 
         return '';
     }
+
 }

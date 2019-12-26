@@ -10,6 +10,7 @@ use App\Entity\DataTScopus;
 use App\Entity\Search;
 use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,13 +25,19 @@ class SearchController extends BaseController
     private $entityManager;
 
     /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+    /**
      * SearchController constructor.
      *
      * @param EntityManagerInterface $entityManager
+     * @param PaginatorInterface $paginator
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator)
     {
         $this->entityManager = $entityManager;
+        $this->paginator = $paginator;
     }
 
 
@@ -129,13 +136,20 @@ class SearchController extends BaseController
                     }
                 }
             }
+
+            $pagination = $this->paginator->paginate(
+                $data_t_scopus, /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+               1 /*limit per page*/
+            );
+
         }
 
-        dump($data_reuters, $data_t_scopus);
         return $this->render('default/searchV.html.twig', [
             'form' => $form->createView(),
             'data_reuter' => $data_reuters,
-            'data_t_scopus' => $data_t_scopus
+            'data_t_scopus' => $data_t_scopus,
+            'pagination'=>$pagination
         ]);
     }
 

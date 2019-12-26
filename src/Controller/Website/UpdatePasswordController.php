@@ -44,21 +44,29 @@ class UpdatePasswordController extends AbstractController
     public function edit(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
-        $userpassword=$user->getPassword();
-        $passwordValid=$this->encoder->isPasswordValid($user, $userpassword);
+//        $user = $this->getUser();
+        $user=$this->getUser();
+
         $form = $this->createForm(UpdatePasswordType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $newpwd = $form->get('plainPassword')['first']->getData();
-            $user->setPassword($this->encoder->encodePassword($user, $newpwd));
-            //$this->userManager->updateUser($user);
-            $em->persist($user);
-            $em->flush();
+            //$userpassword=$user->getPassword();
+            $oldpassword=$form->get('oldPassword')->getData();
+            $passwordValid=$this->encoder->isPasswordValid($user, $oldpassword);
+            if($passwordValid){
+                $newpwd = $form->get('plainPassword')['first']->getData();
+                $user->setPassword($this->encoder->encodePassword($user, $newpwd));
+                //$this->userManager->updateUser($user);
+                $em->persist($user);
+                $em->flush();
 
-            $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
 
-            return $this->redirectToRoute('sulu_community.profile');
+                return $this->redirectToRoute('sulu_community.profile');
+            }else{
+                $this->addFlash('info','error');
+
+            }
         }
 
         return $this->render('bundles/SuluCommunityBundle/registration-update-password.html.twig', array(

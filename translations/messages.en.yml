@@ -1,0 +1,4 @@
+registration_finished: "Test en"
+message:
+    success:
+        save_profile_finished: 'Success'

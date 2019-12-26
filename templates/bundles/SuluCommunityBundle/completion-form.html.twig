@@ -4,7 +4,7 @@
     <h1>{{ 'Completion'|trans }}</h1>
 
     {% if app.request.get('send') == 'true' %}
-        <p>
+        <p class="alert alert-success">
             {{ 'completion_finished'|trans }}
         </p>
     {% else %}
