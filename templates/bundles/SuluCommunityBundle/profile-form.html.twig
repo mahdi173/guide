@@ -1,0 +1,118 @@
+{% extends '@SuluCommunity/base.html.twig' %}
+
+{% block content %}
+{#    <h1>{{ 'Profile'|trans }}</h1>#}
+
+    {% if success %}
+        <p class="alert alert-success" role="alert">
+            {{ 'save_profile_finished'|trans }}
+        </p>
+    {% endif %}
+
+{#    {{ form(form) }}#}
+
+    <div>
+        <div class="container margin-top">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-4">
+                                <img style="max-height: 150px;max-width: 150px" src="{{ asset('assets/images/logo1.png') }}" alt="H" class="img-rounded img-responsive"/>
+                            </div>
+                            <div class="col-sm-6 col-md-8">
+                                <h4>{{ app.user.username }} | <a href="{{ path('sulu_community.logout') }}">Logout</a></h4>
+                                <p>
+                                    <br/>
+                                    <a href= "{{ path('sulu_community.profile') }}">Edit Profile</a> |
+                                    <a href="{{ path('update-password') }}">Change Password</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class = "container margin-top" >
+
+        <div class = "row">
+
+            {#sidebar#}
+            <div class = "d-flex col-md-3" id = "wrapper">
+                <div class = "bg-light border-right" id = "sidebar-wrapper">
+                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Blog</div>
+                    <div class = "list-group list-group-flush" >
+
+                        <a href="/admin/category/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        Categories
+                        </a>
+                        <a href="/admin/tag/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        Tags
+                        </a>
+                    </div>
+                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>
+                    <div class = "list-group list-group-flush" >
+                        <a href = "#" class = "list-group-item list-group-item-action bg-light" > Infos </a>
+                        <a href="/admin/publications/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        Publications
+                        </a>
+                        <a href="/admin/books/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        Books
+                        </a>
+                        <a href="/admin/chapters/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        Chapters
+                        </a>
+                        <a href="/admin/conferences/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        Conferences
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-light">My Journals List</a>
+                    </div>
+                </div>
+            </div>
+            {#end#}
+
+            <div class="col-8"><br/><br/>
+
+                <h2>Edit Profile</h2><br/>
+
+                    {{ form_start(form, { 'attr': {'class': 'form'} }) }}
+
+                    <div class="form-group">
+                        <label for="registration_username">First name :</label>
+                        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control '} }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="registration_username">First name :</label>
+                        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="registration_username">First name :</label>
+                        {{ form_widget(form.mainEmail, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="registration_username">Avatar :</label>
+                        {{ form_widget(form.avatar, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="registration_username">Adress :</label>
+                        {{ form_widget(form.street, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group ">
+                        <label for="registration_username">Adress :</label>
+                        {{ form_widget(form.countryCode, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+
+                    {{ form_widget(form._token) }}
+                    <button type="submit" id="registration_submit" name="profile[submit]" class="btn btn-info">Update</button>
+
+                    {{ form_end(form, {'render_rest': false}) }}
+
+
+
+                </div>
+
+        </div>
+
+    </div>
+    </div>
+{% endblock %}

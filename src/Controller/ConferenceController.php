@@ -28,7 +28,12 @@ class ConferenceController extends AbstractController
     }
 
     /**
+     *
      * @Route("/new", name="conference_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {

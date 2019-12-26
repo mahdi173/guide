@@ -16,11 +16,14 @@ class SearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('searchValue',TextType::class)
+        $builder
+            ->add('searchValue',TextType::class)
             ->add('submit',SubmitType::class);
-    }/**
- * {@inheritdoc}
- */
+    }
+
+    /**
+     * {@inheritdoc}
+    */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

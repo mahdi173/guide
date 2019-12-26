@@ -3,3 +3,8 @@ sulu_form_api:
   type: rest
   resource: "@SuluFormBundle/Resources/config/routing_api.yml"
   prefix: /admin/api
+app_journals_api:
+    type: rest
+    prefix: /admin/api
+    resource: App\Controller\Admin\JournalController
+    name_prefix: app.

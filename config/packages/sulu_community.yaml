@@ -2,15 +2,27 @@ sulu_community:
   webspaces:
     guidejournal:
       from: "%env(SULU_ADMIN_EMAIL)%"
-      login:
-        embed_template: community/login-embed.html.twig
-        template: community/login.html.twig
       registration:
         activate_user: false
         auto_login: true # only available when activate_user is true
         email:
           subject: Registration
-          user_template: community/registration-email.html.twig
           admin_template: ~
         redirect_to: ?send=true
-        template: community/registration-form.html.twig
+        type: App\Form\RegistrationFormType
+      profile:
+        email:
+          subject: Profile Updated
+          admin_template: ~
+        redirect_to: ~
+      password_reset:
+        auto_login: true
+        email:
+          subject: Password Reset
+          admin_template: ~
+        redirect_to: ?send=true
+      password_forget:
+        email:
+          subject: Password Forget
+          admin_template: ~
+        redirect_to: ?send=true

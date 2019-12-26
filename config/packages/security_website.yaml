@@ -36,5 +36,9 @@ security:
         lifetime: 604800 # 1 week in seconds
         path:     /
 sulu_security:
+  objects:
+    user:
+      model: App\Entity\User
+      repository: Sulu\Bundle\SecurityBundle\Entity\UserRepository
   checker:
     enabled: true

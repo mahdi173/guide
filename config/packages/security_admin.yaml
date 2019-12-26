@@ -32,7 +32,10 @@ security:
             logout:
                 path: sulu_admin.logout
                 success_handler: sulu_security.logout_success_handler
-
 sulu_security:
+    objects:
+        user:
+            model: App\Entity\User
+            repository: Sulu\Bundle\SecurityBundle\Entity\UserRepository
     checker:
         enabled: true

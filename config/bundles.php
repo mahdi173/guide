@@ -51,4 +51,5 @@ return [
     Sulu\Bundle\ArticleBundle\SuluArticleBundle::class => ['all' => true],
     ONGR\ElasticsearchBundle\ONGRElasticsearchBundle::class => ['all' => true],
     Sulu\Bundle\CommunityBundle\SuluCommunityBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
 ];

@@ -19,7 +19,6 @@ class PublicationType extends AbstractType
             ->add('issue')
             ->add('authors')
             ->add('year')
-            ->add('user')
         ;
     }
 
