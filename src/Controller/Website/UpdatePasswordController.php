@@ -60,8 +60,7 @@ class UpdatePasswordController extends AbstractController
                 $em->persist($user);
                 $em->flush();
 
-                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
-
+                $this->addFlash('info', 'Votre mot de passe à bien été changé !');
                 return $this->redirectToRoute('sulu_community.profile');
             }else{
                 $this->addFlash('info','error');
@@ -69,7 +68,7 @@ class UpdatePasswordController extends AbstractController
             }
         }
 
-        return $this->render('bundles/SuluCommunityBundle/registration-update-password.html.twig', array(
+        return $this->render('registration/register_update_password.html.twig', array(
             'form' => $form->createView(),
             'user' => $user
         ));

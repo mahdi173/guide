@@ -3,7 +3,7 @@
 {% block content %}
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
 
-    {% if success %}
+    {% if success is defined and success %}
         <p class="alert alert-success" role="alert">
             {{ 'save_profile_finished'|trans }}
         </p>
@@ -33,36 +33,36 @@
                 </div>
             </div>
         </div>
-    <div class = "container margin-top" >
+    <div class = "container mt-5" >
 
         <div class = "row">
 
             {#sidebar#}
             <div class = "d-flex col-md-3" id = "wrapper">
                 <div class = "bg-light border-right" id = "sidebar-wrapper">
-                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Blog</div>
-                    <div class = "list-group list-group-flush" >
+{#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Blog</div>#}
+{#                    <div class = "list-group list-group-flush" >#}
 
-                        <a href="/admin/category/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
-                        Categories
-                        </a>
-                        <a href="/admin/tag/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
-                        Tags
-                        </a>
-                    </div>
+{#                        <a href="/admin/category/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">#}
+{#                        Categories#}
+{#                        </a>#}
+{#                        <a href="/admin/tag/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">#}
+{#                        Tags#}
+{#                        </a>#}
+{#                    </div>#}
                     <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>
                     <div class = "list-group list-group-flush" >
                         <a href = "#" class = "list-group-item list-group-item-action bg-light" > Infos </a>
-                        <a href="/admin/publications/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
                         Publications
                         </a>
-                        <a href="/admin/books/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
                         Books
                         </a>
-                        <a href="/admin/chapters/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
                         Chapters
                         </a>
-                        <a href="/admin/conferences/" activeclass="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
                         Conferences
                         </a>
                         <a href="#" class="list-group-item list-group-item-action bg-light">My Journals List</a>
@@ -71,8 +71,9 @@
             </div>
             {#end#}
 
-            <div class="col-8"><br/><br/>
+            <div class="col-8">
 
+                {% block profile_content %}
                 <h2>Edit Profile</h2><br/>
 
                     {{ form_start(form, { 'attr': {'class': 'form'} }) }}
@@ -98,7 +99,7 @@
                         {{ form_widget(form.street, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group ">
-                        <label for="registration_username">Adress :</label>
+                        <label for="registration_username">Country :</label>
                         {{ form_widget(form.countryCode, { 'attr': {'class': 'form-control'} }) }}
                     </div>
 
@@ -108,8 +109,10 @@
                     {{ form_end(form, {'render_rest': false}) }}
 
 
-
+                {% endblock %}
                 </div>
+
+
 
         </div>
 

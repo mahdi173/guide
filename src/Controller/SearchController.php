@@ -140,7 +140,7 @@ class SearchController extends BaseController
             $pagination = $this->paginator->paginate(
                 $data_t_scopus, /* query NOT result */
                 $request->query->getInt('page', 1), /*page number*/
-               1 /*limit per page*/
+               20 /*limit per page*/
             );
 
         }

@@ -1,12 +1,10 @@
-{% extends 'member.html.twig' %}
+{% extends '@SuluCommunity/profile-form.html.twig' %}
 
 {% block title %}GuideJournal: Conferences{% endblock %}
 
-{% block member_content %}
+{% block profile_content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
+
             <h1>Edit Conference</h1>
 
             {{ include('conference/_form.html.twig', {'button_label': 'Update'}) }}
@@ -14,8 +12,6 @@
             <a href="{{ path('conference_index') }}">back to list</a>
 
             {{ include('conference/_delete_form.html.twig') }}
-        </div>
-    </div>
-</div>
+
 
 {% endblock %}

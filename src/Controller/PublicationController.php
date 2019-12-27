@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/member/publication")
+ * @Route("/profile/publication")
  */
 class PublicationController extends AbstractController
 {
@@ -38,6 +38,7 @@ class PublicationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $publication->setUser($this->getUser());
             $entityManager->persist($publication);
             $entityManager->flush();
 
