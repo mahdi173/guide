@@ -39,7 +39,7 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
 
   mariadb:
-    image: mariadb:10.4.4
+    image: mysql:5.7
     environment:
       MYSQL_DATABASE: guidejournal
       MYSQL_USER: guidejournal
