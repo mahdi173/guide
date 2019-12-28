@@ -1,12 +1,10 @@
-{% extends 'member.html.twig' %}
+{% extends '@SuluCommunity/profile-form.html.twig' %}
 
 {% block title %}GuideJournal: Chapters{% endblock %}
 
-{% block member_content %}
+{% block profile_content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
+
             <h1>Chapter index</h1>
 
             <table class="table">
@@ -44,8 +42,6 @@
             </table>
 
             <a href="{{ path('chapter_new') }}">Create new</a>
-        </div>
-    </div>
-</div>
+
 
 {% endblock %}

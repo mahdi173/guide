@@ -34,6 +34,7 @@ class UpdatePasswordType extends AbstractType
             'first_options'  => ['label' => 'Password'],
             'second_options' => ['label' => 'Repeat Password'],
         ]);
+        $builder->add('submit',SubmitType::class);
 
     }
 
@@ -49,7 +50,7 @@ class UpdatePasswordType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => null,
+                'data_class' => User::class,
                 'validation_groups' => ['profile'],
             ]
         );
