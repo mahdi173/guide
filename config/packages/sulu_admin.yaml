@@ -7,7 +7,7 @@ sulu_admin:
         directories:
             - "%kernel.project_dir%/config/lists"
     resources:
-        events:
+        journals:
             routes:
                 list: app.get_journals
                 detail: app.get_journal

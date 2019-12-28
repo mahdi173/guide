@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>journals</key>
+
+    <properties>
+        <property name="id" visibility="no" translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+
+        <property name="title" visibility="always" searchability="yes" translation="sulu_admin.name">
+            <field-name>title</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+
+        <property name="publisher" visibility="yes" translation="app.publisher" >
+            <field-name>publisher</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+    </properties>
+</list>

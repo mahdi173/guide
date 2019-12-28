@@ -22,13 +22,13 @@ set :assets_install_path, "public"
 set :assets_install_flags,  '--symlink'
 
 # Share files/directories between releases
-set :linked_dirs, ["public/media", "public/uploads", "var/log", "vendor", "node_modules"]
+set :linked_dirs, ["public/media", "public/uploads", "var/log", "var/uploads", "vendor", "node_modules"]
 
 # To use a .env file:
 set :linked_files, [".env.local"]
 
 # Set correct permissions between releases, this is turned off by default
-set :file_permissions_paths, ["var", "public/media", "var/log", "public/uploads"]
+set :file_permissions_paths, ["var", "public/media", "var/uploads", "var/log", "public/uploads"]
 set :file_permissions_users, ["www-data"]
 set :permission_method, false
 
@@ -51,6 +51,7 @@ before "deploy:updated", "deploy:set_permissions:acl"
 
 after 'deploy:starting', 'composer:install_executable'
 after 'deploy:starting', 'deploy:grant_access'
+after 'deploy:finished', 'assets:install'
 after 'deploy:finished', 'deploy:grant_access'
 
 namespace :deploy do

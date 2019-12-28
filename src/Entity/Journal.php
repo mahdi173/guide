@@ -1,58 +1,62 @@
 <?php
 
-/**
- * @ORM/Entity
- */
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Journal
+ * @package App\Entity
+ *
+ * @ORM\Entity(repositoryClass="App\Repository\JournalRepository")
+ */
 class Journal
 {
 
     const RESOURCE_KEY = 'journals';
+    
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
 
     /**
-     * @ORM/Id()
-     * @ORM/GeneratedValue()
-     * @ORM/Column(Type="integer")
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $id;
+    protected $title;
 
     /**
-     *@ORM/Column(Type="String")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $title;
+    protected $ejr;
 
     /**
-     * @ORM/Column(Type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $ejr;
+    protected $publisher;
 
     /**
-     * @ORM/Column(Type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $rank;
+    protected $openaccess;
 
     /**
-     * @ORM/Column(Type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $publisher;
+    protected $printissn;
 
     /**
-     * @ORM/Column(Type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $openaccess;
+    protected $eissn;
 
     /**
-     * @ORM/Column(Type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $p_issn;
-
-    /**
-     * @ORM/Column(Type="string")
-     */
-    private $e_issn;
+    protected $rank;
 
     /**
      * @return mixed
@@ -60,14 +64,6 @@ class Journal
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -81,7 +77,7 @@ class Journal
     /**
      * @param mixed $title
      */
-    public function setTitle($title): void
+    public function setTitle($title)
     {
         $this->title = $title;
     }
@@ -153,34 +149,32 @@ class Journal
     /**
      * @return mixed
      */
-    public function getPIssn()
+    public function getPrintissn()
     {
-        return $this->p_issn;
+        return $this->printissn;
     }
 
     /**
-     * @param mixed $p_issn
+     * @param mixed $printissn
      */
-    public function setPIssn($p_issn): void
+    public function setPrintissn($printissn): void
     {
-        $this->p_issn = $p_issn;
+        $this->printissn = $printissn;
     }
 
     /**
      * @return mixed
      */
-    public function getEIssn()
+    public function getEissn()
     {
-        return $this->e_issn;
+        return $this->eissn;
     }
 
     /**
-     * @param mixed $e_issn
+     * @param mixed $eissn
      */
-    public function setEIssn($e_issn): void
+    public function setEissn($eissn): void
     {
-        $this->e_issn = $e_issn;
+        $this->eissn = $eissn;
     }
-
-
 }

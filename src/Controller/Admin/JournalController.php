@@ -2,17 +2,23 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\DataReuters;
 use App\Entity\Journal;
+use App\Repository\JournalRepository;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\Doctrine\DoctrineListBuilderFactoryInterface;
 use Sulu\Component\Rest\ListBuilder\Metadata\FieldDescriptorFactoryInterface;
 use Sulu\Component\Rest\ListBuilder\PaginatedRepresentation;
+use Sulu\Component\Rest\RestController;
 use Sulu\Component\Rest\RestHelperInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class JournalController implements ClassResourceInterface
+class JournalController extends AbstractRestController implements ClassResourceInterface
 {
     /**
      * @var ViewHandlerInterface
@@ -34,16 +40,23 @@ class JournalController implements ClassResourceInterface
      */
     private $restHelper;
 
+    /** @var JournalRepository */
+    private $repository;
+
     public function __construct(
         ViewHandlerInterface $viewHandler,
         FieldDescriptorFactoryInterface $fieldDescriptorFactory,
         DoctrineListBuilderFactoryInterface $listBuilderFactory,
-        RestHelperInterface $restHelper
+        RestHelperInterface $restHelper,
+        JournalRepository $repository
     ) {
         $this->viewHandler = $viewHandler;
         $this->fieldDescriptorFactory = $fieldDescriptorFactory;
         $this->listBuilderFactory = $listBuilderFactory;
         $this->restHelper = $restHelper;
+        $this->repository = $repository;
+
+        parent::__construct($this->viewHandler);
     }
 
     public function cgetAction(): Response
@@ -61,5 +74,51 @@ class JournalController implements ClassResourceInterface
         );
 
         return $this->viewHandler->handle(View::create($listRepresentation));
+    }
+
+    public function getAction(int $id, Request $request): Response
+    {
+        $entity = $this->load($id, $request);
+        if (!$entity) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->handleView($this->view($entity));
+    }
+
+    public function postAction(Request $request): Response
+    {
+        $entity = new Journal();
+        $data = $request->request->all();
+
+        $entity->setTitle($data['title']);
+        $entity->setPublisher($data['publisher']);
+
+        $this->repository->save($entity);
+
+        return $this->handleView($this->view($entity));
+    }
+
+    public function putAction(int $id, Request $request): Response
+    {
+        $entity = $this->load($id, $request);
+
+        if (empty($entity)) {
+            throw new NotFoundHttpException();
+        }
+
+        $data = $request->request->all();
+
+        $entity->setTitle($data['title']);
+        $entity->setPublisher($data['publisher']);
+
+        $this->repository->save($entity);
+
+        return $this->handleView($this->view($entity));
+    }
+
+    protected function load(int $id, Request $request): ?Journal
+    {
+        return $this->repository->findOneById($id);
     }
 }

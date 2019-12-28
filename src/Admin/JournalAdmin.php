@@ -40,7 +40,7 @@ class JournalAdmin extends Admin
     public function configureViews(ViewCollection $viewCollection): void
     {
         $listView = $this->viewBuilderFactory->createListViewBuilder(static::JOURNAL_LIST_VIEW, '/journals')
-            ->setResourceKey(RESOURCE_KEY::class)
+            ->setResourceKey(Journal::RESOURCE_KEY)
             ->setListKey('journals')
             ->addListAdapters(['table'])
             ->setAddView(static::JOURNAL_ADD_FORM_VIEW)
@@ -50,13 +50,13 @@ class JournalAdmin extends Admin
         $viewCollection->add($listView);
 
         $addFormView = $this->viewBuilderFactory->createResourceTabViewBuilder(static::JOURNAL_ADD_FORM_VIEW, '/journals/add')
-            ->setResourceKey(RESOURCE_KEY::class)
+            ->setResourceKey(Journal::RESOURCE_KEY)
             ->setBackView(static::JOURNAL_LIST_VIEW);
 
         $viewCollection->add($addFormView);
 
         $addDetailsFormView = $this->viewBuilderFactory->createFormViewBuilder(static::JOURNAL_ADD_FORM_VIEW . '.details', '/details')
-            ->setResourceKey(RESOURCE_KEY::class)
+            ->setResourceKey(Journal::RESOURCE_KEY)
             ->setFormKey(static::JOURNAL_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->setEditView(static::JOURNAL_EDIT_FORM_VIEW)
@@ -66,13 +66,13 @@ class JournalAdmin extends Admin
         $viewCollection->add($addDetailsFormView);
 
         $editFormView = $this->viewBuilderFactory->createResourceTabViewBuilder(static::JOURNAL_EDIT_FORM_VIEW, '/journals/:id')
-            ->setResourceKey(RESOURCE_KEY::class)
+            ->setResourceKey(Journal::RESOURCE_KEY)
             ->setBackView(static::JOURNAL_LIST_VIEW);
 
         $viewCollection->add($editFormView);
 
         $editDetailsFormView = $this->viewBuilderFactory->createFormViewBuilder(static::JOURNAL_EDIT_FORM_VIEW . '.details', '/details')
-            ->setResourceKey(RESOURCE_KEY::class)
+            ->setResourceKey(Journal::RESOURCE_KEY)
             ->setFormKey(static::JOURNAL_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->addToolbarActions([new ToolbarAction('sulu_admin.save'), new ToolbarAction('sulu_admin.delete')])

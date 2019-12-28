@@ -2,3 +2,5 @@ registration_finished: "Test fr"
 message:
     success:
         save_profile_finished: 'Success'
+app:
+    journal: "Journaux"

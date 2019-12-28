@@ -46,9 +46,11 @@ services:
       MYSQL_PASSWORD: guidejournal
       MYSQL_ROOT_PASSWORD: guidejournal
     volumes:
-      - db-data:/var/lib/mysql
+      - gj-data:/var/lib/mysql
   adminer:
     image: adminer
+    depends_on:
+      - mariadb
     ports:
       - 8080:8080
   maildev:
@@ -56,4 +58,4 @@ services:
     ports:
       - 1080:80
 volumes:
-  db-data:
+  gj-data:

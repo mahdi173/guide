@@ -22,7 +22,8 @@ namespace :assets do
     on "#{fetch(:server_username)}@#{fetch(:server_host)}" do
         invoke 'symfony:console', 'assets:install', ' public'
         execute "cd #{fetch(:deploy_to)}/current && yarn"
-        execute "cd #{fetch(:deploy_to)}/current && yarn run encore production"
+        execute "cd #{fetch(:deploy_to)}/current && yarn run dev"
+        invoke 'symfony:console', 'sulu:admin:download-build'
     end
   end
 end
