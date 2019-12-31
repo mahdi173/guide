@@ -1,8 +1,4 @@
 parameters:
-  # Adds a fallback DATABASE_URL if the env var is not set.
-  # This allows you to run cache:warmup even if your
-  # environment variables are not available yet.
-  # You should not need to change this value.
   env(ELASTICSEARCH_URL): ''
 
 sulu_route:
@@ -26,4 +22,4 @@ sulu_core:
 sulu_article:
   default_main_webspace: 'guidejournal'
   index_name: su_articles
-  hosts: ['%env(resolve:ELASTICSEARCH_URL)%']
+  hosts: ['elasticsearch:9200']

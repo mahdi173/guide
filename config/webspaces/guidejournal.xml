@@ -33,8 +33,13 @@
             <context key="main">
                 <meta>
                     <title lang="en">Main Navigation</title>
-                    <title lang="de">Hauptnavigation</title>
                     <title lang="fr">Menu principal</title>
+                </meta>
+            </context>
+            <context key="member">
+                <meta>
+                    <title lang="en">Member Navigation</title>
+                    <title lang="fr">Menu membre</title>
                 </meta>
             </context>
         </contexts>
