@@ -47,3 +47,4 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%blog_files%'
+

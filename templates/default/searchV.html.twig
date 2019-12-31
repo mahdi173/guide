@@ -378,7 +378,7 @@
                         </tr>
                         </tbody>
                     </table>
-
+                    <a href="{{ path('add_to_favorite', {id: data_t_scopus.id}) }}" class="btn btn-outline-primary" >Ajouter aux favorite</a>
                     {#end table#}
 
                     {% elseif data_t_scopus | length >1 %}

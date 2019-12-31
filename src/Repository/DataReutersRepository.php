@@ -11,9 +11,9 @@ class DataReutersRepository extends BaseRepository
     {
 
         $data_t_thomson = $this->findOneBy(array('eissn' => $value));
-        if ($data_t_thomson == null) {
-            $data_t_thomson = $this->findOneBy(array('printissn' => $value));
-        }
+//        if ($data_t_thomson == null) {
+//            $data_t_thomson = $this->findOneBy(array('printissn' => $value));
+//        }
         return $data_t_thomson;
     }
 
