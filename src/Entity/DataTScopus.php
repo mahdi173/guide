@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="data_t_scopus")
  * @ORM\Entity(repositoryClass="App\Repository\DataTScopusRepository")
  */
-class DataTScopus
+class DataTScopus extends AbstractJournal
 {
     /**
      * @var int
@@ -292,5 +292,20 @@ class DataTScopus
         }
 
         return $this;
+    }
+
+    public function getUrl()
+    {
+        return $this->getScopussourceid();
+    }
+
+    public function getISSN()
+    {
+        return $this->getPrintissn();
+    }
+
+    public function getSubjectArea()
+    {
+        return $this->getScopussubsubjectarea();
     }
 }

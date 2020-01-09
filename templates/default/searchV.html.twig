@@ -283,6 +283,16 @@
                             </tbody>
                         </table>
 
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
+                                {% if app.user.favoriteReutersJournals.contains(data_reuter) %}
+                                    Supprimer de vos favoris
+                                {% else %}
+                                    Ajouter à vos favoris
+                                {% endif %}
+                            </a>
+                        {% endif %}
+
                         {#end table#}
                     </div>
 
@@ -387,17 +397,13 @@
                     </table>
                     {% set jid = 0 %}
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        {% for c in app.user.favoriteScopusJournals %}
-                            {% set jid = c.id %}
-
-                        {% endfor %}
-                        {% if data_t_scopus.id == jid %}
-                            <a href="{{ path('delete-favorite', {id: data_t_scopus.id}) }}" class="btn btn-outline-primary">Supprimer de vos favorite</a>
-                        {% else %}
-
-                            <a href="{{ path('add_to_favorite', {id: data_t_scopus.id}) }}"  class="btn btn-outline-primary" >Ajouter aux favorite</a>
-                        {% endif %}
-
+                        <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
+                            {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}
+                                Supprimer de vos favoris
+                            {% else %}
+                                Ajouter à vos favoris
+                            {% endif %}
+                        </a>
                     {% endif %}
 
                     {#end table#}

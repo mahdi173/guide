@@ -8,6 +8,7 @@ use App\Entity\DataReuters;
 use App\Entity\DataScopus;
 use App\Entity\DataTScopus;
 use App\Entity\User;
+use App\Repository\DataReutersRepository;
 use App\Repository\DataScopusRepository;
 use App\Repository\DataTScopusRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,47 +44,66 @@ class FavoriteController extends BaseController
      * @param EntityManagerInterface $manager
      * @param DataTScopusRepository $dscopusRepository
      *
-     * @Route("/Favorite/add", name="add_to_favorite")
+     * @Route("/{_locale}/favorite/switch", name="switch_favorite")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function switchFavoriteStatus(Request $request, EntityManagerInterface $manager, DataTScopusRepository $dscopusRepository)
+    public function switchFavoriteStatus(Request $request, EntityManagerInterface $manager, DataTScopusRepository $dscopusRepository, DataReutersRepository $dataReutersRepository)
     {
-        $id=$request->get('id');
-        $journal = $dscopusRepository->find($id);
+        $id = $request->get('id');
+        $source = $request->get('source');
 
         /** @var User $me */
         $me = $this->getUser();
 
-        $favoriteList = $me->getFavoriteScopusJournals();
+        if ('reuters' === $source)
+        {
+            /** @var DataReuters $journal */
+            $journal = $dataReutersRepository->find($id);
+            $favoriteList = $me->getFavoriteReutersJournals();
 
-//        if ($favoriteList->contains($journal)) {
-//            $favoriteList->remove($journal);
-//        }else{
-            $favoriteList->add($journal);
-//        }
+            if ($favoriteList->contains($journal)) {
+                $me->removeFavoriteReutersJournal($journal);
+            }else{
+                $me->addFavoriteReutersJournal($journal);
+            }
+        }
+        elseif ('scopus' === $source){
+
+            /** @var DataTScopus $journal */
+            $journal = $dscopusRepository->find($id);
+            $favoriteList = $me->getFavoriteScopusJournals();
+
+            if ($favoriteList->contains($journal)) {
+                $me->removeFavoriteScopusJournal($journal);
+            }else{
+                $me->addFavoriteScopusJournal($journal);
+            }
+        }
+        else {
+            throw $this->createNotFoundException();
+        }
 
         $manager->flush();
+        $this->addFlash('success','journal was added with success');
 
-            $this->addFlash('success','journal was added with success');
-
-        return new Response('journal was added with success');
-
+        $issn =  $journal->getEissn() ?  $journal->getEissn() :  $journal->getIssn();
+        return $this->redirectToRoute('data_t_scopus_results', ['eISSN' => $issn]);
     }
 
     /**
-     * @Rest\Route("/Favorite", name="favorite_list")
+     * @Route("/{_locale}/Favorite", name="favorite_list")
      */
     public function index(){
         /** @var User $me */
         $me = $this->getUser();
-        $favorite=$me->getFavoriteScopusJournals();
+        $favorite=array_merge($me->getFavoriteScopusJournals()->toArray(), $me->getFavoriteReutersJournals()->toArray());
 
         return $this->render('favorite/index.html.twig',['favorite' => $favorite]);
     }
 
     /**
-     * @Rest\Route("/Favorite/delete", name="delete-favorite")
+     * @Route("/{_locale}/Favorite/delete", name="delete_favorite")
      */
     public function remove(Request $request, DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager){
         $id=$request->get('id');

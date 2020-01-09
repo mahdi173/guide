@@ -10,7 +10,7 @@
             <th scope="col">Id</th>
             <th scope="col">Title</th>
             <th scope="col">Publisher</th>
-            <th scope="col">Subsubject area</th>
+            <th scope="col">Subject area</th>
             <th scope="col">journal url</th>
         </tr>
         </thead>
@@ -19,9 +19,9 @@
         <tr>
             <th scope="row">{{ f.id }}</th>
             <td>{{ f.title }}</td>
-            <td>{{ f.publisher }}</td>
-            <td>{{ f.scopussubsubjectarea }}</td>
-            <td><a href="{{ f.scopussourceid }}">URL</a></td>
+            <td>{{ f.publisher  }}</td>
+            <td>{{ f.subjectArea|default('') }}</td>
+            <td><a target="_blank" href="{{ f.url }}">URL</a></td>
         </tr>
         {% endfor %}
         </tbody>

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/profile/conference")
+ * @Route("/{_locale}/profile/conference")
  */
 class ConferenceController extends AbstractController
 {

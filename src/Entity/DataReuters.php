@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="data_reuters")
  * @ORM\Entity(repositoryClass="App\Repository\DataReutersRepository")
  */
-class DataReuters
+class DataReuters extends AbstractJournal
 {
     /**
      * @var int
@@ -216,5 +216,20 @@ class DataReuters
         }
 
         return $this;
+    }
+
+    public function getUrl()
+    {
+        return "http://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?PC=MASTER&ISSN=*" . $this->getIssn();
+    }
+
+    public function getPublisher()
+    {
+        return '';
+    }
+
+    public function getSubjectArea()
+    {
+        return $this->getCategoryname();
     }
 }
