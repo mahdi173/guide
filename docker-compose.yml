@@ -13,6 +13,7 @@ services:
       DB_DATABASE: guidejournal
       DB_USERNAME: guidejournal
       DB_PASSWORD: guidejournal
+      ELASTICSEARCH_URL: "elasticsearch:9200"
     depends_on:
       - mariadb
       - maildev

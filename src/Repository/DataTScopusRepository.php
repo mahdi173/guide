@@ -3,8 +3,17 @@
 
 namespace App\Repository;
 
-class DataTScopusRepository extends BaseRepository
+use App\Entity\DataTScopus;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+class DataTScopusRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, DataTScopus::class);
+    }
+
     public function findInScopusByIssn($value, $em)
     {
         $data_t_scopus = $this->findOneBy(array('eissn' => $value));

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="data_reuters")
  * @ORM\Entity(repositoryClass="App\Repository\DataReutersRepository")
  */
-class DataReuters
+class DataReuters extends AbstractJournal
 {
     /**
      * @var int
@@ -76,6 +78,16 @@ class DataReuters
      * @ORM\Column(name="Categoryname", type="text", length=65535, nullable=false)
      */
     private $categoryname;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="favoriteReutersJournals")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -176,5 +188,48 @@ class DataReuters
         $this->categoryname = $categoryname;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavoriteReutersJournal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeFavoriteReutersJournal($this);
+        }
+
+        return $this;
+    }
+
+    public function getUrl()
+    {
+        return "http://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?PC=MASTER&ISSN=*" . $this->getIssn();
+    }
+
+    public function getPublisher()
+    {
+        return '';
+    }
+
+    public function getSubjectArea()
+    {
+        return $this->getCategoryname();
     }
 }

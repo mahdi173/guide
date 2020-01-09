@@ -66,6 +66,16 @@ class User extends BaseUser
      */
     private $conferences;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\DataTScopus", inversedBy="users")
+     */
+    private $favoriteScopusJournals;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\DataReuters", inversedBy="users")
+     */
+    private $favoriteReutersJournals;
+
 
     public function __construct()
     {
@@ -74,6 +84,8 @@ class User extends BaseUser
         $this->books = new ArrayCollection();
         $this->chapters = new ArrayCollection();
         $this->conferences = new ArrayCollection();
+        $this->favoriteScopusJournals = new ArrayCollection();
+        $this->favoriteReutersJournals = new ArrayCollection();
     }
 
     public function setEmail($email)
@@ -310,6 +322,58 @@ class User extends BaseUser
         }
 
         return '';
+    }
+
+    /**
+     * @return Collection|DataTScopus[]
+     */
+    public function getFavoriteScopusJournals(): Collection
+    {
+        return $this->favoriteScopusJournals;
+    }
+
+    public function addFavoriteScopusJournal(DataTScopus $favoriteScopusJournal): self
+    {
+        if (!$this->favoriteScopusJournals->contains($favoriteScopusJournal)) {
+            $this->favoriteScopusJournals[] = $favoriteScopusJournal;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteScopusJournal(DataTScopus $favoriteScopusJournal): self
+    {
+        if ($this->favoriteScopusJournals->contains($favoriteScopusJournal)) {
+            $this->favoriteScopusJournals->removeElement($favoriteScopusJournal);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DataReuters[]
+     */
+    public function getFavoriteReutersJournals(): Collection
+    {
+        return $this->favoriteReutersJournals;
+    }
+
+    public function addFavoriteReutersJournal(DataReuters $favoriteReutersJournal): self
+    {
+        if (!$this->favoriteReutersJournals->contains($favoriteReutersJournal)) {
+            $this->favoriteReutersJournals[] = $favoriteReutersJournal;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteReutersJournal(DataReuters $favoriteReutersJournal): self
+    {
+        if ($this->favoriteReutersJournals->contains($favoriteReutersJournal)) {
+            $this->favoriteReutersJournals->removeElement($favoriteReutersJournal);
+        }
+
+        return $this;
     }
 
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/profile/chapter")
+ * @Route("/{_locale}/profile/chapter")
  */
 class ChapterController extends AbstractController
 {

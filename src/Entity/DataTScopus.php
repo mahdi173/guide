@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="data_t_scopus")
  * @ORM\Entity(repositoryClass="App\Repository\DataTScopusRepository")
  */
-class DataTScopus
+class DataTScopus extends AbstractJournal
 {
     /**
      * @var int
@@ -104,6 +106,16 @@ class DataTScopus
      * @ORM\Column(name="EISSN", type="text", length=65535, nullable=true)
      */
     private $eissn;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="favoriteScopusJournals")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -252,5 +264,48 @@ class DataTScopus
         $this->eissn = $eissn;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavoriteScopusJournal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeFavoriteScopusJournal($this);
+        }
+
+        return $this;
+    }
+
+    public function getUrl()
+    {
+        return $this->getScopussourceid();
+    }
+
+    public function getISSN()
+    {
+        return $this->getPrintissn();
+    }
+
+    public function getSubjectArea()
+    {
+        return $this->getScopussubsubjectarea();
     }
 }

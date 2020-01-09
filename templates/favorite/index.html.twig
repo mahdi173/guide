@@ -1,6 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends '@SuluCommunity/profile-form.html.twig' %}
 
-{% profile_content %}
+{% block title %}GuideJournal: List journals{% endblock %}
 
-    <h1>favorit</h1>
+{% block profile_content %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Publisher</th>
+            <th scope="col">Subject area</th>
+            <th scope="col">journal url</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for f in favorite %}
+        <tr>
+            <th scope="row">{{ f.id }}</th>
+            <td>{{ f.title }}</td>
+            <td>{{ f.publisher  }}</td>
+            <td>{{ f.subjectArea|default('') }}</td>
+            <td><a target="_blank" href="{{ f.url }}">URL</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

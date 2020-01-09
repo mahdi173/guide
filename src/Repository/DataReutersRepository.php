@@ -4,16 +4,24 @@
 namespace App\Repository;
 
 
-class DataReutersRepository extends BaseRepository
+use App\Entity\DataReuters;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+class DataReutersRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, DataReuters::class);
+    }
 
     public function findInThomsonByIssn($value, $em)
     {
 
         $data_t_thomson = $this->findOneBy(array('eissn' => $value));
-        if ($data_t_thomson == null) {
-            $data_t_thomson = $this->findOneBy(array('printissn' => $value));
-        }
+//        if ($data_t_thomson == null) {
+//            $data_t_thomson = $this->findOneBy(array('printissn' => $value));
+//        }
         return $data_t_thomson;
     }
 
