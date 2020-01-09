@@ -4,9 +4,10 @@
 namespace App\Repository;
 
 use App\Entity\DataTScopus;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class DataTScopusRepository extends BaseRepository
+class DataTScopusRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

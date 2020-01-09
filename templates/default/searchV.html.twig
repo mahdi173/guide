@@ -304,6 +304,13 @@
             <div class="col-lg-5 col-sm-5">
                 {%  if data_t_scopus | length ==1 %}
                 {% set tests=0 %}
+
+                {% for message in app.flashes('info') %}
+                    <div class="flash-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
                 <div class="alert bg-light" style="height: 95%;width: 95%">
 
 
@@ -378,7 +385,9 @@
                         </tr>
                         </tbody>
                     </table>
-                    <a href="{{ path('add_to_favorite', {id: data_t_scopus.id}) }}" class="btn btn-outline-primary" >Ajouter aux favorite</a>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <a href="{{ path('add_to_favorite', {id: data_t_scopus.id}) }}" id="addfavorite" class="btn btn-outline-primary" >Ajouter aux favorite</a>
+                    {% endif %}
                     {#end table#}
 
                     {% elseif data_t_scopus | length >1 %}
@@ -467,6 +476,7 @@
 {% endblock %}
 
 {% block javascripts %}
+
     {{ parent() }}
     <script>
 

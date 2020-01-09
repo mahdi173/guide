@@ -13,6 +13,7 @@ use App\Repository\DataTScopusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\FavoriteRepository;
 use App\Entity\Publication;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -49,21 +50,35 @@ class FavoriteController extends BaseController
     public function switchFavoriteStatus(Request $request, EntityManagerInterface $manager, DataTScopusRepository $dscopusRepository)
     {
         $id=$request->get('id');
-        $journal = $dscopusRepository->findOneBy($id);
+        $journal = $dscopusRepository->find($id);
 
         /** @var User $me */
         $me = $this->getUser();
 
         $favoriteList = $me->getFavoriteScopusJournals();
 
-        if ($favoriteList->contains($journal)) {
-            $favoriteList->remove($journal);
-        }else{
+//        if ($favoriteList->contains($journal)) {
+//            $favoriteList->remove($journal);
+//        }else{
             $favoriteList->add($journal);
-        }
+//        }
 
         $manager->flush();
 
-        return $this->render('favorite/index.html.twig',['favorit' => $favoriteList]);
+            $this->addFlash('success','journal was added with success');
+
+        return new Response('journal was added with success');
+
+    }
+
+    /**
+     * @Rest\Route("/Favorite", name="favorite_list")
+     */
+    public function index(){
+        /** @var User $me */
+        $me = $this->getUser();
+        $favorite=$me->getFavoriteScopusJournals();
+
+        return $this->render('favorite/index.html.twig',['favorite' => $favorite]);
     }
 }
