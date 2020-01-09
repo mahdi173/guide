@@ -385,9 +385,21 @@
                         </tr>
                         </tbody>
                     </table>
+                    {% set jid = 0 %}
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a href="{{ path('add_to_favorite', {id: data_t_scopus.id}) }}" id="addfavorite" class="btn btn-outline-primary" >Ajouter aux favorite</a>
+                        {% for c in app.user.favoriteScopusJournals %}
+                            {% set jid = c.id %}
+
+                        {% endfor %}
+                        {% if data_t_scopus.id == jid %}
+                            <a href="{{ path('delete-favorite', {id: data_t_scopus.id}) }}" class="btn btn-outline-primary">Supprimer de vos favorite</a>
+                        {% else %}
+
+                            <a href="{{ path('add_to_favorite', {id: data_t_scopus.id}) }}"  class="btn btn-outline-primary" >Ajouter aux favorite</a>
+                        {% endif %}
+
                     {% endif %}
+
                     {#end table#}
 
                     {% elseif data_t_scopus | length >1 %}

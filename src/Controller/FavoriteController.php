@@ -81,4 +81,16 @@ class FavoriteController extends BaseController
 
         return $this->render('favorite/index.html.twig',['favorite' => $favorite]);
     }
+
+    /**
+     * @Rest\Route("/Favorite/delete", name="delete-favorite")
+     */
+    public function remove(Request $request, DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager){
+        $id=$request->get('id');
+        $journal = $dscopusRepository->find($id);
+        $manager->remove($journal);
+        $manager->flush();
+        $this->addFlash('success','journal was deleted from your favorite with success');
+        return new Response('journal was deleted from your favorite with success');
+    }
 }
