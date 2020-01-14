@@ -9,12 +9,11 @@
 
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>InBook</th>
-                        <th>Url</th>
-                        <th>Authors</th>
+                    <tr class="table-active">
+                        <th colspan="8">Title</th>
+{#                        <th>InBook</th>#}
+{#                        <th>Url</th>#}
+{#                        <th>Authors</th>#}
                         <th>Year</th>
                         <th>actions</th>
                     </tr>
@@ -22,13 +21,16 @@
                 <tbody>
                 {% for chapter in chapters %}
                     <tr>
-                        <td>{{ chapter.id }}</td>
-                        <td>{{ chapter.title }}</td>
-                        <td>{{ chapter.inBook }}</td>
-                        <td>{{ chapter.url }}</td>
-                        <td>{{ chapter.authors }}</td>
-                        <td>{{ chapter.year }}</td>
-                        <td>
+                        <td colspan="8" class="w-70 border-0">
+                            <p class="font-weight-bold text-primary">{{ chapter.title }}</p>
+                            <p class="font-weight-light text-muted mt-n3"><small> Author : {{ chapter.authors }}</small></p>
+                            <p class="font-weight-light text-muted mt-n3"><small> Publisher : {{ chapter.inBook }}</small></p>
+                        </td>
+{#                        <td>{{ chapter.inBook }}</td>#}
+{#                        <td>{{ chapter.url }}</td>#}
+{#                        <td>{{ chapter.authors }}</td>#}
+                        <td class="border-0">{{ chapter.year }}</td>
+                        <td class="border-0">
                             <a href="{{ path('chapter_show', {'id': chapter.id}) }}">show</a>
                             <a href="{{ path('chapter_edit', {'id': chapter.id}) }}">edit</a>
                         </td>

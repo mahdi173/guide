@@ -8,14 +8,15 @@
 
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Journal</th>
-                        <th>Url</th>
-                        <th>Volume</th>
-                        <th>Issue</th>
-                        <th>Authors</th>
+                    <tr class="table-active">
+                        <th colspan="8">Title</th>
+{#                        <th>Journal</th>#}
+{#                        <th>Url</th>#}
+{#                        <th>Volume</th>#}
+{#                        <th>Issue</th>#}
+{#                        <th>Authors</th>#}
+{#                        <th>Year</th>#}
+{#                        <th>Volume</th>#}
                         <th>Year</th>
                         <th>actions</th>
                     </tr>
@@ -23,15 +24,20 @@
                 <tbody>
                 {% for publication in publications %}
                     <tr>
-                        <td>{{ publication.id }}</td>
-                        <td>{{ publication.title }}</td>
-                        <td>{{ publication.journal }}</td>
-                        <td>{{ publication.url }}</td>
-                        <td>{{ publication.volume }}</td>
-                        <td>{{ publication.issue }}</td>
-                        <td>{{ publication.authors }}</td>
-                        <td>{{ publication.year }}</td>
-                        <td>
+                        <td colspan="8" class="w-70 border-0">
+                            <p class="font-weight-bold text-primary">{{ publication.title }}</p>
+                            <p class="font-weight-light text-muted mt-n3"><small>Author : {{ publication.authors }}</small></p>
+                            <p class="font-weight-light text-muted mt-n3"><small>Volume : {{ publication.volume }}</small></p>
+
+                        </td>
+{#                        <td>{{ publication.journal }}</td>#}
+{#                        <td>{{ publication.url }}</td>#}
+{#                        <td>{{ publication.volume }}</td>#}
+{#                        <td>{{ publication.issue }}</td>#}
+{#                        <td>{{ publication.authors }}</td>#}
+{#                        <td>{{ publication.volume }}</td>#}
+                        <td class="border-0">{{ publication.year }}</td>
+                        <td class="border-0">
                             <a href="{{ path('publication_show', {'id': publication.id}) }}">show</a>
                             <a href="{{ path('publication_edit', {'id': publication.id}) }}">edit</a>
                         </td>

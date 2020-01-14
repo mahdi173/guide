@@ -34,7 +34,7 @@
     {% set tests=-1 %}
 
     {% set issn="" %}
-    <div class="container-fluid">
+    <div class="container">
 
         <!-- Pubi 0001-->
 
@@ -46,16 +46,17 @@
         </div>
 
         <!-- Fin pub 0001-->
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-sm-12"> </div>
             <div class="col-lg-2 col-sm-1"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-8 w-auto text-center">
                 {% include '_includes/search_form.html.twig' %}
                 <!-- fin publicité adSense 1-->
             </div>
             <div class="col-lg-2 col-sm-1"></div>
         </div>
-
+    </div>
+    <div class="container-fluid">
         <!-- Fin pub 0001-->
         <div class="row">
             <div class="col-sm-12"> </div>
@@ -283,14 +284,21 @@
                             </tbody>
                         </table>
 
+{#                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+{#                            <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">#}
+{#                                {% if app.user.favoriteReutersJournals.contains(data_reuter) %}#}
+{#                                    Supprimer de vos favoris#}
+{#                                {% else %}#}
+{#                                    Ajouter à vos favoris#}
+{#                                {% endif %}#}
+{#                            </a>#}
+{#                        {% endif %}#}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                            <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
-                                {% if app.user.favoriteReutersJournals.contains(data_reuter) %}
-                                    Supprimer de vos favoris
-                                {% else %}
-                                    Ajouter à vos favoris
-                                {% endif %}
-                            </a>
+                            {% if app.user.favoriteScopusJournals.contains(data_reuter) %}
+                                <div data-toggle="tooltip" data-placement="right" title="Added to your Favorites">
+                                    <span class="badge badge-warning"><i class="fa fa-star" aria-hidden="true"></i></span>
+                                </div>
+                            {% endif %}
                         {% endif %}
 
                         {#end table#}
@@ -395,17 +403,23 @@
                         </tr>
                         </tbody>
                     </table>
-                    {% set jid = 0 %}
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
-                            {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}
-                                Supprimer de vos favoris
-                            {% else %}
-                                Ajouter à vos favoris
-                            {% endif %}
-                        </a>
-                    {% endif %}
+{#                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+{#                        <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">#}
+{#                            {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}#}
+{#                                Supprimer de vos favoris#}
+{#                            {% else %}#}
+{#                                Ajouter à vos favoris#}
+{#                            {% endif %}#}
+{#                        </a>#}
+{#                    {% endif %}#}
 
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}
+                            <div data-toggle="tooltip" data-placement="right" title="Added to your Favorites">
+                                <span class="badge badge-warning"><i class="fa fa-star" aria-hidden="true"></i></span>
+                            </div>
+                         {% endif %}
+                    {% endif %}
                     {#end table#}
 
                     {% elseif data_t_scopus | length >1 %}
@@ -417,16 +431,41 @@
                         <div class="alert bg-info" style="height: 95%;width: 95%">
                             <h3><img src="{{ asset('assets/images/scopus3.png') }}" style="width: 3rem; height: 3rem;"> Scopus Database</h3>
                             <h1>Not Found </h1>
-
                         </div>
                     {% endif %}
-
-
 
                 </div>
 
             </div>
         </div>
+        <!-- favorite button -->
+        {% if data_t_scopus.eIssn is defined %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class="row mb-3">
+                    <div class="col-md-12 text-center">
+                        {% if app.user.favoriteScopusJournals.contains(data_t_scopus)==false %}
+                            <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
+                                <i class="fa fa-star"></i> Add to your favorites
+                            </a>
+                        {% endif %}
+                    </div>
+
+                </div>
+{#            {% endif %}#}
+                {% elseif data_reuter is defined %}
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-center">
+                            {% if app.user.favoriteScopusJournals.contains(data_reuter)==false %}
+                                <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
+                                    <i class="fa fa-star"></i> Add to your favorites
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+        {% endif %}
+        <!-- end favorite button -->
 
         <div class="row">
             <div class="col-lg-12 text-center">

@@ -4,8 +4,9 @@
     <h1 class="text-center">{{ 'Registration'|trans }}</h1>
 
     {% if app.request.get('send') == 'true' %}
-        <p class="alert alert-success">
-            {{ 'registration_finished'|trans }}
+        <p class="text-center border pt-3 pb-3">
+{#            {{ 'registration_finished'|trans }}#}
+            operation was successfully completed
         </p>
     {% else %}
 {#       {{ form(form, { 'attr': {'class': 'form-signin'} }) }}#}

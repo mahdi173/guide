@@ -1,11 +1,24 @@
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <div class="text-center">
-        <h1 class="text-info pb-md-5 pt-md-4">Find the best journal for your research</h1>
-        <form class="form-inline justify-content-center pb-lg-5" method="get" action="{{ url('data_search_by_several_values') }}">
-            <div class="justify-content-center">
-                <input name="searchValue" type="text" class="form-control search-form form-control-lg  mr-lg-2" placeholder="Title, word, ISSN" />
-                <button class="btn btn-lg btn-info my-2 my-lg-0" type="submit" >Submit</button>
-            </div>
-        </form>
+{#<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">#}
+{#    <div class="text-center">#}
+{#        <h1 class="text-info pb-md-5 pt-md-4">Find the best journal for your research</h1>#}
+{#        <form class="form-inline justify-content-center pb-lg-5" method="get" action="{{ url('data_search_by_several_values') }}">#}
+{#            <div class="justify-content-center">#}
+{#                <input name="searchValue" type="text" class="form-control search-form form-control-lg  mr-lg-2" placeholder="Title, word, ISSN" />#}
+{#                <button class="btn btn-lg btn-info my-2 my-lg-0" type="submit" >Submit</button>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#</div>#}
+
+<form method="get" action="{{ url('data_search_by_several_values') }}">
+    <div class="row">
+        <div class="col-lg-8">
+            <input type="text"  name="searchValue"  required="required" placeholder="Title, word, ISSN" class="form-control">
+        </div>
+        <div class="col-lg-4">
+            <button type="submit" class="btn btn-info btn">Submit</button>
+        </div>
+
+
     </div>
-</div>
+</form>
