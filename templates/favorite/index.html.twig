@@ -10,7 +10,6 @@
             <th scope="col">Title</th>
             <th scope="col">Publisher</th>
             <th scope="col">Subject area</th>
-            <th scope="col">journal url</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -20,11 +19,10 @@
         {% else %}
         {% for f in favorite %}
         <tr>
-            <td>{{ f.title }}</td>
+            <td><a target="_blank" href="/journal/{{ f.eissn }}">{{ f.title }}</a></td>
             <td>{{ f.publisher  }}</td>
             <td>{{ f.subjectArea|default('') }}</td>
-            <td><a target="_blank" href="/journal/{{ f.eissn }}">URL</a></td>
-            <td><a class="btn btn-danger" target="_blank" href="{{ path('switch_favorite', {id: f.id, 'source': 'reuters'?'scopus'}) }}"><i class="fa fa-remove"></i></a></td>
+            <td><a class="btn btn-danger" target="_blank" href="{{ path('delete_favorite', {id: f.id, 'source': 'reuters'?'scopus'}) }}"><i class="fa fa-remove"></i></a></td>
         </tr>
         {% endfor %}
         {% endif %}

@@ -109,7 +109,7 @@
         </div>
     </nav>
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <a class="" href="{{ path('sulu_community.profile')}}">{{app.user.firstName}}</a>
+        <a class="" href="{{ path('favorite_list')}}">{{app.user.firstName}}</a>
     {% else %}
         <a class="btn btn-outline-info" href="{{ path('sulu_community.login')}}">Sign in</a>
     {% endif %}

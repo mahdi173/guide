@@ -36,12 +36,12 @@
         <!-- Fin pub 0001-->
         <div class="row">
             <div class="col-sm-12"> </div>
-            <div class="col-lg-2 col-sm-1"></div>
-            <div class="col-lg-8" style="margin-top: 40px">
+            <div class="col-md-2 col-sm-1"></div>
+            <div class="col-md-8 mt-5">
                 {% include '_includes/search_form.html.twig' %}
                 <!-- fin publicité adSense 1-->
             </div>
-            <div class="col-lg-2 col-sm-1"></div>
+            <div class="col-md-2 col-sm-1"></div>
         </div>
 
         <div class="row" >
@@ -125,11 +125,11 @@
         {% set test=0 %}
         {% set tests=0 %}
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-md-2">
             </div>
-            <div class="col-lg-8">
+            <div class="col-md-8">
                 <div class="row" style="height: 50px">
-                    <div class="col-lg-12">
+                    <div class="col-md-12">
                         <h3 align="center">The following title(s) matched your request</h3>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
 
                 {% endif %}
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2">
                 <!-- ajouter pour la publicité -->
                 {%  if data_t_scopus is defined and data_t_scopus | length >1 %}
                     <div class="row" ></div>
@@ -183,14 +183,14 @@
         {%  if data_reuter is defined and data_reuter | length ==1
             or data_t_scopus is defined and data_t_scopus | length==1 %}
             <div class="row" >
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <h3 align="center">The following title(s) matched your request</h3>
                 </div>
             </div>
         {% endif %}
         <div class="row">
-            <div class="col-lg-1 col-sm-1"></div>
-            <div class="col-lg-5 col-sm-5">
+            <div class="col-md-1 col-sm-1"></div>
+            <div class="col-md-5 col-sm-5">
 
                 {%  if data_reuter is defined and data_reuter | length ==1 %}
                     {% set test=0 %}
@@ -208,20 +208,20 @@
                         <h3><img src="{{ asset('assets/images/thomson1.png') }}" style="width: 3rem; height: 3rem;"> Thomson Reuters Database</h3>
                         <div class="container">
                             <div class="row">
-                                <div class="col-sm-12 col-lg-12">Title : <a href={{ url }} target="_blank">{{ data_reuter.title }} </a></div>
+                                <div class="col-sm-12 col-md-12">Title : <a href={{ url }} target="_blank">{{ data_reuter.title }} </a></div>
                             </div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-sm-6 col-lg-6">Impact Factor : {{ data_reuter.journalImpactFactor }}</div>
-                                    <div class="col-sm-6 col-lg-6">Rank : {{ data_reuter.rank }}</div>
+                                    <div class="col-sm-6 col-md-6">Impact Factor : {{ data_reuter.journalImpactFactor }}</div>
+                                    <div class="col-sm-6 col-md-6">Rank : {{ data_reuter.rank }}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6 col-lg-6">Total Cites : {{ data_reuter.totalCites }} </div>
-                                    <div class="col-sm-6 col-lg-6">Category name : {{ data_reuter.categoryname }} </div>
+                                    <div class="col-sm-6 col-md-6">Total Cites : {{ data_reuter.totalCites }} </div>
+                                    <div class="col-sm-6 col-md-6">Category name : {{ data_reuter.categoryname }} </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6 col-lg-6">ISSN : {{ data_reuter.iSSN }}</div>
-                                    <div class="col-sm-6 col-lg-6">E-ISSN : {{ data_reuter.eISSN }}</div>
+                                    <div class="col-sm-6 col-md-6">ISSN : {{ data_reuter.iSSN }}</div>
+                                    <div class="col-sm-6 col-md-6">E-ISSN : {{ data_reuter.eISSN }}</div>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +241,7 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="col-lg-5 col-sm-5">
+            <div class="col-md-5 col-sm-5">
                 {%  if data_t_scopus is defined and data_t_scopus | length ==1 %}
                 {% set tests=0 %}
                 <div class="alert bg-light" style="height: 95%;width: 95%">
@@ -250,24 +250,24 @@
                     <h3><img src="{{ asset('assets/images/scopus3.png') }}" style="width: 3rem; height: 3rem;"> Scopus Database</h3>
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-12 col-lg-12">Title : <a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </div>
+                            <div class="col-sm-12 col-md-12">Title : <a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </div>
                         </div>
                         <div class="container">
                             <div class="row">
-                                <div class="col-sm-6 col-lg-6">SJR : {{ data_t_scopus.sJR }}</div>
-                                <div class="col-sm-6 col-lg-6">Rank : {{ data_t_scopus.rANK }} </div>
+                                <div class="col-sm-6 col-md-6">SJR : {{ data_t_scopus.sJR }}</div>
+                                <div class="col-sm-6 col-md-6">Rank : {{ data_t_scopus.rANK }} </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-lg-6">Publisher : {{ data_t_scopus.publisher }} </div>
-                                <div class="col-sm-6 col-lg-6">Open Access : {{ data_t_scopus.openAccess }} </div>
+                                <div class="col-sm-6 col-md-6">Publisher : {{ data_t_scopus.publisher }} </div>
+                                <div class="col-sm-6 col-md-6">Open Access : {{ data_t_scopus.openAccess }} </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-lg-6">Quartile : {{ data_t_scopus.quartile }}</div>
-                                <div class="col-sm-6 col-lg-6">Citation Count : {{ data_t_scopus.citationCount }} </div>
+                                <div class="col-sm-6 col-md-6">Quartile : {{ data_t_scopus.quartile }}</div>
+                                <div class="col-sm-6 col-md-6">Citation Count : {{ data_t_scopus.citationCount }} </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-lg-6">ISSN : {{ data_t_scopus.printISSN }}</div>
-                                <div class="col-sm-6 col-lg-6">E-ISSN : {{ data_t_scopus.eISSN }}</div>
+                                <div class="col-sm-6 col-md-6">ISSN : {{ data_t_scopus.printISSN }}</div>
+                                <div class="col-sm-6 col-md-6">E-ISSN : {{ data_t_scopus.eISSN }}</div>
                             </div>
                         </div>
                     </div>
@@ -292,7 +292,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-md-12 text-center">
                 {% if eISSN is defined  %}
                     {% set url = absolute_url(path('data_t_scopus_results', {'eISSN': eISSN})) %}
                     {%  if data_reuter | length ==1 %}

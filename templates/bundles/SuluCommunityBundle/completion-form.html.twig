@@ -2,10 +2,10 @@
 
 {% block content %}
     <h1>{{ 'Completion'|trans }}</h1>
-
     {% if app.request.get('send') == 'true' %}
-        <p class="alert alert-success">
-            {{ 'completion_finished'|trans }}
+        <p class="text-center border pt-3 pb-3">
+{#            {{ 'completion_finished'|trans }}#}
+            Completion finished
         </p>
     {% else %}
         {{ form(form) }}

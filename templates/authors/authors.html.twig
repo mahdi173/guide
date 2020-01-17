@@ -1,0 +1,66 @@
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {% include "SuluWebsiteBundle:Extension:seo.html.twig" with {
+        "seo": extension.seo|default([]),
+        "content": content|default([]),
+        "urls": urls|default([]),
+        "shadowBaseLocale": shadowBaseLocale|default(),
+        "defaultLocale": request.defaultLocale|default('de')
+    } %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2 col-sm-1"></div>
+    <div class="col-md-8 mt-5 mb-5">
+        <form method="get" action="{{ url('get_authors') }}">
+
+            <div class="input-group mb-3">
+                <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2 col-sm-1"></div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-1"></div>
+    <div class="col-md-6 mt-5 mb-5">
+        <table class="table">
+            <thead>
+            <tr class="border-0">
+                <th colspan="8">Title</th>
+                <th>Url</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if data | length>0 %}
+                {% for res in data.result.hits.hit  %}
+                    <tr>
+                        <td colspan="8" class="w-70 border-0">
+                            <p class="font-weight-bold text-primary"><a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a></p>
+
+                        </td>
+                        <td class="border-0">{{ res.info.url }}</td>
+                    </tr>
+    {#            {% else %}#}
+    {#                <tr>#}
+    {#                    <td colspan="9">no records found</td>#}
+    {#                </tr>#}
+                {% endfor %}
+            {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3 col-sm-1"></div>
+</div>
+
+
+{% endblock %}

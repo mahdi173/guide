@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {% include "SuluWebsiteBundle:Extension:seo.html.twig" with {
+        "seo": extension.seo|default([]),
+        "content": content|default([]),
+        "urls": urls|default([]),
+        "shadowBaseLocale": shadowBaseLocale|default(),
+        "defaultLocale": request.defaultLocale|default('de')
+    } %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-2 col-sm-1"></div>
+        <div class="col-md-8 mt-5 mb-5">
+            <form method="get" action="{{ url('get_authors') }}">
+
+                <div class="input-group mb-3">
+                    <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2 col-sm-1"></div>
+    </div>
+
+<div class="row">
+    <div class="col-md-12 mt-5 mb-5">
+        <table class="table" data-toggle="table" data-striped="true">
+            <thead>
+            <tr class="table-active">
+                <th colspan="8">Title</th>
+                <th>Year</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if data| length >0 %}
+                {% for res in data.result.hits.hit  %}
+
+                    <tr>
+                        <td colspan="8" class="w-70 border-0 mb-n5">
+                            <p class="font-weight-bold text-primary"><a href="{{ res.info.url }}" target="_blank"> {{ res.info.title }} </a></p>
+                            <p class="font-weight-light text-muted mt-n3">
+                                <small>Authors :
+                                    {% for a in res.info.authors.author %}
+                                         {{ a }}
+                                        {% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </small></p>
+                            <p class="font-weight-light text-muted mt-n4 mb-n3">
+                                <small>
+                                    {{ res.info.type }},
+                                    {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
+                                    {% if res.info.volume is defined %}({{ res.info.volume }}),
+                                        Pages :{% if res.info.pages is defined %}{{ res.info.pages }}{% endif %}{% endif %}
+                                </small>
+                            </p>
+                        </td>
+                        <td class="border-0">{{ res.info.year }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                    <tr>
+                        <td colspan="9">no results found</td>
+                    </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+{% endblock %}

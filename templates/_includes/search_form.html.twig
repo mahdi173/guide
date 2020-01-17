@@ -11,14 +11,11 @@
 {#</div>#}
 
 <form method="get" action="{{ url('data_search_by_several_values') }}">
-    <div class="row">
-        <div class="col-lg-8">
-            <input type="text"  name="searchValue"  required="required" placeholder="Title, word, ISSN" class="form-control">
-        </div>
-        <div class="col-lg-4">
-            <button type="submit" class="btn btn-info btn">Submit</button>
-        </div>
 
-
+    <div class="input-group mb-3">
+        <input type="text" name="searchValue"  class="form-control" placeholder="Title, word, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
+        </div>
     </div>
 </form>
