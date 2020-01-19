@@ -30,6 +30,8 @@
 
 <div class="row">
     <div class="col-md-12 mt-5 mb-5">
+
+{#        {{ dump(data_doaj) }}#}
         <table class="table" data-toggle="table" data-striped="true">
             <thead>
             <tr class="table-active">
@@ -38,9 +40,38 @@
             </tr>
             </thead>
             <tbody>
-            {% if data| length >0 %}
-                {% for res in data.result.hits.hit  %}
+            {% if data_doaj| length >0 %}
+                {% for result in data_doaj.results %}
+                    <tr>
+                        <td colspan="8" class="w-70 border-0 mb-n5">
+                            <p class="font-weight-bold text-primary">
+                                {% for l in result.bibjson.link %}
+                                   {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
+                                {% endfor %}
+                            </p>
+                            <p class="font-weight-light text-muted mt-n3">
+                                <small>Authors :
+                                    {% for a in result.bibjson.author %}
+                                        {{ a.name }}
+                                        {% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </small></p>
+                            <p class="font-weight-light text-muted mt-n4 mb-n3">
+                                <small>
+                                    {% if result.bibjson.identifier| length >0 %} {% for t in result.bibjson.identifier %}{{ t.type }}{% endfor %}{% endif %},
+                                    {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
+                                    {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
+                                    Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
+                                </small>
+                            </p>
+                        </td>
+                        <td class="border-0">{{ result.bibjson.year }}</td>
+                    </tr>
+                {% endfor %}
 
+            {% endif %}
+            {% if data_dblp| length >0 %}
+                {% for res in data_dblp  %}
                     <tr>
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary"><a href="{{ res.info.url }}" target="_blank"> {{ res.info.title }} </a></p>
@@ -70,9 +101,9 @@
             {% endif %}
             </tbody>
         </table>
-
     </div>
 </div>
+
 
 
 {% endblock %}

@@ -55,7 +55,9 @@ class SearchauthorsController extends AbstractController{
 //        dump($response);die;
 
 
-        $param = $request->get('authorValue');
+        $auteur = $request->get('authorValue');
+        $auteur=htmlspecialchars($auteur);
+        $param=str_replace(' ','+',$auteur);
         $data = null;
         if($param!=null)
         {
@@ -82,19 +84,60 @@ class SearchauthorsController extends AbstractController{
 
         $auteur = $request->get('auteur');
         $param=str_replace(' ','+',$auteur);
-        $data = null;
-//        dump($param);die();
+        $data_doaj = null;
+        $data_dblp=null;
         if($param!=null)
         {
+            // doaj API
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://dblp.org/search/publ/api?q=.$param.&format=json");
+            curl_setopt($ch, CURLOPT_URL, "https://doaj.org/api/v1/search/articles/$param");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
             $response = curl_exec($ch);
             // If using JSON...
-            $data = json_decode($response);
+            $data_doaj = json_decode($response);
+
         }
-        return $this->render('authors/publications.html.twig',['data'=>$data]);
+
+        $test='teste teet . yeyte, hello test. ';
+        if($param!=null)
+        {
+            //dblp API
+            $ch2 = curl_init();
+            curl_setopt($ch2, CURLOPT_URL, "https://dblp.org/search/publ/api?q=.$param.&format=json");
+            curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+//            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+//            curl_setopt($ch2, CURLOPT_FOLLOWLOCATION, true);
+
+            $response2 = curl_exec($ch2);
+            $data_dblp= json_decode($response2);
+        }
+        $result = $data_dblp->result->hits;
+        $result2= $data_doaj->results;
+
+
+
+        $inc = false;
+        $array = [];
+        foreach ($result->hit as $r){
+            $inc = false;
+            foreach ($result2 as $r2){
+                if (rtrim($r->info->title,'. ') == rtrim($r2->bibjson->title,'. ')){
+                    $inc = true;
+                }
+            }
+            if($inc == false ){
+                $array[] = $r;
+            }
+        }
+
+        return $this->render('authors/publications.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array]);
     }
+
+
 
 }
