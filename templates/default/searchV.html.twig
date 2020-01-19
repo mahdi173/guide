@@ -436,8 +436,9 @@
             </div>
         </div>
         <!-- favorite button -->
-        {% if data_t_scopus.eIssn is defined %}
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if data_t_scopus.eIssn is defined %}
+
                 <div class="row mb-3">
                     <div class="col-md-12 text-center">
                         {% if app.user.favoriteScopusJournals.contains(data_t_scopus)==false %}
@@ -449,7 +450,7 @@
 
                 </div>
 {#            {% endif %}#}
-                {% elseif data_reuter is defined %}
+            {% elseif data_reuter is defined %}
                     <div class="row mb-3">
                         <div class="col-md-12 text-center">
                             {% if app.user.favoriteScopusJournals.contains(data_reuter)==false %}
@@ -459,7 +460,7 @@
                             {% endif %}
                         </div>
                     </div>
-                {% endif %}
+            {% endif %}
 
         {% endif %}
         <!-- end favorite button -->

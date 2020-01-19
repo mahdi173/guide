@@ -27,39 +27,31 @@
     <div class="col-md-2 col-sm-1"></div>
 </div>
 <div class="row">
-    <div class="col-md-3 col-sm-1"></div>
+    <div class="col-md-3 col-sm-12"></div>
     <div class="col-md-6 mt-5 mb-5">
-        <table class="table">
-            <thead>
-            <tr class="border-0">
-                <th colspan="8">Title</th>
-                <th>Url</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if data | length>0 %}
-                {% for res in data.result.hits.hit  %}
-                    <tr>
-                        <td colspan="8" class="w-70 border-0">
-                            <p class="font-weight-bold text-primary"><a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a></p>
+        {% if data | length>0 %}
+            <table class="table">
+                <thead>
+                <tr class="border-0">
+                    <th colspan="8">Title</th>
+                    <th>Url</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for res in data.result.hits.hit  %}
+                        <tr>
+                            <td colspan="8" class="w-70 border-0">
+                                <p class="font-weight-bold text-primary"><a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a></p>
 
-                        </td>
-                        <td class="border-0">{{ res.info.url }}</td>
-                    </tr>
-    {#            {% else %}#}
-    {#                <tr>#}
-    {#                    <td colspan="9">no records found</td>#}
-    {#                </tr>#}
-                {% endfor %}
-            {% else %}
-                    <tr>
-                        <td colspan="9">no records found</td>
-                    </tr>
-            {% endif %}
-            </tbody>
-        </table>
+                            </td>
+                            <td class="border-0">{{ res.info.url }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
-    <div class="col-md-3 col-sm-1"></div>
+    <div class="col-md-3 col-sm-12"></div>
 </div>
 
 
