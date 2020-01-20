@@ -29,30 +29,41 @@
 <div class="row">
     <div class="col-md-3 col-sm-12"></div>
     <div class="col-md-6 mt-5 mb-5">
-        {% if data| length >0 %}
-            <table class="table">
+        {% if data.result.hits.hit is defined %}
+            <table id="auteurs" class="table">
                 <thead>
                 <tr class="border-0">
-                    <th colspan="8">Title</th>
-                    <th>Url</th>
+                    <th>Title</th>
                 </tr>
                 </thead>
                 <tbody>
                     {% for res in data.result.hits.hit  %}
                         <tr>
-                            <td colspan="8" class="w-70 border-0">
+                            <td class="w-70 border-0">
                                 <p class="font-weight-bold text-primary"><a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a></p>
-
                             </td>
-                            <td class="border-0">{{ res.info.url }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+                <p class="text-center border pt-3 pb-3">
+                    No data found !
+                </p>
         {% endif %}
     </div>
     <div class="col-md-3 col-sm-12"></div>
 </div>
+
+    {% block javascripts %}
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+                $('#auteurs').DataTable();
+            } );
+
+        </script>
+    {% endblock %}
 
 
 {% endblock %}

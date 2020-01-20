@@ -59,6 +59,7 @@ class SearchauthorsController extends AbstractController{
         $auteur=htmlspecialchars($auteur);
         $param=str_replace(' ','+',$auteur);
         $data = null;
+        $etat=false;
         if($param!=null)
         {
             $ch = curl_init();
@@ -70,8 +71,11 @@ class SearchauthorsController extends AbstractController{
             $data = json_decode($response);
 
         }
+        if(!empty($data)){
+            $etat=true;
+        }
 
-                return $this->render('authors/authors.html.twig',['data'=>$data]);
+                return $this->render('authors/authors.html.twig',['data'=>$data,'etat'=>$etat]);
     }
 
 
