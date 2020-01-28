@@ -75,7 +75,8 @@ class FavoriteController extends BaseController
             $favoriteList = $me->getFavoriteScopusJournals();
 
             if ($favoriteList->contains($journal)) {
-                $me->removeFavoriteScopusJournal($journal);
+//                $me->removeFavoriteScopusJournal($journal);
+                throw $this->createNotFoundException();
             }else{
                 $me->addFavoriteScopusJournal($journal);
             }
@@ -105,12 +106,40 @@ class FavoriteController extends BaseController
     /**
      * @Route("/{_locale}/Favorite/delete", name="delete_favorite")
      */
-    public function remove(Request $request, DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager){
+    public function remove(Request $request, DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager,DataReutersRepository $dataReutersRepository){
         $id=$request->get('id');
-        $journal = $dscopusRepository->find($id);
-        $manager->remove($journal);
+
+        /** @var User $me */
+        $me = $this->getUser();
+
+        /** @var DataReuters $journal */
+
+        $source = $request->get('source');
+        if ('reuters' === $source)
+        {
+
+            $journal = $dataReutersRepository->find($id);
+            $favoriteList = $me->getFavoriteReutersJournals();
+            if ($favoriteList->contains($journal)) {
+                $me->removeFavoriteScopusJournal($journal);
+            }
+        }elseif ('scopus' === $source){
+
+            /** @var DataTScopus $journal */
+            $journal = $dscopusRepository->find($id);
+            $favoriteList = $me->getFavoriteScopusJournals();
+
+            if ($favoriteList->contains($journal)) {
+                $me->removeFavoriteScopusJournal($journal);
+            }
+        }
+        else {
+            throw $this->createNotFoundException();
+        }
+
         $manager->flush();
         $this->addFlash('success','journal was deleted from your favorite with success');
-        return new Response('journal was deleted from your favorite with success');
+        $favorite=array_merge($me->getFavoriteScopusJournals()->toArray(), $me->getFavoriteReutersJournals()->toArray());
+        return $this->render('favorite/index.html.twig',['favorite' => $favorite]);
     }
 }

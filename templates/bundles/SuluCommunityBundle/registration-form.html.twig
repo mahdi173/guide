@@ -3,17 +3,13 @@
 {% block security %}
     <h1 class="text-center">{{ 'Registration'|trans }}</h1>
 
-    {% if app.request.get('send') == 'true' %}
-        <p class="alert alert-success">
-            {{ 'registration_finished'|trans }}
+    {% if (app.request.get('send') == 'true')  %}
+        <p class="text-center border pt-3 pb-3">
+{#            {{ 'registration_finished'|trans }}#}
+            operation was successfully completed, Please confirm from your email acount !
         </p>
     {% else %}
-{#       {{ form(form, { 'attr': {'class': 'form-signin'} }) }}#}
         {{ form_start(form, { 'attr': {'class': 'form'} }) }}
-
-{#        <div class="alert alert-danger" role="alert">#}
-{#            #}
-{#        </div>#}
         <div class="col">{{ form_errors(form) }}</div>
         <div class="form-label-group ">
             <label for="registration_username">First name :</label>
@@ -43,10 +39,6 @@
             {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
             {{ form_errors(form.plainPassword.second) }}
         </div>
-{#        <div class="form-label-group">#}
-{#            <label for="registration_plainPassword">Confirm Password:</label>#}
-{#            {{ form_widget(form.plainPassword, { 'attr': {'class': 'form-control form-control-lg  mr-lg-2'} }) }}#}
-{#        </div>#}
         <div class="checkbox mb-3">
             <label class="mr-lg-2 mt-4">
                 {{ form_widget(form.terms) }} <a href="#">Accept terms and conditions</a>
@@ -54,7 +46,6 @@
         </div>
         {{ form_widget(form._token) }}
         <button type="submit" id="registration_submit" name="registration[submit]" class="btn btn-lg btn-info mr-2 mr-lg-2">Register</button>
-
         {{ form_end(form, {'render_rest': false}) }}
 
     {% endif %}
