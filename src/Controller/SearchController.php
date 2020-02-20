@@ -136,15 +136,15 @@ class SearchController extends BaseController
                     }
                 }
             }
-
-            $pagination = $this->paginator->paginate(
-                $data_t_scopus, /* query NOT result */
-                $request->query->getInt('page', 1), /*page number*/
-               20 /*limit per page*/
-            );
-
+            $pagination=0;
+            if(!is_null($data_t_scopus) && is_iterable($data_t_scopus)){
+                $pagination = $this->paginator->paginate(
+                    $data_t_scopus, /* query NOT result */
+                    $request->query->getInt('page', 1), /*page number*/
+                   20 /*limit per page*/
+                );
+            }
         }
-
         return $this->render('default/searchV.html.twig', [
             'form' => $form->createView(),
             'data_reuter' => $data_reuters,
