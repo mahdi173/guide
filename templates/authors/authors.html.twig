@@ -11,32 +11,34 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-2 col-sm-1"></div>
-    <div class="col-md-8 mt-5 mb-5">
-        <form method="get" action="{{ url('get_authors') }}">
+    <div class="row">
+        <div class="col-md-2 col-sm-1"></div>
+        <div class="col-md-8 mt-5 mb-5">
+            <form method="get" action="{{ url('get_authors') }}">
 
-            <div class="input-group mb-3">
-                <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
+                <div class="input-group mb-3">
+                    <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="col-md-2 col-sm-1"></div>
     </div>
-    <div class="col-md-2 col-sm-1"></div>
-</div>
-<div class="row">
-    <div class="col-md-3 col-sm-12"></div>
-    <div class="col-md-6 mt-5 mb-5">
-        {% if data.result.hits.hit is defined %}
-            <table id="auteurs" class="table">
-                <thead>
-                <tr class="border-0">
-                    <th>Title</th>
-                </tr>
-                </thead>
-                <tbody>
+    <div class="row">
+        <div class="col-md-3 col-sm-12"></div>
+        <div class="col-md-6 mt-5 mb-5">
+            {% if data is null %}
+
+            {% elseif data.result.hits.hit is defined %}
+                <table id="auteurs" class="table">
+                    <thead>
+                    <tr class="border-0">
+                        <th>Title</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     {% for res in data.result.hits.hit  %}
                         <tr>
                             <td class="w-70 border-0">
@@ -44,16 +46,16 @@
                             </td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             {% else %}
                 <p class="text-center border pt-3 pb-3">
                     No data found !
                 </p>
-        {% endif %}
+            {% endif %}
+        </div>
+        <div class="col-md-3 col-sm-12"></div>
     </div>
-    <div class="col-md-3 col-sm-12"></div>
-</div>
 
     {% block javascripts %}
         <script type="text/javascript">

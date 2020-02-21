@@ -21,15 +21,15 @@
           <div class="card-body">
             <h2 class="card-title"><a href="{{ c.routePath }}">{{ c.content.content.title }}</a></h2>
             <div property="article">
-              {{ c.content.content.article| raw }}
+              {{ c.content.content.teaser| raw }}
             </div>
 
             <p class="card-text">{{ c.article|default()|raw }}</p>
             <a href="{{ c.routePath }}" class="btn btn-primary">Read More →</a>
           </div>
           <div class="card-footer text-muted">
-            Posted on {{ c.content.published|date('D M Y') }} by
-            <a href="#">{{ c.content.creatorFullName }}
+            Posted on {{ c.content.published|date('D M Y') }}
+{#            <a href="#">{{ c.content.creatorFullName }}#}
             </a>
           </div>
         </div>

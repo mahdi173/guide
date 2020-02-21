@@ -31,7 +31,6 @@
 <div class="row">
     <div class="col-md-12 mt-5 mb-5">
 
-{#        {{ dump(data_doaj) }}#}
         <table class="table" data-toggle="table" data-striped="true">
             <thead>
             <tr class="table-active">
@@ -46,22 +45,45 @@
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary">
                                 {% for l in result.bibjson.link %}
+
+{#                                    {% for s in result.bibjson.journal.issns %}#}
+{#                                        {% for ds in dataissn.printissn %}#}
+{#                                        {% if (ds == s|replace({'-':''})) %}#}
+{#                                            {{ dump(ds) }}#}
+{#                                        {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                    {% endfor %}#}
+
+                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
+
                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
                                 {% endfor %}
                             </p>
                             <p class="font-weight-light text-muted mt-n3">
                                 <small>Authors :
-                                    {% for a in result.bibjson.author %}
+                                    {% for a in result.bibjson.author[:30] %}
                                         {{ a.name }}
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>
                             <p class="font-weight-light text-muted mt-n4 mb-n3">
                                 <small>
-                                    {% if result.bibjson.identifier| length >0 %} {% for t in result.bibjson.identifier %}{{ t.type }}{% endfor %}{% endif %},
+                                    {% if result.bibjson.identifier| length >0 %}
+                                        {{ result.bibjson.journal.title }}
+                                    {% endif %},
                                     {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
                                     {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
                                     Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
+                                    {% for d in dataissn %}
+
+                                        {% for iss in result.bibjson.journal.issns %}
+{#                                            {{ dump(iss) }}#}
+
+                                            {% if(d.issn == iss|replace({'-':''})) %}
+                                                <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"><span class="badge badge-primary">In our database</span></a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
                                 </small>
                             </p>
                         </td>
@@ -78,13 +100,13 @@
                             <p class="font-weight-light text-muted mt-n3">
                                 <small>Authors :
                                     {% for a in res.info.authors.author %}
-                                         {{ a }}
+                                         {{ a.text }}
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>
                             <p class="font-weight-light text-muted mt-n4 mb-n3">
                                 <small>
-                                    {{ res.info.type }},
+                                    {{ res.info.venue }},
                                     {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
                                     {% if res.info.volume is defined %}({{ res.info.volume }}),
                                         Pages :{% if res.info.pages is defined %}{{ res.info.pages }}{% endif %}{% endif %}
