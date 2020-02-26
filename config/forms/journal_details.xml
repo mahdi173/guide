@@ -16,5 +16,35 @@
                 <title>app.publisher</title>
             </meta>
         </property>
+
+        <property name="ejr" type="text_line" mandatory="true" colspan="12">
+            <meta>
+                <title>app.ejr</title>
+            </meta>
+        </property>
+
+        <property name="openaccess" type="text_line" mandatory="true" colspan="12">
+            <meta>
+                <title>app.openaccess</title>
+            </meta>
+        </property>
+
+        <property name="printissn" type="text_line" mandatory="true" colspan="12">
+            <meta>
+                <title>app.printissn</title>
+            </meta>
+        </property>
+
+        <property name="eissn" type="text_line" mandatory="true" colspan="12">
+            <meta>
+                <title>app.eissn</title>
+            </meta>
+        </property>
+
+        <property name="rank" type="text_line" mandatory="true" colspan="12">
+            <meta>
+                <title>app.rank</title>
+            </meta>
+        </property>
     </properties>
 </form>

@@ -29,9 +29,7 @@
     <div class="row">
         <div class="col-md-3 col-sm-12"></div>
         <div class="col-md-6 mt-5 mb-5">
-            {% if data is null %}
-
-            {% elseif data.result.hits.hit is defined %}
+            {% if data.result.hits.hit is defined %}
                 <table id="auteurs" class="table">
                     <thead>
                     <tr class="border-0">
@@ -48,10 +46,13 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            {% else %}
+            {% elseif parametre==true  %}
                 <p class="text-center border pt-3 pb-3">
                     No data found !
                 </p>
+            {% elseif parametre==false  %}
+
+                    <p> </p>
             {% endif %}
         </div>
         <div class="col-md-3 col-sm-12"></div>

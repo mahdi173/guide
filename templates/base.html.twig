@@ -105,7 +105,7 @@
 {#            <a href="/blog" class="p-2 text-dark">Blog</a>#}
 {#            <a href="/scopus/topjournallist" class="p-2 text-dark">Top journals list</a>#}
             <a  href="/" class="p-2 text-dark">Home <span class="sr-only">(current)</span></a>
-            <a  href="{{ path('get_authors') }}" class="p-2 text-dark">Search authors <span class="sr-only"></span></a>
+            <a  href="{{ path('get_authors') }}" class="p-2 text-dark">Author search <span class="sr-only"></span></a>
             {% for item in sulu_navigation_root_tree('main') %}
                 <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="p-2 text-dark"
                    title="{{ item.title }}">{{ item.title }}</a>

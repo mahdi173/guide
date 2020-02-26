@@ -30,7 +30,7 @@
 
 <div class="row">
     <div class="col-md-12 mt-5 mb-5">
-
+{{ dump(data_doaj) }}{{ dump(dataissn) }}
         <table class="table" data-toggle="table" data-striped="true">
             <thead>
             <tr class="table-active">
@@ -69,7 +69,19 @@
                             <p class="font-weight-light text-muted mt-n4 mb-n3">
                                 <small>
                                     {% if result.bibjson.identifier| length >0 %}
-                                        {{ result.bibjson.journal.title }}
+                                    {% for d in dataissn %}
+
+                                        {% for iss in result.bibjson.journal.issns %}
+                                            {#                                            {{ dump(iss) }}#}
+
+                                            {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
+                                                <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"> {{ result.bibjson.journal.title }}</a>
+                                            {% else %}
+                                                    {{ result.bibjson.journal.title }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+
                                     {% endif %},
                                     {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
                                     {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
@@ -79,8 +91,9 @@
                                         {% for iss in result.bibjson.journal.issns %}
 {#                                            {{ dump(iss) }}#}
 
-                                            {% if(d.issn == iss|replace({'-':''})) %}
-                                                <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"><span class="badge badge-primary">In our database</span></a>
+                                            {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
+                                                <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"><span class="badge badge-primary">Verified by </span> <img src="{{ asset('assets/images/logo1.png') }}"  class="rounded" title="Guidejournal" alt="Guidejournal" height="20" width="20"></a>
+
                                             {% endif %}
                                         {% endfor %}
                                     {% endfor %}
