@@ -42,15 +42,6 @@
                 <title lang="fr">Article</title>
             </meta>
         </property>
-        <property name="form" type="single_form_selection">
-            <meta>
-                <title lang="de">Formular</title>
-                <title lang="en">Form</title>
-                <title lang="fr">Formulaire</title>
-            </meta>
-            <params>
-                <param name="resourceKey" value="page"/>
-            </params>
-        </property>
+
     </properties>
 </template>
