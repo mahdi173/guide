@@ -4,7 +4,10 @@
 {% block title %}GuideJournal: Add journal{% endblock %}
 
   {% block profile_content %}
-{{ dump(content.form) }}
+      <h1 class="my-4">
+          <small>Submit journals</small>
+      </h1>
+{#{{ dump(content.form) }}#}
       {% if content.form %}
           {% if app.request.get('send') != 'true' %}
               {{ form_start(content.form) }}
