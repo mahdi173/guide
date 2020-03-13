@@ -44,17 +44,6 @@
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary">
                                 {% for l in result.bibjson.link %}
-
-{#                                    {% for s in result.bibjson.journal.issns %}#}
-{#                                        {% for ds in dataissn.printissn %}#}
-{#                                        {% if (ds == s|replace({'-':''})) %}#}
-{#                                            {{ dump(ds) }}#}
-{#                                        {% endif %}#}
-{#                                            {% endfor %}#}
-{#                                    {% endfor %}#}
-
-                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
-
                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
                                 {% endfor %}
                             </p>
