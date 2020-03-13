@@ -44,6 +44,10 @@ class SearchAuthorsController extends AbstractController
     {
 
         $auteur = $request->get('authorValue');
+        $test=false;
+        if (strpos($request->getUri(), 'authorValue') !== false){
+            $test=true;
+        }
         $param  = urlencode($auteur); // str_replace(' ','+',$auteur);
         $data = null;
         try {
@@ -57,8 +61,7 @@ class SearchAuthorsController extends AbstractController
             $this->logger->critical($exception->getTraceAsString());
         }
 
-
-        return $this->render('authors/authors.html.twig',['data'=> $data]);
+        return $this->render('authors/authors.html.twig',['data'=> $data,'parametre'=>$test]);
     }
 
     /**
@@ -150,7 +153,6 @@ class SearchAuthorsController extends AbstractController
                 }
             }
 
-//        dd($dd1);
         /*end*/
 
         return $this->render('authors/publications.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);

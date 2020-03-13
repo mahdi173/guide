@@ -93,6 +93,11 @@ class JournalController extends AbstractRestController implements ClassResourceI
 
         $entity->setTitle($data['title']);
         $entity->setPublisher($data['publisher']);
+        $entity->setEjr($data['ejr']);
+        $entity->setOpenaccess($data['openaccess']);
+        $entity->setPrintissn($data['printissn']);
+        $entity->setEissn($data['eissn']);
+        $entity->setRank($data['rank']);
 
         $this->repository->save($entity);
 
@@ -111,6 +116,11 @@ class JournalController extends AbstractRestController implements ClassResourceI
 
         $entity->setTitle($data['title']);
         $entity->setPublisher($data['publisher']);
+        $entity->setEjr($data['ejr']);
+        $entity->setOpenaccess($data['openaccess']);
+        $entity->setPrintissn($data['printissn']);
+        $entity->setEissn($data['eissn']);
+        $entity->setRank($data['rank']);
 
         $this->repository->save($entity);
 

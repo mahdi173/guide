@@ -221,28 +221,6 @@
 
                     <div class="alert bg-light" style="height: 95%;width: 95%">
 
-{#                        <h3><img src="{{ asset('assets/images/thomson1.png') }}" style="width: 3rem; height: 3rem;"> Thomson Reuters Database</h3>#}
-{#                        <div class="container">#}
-{#                            <div class="row">#}
-{#                                <div class="col-sm-12 col-md-12">Title : <a href={{ url }} target="_blank">{{ data_reuter.title }} </a></div>#}
-{#                            </div>#}
-{#                            <div class="container">#}
-{#                                <div class="row">#}
-{#                                    <div class="col-sm-6 col-md-6">Impact Factor : {{ data_reuter.journalImpactFactor }}</div>#}
-{#                                    <div class="col-sm-6 col-md-6">Rank : {{ data_reuter.rank }}</div>#}
-{#                                </div>#}
-{#                                <div class="row">#}
-{#                                    <div class="col-sm-6 col-md-6">Total Cites : {{ data_reuter.totalCites }} </div>#}
-{#                                    <div class="col-sm-6 col-md-6">Category name : {{ data_reuter.categoryname }} </div>#}
-{#                                </div>#}
-{#                                <div class="row">#}
-{#                                    <div class="col-sm-6 col-md-6">ISSN : {{ data_reuter.iSSN }}</div>#}
-{#                                    <div class="col-sm-6 col-md-6">E-ISSN : {{ data_reuter.eISSN }}</div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-
-                        {#debut table#}
                         <table class="table table-bordered table-striped table-sm">
                             <caption style="caption-side: top;">
                                 <h4><img src="{{ asset('assets/images/thomson1.png') }}" style="width: 3rem; height: 3rem; caption-side: top !important;"> Thomson Reuters Database</h4>
@@ -281,15 +259,6 @@
                             </tbody>
                         </table>
 
-{#                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
-{#                            <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">#}
-{#                                {% if app.user.favoriteReutersJournals.contains(data_reuter) %}#}
-{#                                    Supprimer de vos favoris#}
-{#                                {% else %}#}
-{#                                    Ajouter à vos favoris#}
-{#                                {% endif %}#}
-{#                            </a>#}
-{#                        {% endif %}#}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             {% if app.user.favoriteScopusJournals.contains(data_reuter) %}
                                 <div data-toggle="tooltip" data-placement="right" title="Added to your Favorites">
@@ -307,7 +276,7 @@
                     {% set test=1 %}
                 {% endif %}
                 {% if test ==1 and data_reuter is not null %}
-                    <div class="alert bg-info" style="height: 95%;width: 95%">
+                    <div class="alert bg-light" style="height: 95%;width: 95%; color: #999">
 
 
                         <h3><img src="{{ asset('assets/images/thomson1.png') }}" style="width: 3rem; height: 3rem;"> Thomson Reuters Database</h3>
@@ -400,15 +369,6 @@
                         </tr>
                         </tbody>
                     </table>
-{#                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
-{#                        <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">#}
-{#                            {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}#}
-{#                                Supprimer de vos favoris#}
-{#                            {% else %}#}
-{#                                Ajouter à vos favoris#}
-{#                            {% endif %}#}
-{#                        </a>#}
-{#                    {% endif %}#}
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}
@@ -425,7 +385,7 @@
                         {% set tests=1 %}
                     {% endif %}
                     {% if tests==1 and  data_t_scopus is not null %}
-                        <div class="alert bg-info" style="height: 95%;width: 95%">
+                        <div class="alert bg-light" style="height: 95%;width: 95%; color: #999">
                             <h3><img src="{{ asset('assets/images/scopus3.png') }}" style="width: 3rem; height: 3rem;"> Scopus Database</h3>
                             <h1>Not Found </h1>
                         </div>
@@ -450,7 +410,7 @@
 
                 </div>
 {#            {% endif %}#}
-            {% elseif data_reuter is defined %}
+            {% elseif data_reuter is defined and data_reuter| length >0 %}
                     <div class="row mb-3">
                         <div class="col-md-12 text-center">
                             {% if app.user.favoriteScopusJournals.contains(data_reuter)==false %}
@@ -464,6 +424,33 @@
 
         {% endif %}
         <!-- end favorite button -->
+
+        <!-- user dosen't logged in -->
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED')==false %}
+
+            {% if data_t_scopus is defined and data_t_scopus| length >0  %}
+
+                <div class="row mb-3">
+                    <div class="col-md-12 text-center">
+                            <a href="{{ path('sulu_community.login', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
+                                <i class="fa fa-star"></i> Add to your favorites
+                            </a>
+                    </div>
+
+                </div>
+                {#            {% endif %}#}
+            {% elseif data_reuter is defined and data_reuter| length >0 %}
+                <div class="row mb-3">
+                    <div class="col-md-12 text-center">
+                            <a href="{{ path('sulu_community.login', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
+                                <i class="fa fa-star"></i> Add to your favorites
+                            </a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        <!-- end user dosen't logged in -->
+
 
         <div class="row">
             <div class="col-md-12 text-center">

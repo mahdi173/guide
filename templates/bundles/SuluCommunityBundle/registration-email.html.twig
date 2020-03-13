@@ -1,8 +1,8 @@
 {% extends '@SuluCommunity/base-email.html.twig' %}
 
 {% block content %}
+{#    {% set url = url('sulu_community.confirmation', { token: user.confirmationKey }) %}#}
     {% set url = url('sulu_community.confirmation', { token: user.confirmationKey }) %}
-
     <div class="text-center border pt-3 pb-3" role="alert">
         <a href="{{ url }}" class="alert-link">
             {{ url }}

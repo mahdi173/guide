@@ -17,5 +17,25 @@
             <field-name>publisher</field-name>
             <entity-name>App\Entity\Journal</entity-name>
         </property>
+        <property name="ejr" visibility="yes" translation="app.ejr" >
+            <field-name>ejr</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+        <property name="openaccess" visibility="yes" translation="app.openaccess" >
+            <field-name>openaccess</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+        <property name="printissn" visibility="yes" translation="app.printissn" >
+            <field-name>printissn</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+        <property name="eissn" visibility="yes" translation="app.eissn" >
+            <field-name>eissn</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
+        <property name="rank" visibility="yes" translation="app.rank" >
+            <field-name>rank</field-name>
+            <entity-name>App\Entity\Journal</entity-name>
+        </property>
     </properties>
 </list>
