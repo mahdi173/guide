@@ -1,0 +1,144 @@
+{% extends "base.html.twig" %}
+{% block title %}GuideJournal - Graphics generator{% endblock %}
+{% block stylesheets %}
+<style>
+    #myChart{
+
+        width:1000px !important;
+        height:1000px !important;
+
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <canvas id="myChart" width="100" height="100"></canvas>
+
+    </div>
+    <div class="row">
+        <a href="#" id="downloadPdf" class="btn-danger" style="padding: 20px">pdf</a>
+    </div>
+
+{% endblock  %}
+
+{% block javascripts %}
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: '{{type}}',
+    data: {
+        labels: ({{axeX|json_encode()|raw}}),
+        datasets: [{
+        data: ({{axeY|json_encode()|raw}}),
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem) {
+                    return tooltipItem.yLabel;
+                }
+            }
+        },
+         scales: {
+
+           yAxes: [{
+            ticks: {
+            beginAtZero: true,
+            fontSize: 18
+           },
+               scaleLabel: {
+                   display: true,
+                   labelString: '{{titleY}}'
+               }
+           }],
+             xAxes: [{
+                 titleFontSize: 30,
+                 ticks: {
+                     fontSize: 18
+                 },
+                 scaleFontSize: 40,
+                 scaleLabel: {
+                     display: true,
+                     labelString: '{{titleX}}'
+                 }
+             }]
+         },
+         title: {
+             fontSize: 36,
+          display: true,
+          text: '{{graphicTitle}}'
+         }
+    }
+    });
+
+
+    $('#downloadPdf').click(function(event) {
+        // get size of report page
+        var reportPageHeight = $('#reportPage').innerHeight();
+        var reportPageWidth = $('#reportPage').innerWidth();
+
+        // create a new canvas object that we will populate with all other canvas objects
+        var pdfCanvas = $('<canvas />').attr({
+            id: "canvaspdf",
+            width: reportPageWidth,
+            height: reportPageHeight
+        });
+
+        // keep track canvas position
+        var pdfctx = $(pdfCanvas)[0].getContext('2d');
+        var pdfctxX = 0;
+        var pdfctxY = 0;
+        var buffer = 100;
+
+        // for each chart.js chart
+        $("canvas").each(function(index) {
+            // get the chart height/width
+            var canvasHeight = $(this).innerHeight();
+            var canvasWidth = $(this).innerWidth();
+
+            // draw the chart into the new canvas
+            pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
+            pdfctxX += canvasWidth + buffer;
+
+            // our report page is in a grid pattern so replicate that in the new canvas
+            if (index % 2 === 1) {
+                pdfctxX = 0;
+                pdfctxY += canvasHeight + buffer;
+            }
+        });
+
+        // create new pdf and add our new canvas as an image
+        var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+        pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+
+        // download the pdf
+        pdf.save('filename.pdf');
+    });
+
+    </script>
+{% endblock %}

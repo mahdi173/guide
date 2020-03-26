@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block content %}
+
+    <div class="row">
+        <h4 class="text-center" style="margin-top: 20px;">Graphics generator</h4>
+        <p style="margin-top: 30px;margin-bottom: 60px">
+            Graphics generator create online graphics, bar, pie or line charts. Just paste your data into the data section of the graph and click the Create Graph button</p>
+
+
+    </div>
+
+
+    {{ form_start(form)}}
+    <div class="row">
+    <div class="col-md-5">
+
+        {{ form_row(form.type)}}<br>
+        {{ form_row(form.titleX)}}<br>
+        {{ form_row(form.dataX)}}
+        <br>{{ form_row(form.createGraph)}}
+    </div>
+
+        <div class="col-md-5">
+
+            {{ form_row(form.graphicTitle)}}
+            {{ form_row(form.titleY)}}<br>
+            {{ form_row(form.dataY)}}
+
+        </div>
+    </div>
+
+    {{ form_end(form)}}
+
+{% endblock  %}
