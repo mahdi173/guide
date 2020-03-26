@@ -27,7 +27,6 @@
         </div>
         <div class="col-md-2 col-sm-1"></div>
     </div>
-
 <div class="row">
     <div class="col-md-12 mt-5 mb-5">
 
@@ -45,17 +44,6 @@
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary">
                                 {% for l in result.bibjson.link %}
-
-{#                                    {% for s in result.bibjson.journal.issns %}#}
-{#                                        {% for ds in dataissn.printissn %}#}
-{#                                        {% if (ds == s|replace({'-':''})) %}#}
-{#                                            {{ dump(ds) }}#}
-{#                                        {% endif %}#}
-{#                                            {% endfor %}#}
-{#                                    {% endfor %}#}
-
-                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
-
                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
                                 {% endfor %}
                             </p>
@@ -72,14 +60,15 @@
                                     {% for d in dataissn %}
 
                                         {% for iss in result.bibjson.journal.issns %}
-                                            {#                                            {{ dump(iss) }}#}
+{#                                                                                        {{ dump(iss) }}#}
 
                                             {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
                                                 <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"> {{ result.bibjson.journal.title }}</a>
-                                            {% else %}
-                                                    {{ result.bibjson.journal.title }}
+
                                             {% endif %}
                                         {% endfor %}
+                                        {% else %}
+                                            {{ result.bibjson.journal.title }}
                                     {% endfor %}
 
                                     {% endif %},
@@ -122,7 +111,7 @@
                                     {{ res.info.venue }},
                                     {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
                                     {% if res.info.volume is defined %}({{ res.info.volume }}),
-                                        Pages :{% if res.info.pages is defined %}{{ res.info.pages }}{% endif %}{% endif %}
+                                        {% if res.info.pages is defined %}Pages :{{ res.info.pages }}{% endif %}{% endif %}
                                 </small>
                             </p>
                         </td>
