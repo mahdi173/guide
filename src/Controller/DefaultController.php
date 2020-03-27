@@ -54,17 +54,5 @@ class DefaultController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/graphics_generator", name="graphics_generator")
-     */
-    public function graphic_generator(Request $request)
-    {
-        dd($request);
 
-        return $this->render(
-            'graphics/graphics_generator.html.twig', [
-
-            ]
-        );
-    }
 }

@@ -6,6 +6,7 @@
 
         width:1000px !important;
         height:1000px !important;
+        background-color: white !important;
 
     }
 </style>
@@ -16,8 +17,10 @@
         <canvas id="myChart" width="100" height="100"></canvas>
 
     </div>
-    <div class="row">
-        <a href="#" id="downloadPdf" class="btn-danger" style="padding: 20px">pdf</a>
+    <br><div class="row">
+        <a href="#" id="downloadPdf" class="btn" style="padding: 20px;background-color: #B22222;color:white;margin-right: 15px">download pdf</a>
+{#        <a href="#" id="downloadPic" class="btn" style="padding: 20px;background-color: #B22222;color:white">download image</a>#}
+
     </div>
 
 {% endblock  %}
@@ -25,6 +28,7 @@
 {% block javascripts %}
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
 
     <script>
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -73,18 +77,20 @@
            },
                scaleLabel: {
                    display: true,
-                   labelString: '{{titleY}}'
+                   labelString: '{{titleY}}',
+                   fontSize:24,
                }
            }],
              xAxes: [{
-                 titleFontSize: 30,
+                 fontSize: 30,
                  ticks: {
                      fontSize: 18
                  },
                  scaleFontSize: 40,
                  scaleLabel: {
                      display: true,
-                     labelString: '{{titleX}}'
+                     labelString: '{{titleX}}',
+                     fontSize:24,
                  }
              }]
          },
@@ -97,47 +103,31 @@
     });
 
 
+    $('#downloadPic').click(function(event) {
+        var canvas = document.getElementById('myChart');
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+        $("#downloadPic").attr("href", dataURL);
+        $("#downloadPic").attr("download", "{{graphicTitle}}.jpeg");
+
+
+
+    })
     $('#downloadPdf').click(function(event) {
-        // get size of report page
-        var reportPageHeight = $('#reportPage').innerHeight();
-        var reportPageWidth = $('#reportPage').innerWidth();
+        var canvas = document.getElementById('myChart');
+        //creates image
+        var canvasImg = canvas.toDataURL("image/png", 1.0);
 
-        // create a new canvas object that we will populate with all other canvas objects
-        var pdfCanvas = $('<canvas />').attr({
-            id: "canvaspdf",
-            width: reportPageWidth,
-            height: reportPageHeight
-        });
+        //creates PDF from img
+        var doc = new jsPDF('landscape');
+        doc.setFontSize(20);
 
-        // keep track canvas position
-        var pdfctx = $(pdfCanvas)[0].getContext('2d');
-        var pdfctxX = 0;
-        var pdfctxY = 0;
-        var buffer = 100;
 
-        // for each chart.js chart
-        $("canvas").each(function(index) {
-            // get the chart height/width
-            var canvasHeight = $(this).innerHeight();
-            var canvasWidth = $(this).innerWidth();
 
-            // draw the chart into the new canvas
-            pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
-            pdfctxX += canvasWidth + buffer;
-
-            // our report page is in a grid pattern so replicate that in the new canvas
-            if (index % 2 === 1) {
-                pdfctxX = 0;
-                pdfctxY += canvasHeight + buffer;
-            }
-        });
-
-        // create new pdf and add our new canvas as an image
-        var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
-        pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
-
-        // download the pdf
-        pdf.save('filename.pdf');
+        doc.addImage(canvasImg, 'PNG', 10, 30, 280, 150 );
+        var title='{{graphicTitle}}';
+        doc.save(title+'.pdf');
     });
 
     </script>
