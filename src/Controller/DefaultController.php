@@ -45,7 +45,7 @@ class DefaultController extends AbstractController
 
             ]);
         }
-        else{dump("rr");}
+
 
         return $this->render(
             'graphics/graphics_data.html.twig', [
