@@ -1,0 +1,134 @@
+{% extends "base.html.twig" %}
+{% block title %}GuideJournal - Graphics generator{% endblock %}
+{% block stylesheets %}
+<style>
+    #myChart{
+
+        width:1000px !important;
+        height:1000px !important;
+        background-color: white !important;
+
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <canvas id="myChart" width="100" height="100"></canvas>
+
+    </div>
+    <br><div class="row">
+        <a href="#" id="downloadPdf" class="btn" style="padding: 20px;background-color: #B22222;color:white;margin-right: 15px">download pdf</a>
+{#        <a href="#" id="downloadPic" class="btn" style="padding: 20px;background-color: #B22222;color:white">download image</a>#}
+
+    </div>
+
+{% endblock  %}
+
+{% block javascripts %}
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
+
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: '{{type}}',
+    data: {
+        labels: ({{axeX|json_encode()|raw}}),
+        datasets: [{
+        data: ({{axeY|json_encode()|raw}}),
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem) {
+                    return tooltipItem.yLabel;
+                }
+            }
+        },
+         scales: {
+
+           yAxes: [{
+            ticks: {
+            beginAtZero: true,
+            fontSize: 18
+           },
+               scaleLabel: {
+                   display: true,
+                   labelString: '{{titleY}}',
+                   fontSize:24,
+               }
+           }],
+             xAxes: [{
+                 fontSize: 30,
+                 ticks: {
+                     fontSize: 18
+                 },
+                 scaleFontSize: 40,
+                 scaleLabel: {
+                     display: true,
+                     labelString: '{{titleX}}',
+                     fontSize:24,
+                 }
+             }]
+         },
+         title: {
+             fontSize: 36,
+          display: true,
+          text: '{{graphicTitle}}'
+         }
+    }
+    });
+
+
+    $('#downloadPic').click(function(event) {
+        var canvas = document.getElementById('myChart');
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+        $("#downloadPic").attr("href", dataURL);
+        $("#downloadPic").attr("download", "{{graphicTitle}}.jpeg");
+
+
+
+    })
+    $('#downloadPdf').click(function(event) {
+        var canvas = document.getElementById('myChart');
+        //creates image
+        var canvasImg = canvas.toDataURL("image/png", 1.0);
+
+        //creates PDF from img
+        var doc = new jsPDF('landscape');
+        doc.setFontSize(20);
+
+
+
+        doc.addImage(canvasImg, 'PNG', 10, 30, 280, 150 );
+        var title='{{graphicTitle}}';
+        doc.save(title+'.pdf');
+    });
+
+    </script>
+{% endblock %}
