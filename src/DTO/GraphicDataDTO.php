@@ -15,6 +15,10 @@ class GraphicDataDTO
     public $titleY;
     public $dataX;
     public $dataY;
+    public $color;
+    public $showValues;
+    public $showGrid;
+
 
 
 }

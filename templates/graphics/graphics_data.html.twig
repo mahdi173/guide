@@ -16,7 +16,8 @@
 
         {{ form_row(form.type)}}<br>
         {{ form_row(form.titleX)}}<br>
-        {{ form_row(form.dataX)}}
+        {{ form_row(form.dataX )}}
+        {{ form_row(form.showValues)}}
         <br>{{ form_row(form.createGraph)}}
     </div>
 
@@ -25,10 +26,62 @@
             {{ form_row(form.graphicTitle)}}
             {{ form_row(form.titleY)}}<br>
             {{ form_row(form.dataY)}}
+            {{ form_row(form.showGrid)}}
+            {{ form_row(form.color)}}
 
         </div>
     </div>
 
     {{ form_end(form)}}
 
+{% endblock  %}
+{% block javascripts %}
+    <script>
+        $( document ).ready(function() {
+
+            if('{{ edit }}')
+            {
+                if (localStorage.getItem('dataObject')) {
+
+                    var retrievedObject = localStorage.getItem('dataObject');
+                    var dataX = localStorage.getItem('dataX');
+                    var dataY = localStorage.getItem('dataY');
+
+                    var arrayData = JSON.parse(retrievedObject);
+                    var arrayDataX = JSON.parse(dataX);
+                    var arrayDataY = JSON.parse(dataY);
+
+                    var selectedType=arrayData.type;
+                    var textareaX=JSON.parse(arrayDataX);
+                    var textareaY=JSON.parse(arrayDataY);
+
+
+                    $('#graphic_data_type').val(selectedType);
+                    $("#graphic_data_titleX").val(arrayData.titleX);
+                    $("#graphic_data_titleY").val(arrayData.titleY);
+                    $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
+                    $("#graphic_data_color").val(arrayData.color);
+
+                    var text1=document.getElementById("graphic_data_dataX");
+                    text1.value=textareaX.join('\n');
+
+                    var text2=document.getElementById("graphic_data_dataY");
+                    text2.value=textareaY.join('\n');
+
+
+                    if(arrayData.showValues !== ""){
+                        $("#graphic_data_showValues").prop( "checked",true );
+                    }
+                    if(arrayData.showGrig !== ""){
+                        $("#graphic_data_showGrid").prop( "checked",true);
+                    }
+                }
+            }
+            else{
+                localStorage.removeItem('dataObject');
+                localStorage.removeItem('dataX');
+                localStorage.removeItem('dataY');
+            }
+        })
+    </script>
 {% endblock  %}

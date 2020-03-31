@@ -5,7 +5,9 @@ namespace App\Form;
 
 use App\DTO\GraphicDataDTO;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,6 +50,17 @@ class GraphicDataType extends AbstractType
             ])
             ->add('createGraph',SubmitType::class,[
                 'attr'=>['class'=>"btn btn-primary"]
+            ])
+            ->add('color',ColorType::class,[
+                'attr'=>['class'=>""]
+            ])
+            ->add('showValues',CheckboxType::class,[
+                'required'=>false,
+              //  'attr'=>['checked'=>"checked","value"=>"1"]
+            ])
+            ->add('showGrid',CheckboxType::class,[
+                'required'=>false,
+               // 'attr'=>['checked'=>"checked","value"=>"1"]
             ])
         ;
     }
