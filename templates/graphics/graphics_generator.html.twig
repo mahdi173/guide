@@ -36,6 +36,8 @@
 
 
     <script>
+        var hasMultipleY='{{ hasMultipleY }}'
+console.log(hasMultipleY);
         var showValues='{{ showValues }}';
         var type='{{ type }}';
         var showGrid='{{ showGrid }}';
@@ -50,7 +52,43 @@
 
         borderColor: '{{color}}',
         borderWidth: 1
-        }]
+        }],
+
+        {#datasets: [#}
+
+        {#    {#}
+        {#        label: "Total Commisfgsion",#}
+        {#        data: ({{axeY|json_encode()|raw}}),#}
+        {#        backgroundColor:'{{color}}',#}
+
+        {#        yAxyesID: "id0",#}
+        {#        borderWidth: 1#}
+        {#    },#}
+        {#    {#}
+        {#    label: "Total Commission",#}
+        {#    data: ({{axe1|json_encode()|raw}}),#}
+        {#    backgroundColor: "#8e5ea2",#}
+
+        {#    yAxyesID: "id1",#}
+        {#      borderWidth: 1#}
+        {#},{#}
+        {#    label: "# of Commissgggrions",#}
+        {#    data: ({{axe2|json_encode()|raw}}),#}
+        {#    backgroundColor: "#c45850",#}
+        {#    type: 'line',#}
+        {#    yAxesID: "id2",#}
+        {#    borderWidth: 1#}
+        {#},#}
+        {#    ,{#}
+        {#        label: "# of Commissions",#}
+        {#        data: ({{axe3|json_encode()|raw}}),#}
+        {#        backgroundColor: "#E8839C",#}
+        {#        type: 'line',#}
+        {#        yAxesID: "id3",#}
+        {#        borderWidth: 1#}
+        {#    }#}
+        {#],#}
+
     },
     options: {
         legend: {

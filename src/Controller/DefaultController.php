@@ -8,6 +8,7 @@ use App\DTO\GraphicDataDTO;
 use App\Form\GraphicDataType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-//            dd($form->getData());
+
             $type=$form->get('type')->getData();
             $graphicTitle=$form->get('graphicTitle')->getData();
             $titleX=$form->get('titleX')->getData();
@@ -39,6 +40,28 @@ class DefaultController extends AbstractController
             $dataY=$form->get('dataY')->getData();
             $axeY=explode("\r\n",$dataY);
 
+            /*extra yaxis*/
+            $titles=$request->request->get('title');
+            $dataExtra=$request->request->get('dataExtra');
+            $colors=$request->request->get('color');
+            $hasMultipleY=false;
+            $ax1=[];$ax2=[];$ax3=0;
+
+            if($titles && $dataExtra && $colors && count($titles)!=0 && count($dataExtra)!=0 && count($colors)!=0){
+                $hasMultipleY=true;
+
+                if(count($dataExtra)!=0) {
+                    $ax1 = explode("\r\n", $dataExtra[0]);
+                    $ax2 = explode("\r\n", $dataExtra[1]);
+                    $ax3 = explode("\r\n", $dataExtra[2]);
+
+                }
+            }
+
+
+
+
+
             return $this->render(
                 'graphics/graphics_generator.html.twig', [
                     'type'=>$type,
@@ -50,6 +73,12 @@ class DefaultController extends AbstractController
                     'color'=>$color,
                     'showValues'=>$showValues,
                     'showGrid'=>$showGrid,
+                    'hasMultipleY'=>$hasMultipleY,
+                    'titles'=>$titles,
+                    'axe1'=>$ax1,
+                    'axe2'=>$ax2,
+                    'axe3'=>$ax3,
+                    'colors'=>$colors,
 
 
             ]);
@@ -64,5 +93,35 @@ class DefaultController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/add-new-data", name="add_new_data")
+     */
+    public function add_new_data(Request $request)
+    {
 
+        $html =  $this->renderView("graphics/graphics_extra_data.html.twig");
+
+
+        return new JsonResponse([
+            "ok"=>true,
+            "html"=>$html,
+            "request"=>$request->request->get("dummy"),
+        ]);
+    }
+
+    /**
+     * @Route("/calcul_data", name="calcul_data")
+     */
+    public function calcul_data(Request $request)
+    {
+dump($request);
+        $html =  $this->renderView("graphics/graphics_extra_data.html.twig");
+
+
+        return new JsonResponse([
+            "ok"=>true,
+            "html"=>$html,
+            "request"=>$request->request->get("dummy"),
+        ]);
+    }
 }

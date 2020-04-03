@@ -1,4 +1,16 @@
 {% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    <style>
+    #new_data:hover,#removeRow:hover{
+        cursor:pointer;
+    }
+        .createGraph{
+            width: 150px !important;
+        }
+    </style>
+{% endblock  %}
+
 {% block content %}
 
     <div class="row">
@@ -17,22 +29,60 @@
         {{ form_row(form.type)}}<br>
         {{ form_row(form.titleX)}}<br>
         {{ form_row(form.dataX )}}
-        {{ form_row(form.showValues)}}
-        <br>{{ form_row(form.createGraph)}}
+
+
     </div>
 
         <div class="col-md-5">
 
             {{ form_row(form.graphicTitle)}}
             {{ form_row(form.titleY)}}<br>
-            {{ form_row(form.dataY)}}
-            {{ form_row(form.showGrid)}}
+
+
+
             {{ form_row(form.color)}}
+            {{ form_row(form.showGrid)}}
+            {{ form_row(form.showValues)}}
+
 
         </div>
+
+
+
+    </div>
+    <div class="row" style="margin-left: 10px;">
+        <div class="col-md-12"><i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #0b2e13"></i></div>
+        <div class="col-md-3 col-sm-12" style="float: left">
+            {{ form_row(form.dataY)}}
+        </div>
+        <div class="col-md-9 col-sm-12" style="float: right">
+                <div id="container"></div>
+        </div>
+
+
     </div>
 
+     <div class="row" style="margin-left: 40px;margin-top: 20px">
+
+        {{ form_row(form.createGraph)}}
+
+    </div>
+
+
     {{ form_end(form)}}
+    <div class="row" style="display: none;">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label style="display: none;">Nombre de rows</label>
+                <input class="form-control max_width_150" name="nombreRows" id="nombreRows" type="hidden" min="0" value="1">
+                  <div id="colisSummary" class="margin_top_15" style="display: none;">
+            </div>
+        </div>
+    </div>
+    <div id="blockY">
+    </div>
+
+
 
 {% endblock  %}
 {% block javascripts %}
@@ -82,6 +132,209 @@
                 localStorage.removeItem('dataX');
                 localStorage.removeItem('dataY');
             }
+
+
+            /*ajout data*/
+
+
+/***************************BTN************************************/
+
+function update_input_number(){
+    var nombre = $(".ligne").length;
+   // nombre = Math.max(nombre, 1);
+    $("#nombreRows").val(nombre);
+}
+
+
+            $(document).on("click",".delete_colis_row",function(){
+                var rowToDelete = "#colis"+$(this).attr("data-number");
+
+                $(rowToDelete).remove();
+
+
+                //On met à jour le nombre
+                update_input_number();
+            });
+
+
+            $(document).on("click","#new_data",function(){
+
+                var path = "{{ path('add_new_data') | escape('js')}}";
+
+                var data = {"dummy":'rr'}
+                var nombre = parseInt($('#nombreRows').val());
+                $('#nombreRows').val(nombre+1);
+                $.post(path,data,function (server) {
+                    // console.log('server')
+
+
+                    if(server.ok){
+
+                        var conteur = 0
+                        $(".ligne").each(function (index) {
+                            conteur +=1;
+                            if(conteur > nombre){
+                                this.remove();
+                            }
+                        })
+
+
+                        if(nombre<=3){
+                            for(var i=0;i<(nombre-conteur); i++){
+
+                                $("#container").append(server.html);
+                            }
+                        }
+                    else{
+                            $("#new_data").css('display','none')
+                        }
+
+                    }
+
+                    //Je fais une boucle pour que les inputs soient stockés
+                    $("#blockY").each(function (index) {
+                        if(!$(this).hasClass("dealtWith")){
+                            var rowIdSelector = dealWithColisInput(index, $(this));
+                            dealWithToggle(rowIdSelector);
+                        }
+                    })
+                })
+            })
+
+            setTimeout(function () {
+                //$("#ajoutColisButton").trigger('click');
+            },500)
+
+            setTimeout(function () {
+                //$("input[name=longueur0]").focus();
+            },1000)
+
+
+            //Gestion des critères supplémentaires
+
+/***************************BTN************************************/
+
+
+
+
         })
+/****************************************************************************/
+        function dealWithToggle(parentSelector){
+            if(typeof(parentSelector) == "undefined"){
+                parentSelector = "";
+            }
+            if(parentSelector != ""){
+                parentSelector = parentSelector +" ";
+            }
+
+            let toggleTarget = parentSelector + '.toggle';
+            let toggleSpanTarget = parentSelector + '.toggle span';
+            let dataToggleTarget = parentSelector + '[data-toggle]';
+            $(toggleTarget).append('<span></span>');
+            $(toggleSpanTarget).click(function() {
+                $(this).parent().find('input').prop('checked', !$(this).parent().find('input').prop('checked'))
+                $(this).parent().find('input').trigger('change')
+            })
+            $(toggleSpanTarget).click(function() {
+                $(this).parent().find('textarea').prop('checked', !$(this).parent().find('textarea').prop('checked'))
+                $(this).parent().find('textarea').trigger('change')
+            })
+
+            $(dataToggleTarget).change(function() {
+
+                if($(this).prop('checked')) $($(this).attr('data-toggle')).slideDown()
+                else $($(this).attr('data-toggle')).slideUp()
+            })
+
+            $(dataToggleTarget).each(function() {
+
+                if($(this).prop('checked')) $($(this).attr('data-toggle')).show()
+                else $($(this).attr('data-toggle')).hide()
+            })
+        }
+
+        function dealWithColisInput(index, target){
+
+            var inputs = target.find("input");
+            var selects = target.find("select");
+            var textarea = target.find("textarea");
+            inputs.each(function () {
+                var name = $(this).attr('name');
+                var newName = name + index;
+                $(this).attr('name',newName);
+                $(this).attr('data-number',index);
+            });
+
+
+
+            textarea.each(function () {
+                var name = $(this).attr('name');
+                var newName = name + index;
+                $(this).attr('name',newName);
+                $(this).attr('data-number',index);
+            });
+
+            var deleteTarget = target.find(".delete_colis_row");
+            deleteTarget.attr('data-number',index)
+
+
+
+            if(!target.hasClass("dealtWith")){
+                target.addClass("dealtWith");
+                target.attr("data-number",index);
+                target.attr("id","row"+index);
+
+
+            }
+
+
+            return "#ligne"+index;
+        }
+        dealWithToggle('');
+
+        $(document).on("change","#container input", updatePreviewInformation);
+        $(document).on("change","#container textarea", updatePreviewInformation);
+        $(document).on("click",".delete_colis_row", updatePreviewInformation);
+
+        function updatePreviewInformation(){
+
+            $("#colisSummary").fadeIn();
+            var dd = [];
+
+
+            var total = 0;
+
+            var path = "{{ path('calcul_data') }}";
+
+
+            console.log("estimate mpl");
+            //Si l'un des colis est gerbable, on interroge le server
+            var has_one_gerbable = false;
+
+            $(".ligne").each(function(){
+                var number = parseInt($(this).find(".nombre").val());
+                var title = parseInt($(this).find(".title").val());
+                var color = parseInt($(this).find(".color").val());
+
+
+                var aColis = {
+                    "nombre":number,
+                    "title":title,
+                    "color":color,
+
+                };
+                dd.push(aColis);
+
+            });
+
+
+
+
+        }
+        /****************************************************************************/
+
+
+
+
     </script>
 {% endblock  %}

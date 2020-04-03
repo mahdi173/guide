@@ -49,7 +49,7 @@ class GraphicDataType extends AbstractType
                 'required'=>'required'
             ])
             ->add('createGraph',SubmitType::class,[
-                'attr'=>['class'=>"btn btn-primary"]
+                'attr'=>['class'=>"btn btn-primary createGraph"]
             ])
             ->add('color',ColorType::class,[
                 'attr'=>['class'=>""]
