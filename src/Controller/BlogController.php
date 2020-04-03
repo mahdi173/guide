@@ -8,18 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends BaseController
 {
-    /**
-     * @Route("/blog", name="blog_index")
-     */
-    public function index()
-    {
-        $posts = $this->em->getRepository(Post::class)->findAll();
-        return $this->render(
-            'blog/index.html.twig', [
-                'posts' => $posts,
-            ]
-        );
-    }
+//    /**
+//     * @Route("blog", name="blog_index")
+//     */
+//    public function index()
+//    {
+//        $posts = $this->em->getRepository(Post::class)->findAll();
+//        return $this->render(
+//            'blog/index.html.twig', [
+//                'posts' => $posts,
+//            ]
+//        );
+//    }
 
     /**
      * @param Post $post

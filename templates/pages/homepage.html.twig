@@ -99,7 +99,10 @@
             </div>
         </div>
 
-
+        <div class="row">
+            <h4 class="mb-n2 mt-5" style="color: #a7a7a7"><b>Recent articles</b></h4>
+            <hr class="col-md-12" style="background-color: #a7a7a7; height:2px">
+        </div>
         <div class="row">
             {% set recentarticles= sulu_article_load_recent(6) %}
             {% for a in recentarticles %}
@@ -113,6 +116,8 @@
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>
+                            <p>{{ a.content.content.article|slice(0,50)|raw  }}...</p>
+                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>
                         </div>
                     </div>
                 </div>

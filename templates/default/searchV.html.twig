@@ -397,7 +397,7 @@
         </div>
         <!-- favorite button -->
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {% if data_t_scopus.eIssn is defined %}
+            {% if data_t_scopus.eIssn is defined and data_t_scopus| length ==1 %}
 
                 <div class="row mb-3">
                     <div class="col-md-12 text-center">
@@ -410,7 +410,7 @@
 
                 </div>
 {#            {% endif %}#}
-            {% elseif data_reuter is defined and data_reuter| length >0 %}
+            {% elseif data_reuter is defined and data_reuter| length ==1 %}
                     <div class="row mb-3">
                         <div class="col-md-12 text-center">
                             {% if app.user.favoriteScopusJournals.contains(data_reuter)==false %}
@@ -428,18 +428,18 @@
         <!-- user dosen't logged in -->
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED')==false %}
 
-            {% if data_t_scopus is defined and data_t_scopus| length >0  %}
+            {% if data_t_scopus is defined and data_t_scopus| length ==1  %}
 
                 <div class="row mb-3">
                     <div class="col-md-12 text-center">
-                            <a href="{{ path('sulu_community.login', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
+                            <a href="{{ path('sulu_community.login') }}" class="btn btn-outline-primary">
                                 <i class="fa fa-star"></i> Add to your favorites
                             </a>
                     </div>
 
                 </div>
                 {#            {% endif %}#}
-            {% elseif data_reuter is defined and data_reuter| length >0 %}
+            {% elseif data_reuter is defined and data_reuter| length ==1 %}
                 <div class="row mb-3">
                     <div class="col-md-12 text-center">
                             <a href="{{ path('sulu_community.login', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
