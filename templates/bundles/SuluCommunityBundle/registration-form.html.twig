@@ -5,7 +5,6 @@
 
     {% if (app.request.get('send') == 'true')  %}
         <p class="text-center border pt-3 pb-3">
-{#            {{ 'registration_finished'|trans }}#}
             operation was successfully completed, Please confirm from your email acount !
         </p>
     {% else %}
@@ -41,7 +40,7 @@
         </div>
         <div class="checkbox mb-3">
             <label class="mr-lg-2 mt-4">
-                {{ form_widget(form.terms) }} <a href="#">Accept terms and conditions</a>
+                {{ form_widget(form.terms) }} <a href="{{ path('privacy_page') }}" target="_blank">Accept terms and conditions</a>
             </label>
         </div>
         {{ form_widget(form._token) }}
