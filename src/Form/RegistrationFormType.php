@@ -71,6 +71,7 @@ class RegistrationFormType extends AbstractType
 
                     return $user;
                 },
+                'validation_groups' => ['profile'],
             ]
         );
     }
