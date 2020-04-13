@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class GraphicDataType extends AbstractType
 {
@@ -28,7 +30,7 @@ class GraphicDataType extends AbstractType
 
             ])
             ->add('graphicTitle',TextType::class, [
-                    'required'=>'require'
+                    'required'=>'required'
                 ])
             ->add('titleX',TextType::class,[
                 'required'=>'required'
@@ -38,13 +40,15 @@ class GraphicDataType extends AbstractType
             ])
             ->add('dataX',TextareaType::class,[
                 'required'=>'required',
+                'label'=>'X axis',
                 'attr'=>[
-                    'cols'=>'8','rows'=>'8'
+                    'cols'=>'8','rows'=>'8','class'=>"dataX"
                 ],
             ])
             ->add('dataY',TextareaType::class,[
+                'label'=>'Y axis',
                 'attr'=>[
-                    'cols'=>'8','rows'=>'8'
+                    'cols'=>'8','rows'=>'8','class'=>"dataY"
                 ],
                 'required'=>'required'
             ])

@@ -20,13 +20,22 @@ class DefaultController extends AbstractController
      */
     public function graphic_data(Request $request)
     {
+
+        $aa=[];
        $edit=$request->query->get('edit');
+//       if($edit){
+//           if($request->request->get('dataExtra')) {
+//               $dataExtra = $request->request->get('dataExtra');
+//               $aa=explode("\r\n",$dataExtra);
+//               dd($aa);
+//           }
+//       }
         $graphicData=new GraphicDataDTO();
         $form=$this->createForm(GraphicDataType::class,$graphicData);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
+//            dd($request->request->all());
             $type=$form->get('type')->getData();
             $graphicTitle=$form->get('graphicTitle')->getData();
             $titleX=$form->get('titleX')->getData();
@@ -39,24 +48,49 @@ class DefaultController extends AbstractController
 
             $dataY=$form->get('dataY')->getData();
             $axeY=explode("\r\n",$dataY);
-
+            $titles=null;$dataExtra=null;$colors=null;$aa=[];
+            $color1=null;$color2=null;$color3=null;
             /*extra yaxis*/
-            $titles=$request->request->get('title');
-            $dataExtra=$request->request->get('dataExtra');
-            $colors=$request->request->get('color');
+            if($request->request->get('title')){
+                $titles=$request->request->get('title');
+            }
+            if($request->request->get('dataExtra')) {
+                $dataExtra = $request->request->get('dataExtra');
+
+
+            }
+            if($request->request->get('color')) {
+                $colors = $request->request->get('color');
+            }
+
+
+            if($colors){
+                $color1=$colors[0];
+                if(count($colors)>=2){
+                    $color2=$colors[1];
+                }
+                if(count($colors)==3){
+                    $color3=$colors[2];
+                }
+            }
+
             $hasMultipleY=false;
             $ax1=[];$ax2=[];$ax3=0;
 
             if($titles && $dataExtra && $colors && count($titles)!=0 && count($dataExtra)!=0 && count($colors)!=0){
                 $hasMultipleY=true;
 
-                if(count($dataExtra)!=0) {
+
                     $ax1 = explode("\r\n", $dataExtra[0]);
+                if(count($dataExtra)>=2 ) {
                     $ax2 = explode("\r\n", $dataExtra[1]);
+                }
+                if(count($dataExtra)==3 ) {
                     $ax3 = explode("\r\n", $dataExtra[2]);
+                }
 
                 }
-            }
+
 
 
 
@@ -78,7 +112,12 @@ class DefaultController extends AbstractController
                     'axe1'=>$ax1,
                     'axe2'=>$ax2,
                     'axe3'=>$ax3,
+                    'dataExtra'=>$dataExtra,
+                    'aa'=>$aa,
                     'colors'=>$colors,
+                    'color1'=>$color1,
+                    'color2'=>$color2,
+                    'color3'=>$color3,
 
 
             ]);
@@ -88,6 +127,7 @@ class DefaultController extends AbstractController
         return $this->render(
             'graphics/graphics_data.html.twig', [
               'form'=>$form->createView(),
+                'aa'=>$aa,
                 'edit'=>$edit,
             ]
         );

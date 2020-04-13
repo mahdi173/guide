@@ -12,16 +12,19 @@
         margin-right: 39px;
        float: left;
     }
+    .data-area textarea{
+        height: 75px;
+    }
 </style>
 <div class="ligne">
 <div class="row data-area">
     <div class="form-group">
-    <label>data y</label><br>
+    <label class="label">data y</label><br>
         <div class="input-group mb-3">
            <input type="text" name="title[]" value="Title" class="form-control title"><br>
         </div>
         <div class="input-group mb-3">
-            <textarea type="text" name="dataExtra[]" data-number="0" class="nombre form-control"></textarea><br>
+            <textarea type="text" name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre"></textarea><br>
         </div>
         <div class="input-group mb-3">
            <input type="color" name="color[]" class="form-control color"/>

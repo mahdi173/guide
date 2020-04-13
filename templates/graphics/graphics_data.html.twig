@@ -2,6 +2,32 @@
 
 {% block stylesheets %}
     <style>
+    .cee{
+
+    display: inline;
+    }
+    .dataY,.dataX{
+   border-radius: 5%;
+
+
+    }
+    .settings{
+
+    border: 2px #E0E0E0 solid;
+    padding: 30px 25px;
+    background-color:	#F8F8F8;
+    }
+    .settings-title{
+    padding-bottom: 10px;
+    padding-top:0px;
+    border-bottom: 2px #F0F0F0 solid;
+    }
+    .settings .params{
+    padding-top: 20px;
+    }
+    .data-settings{
+     margin-top: 30px;
+    }
     #new_data:hover,#removeRow:hover{
         cursor:pointer;
     }
@@ -17,57 +43,57 @@
         <h4 class="text-center" style="margin-top: 20px;">Graphics generator</h4>
         <p style="margin-top: 30px;margin-bottom: 60px">
             Graphics generator create online graphics, bar, pie or line charts. Just paste your data into the data section of the graph and click the Create Graph button</p>
-
-
     </div>
 
-
     {{ form_start(form)}}
-    <div class="row">
+    <div class="settings">
+    <h5 class="settings-title">Chart settings</h5>
+    <div class="row params">
     <div class="col-md-5">
 
         {{ form_row(form.type)}}<br>
         {{ form_row(form.titleX)}}<br>
-        {{ form_row(form.dataX )}}
-
+       {{ form_row(form.color)}}
 
     </div>
-
         <div class="col-md-5">
 
             {{ form_row(form.graphicTitle)}}
             {{ form_row(form.titleY)}}<br>
 
-
-
-            {{ form_row(form.color)}}
             {{ form_row(form.showGrid)}}
             {{ form_row(form.showValues)}}
 
-
         </div>
-
-
 
     </div>
-    <div class="row" style="margin-left: 10px;">
-        <div class="col-md-12"><i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #0b2e13"></i></div>
-        <div class="col-md-3 col-sm-12" style="float: left">
-            {{ form_row(form.dataY)}}
-        </div>
-        <div class="col-md-9 col-sm-12" style="float: right">
-                <div id="container"></div>
-        </div>
-
-
     </div>
+     <div class="settings data-settings">
+          <h5 class="settings-title">Chart data</h5>
+        <div class="row params">
+            <div class="col-md-2 col-sm-12" style="float: left">
+              {{ form_label(form.dataX, null, {  'label_attr': {'class': 'cee'} }) }}
+             {{ form_widget(form.dataX )}}
+             </div>
+              <div class="col-md-2">
 
-     <div class="row" style="margin-left: 40px;margin-top: 20px">
+              {{ form_label(form.dataY, null, {  'label_attr': {'class': 'cee'} }) }}
+              {{ form_widget(form.dataY)}}
+              <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #0b2e13"></i>
+              </div>
+
+            <div class="col-md-8 col-sm-12" style="float: right">
+                    <div id="container"></div>
+            </div>
+
+        </div>
+{#         <div class="row" style="margin-left: 40px;margin-top: 20px">#}
+         <div class="row" style="margin-top: 20px">
 
         {{ form_row(form.createGraph)}}
 
     </div>
-
+    </div>
 
     {{ form_end(form)}}
     <div class="row" style="display: none;">
@@ -88,22 +114,58 @@
 {% block javascripts %}
     <script>
         $( document ).ready(function() {
+        var edit='{{ edit }}'
 
-            if('{{ edit }}')
+            if(edit)
+
             {
+                console.log(localStorage.getItem('dataExtra'))
+                console.log(localStorage.getItem('dataY'))
+
                 if (localStorage.getItem('dataObject')) {
 
                     var retrievedObject = localStorage.getItem('dataObject');
                     var dataX = localStorage.getItem('dataX');
                     var dataY = localStorage.getItem('dataY');
+                    var dataExtra = localStorage.getItem('dataExtra');
+
+                     var axe1 = localStorage.getItem('axe1');
+                     var axe2 = localStorage.getItem('axe2');
+                     var axe3 = localStorage.getItem('axe3');
 
                     var arrayData = JSON.parse(retrievedObject);
                     var arrayDataX = JSON.parse(dataX);
                     var arrayDataY = JSON.parse(dataY);
+                    var arrayDataExtra = JSON.parse(dataExtra);
+
+                    var arrayAxe1 = JSON.parse(axe1);
+                    var arrayAxe2 = JSON.parse(axe2);
+                    var arrayAxe3 = JSON.parse(axe3);
 
                     var selectedType=arrayData.type;
                     var textareaX=JSON.parse(arrayDataX);
                     var textareaY=JSON.parse(arrayDataY);
+
+                    console.log('selectedType');
+                    console.log(selectedType);
+                   console.log(arrayDataExtra);
+                   console.log(dataExtra);
+                   var item=dataExtra.split(",")
+   console.log("item")
+   console.log(arrayAxe1)
+   console.log(arrayAxe2)
+   console.log(arrayAxe3)
+   var a =item[0]
+console.log(a.split('\\r'))
+
+// console.log(JSON.parse(dataExtra))
+
+ // console.log(a[0].split("\"") )
+ // console.log(a[1] )
+ //var var3=(a[2].split("\"") )
+ // console.log(a[2].split("\"") )
+ //var values=[var1[1],a[1],var3[0]]
+//console.log(a)
 
 
                     $('#graphic_data_type').val(selectedType);
@@ -111,65 +173,35 @@
                     $("#graphic_data_titleY").val(arrayData.titleY);
                     $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
                     $("#graphic_data_color").val(arrayData.color);
+                    var showGrig=arrayData.showGrig
+                    var showValues=arrayData.showValues
+                    if(showGrig){
+                         $("#graphic_data_showGrid").prop( "checked", true );
+                    } if(showValues){
+                         $("#graphic_data_showValues").prop( "checked", true );
+                    }
+
 
                     var text1=document.getElementById("graphic_data_dataX");
                     text1.value=textareaX.join('\n');
 
-                    var text2=document.getElementById("graphic_data_dataY");
+                     var text2=document.getElementById("graphic_data_dataY");
                     text2.value=textareaY.join('\n');
 
-
-                    if(arrayData.showValues !== ""){
-                        $("#graphic_data_showValues").prop( "checked",true );
-                    }
-                    if(arrayData.showGrig !== ""){
-                        $("#graphic_data_showGrid").prop( "checked",true);
-                    }
-                }
-            }
-            else{
-                localStorage.removeItem('dataObject');
-                localStorage.removeItem('dataX');
-                localStorage.removeItem('dataY');
-            }
-
-
-            /*ajout data*/
-
-
-/***************************BTN************************************/
-
-function update_input_number(){
-    var nombre = $(".ligne").length;
-   // nombre = Math.max(nombre, 1);
-    $("#nombreRows").val(nombre);
-}
-
-
-            $(document).on("click",".delete_colis_row",function(){
-                var rowToDelete = "#colis"+$(this).attr("data-number");
-
-                $(rowToDelete).remove();
-
-
-                //On met à jour le nombre
-                update_input_number();
-            });
-
-
-            $(document).on("click","#new_data",function(){
-
-                var path = "{{ path('add_new_data') | escape('js')}}";
+                    if(arrayDataExtra.length>0)
+                        {
+                            console.log(arrayDataExtra)
+                            var aa='{{aa|json_encode()|raw}}';
+                            console.log("aa")
+                            console.log(aa)
+                             var path = "{{ path('add_new_data') | escape('js')}}";
 
                 var data = {"dummy":'rr'}
                 var nombre = parseInt($('#nombreRows').val());
                 $('#nombreRows').val(nombre+1);
                 $.post(path,data,function (server) {
-                    // console.log('server')
-
 
                     if(server.ok){
-
                         var conteur = 0
                         $(".ligne").each(function (index) {
                             conteur +=1;
@@ -177,22 +209,90 @@ function update_input_number(){
                                 this.remove();
                             }
                         })
-
-
                         if(nombre<=3){
                             for(var i=0;i<(nombre-conteur); i++){
-
                                 $("#container").append(server.html);
                             }
                         }
                     else{
                             $("#new_data").css('display','none')
                         }
-
                     }
 
                     //Je fais une boucle pour que les inputs soient stockés
-                    $("#blockY").each(function (index) {
+                    $(".ligne").each(function (index) {
+                        if(!$(this).hasClass("dealtWith")){
+                            var rowIdSelector = dealWithColisInput(index, $(this));
+                            dealWithToggle(rowIdSelector);
+                        }
+                    })
+                })
+                console.log(document.getElementsByClassName('.nombre0'))
+                $('.nombre0').val("arrayAxe1")
+             }
+            }
+            else{
+                localStorage.removeItem('dataObject');
+                localStorage.removeItem('dataX');
+                localStorage.removeItem('dataY');
+                localStorage.removeItem('dataExtra');
+                localStorage.removeItem('axe1');
+                localStorage.removeItem('axe2');
+                localStorage.removeItem('axe3');
+                localStorage.removeItem('colors');
+                localStorage.removeItem('titles');
+            }
+            /*ajout data*/
+
+/***************************BTN************************************/
+
+        function update_input_number(){
+            var nombre = $(".ligne").length;
+           nombre = Math.max(nombre, 1);
+            $("#nombreRows").val(nombre);
+        }
+
+            $(document).on("click",".delete_colis_row",function(){
+                 var rowToDelete = "#row"+$(this).attr("data-number");
+
+
+console.log(rowToDelete)
+                $(rowToDelete).remove();
+
+
+
+                //On met à jour le nombre
+                update_input_number();
+            });
+
+            $(document).on("click","#new_data",function(){
+
+                var path = "{{ path('add_new_data') | escape('js')}}";
+                var data = {"dummy":'rr'}
+                var nombre = parseInt($('#nombreRows').val());
+                $('#nombreRows').val(nombre+1);
+                $.post(path,data,function (server) {
+
+                    if(server.ok){
+                        var conteur = 0
+                        $(".ligne").each(function (index) {
+                            conteur +=1;
+                            if(conteur > nombre){
+                                this.remove();
+                            }
+                        })
+                        if(nombre<=3){
+                            for(var i=0;i<(nombre-conteur); i++){
+                                $("#container").append(server.html);
+                            }
+                        }
+                    else{
+                            $("#new_data").css('display','none')
+                        }
+                    }
+
+                    //Je fais une boucle pour que les inputs soient stockés
+                    $(".ligne").each(function (index) {
                         if(!$(this).hasClass("dealtWith")){
                             var rowIdSelector = dealWithColisInput(index, $(this));
                             dealWithToggle(rowIdSelector);
@@ -200,24 +300,16 @@ function update_input_number(){
                     })
                 })
             })
-
             setTimeout(function () {
                 //$("#ajoutColisButton").trigger('click');
             },500)
-
             setTimeout(function () {
                 //$("input[name=longueur0]").focus();
             },1000)
-
-
             //Gestion des critères supplémentaires
 
-/***************************BTN************************************/
-
-
-
-
-        })
+     }
+            //)
 /****************************************************************************/
         function dealWithToggle(parentSelector){
             if(typeof(parentSelector) == "undefined"){
@@ -255,38 +347,38 @@ function update_input_number(){
 
         function dealWithColisInput(index, target){
 
-            var inputs = target.find("input");
-            var selects = target.find("select");
             var textarea = target.find("textarea");
-            inputs.each(function () {
-                var name = $(this).attr('name');
+            var text = target.find("input");
+            var label = target.find("label");
+
+            label.each(function () {
+                var name = $(this).attr('class');
                 var newName = name + index;
-                $(this).attr('name',newName);
+                $(this).attr('class',newName);
+                $(this).attr('data-number',index);
+            });
+            text.each(function () {
+                var name = $(this).attr('class');
+                var newName = name + index;
+                $(this).attr('class',newName);
                 $(this).attr('data-number',index);
             });
 
-
-
             textarea.each(function () {
-                var name = $(this).attr('name');
+                var name = $(this).attr('class');
                 var newName = name + index;
-                $(this).attr('name',newName);
+                $(this).attr('class',newName);
                 $(this).attr('data-number',index);
             });
 
             var deleteTarget = target.find(".delete_colis_row");
             deleteTarget.attr('data-number',index)
 
-
-
             if(!target.hasClass("dealtWith")){
                 target.addClass("dealtWith");
                 target.attr("data-number",index);
                 target.attr("id","row"+index);
-
-
             }
-
 
             return "#ligne"+index;
         }
@@ -300,22 +392,15 @@ function update_input_number(){
 
             $("#colisSummary").fadeIn();
             var dd = [];
-
-
             var total = 0;
-
             var path = "{{ path('calcul_data') }}";
 
-
-            console.log("estimate mpl");
-            //Si l'un des colis est gerbable, on interroge le server
             var has_one_gerbable = false;
 
             $(".ligne").each(function(){
                 var number = parseInt($(this).find(".nombre").val());
                 var title = parseInt($(this).find(".title").val());
                 var color = parseInt($(this).find(".color").val());
-
 
                 var aColis = {
                     "nombre":number,
@@ -326,15 +411,9 @@ function update_input_number(){
                 dd.push(aColis);
 
             });
-
-
-
-
         }
         /****************************************************************************/
-
-
-
+})
 
     </script>
 {% endblock  %}

@@ -37,57 +37,71 @@
 
     <script>
         var hasMultipleY='{{ hasMultipleY }}'
-console.log(hasMultipleY);
+        console.log(hasMultipleY,"hasMultipleY");
         var showValues='{{ showValues }}';
         var type='{{ type }}';
         var showGrid='{{ showGrid }}';
+        var countDataExtra='{{ dataExtra|length }}';
+
+        var countColors='{{axe2|json_encode()|raw}}';
+        var aa='{{aa|json_encode()|raw}}';
+        console.log(countDataExtra,'countDataExtra');
+        console.log(countColors);
+        console.log("aaa");
+        console.log(aa);
     var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
     type: '{{type}}',
     data: {
         labels: ({{axeX|json_encode()|raw}}),
-        datasets: [{
+        datasets:  parseInt(countDataExtra)===0?[{
         data: ({{axeY|json_encode()|raw}}),
-         backgroundColor: type!=="pie"?'{{color}}':['{{color}}', "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
-
+        backgroundColor: type!=="pie"?'{{color}}':['{{color}}', "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
         borderColor: '{{color}}',
         borderWidth: 1
-        }],
+        }]:
+            [
 
-        {#datasets: [#}
+            {
+                type: '{{ type }}',
+                label: 'a0',
+                id: "y-axis-10",
+                backgroundColor: '{{color}}',
+                data: ({{axeY|json_encode()|raw}})
+            }
+              ,
+              //  parseInt(countDataExtra)>=1?(
+                {
 
-        {#    {#}
-        {#        label: "Total Commisfgsion",#}
-        {#        data: ({{axeY|json_encode()|raw}}),#}
-        {#        backgroundColor:'{{color}}',#}
+                    type: '{{ type }}',
+                    label: 'a',
+                    id: "y-axis-20",
+                    backgroundColor: ('{{ color1 }}') ? '{{ color1 }}' : "#8e5ea2",
+                    data: ({{ axe1|json_encode()|raw }})
+                },
+              //  ):null,
+                parseInt(countDataExtra)>=1?(
+                {
 
-        {#        yAxyesID: "id0",#}
-        {#        borderWidth: 1#}
-        {#    },#}
-        {#    {#}
-        {#    label: "Total Commission",#}
-        {#    data: ({{axe1|json_encode()|raw}}),#}
-        {#    backgroundColor: "#8e5ea2",#}
+                type: '{{ type }}',
+                label: 'b',
+                id: "y-axis-30",
+                backgroundColor: ('{{ color2 }}') ? '{{ color2 }}' : "#FF5733",
+                data: ({{ axe2|json_encode()|raw }})
 
-        {#    yAxyesID: "id1",#}
-        {#      borderWidth: 1#}
-        {#},{#}
-        {#    label: "# of Commissgggrions",#}
-        {#    data: ({{axe2|json_encode()|raw}}),#}
-        {#    backgroundColor: "#c45850",#}
-        {#    type: 'line',#}
-        {#    yAxesID: "id2",#}
-        {#    borderWidth: 1#}
-        {#},#}
-        {#    ,{#}
-        {#        label: "# of Commissions",#}
-        {#        data: ({{axe3|json_encode()|raw}}),#}
-        {#        backgroundColor: "#E8839C",#}
-        {#        type: 'line',#}
-        {#        yAxesID: "id3",#}
-        {#        borderWidth: 1#}
-        {#    }#}
-        {#],#}
+
+               }):null
+                ,{
+            type: '{{ type }}',
+            label: 'c',
+            id: "y-axis-40",
+            backgroundColor: ('{{ color3 }}') ? '{{ color3 }}' :"#e8c3b9",
+            data: ({{axe3|json_encode()|raw}})
+        }
+        //) :''
+
+            ],
 
     },
     options: {
@@ -239,12 +253,24 @@ console.log(hasMultipleY);
             const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',color:'{{ color }}'};
             const ar1='{{axeX|json_encode()|raw}}';
             const ar2='{{axeY|json_encode()|raw}}';
+            const axe1='{{axe1|json_encode()|raw}}';
+            const axe2='{{axe2|json_encode()|raw}}';
+            const axe3='{{axe3|json_encode()|raw}}';
+            const dataExtra='{{dataExtra|json_encode()|raw}}';
+            const titles='{{titles|json_encode()|raw}}';
+            const colors='{{colors|json_encode()|raw}}';
             const dataX=ar1;
             const  dataY=ar2;
 
             localStorage.setItem('dataObject', JSON.stringify(data));
             localStorage.setItem('dataX', JSON.stringify(dataX));
             localStorage.setItem('dataY', JSON.stringify(dataY));
+            localStorage.setItem('dataExtra', JSON.stringify(dataExtra));
+            localStorage.setItem('axe1', JSON.stringify(axe1));
+            localStorage.setItem('axe2', JSON.stringify(axe2));
+            localStorage.setItem('axe3', JSON.stringify(axe3));
+            localStorage.setItem('titles', JSON.stringify(titles));
+            localStorage.setItem('colors', JSON.stringify(colors));
 
         });
         $('#editGraph').click(function () {
