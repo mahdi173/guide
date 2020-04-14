@@ -40,18 +40,18 @@
             <tag name="sulu_article.article_route"/>
         </property>
 
+        <property name="teaser" type="text_area">
+            <meta>
+                <title lang="en">Teaser</title>
+                <title lang="fr">Petite description</title>
+            </meta>
+        </property>
+
         <property name="article" type="text_editor">
 
             <meta>
                 <title lang="en">description</title>
                 <title lang="fr">description</title>
-            </meta>
-        </property>
-
-        <property name="teaser" type="text_area">
-            <meta>
-                <title lang="en">Teaser</title>
-                <title lang="fr">Petite description</title>
             </meta>
         </property>
 
