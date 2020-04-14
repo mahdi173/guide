@@ -16,20 +16,91 @@
         height: 75px;
     }
 </style>
+{% if count %}
+{% for i in 1..count %}
 <div class="ligne">
 <div class="row data-area">
     <div class="form-group">
-    <label class="label">data y</label><br>
+    <label class="label" style="font-weight:bold;">data y</label><br>
         <div class="input-group mb-3">
            <input type="text" name="title[]" value="Title" class="form-control title"><br>
         </div>
         <div class="input-group mb-3">
-            <textarea type="text" name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre"></textarea><br>
+            <textarea  name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre"></textarea><br>
         </div>
         <div class="input-group mb-3">
            <input type="color" name="color[]" class="form-control color"/>
         </div>
    </div>
-    <i class="fa fa-times delete_colis_row"></i>
+    <i class="fa fa-times delete_colis_row" style="color: #EC3A1B"></i>
 </div>
 </div>
+{% endfor %}
+{% else %}
+    <div class="ligne">
+        <div class="row data-area">
+            <div class="form-group">
+                <label class="label" style="font-weight:bold;">data y</label><br>
+                <div class="input-group mb-3">
+                    <input type="text" name="title[]" value="Title" class="form-control title"><br>
+                </div>
+                <div class="input-group mb-3">
+                    <textarea  name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre"></textarea><br>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="color" name="color[]" class="form-control color"/>
+                </div>
+            </div>
+            <i class="fa fa-times delete_colis_row" style="color: #EC3A1B"></i>
+        </div>
+    </div>
+{% endif %}
+<script>
+$(document).ready(function () {
+
+    if(localStorage.getItem('axe1')) {
+
+
+        var axe1 = localStorage.getItem('axe1');
+        var axe2 = localStorage.getItem('axe2');
+        var axe3 = localStorage.getItem('axe3');
+
+       var colors=localStorage.getItem('colors')
+       var titles=localStorage.getItem('titles')
+
+
+        var arrayAxe1 = JSON.parse(axe1);
+        var arrayAxe2 = JSON.parse(axe2);
+        var arrayAxe3 = JSON.parse(axe3);
+        var item_colors=JSON.parse(colors)
+        var arrayTitles = JSON.parse(titles);
+
+
+        var a1 = JSON.parse(arrayAxe1);
+        var a2 = JSON.parse(arrayAxe2);
+       var a3 = JSON.parse(arrayAxe3);
+        var itemArray_colors=JSON.parse(item_colors)
+        var t1 = JSON.parse(arrayTitles);
+console.log(itemArray_colors)
+console.log(t1)
+
+        $('.nombre0').val(a1.join('\n'));
+        $('.nombre1').val(a2.join('\n'));
+        if(a3.length>0){
+             $('.nombre2').val(a3.join('\n'));
+        }
+
+
+        $('.color0').val(itemArray_colors[0])
+        $('.color1').val(itemArray_colors[1])
+        $('.color2').val(itemArray_colors[2])
+
+        $('.title0').val(t1[0])
+        $('.title1').val(t1[1])
+        $('.title2').val(t1[2])
+
+
+
+    }
+})
+</script>

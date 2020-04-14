@@ -138,9 +138,10 @@ class DefaultController extends AbstractController
      */
     public function add_new_data(Request $request)
     {
-
-        $html =  $this->renderView("graphics/graphics_extra_data.html.twig");
-
+        $count=$request->request->get("count");
+        $html =  $this->renderView("graphics/graphics_extra_data.html.twig",[
+            'count'=>$count
+        ]);
 
         return new JsonResponse([
             "ok"=>true,

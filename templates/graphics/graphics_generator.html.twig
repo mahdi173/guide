@@ -232,7 +232,7 @@
         ctx.globalCompositeOperation = 'destination-over';
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        var image = document.getElementById("myChart").toDataURL("image/png").replace("image/png", "image/octet-stream");
+        var image = document.getElementById("myChart").toDataURL("image/png",1).replace("image/png", "image/octet-stream");
         $("#downloadPic").attr("href", image);
         $("#downloadPic").attr("download", "{{graphicTitle}}.png");
 
@@ -241,7 +241,7 @@
     $('#downloadPdf').click(function(event) {
 
         var canvas = document.getElementById('myChart');
-        var canvasImg = canvas.toDataURL("image/png", 1.0);
+        var canvasImg = canvas.toDataURL("image/png", 1);
         var doc = new jsPDF('landscape');
         doc.setFontSize(20);
         doc.addImage(canvasImg, 'PNG', 10, 30, 280, 150 );
@@ -261,7 +261,9 @@
             const colors='{{colors|json_encode()|raw}}';
             const dataX=ar1;
             const  dataY=ar2;
-
+console.log('dataExtra')
+console.log(dataExtra)
+console.log(axe1)
             localStorage.setItem('dataObject', JSON.stringify(data));
             localStorage.setItem('dataX', JSON.stringify(dataX));
             localStorage.setItem('dataY', JSON.stringify(dataY));

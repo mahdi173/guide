@@ -3,13 +3,19 @@
 {% block stylesheets %}
     <style>
     .cee{
-
     display: inline;
+  font-weight:bold;
+    }
+    .titleBold{
+
+     font-weight:bold;
     }
     .dataY,.dataX{
-   border-radius: 5%;
+   /*border-radius: 5%;*/
 
-
+    }
+    .titleG{
+    float: right;
     }
     .settings{
 
@@ -20,7 +26,7 @@
     .settings-title{
     padding-bottom: 10px;
     padding-top:0px;
-    border-bottom: 2px #F0F0F0 solid;
+    border-bottom: 2px #F0BD8F solid;
     }
     .settings .params{
     padding-top: 20px;
@@ -40,61 +46,57 @@
 {% block content %}
 
     <div class="row">
-        <h4 class="text-center" style="margin-top: 20px;">Graphics generator</h4>
-        <p style="margin-top: 30px;margin-bottom: 60px">
-            Graphics generator create online graphics, bar, pie or line charts. Just paste your data into the data section of the graph and click the Create Graph button</p>
+        <h4 class="text-center text-primary" style="margin-top: 20px"><i class="fa fa-line-chart" style="color: orangered"></i>&nbsp;Graphics generator</h4>
+        <p style="border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 60px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">
+            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button</p>
     </div>
 
     {{ form_start(form)}}
     <div class="settings">
-    <h5 class="settings-title">Chart settings</h5>
+    <h5 class="settings-title text-primary">Chart settings</h5>
     <div class="row params">
-    <div class="col-md-5">
 
+    <div class="col-md-5">
         {{ form_row(form.type)}}<br>
         {{ form_row(form.titleX)}}<br>
        {{ form_row(form.color)}}
-
     </div>
-        <div class="col-md-5">
-
-            {{ form_row(form.graphicTitle)}}
-            {{ form_row(form.titleY)}}<br>
-
-            {{ form_row(form.showGrid)}}
-            {{ form_row(form.showValues)}}
-
+        <div class="col-md-2">
+            {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br><br>
+             {{ form_row(form.showGrid)}}
         </div>
-
+        <div class="col-md-4">
+            {{ form_widget(form.graphicTitle)}}<br><br>
+            {{ form_widget(form.titleY)}}<br><br>
+             {{ form_row(form.showValues)}}
+        </div>
     </div>
     </div>
      <div class="settings data-settings">
-          <h5 class="settings-title">Chart data</h5>
+          <h5 class="settings-title text-primary">Chart data</h5>
         <div class="row params">
-            <div class="col-md-2 col-sm-12" style="float: left">
-              {{ form_label(form.dataX, null, {  'label_attr': {'class': 'cee'} }) }}
-             {{ form_widget(form.dataX )}}
+            <div class="col-md-6 col-sm-12" id="dataX" style="float: left">
+                  {{ form_label(form.dataX, null, {  'label_attr': {'class': 'cee'} }) }}
+                 {{ form_widget(form.dataX )}}
              </div>
-              <div class="col-md-2">
-
-              {{ form_label(form.dataY, null, {  'label_attr': {'class': 'cee'} }) }}
-              {{ form_widget(form.dataY)}}
-              <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #0b2e13"></i>
+              <div class="col-md-6" id="dataY">
+                  <div style="display: inline">
+                      <span style="float: left">{{ form_label(form.dataY, null, {  'label_attr': {'class': 'cee'} }) }}</span>
+                         <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #5CB440"></i>
+                  </div>
+                  {{ form_widget(form.dataY)}}
               </div>
-
             <div class="col-md-8 col-sm-12" style="float: right">
                     <div id="container"></div>
             </div>
-
         </div>
 {#         <div class="row" style="margin-left: 40px;margin-top: 20px">#}
          <div class="row" style="margin-top: 20px">
-
         {{ form_row(form.createGraph)}}
 
     </div>
     </div>
-
     {{ form_end(form)}}
     <div class="row" style="display: none;">
         <div class="col-md-12">
@@ -108,16 +110,12 @@
     <div id="blockY">
     </div>
 
-
-
 {% endblock  %}
 {% block javascripts %}
     <script>
         $( document ).ready(function() {
         var edit='{{ edit }}'
-
             if(edit)
-
             {
                 console.log(localStorage.getItem('dataExtra'))
                 console.log(localStorage.getItem('dataY'))
@@ -128,44 +126,32 @@
                     var dataX = localStorage.getItem('dataX');
                     var dataY = localStorage.getItem('dataY');
                     var dataExtra = localStorage.getItem('dataExtra');
+                    var axe1 = localStorage.getItem('axe1');
+                    var axe2 = localStorage.getItem('axe2');
+                    var axe3 = localStorage.getItem('axe3');
 
-                     var axe1 = localStorage.getItem('axe1');
-                     var axe2 = localStorage.getItem('axe2');
-                     var axe3 = localStorage.getItem('axe3');
+
 
                     var arrayData = JSON.parse(retrievedObject);
                     var arrayDataX = JSON.parse(dataX);
                     var arrayDataY = JSON.parse(dataY);
                     var arrayDataExtra = JSON.parse(dataExtra);
-
                     var arrayAxe1 = JSON.parse(axe1);
                     var arrayAxe2 = JSON.parse(axe2);
                     var arrayAxe3 = JSON.parse(axe3);
+
 
                     var selectedType=arrayData.type;
                     var textareaX=JSON.parse(arrayDataX);
                     var textareaY=JSON.parse(arrayDataY);
 
-                    console.log('selectedType');
-                    console.log(selectedType);
-                   console.log(arrayDataExtra);
-                   console.log(dataExtra);
-                   var item=dataExtra.split(",")
-   console.log("item")
-   console.log(arrayAxe1)
-   console.log(arrayAxe2)
-   console.log(arrayAxe3)
-   var a =item[0]
-console.log(a.split('\\r'))
 
-// console.log(JSON.parse(dataExtra))
+                   //var item=dataExtra.split(",")
+                //    var a =item[0]
 
- // console.log(a[0].split("\"") )
- // console.log(a[1] )
- //var var3=(a[2].split("\"") )
- // console.log(a[2].split("\"") )
- //var values=[var1[1],a[1],var3[0]]
-//console.log(a)
+                 //var var3=(a[2].split("\"") )
+
+                 //var values=[var1[1],a[1],var3[0]]
 
 
                     $('#graphic_data_type').val(selectedType);
@@ -190,36 +176,35 @@ console.log(a.split('\\r'))
 
                     if(arrayDataExtra.length>0)
                         {
-                            console.log(arrayDataExtra)
-                            var aa='{{aa|json_encode()|raw}}';
-                            console.log("aa")
-                            console.log(aa)
-                             var path = "{{ path('add_new_data') | escape('js')}}";
+                            $("#dataX").attr('class','col-md-2')
+                            $("#dataY").attr('class','col-md-2')
 
-                var data = {"dummy":'rr'}
-                var nombre = parseInt($('#nombreRows').val());
-                $('#nombreRows').val(nombre+1);
-                $.post(path,data,function (server) {
 
-                    if(server.ok){
-                        var conteur = 0
-                        $(".ligne").each(function (index) {
-                            conteur +=1;
-                            if(conteur > nombre){
-                                this.remove();
-                            }
-                        })
+                             var aa='{{aa|json_encode()|raw}}';
+
+                            var path = "{{ path('add_new_data') | escape('js')}}";
+                           var count=getAxesNumber(arrayAxe1,arrayAxe2,arrayAxe3)
+                           console.log(arrayAxe1)
+                           console.log(arrayAxe2)
+                           console.log(arrayAxe2.length)
+                           console.log(arrayAxe3)
+                           console.log(arrayAxe3.length)
+                            var data = {"dummy":'rr','count':count}
+                            var nombre = parseInt($('#nombreRows').val());
+                            $('#nombreRows').val(nombre+1);
+                        $.post(path,data,function (server) {
+                            if(server.ok){
+
                         if(nombre<=3){
-                            for(var i=0;i<(nombre-conteur); i++){
+                           // for(var i=0;i<(nombre-conteur); i++){
                                 $("#container").append(server.html);
-                            }
-                        }
+                            //}
+                       }
                     else{
                             $("#new_data").css('display','none')
                         }
                     }
 
-                    //Je fais une boucle pour que les inputs soient stockés
                     $(".ligne").each(function (index) {
                         if(!$(this).hasClass("dealtWith")){
                             var rowIdSelector = dealWithColisInput(index, $(this));
@@ -227,9 +212,9 @@ console.log(a.split('\\r'))
                         }
                     })
                 })
-                console.log(document.getElementsByClassName('.nombre0'))
-                $('.nombre0').val("arrayAxe1")
+
              }
+            }
             }
             else{
                 localStorage.removeItem('dataObject');
@@ -244,20 +229,33 @@ console.log(a.split('\\r'))
             }
             /*ajout data*/
 
-/***************************BTN************************************/
+        /***************************BTN************************************/
 
         function update_input_number(){
             var nombre = $(".ligne").length;
            nombre = Math.max(nombre, 1);
-            $("#nombreRows").val(nombre);
+            $("#nombreRows").val(nombre+1);
+            var nb= $("#nombreRows").val()
+
+            console.log('nb',nb)
+           // if(nb===1){nb=2}
+            if(nb<=3){
+             if(nb<2){
+                   $("#dataX").attr('class','col-md-6')
+                            $("#dataY").attr('class','col-md-6')
+            }
+                   $("#new_data").css('display','block')
+            }
+            else{   $("#new_data").css('display','none')}
+
         }
 
             $(document).on("click",".delete_colis_row",function(){
                  var rowToDelete = "#row"+$(this).attr("data-number");
 
 
-console.log(rowToDelete)
-                $(rowToDelete).remove();
+            console.log(rowToDelete)
+              $(rowToDelete).remove();
 
 
 
@@ -267,31 +265,37 @@ console.log(rowToDelete)
 
             $(document).on("click","#new_data",function(){
 
-                var path = "{{ path('add_new_data') | escape('js')}}";
-                var data = {"dummy":'rr'}
+
+                $("#dataX").attr('class','col-md-2')
+                $("#dataY").attr('class','col-md-2')
+
+                 var path = "{{ path('add_new_data') | escape('js')}}";
+                var data = {"dummy":'rr','click':"true"}
                 var nombre = parseInt($('#nombreRows').val());
                 $('#nombreRows').val(nombre+1);
-                $.post(path,data,function (server) {
 
+                $.post(path,data,function (server)
+                {
+                    console.log(nombre)
                     if(server.ok){
                         var conteur = 0
                         $(".ligne").each(function (index) {
                             conteur +=1;
-                            if(conteur > nombre){
-                                this.remove();
-                            }
+                            // if(conteur > nombre){
+                            //     this.remove();
+                            // }
                         })
                         if(nombre<=3){
-                            for(var i=0;i<(nombre-conteur); i++){
+                           //  $("#new_data").css('display','block')
+                         //   for(var i=0;i<(nombre-conteur); i++){
                                 $("#container").append(server.html);
-                            }
+                           // }
                         }
                     else{
                             $("#new_data").css('display','none')
                         }
                     }
 
-                    //Je fais une boucle pour que les inputs soient stockés
                     $(".ligne").each(function (index) {
                         if(!$(this).hasClass("dealtWith")){
                             var rowIdSelector = dealWithColisInput(index, $(this));
@@ -299,6 +303,7 @@ console.log(rowToDelete)
                         }
                     })
                 })
+
             })
             setTimeout(function () {
                 //$("#ajoutColisButton").trigger('click');
@@ -308,7 +313,7 @@ console.log(rowToDelete)
             },1000)
             //Gestion des critères supplémentaires
 
-     }
+
             //)
 /****************************************************************************/
         function dealWithToggle(parentSelector){
@@ -384,17 +389,16 @@ console.log(rowToDelete)
         }
         dealWithToggle('');
 
-        $(document).on("change","#container input", updatePreviewInformation);
-        $(document).on("change","#container textarea", updatePreviewInformation);
-        $(document).on("click",".delete_colis_row", updatePreviewInformation);
+            $(document).on("change","#container input", updatePreviewInformation);
+            $(document).on("change","#container textarea", updatePreviewInformation);
+            $(document).on("click",".delete_colis_row", updatePreviewInformation);
 
-        function updatePreviewInformation(){
+          function updatePreviewInformation(){
 
             $("#colisSummary").fadeIn();
             var dd = [];
             var total = 0;
             var path = "{{ path('calcul_data') }}";
-
             var has_one_gerbable = false;
 
             $(".ligne").each(function(){
@@ -411,6 +415,20 @@ console.log(rowToDelete)
                 dd.push(aColis);
 
             });
+        }
+        function  getAxesNumber(axe1,axe2,axe3) {
+              var nb=0
+              if(axe1.length>0 && axe2.length>=9 && axe3.length>=9){
+                 nb=3
+              }
+               if(axe1.length>0 && axe2.length<9 || axe3.length<9){
+                 nb=1
+              }
+                if(axe1.length>0 && axe2.length>=9 &&  axe3.length<9){
+                 nb=2
+              }
+              return nb;
+
         }
         /****************************************************************************/
 })
