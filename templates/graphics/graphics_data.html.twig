@@ -5,6 +5,7 @@
     .cee{
     display: inline;
   font-weight:bold;
+  color:#555;
     }
     .titleBold{
 
@@ -20,46 +21,61 @@
     .settings{
 
     border: 2px #E0E0E0 solid;
-    padding: 30px 25px;
+    /*padding: 30px 25px;*/
     background-color:	#F8F8F8;
+ border-radius: 10px;
+ box-shadow: 5px 5px #F8F8F8;
     }
     .settings-title{
     padding-bottom: 10px;
     padding-top:0px;
-    border-bottom: 2px #F0BD8F solid;
+
     }
     .settings .params{
     padding-top: 20px;
     }
     .data-settings{
-     margin-top: 30px;
+     margin-top: 45px;
+
     }
     #new_data:hover,#removeRow:hover{
         cursor:pointer;
     }
-        .createGraph{
+    .createGraph{
             width: 150px !important;
-        }
+     }
+    #graphic_data_type{
+    font-family: 'FontAwesome', 'Second Font name'
+    }
     </style>
 {% endblock  %}
 
 {% block content %}
 
     <div class="row">
-        <h4 class="text-center text-primary" style="margin-top: 20px"><i class="fa fa-line-chart" style="color: orangered"></i>&nbsp;Graphics generator</h4>
-        <p style="border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 60px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">
+        <h3 class="text-center text-primary" style="margin-top: 30px;">
+             <i class="fa fa-line-chart" style="color: orangered;font-size: 23px"></i>&nbsp;Graphics generator
+        </h3>
+        <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">
             <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button</p>
     </div>
 
     {{ form_start(form)}}
     <div class="settings">
-    <h5 class="settings-title text-primary">Chart settings</h5>
-    <div class="row params">
+    <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 10px; padding-top: 30px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+    <h5 class="settings-title text-primary" style="padding-left: 20px">Chart Settings</h5>
+    </div>
+    <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px">
 
-    <div class="col-md-5">
-        {{ form_row(form.type)}}<br>
-        {{ form_row(form.titleX)}}<br>
-       {{ form_row(form.color)}}
+    <div class="col-md-2">
+        {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br><br>
+       {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}
+    </div>
+     <div class="col-md-3">
+        {{ form_widget(form.type)}}<br><br>
+        {{ form_widget(form.titleX)}}<br><br>
+       {{ form_widget(form.color)}}
     </div>
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
@@ -74,8 +90,13 @@
     </div>
     </div>
      <div class="settings data-settings">
-          <h5 class="settings-title text-primary">Chart data</h5>
-        <div class="row params">
+
+     <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 10px; padding-top: 30px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+    <h5 class="settings-title text-primary" style="padding-left: 20px">Chart Data</h5>
+
+    </div>
+
+        <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px;padding-right: 20px;">
             <div class="col-md-6 col-sm-12" id="dataX" style="float: left">
                   {{ form_label(form.dataX, null, {  'label_attr': {'class': 'cee'} }) }}
                  {{ form_widget(form.dataX )}}
@@ -83,7 +104,7 @@
               <div class="col-md-6" id="dataY">
                   <div style="display: inline">
                       <span style="float: left">{{ form_label(form.dataY, null, {  'label_attr': {'class': 'cee'} }) }}</span>
-                         <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #5CB440"></i>
+                         <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #5CB440;float: right;"></i>
                   </div>
                   {{ form_widget(form.dataY)}}
               </div>
@@ -92,7 +113,7 @@
             </div>
         </div>
 {#         <div class="row" style="margin-left: 40px;margin-top: 20px">#}
-         <div class="row" style="margin-top: 20px">
+         <div class="row" style="margin-top: 20px;margin-bottom: 10px">
         {{ form_row(form.createGraph)}}
 
     </div>
@@ -174,7 +195,7 @@
                      var text2=document.getElementById("graphic_data_dataY");
                     text2.value=textareaY.join('\n');
 
-                    if(arrayDataExtra.length>0)
+                    if(arrayDataExtra.length>4)
                         {
                             $("#dataX").attr('class','col-md-2')
                             $("#dataY").attr('class','col-md-2')

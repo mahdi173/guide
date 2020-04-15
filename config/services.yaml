@@ -48,3 +48,8 @@ services:
         arguments:
             $targetDirectory: '%blog_files%'
 
+    app.form.icon_choice_type:
+        class: App\Form\Type\IconChoiceType
+        # Symfony has already a container parameter to the kernel root directory.
+        tags:
+            - { name: form.type,extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }

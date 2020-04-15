@@ -4,6 +4,7 @@
 namespace App\Form;
 
 use App\DTO\GraphicDataDTO;
+use App\Form\Type\IconChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,14 +21,17 @@ class GraphicDataType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $choices = $this->getFontAwesome();
         $builder
             ->add('type',ChoiceType::class,[
                 'choices'=>[
-                    'bar'=>'bar',
-                    'pie'=>'pie',
-                    'line'=>'line',
+                    'Bar'=>'bar',
+                    'Pie'=>'pie',
+                    'Line'=>'line',
                 ],
+//                'icon' => 'fa-bug',
 
+                'attr' => array('class' => "fa" )
             ])
             ->add('graphicTitle',TextType::class, [
                     'required'=>'required'
@@ -64,9 +68,24 @@ class GraphicDataType extends AbstractType
             ])
             ->add('showGrid',CheckboxType::class,[
                 'required'=>false,
+//                'icon' => 'fa-bug',
                // 'attr'=>['checked'=>"checked","value"=>"1"]
             ])
         ;
+    }
+
+    public function getFontAwesome()
+    {
+
+//        $webroot = $this->get('kernel')->getRootDir() . '/../web';
+//        $pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"\\\\(.+)";\s+}/';
+//        $subject = file_get_contents($webroot . '/assets/vendor/font-awesome/css/font-awesome.css');
+//        preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
+//        foreach ($matches as $match) {
+//            $icons[$match[1]] = '&#x' . $match[2] . ';';
+//        }
+//
+//        return $icons;
     }
 
     public function configureOptions(OptionsResolver $resolver)
