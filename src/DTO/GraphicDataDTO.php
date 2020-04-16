@@ -10,9 +10,6 @@ class GraphicDataDTO
 {
 
     public $type;
-    /**
-     * @Assert\NotBlank(message="graphicTitle.not_blank")
-     */
     public $graphicTitle;
     public $titleX;
     public $titleY;

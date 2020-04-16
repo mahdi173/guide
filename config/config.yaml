@@ -1,6 +1,11 @@
 framework:
+  translator:      { fallbacks: ["%locale%"] }
   esi: ~
   fragments: ~
+  validation:      {
+    enabled: true
+    enable_annotations: true }
+
 
 webpack_encore:
   # The path where Encore is building the assets.

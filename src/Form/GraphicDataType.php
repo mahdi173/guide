@@ -21,7 +21,7 @@ class GraphicDataType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = $this->getFontAwesome();
+
         $builder
             ->add('type',ChoiceType::class,[
                 'choices'=>[
@@ -30,24 +30,20 @@ class GraphicDataType extends AbstractType
                     'Line'=>'line',
                 ],
 //                'icon' => 'fa-bug',
-                'choice_attr' => function($choice, $key, $value){
-                    return ['class' => 'label'.($key),
-                        "data-thumbnail"=>"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/LetterA.svg/2000px-LetterA.svg.png"];
-                },
-                'attr' => array('class' => "fa" )
             ])
             ->add('graphicTitle',TextType::class, [
                     'required'=>'required',
-                    'invalid_message' => 'Please format your date yyyy-mm-dd'
+
                 ])
             ->add('titleX',TextType::class,[
-                'required'=>'required'
+                'required'=>true,
             ])
             ->add('titleY',TextType::class,[
                 'required'=>'required'
             ])
             ->add('dataX',TextareaType::class,[
                 'required'=>'required',
+
                 'label'=>'X axis',
                 'attr'=>[
                     'cols'=>'8','rows'=>'8','class'=>"dataX"
@@ -78,19 +74,6 @@ class GraphicDataType extends AbstractType
         ;
     }
 
-    public function getFontAwesome()
-    {
-
-//        $webroot = $this->get('kernel')->getRootDir() . '/../web';
-//        $pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"\\\\(.+)";\s+}/';
-//        $subject = file_get_contents($webroot . '/assets/vendor/font-awesome/css/font-awesome.css');
-//        preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
-//        foreach ($matches as $match) {
-//            $icons[$match[1]] = '&#x' . $match[2] . ';';
-//        }
-//
-//        return $icons;
-    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
