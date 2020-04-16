@@ -33,26 +33,42 @@ class GraphicDataType extends AbstractType
             ])
             ->add('graphicTitle',TextType::class, [
                     'required'=>'required',
+                    'attr'=>[
+                        'oninvalid'=>"setCustomValidity('Please fill this field')",
+                        'oninput'=>"setCustomValidity('')",
+                    ],
 
                 ])
             ->add('titleX',TextType::class,[
                 'required'=>true,
+                'attr'=>[
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
+                ],
             ])
             ->add('titleY',TextType::class,[
-                'required'=>'required'
+                'required'=>'required',
+                'attr'=>[
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
+                ],
             ])
             ->add('dataX',TextareaType::class,[
                 'required'=>'required',
 
                 'label'=>'X axis',
                 'attr'=>[
-                    'cols'=>'8','rows'=>'8','class'=>"dataX"
+                    'cols'=>'8','rows'=>'8','class'=>"dataX",
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
                 ],
             ])
             ->add('dataY',TextareaType::class,[
                 'label'=>'Y axis',
                 'attr'=>[
-                    'cols'=>'8','rows'=>'8','class'=>"dataY"
+                    'cols'=>'8','rows'=>'8','class'=>"dataY",
+                     'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
                 ],
                 'required'=>'required'
             ])
