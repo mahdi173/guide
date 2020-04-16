@@ -30,11 +30,15 @@ class GraphicDataType extends AbstractType
                     'Line'=>'line',
                 ],
 //                'icon' => 'fa-bug',
-
+                'choice_attr' => function($choice, $key, $value){
+                    return ['class' => 'label'.($key),
+                        "data-thumbnail"=>"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/LetterA.svg/2000px-LetterA.svg.png"];
+                },
                 'attr' => array('class' => "fa" )
             ])
             ->add('graphicTitle',TextType::class, [
-                    'required'=>'required'
+                    'required'=>'required',
+                    'invalid_message' => 'Please format your date yyyy-mm-dd'
                 ])
             ->add('titleX',TextType::class,[
                 'required'=>'required'
@@ -69,7 +73,7 @@ class GraphicDataType extends AbstractType
             ->add('showGrid',CheckboxType::class,[
                 'required'=>false,
 //                'icon' => 'fa-bug',
-               // 'attr'=>['checked'=>"checked","value"=>"1"]
+                'attr'=>['class'=>"showGrid"]
             ])
         ;
     }

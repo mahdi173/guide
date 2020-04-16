@@ -13,7 +13,8 @@
        float: left;
     }
     .data-area textarea{
-        height: 75px;
+        /*height: 75px;*/
+        margin-top: -8px;
     }
 </style>
 {% if count %}
@@ -22,11 +23,12 @@
 <div class="row data-area">
     <div class="form-group">
     <label class="label" style="font-weight:bold;">data y</label><br>
+
         <div class="input-group mb-3">
-           <input type="text" name="title[]" value="Title" class="form-control title"><br>
+            <textarea  name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre" rows="8" cols="8"></textarea><br>
         </div>
         <div class="input-group mb-3">
-            <textarea  name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre"></textarea><br>
+            <input type="text" name="title[]" value="Title" class="form-control title"><br>
         </div>
         <div class="input-group mb-3">
            <input type="color" name="color[]" class="form-control color"/>
@@ -41,11 +43,12 @@
         <div class="row data-area">
             <div class="form-group">
                 <label class="label" style="font-weight:bold;">data y</label><br>
+
                 <div class="input-group mb-3">
-                    <input type="text" name="title[]" value="Title" class="form-control title"><br>
+                    <textarea  name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre" rows="8" cols="10"></textarea><br>
                 </div>
                 <div class="input-group mb-3">
-                    <textarea  name="dataExtra[]" id="dataExtraText" data-number="0" class="form-control nombre"></textarea><br>
+                    <input type="text" name="title[]" value="Title" class="form-control title"><br>
                 </div>
                 <div class="input-group mb-3">
                     <input type="color" name="color[]" class="form-control color"/>
