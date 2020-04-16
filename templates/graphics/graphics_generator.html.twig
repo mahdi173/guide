@@ -4,8 +4,10 @@
 <style>
     #myChart{
 
-        width:1000px !important;
-        height:1000px !important;
+        margin-top: 50px;
+        margin-left: 50px;
+        width:700px !important;
+        height:500px !important;
         background-color: white !important;
 
     }
@@ -17,8 +19,10 @@
         <canvas id="myChart" width="100" height="100"></canvas>
 
     </div>
-    <br><div class="row">
-        <a href="#" id="downloadPdf" class="btn" style="padding: 20px;background-color: #B22222;color:white;margin-right: 15px">download pdf</a>
+    <br><div class="row" style="margin-left: 190px;margin-top: 20px">
+        <a href="#" id="downloadPdf" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download pdf</a>
+        <a href="#" id="downloadPic" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download png</a>
+        <a href="#" id="editGraph" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px" >Edit graph</a>
 {#        <a href="#" id="downloadPic" class="btn" style="padding: 20px;background-color: #B22222;color:white">download image</a>#}
 
     </div>
@@ -28,38 +32,144 @@
 {% block javascripts %}
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="/scripts/FileSaver.js"></script>
 
 
     <script>
+        var hasMultipleY='{{ hasMultipleY }}'
+        console.log(hasMultipleY,"hasMultipleY");
+        var showValues='{{ showValues }}';
+        var type='{{ type }}';
+        var showGrid='{{ showGrid }}';
+        var countDataExtra='{{ dataExtra|length }}';
+
+        var countColors='{{axe2|json_encode()|raw}}';
+        var aa='{{aa|json_encode()|raw}}';
+        console.log(countDataExtra,'countDataExtra');
+        console.log(countColors);
+        console.log("aaa");
+        console.log(aa);
     var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
     type: '{{type}}',
     data: {
         labels: ({{axeX|json_encode()|raw}}),
-        datasets: [{
+        datasets:  parseInt(countDataExtra)===0?[{
         data: ({{axeY|json_encode()|raw}}),
-        backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-        ],
+        backgroundColor: type!=="pie"?'{{color}}':['{{color}}', "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+        borderColor: '{{color}}',
         borderWidth: 1
-        }]
+        }]:
+            [
+
+            {
+                type: '{{ type }}',
+                label: 'a0',
+                id: "y-axis-10",
+                backgroundColor: '{{color}}',
+                data: ({{axeY|json_encode()|raw}})
+            }
+              ,
+              //  parseInt(countDataExtra)>=1?(
+                {
+
+                    type: '{{ type }}',
+                    label: 'a',
+                    id: "y-axis-20",
+                    backgroundColor: ('{{ color1 }}') ? '{{ color1 }}' : "#8e5ea2",
+                    data: ({{ axe1|json_encode()|raw }})
+                },
+              //  ):null,
+                parseInt(countDataExtra)>=1?(
+                {
+
+                type: '{{ type }}',
+                label: 'b',
+                id: "y-axis-30",
+                backgroundColor: ('{{ color2 }}') ? '{{ color2 }}' : "#FF5733",
+                data: ({{ axe2|json_encode()|raw }})
+
+
+               }):null
+                ,{
+            type: '{{ type }}',
+            label: 'c',
+            id: "y-axis-40",
+            backgroundColor: ('{{ color3 }}') ? '{{ color3 }}' :"#e8c3b9",
+            data: ({{axe3|json_encode()|raw}})
+        }
+        //) :''
+
+            ],
+
     },
     options: {
         legend: {
-            display: false
+
+            display: false,
+
+        },
+        "hover": {
+            "animationDuration": 0
+        },
+
+        "animation": {
+            "duration": 1,
+            "onComplete":
+
+                function () {
+                    if (showValues) {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+
+                        ctx.font = Chart.helpers.fontString(25, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        if (type !== "pie"){
+
+                            this.data.datasets.forEach(function (dataset, i) {
+                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                meta.data.forEach(function (bar, index) {
+                                    var data = dataset.data[index];
+                                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+
+                                });
+                            });
+                    }
+                        else {
+                            this.data.datasets.forEach(function (dataset) {
+
+                                for (var i = 0; i < dataset.data.length; i++) {
+                                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                        total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                        mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                        start_angle = model.startAngle,
+                                        end_angle = model.endAngle,
+                                        mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                                    var x = mid_radius * Math.cos(mid_angle);
+                                    var y = mid_radius * Math.sin(mid_angle);
+
+                                    ctx.fillStyle = '#fff';
+                                    if (i == 3){ // Darker text color for lighter background
+                                        ctx.fillStyle = '#444';
+                                    }
+                                    var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                                    //Don't Display If Legend is hide or value is 0
+                                    if(dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
+                                        ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                                        // Display percent in another line, line break doesn't work for fillText
+                                     //   ctx.fillText(percent, model.x + x, model.y + y + 15);
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                }
+
         },
         tooltips: {
             callbacks: {
@@ -73,62 +183,102 @@
            yAxes: [{
             ticks: {
             beginAtZero: true,
-            fontSize: 18
+            fontSize: 25
            },
                scaleLabel: {
                    display: true,
                    labelString: '{{titleY}}',
-                   fontSize:24,
+                   fontSize:30,
+               },
+               gridLines:{
+               // color:"rgb(32, 35, 11)",
+                   color:showGrid?"rgb(32, 35, 11)":null,
                }
            }],
              xAxes: [{
-                 fontSize: 30,
+
                  ticks: {
-                     fontSize: 18
+                     fontSize: 25
                  },
                  scaleFontSize: 40,
                  scaleLabel: {
                      display: true,
                      labelString: '{{titleX}}',
                      fontSize:24,
+                 },
+                 gridLines:{
+
+                     //display:false,
+
+                          color:showGrid?"rgb(32, 35, 11)":null,
+
                  }
              }]
          },
          title: {
              fontSize: 36,
-          display: true,
-          text: '{{graphicTitle}}'
+             paddingBottom: 50,
+             display: true,
+              text: '{{graphicTitle}}'
          }
     }
     });
 
 
     $('#downloadPic').click(function(event) {
+
         var canvas = document.getElementById('myChart');
-        var ctx = canvas.getContext("2d");
-        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-        var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-        $("#downloadPic").attr("href", dataURL);
-        $("#downloadPic").attr("download", "{{graphicTitle}}.jpeg");
-
-
+        var ctx = canvas.getContext('2d');
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        var image = document.getElementById("myChart").toDataURL("image/png",1).replace("image/png", "image/octet-stream");
+        $("#downloadPic").attr("href", image);
+        $("#downloadPic").attr("download", "{{graphicTitle}}.png");
 
     })
-    $('#downloadPdf').click(function(event) {
-        var canvas = document.getElementById('myChart');
-        //creates image
-        var canvasImg = canvas.toDataURL("image/png", 1.0);
 
-        //creates PDF from img
+    $('#downloadPdf').click(function(event) {
+
+        var canvas = document.getElementById('myChart');
+        var canvasImg = canvas.toDataURL("image/png", 1);
         var doc = new jsPDF('landscape');
         doc.setFontSize(20);
-
-
-
         doc.addImage(canvasImg, 'PNG', 10, 30, 280, 150 );
         var title='{{graphicTitle}}';
         doc.save(title+'.pdf');
     });
+
+        $( document ).ready(function() {
+            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',color:'{{ color }}'};
+            const ar1='{{axeX|json_encode()|raw}}';
+            const ar2='{{axeY|json_encode()|raw}}';
+            const axe1='{{axe1|json_encode()|raw}}';
+            const axe2='{{axe2|json_encode()|raw}}';
+            const axe3='{{axe3|json_encode()|raw}}';
+            const dataExtra='{{dataExtra|json_encode()|raw}}';
+            const titles='{{titles|json_encode()|raw}}';
+            const colors='{{colors|json_encode()|raw}}';
+            const dataX=ar1;
+            const  dataY=ar2;
+console.log('dataExtra')
+console.log(dataExtra)
+console.log(axe1)
+            localStorage.setItem('dataObject', JSON.stringify(data));
+            localStorage.setItem('dataX', JSON.stringify(dataX));
+            localStorage.setItem('dataY', JSON.stringify(dataY));
+            localStorage.setItem('dataExtra', JSON.stringify(dataExtra));
+            localStorage.setItem('axe1', JSON.stringify(axe1));
+            localStorage.setItem('axe2', JSON.stringify(axe2));
+            localStorage.setItem('axe3', JSON.stringify(axe3));
+            localStorage.setItem('titles', JSON.stringify(titles));
+            localStorage.setItem('colors', JSON.stringify(colors));
+
+        });
+        $('#editGraph').click(function () {
+            location.href="?edit=1";
+        })
+
 
     </script>
 {% endblock %}
