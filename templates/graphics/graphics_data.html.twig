@@ -74,12 +74,17 @@
 {% block content %}
 
     <div class="row">
-        <h3 class="text-center text-primary" style="margin-top: 30px;">
-             <i class="fa fa-line-chart" style="color: orangered;font-size: 23px"></i>&nbsp;Graphics generator
+        <h3 class=" text-primary col-md-4" style="margin-top: 20px;">
+             <i class="fa fa-line-chart" style="color: orangered;font-size: 23px;"></i>&nbsp;Graphics generator
         </h3>
+        <a type="button" class="text-dark col-md-4" data-toggle="modal" data-target="#myModal" style="font-weight: bold;margin-top: 20px;font-size: 19px">How it works?</a>
         <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">
-            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button</p>
+            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button
+
+        </p>
     </div>
+
+
 
     {{ form_start(form)}}
     <div class="settings">
@@ -119,7 +124,7 @@
     <h5 class="col-md-3 col-sm-6 settings-title text-primary" style="padding-left: 20px;font-weight: bold">Chart Data</h5>
 {#    <h5 class="col-md-2  settings-title" style="padding-left: 20px">How it works?</h5>#}
 
-        <a type="button" class="col-md-3 col-sm-6 text-dark" data-toggle="modal" data-target="#myModal" style="font-weight: bold">How it works?</a>
+
 
 
 
@@ -133,7 +138,7 @@
                      <div class="modal-header" style="background-color: white;width: 600px;">
                          <button type="button" class="close" data-dismiss="modal">&times;</button>
                      </div>
-                     <img src="{{ asset('assets/images/image.png') }}" style="width: 600px;height: 600px"/>
+                     <img src="{{ asset('assets/images/imageModal.png') }}" style="width: 600px;height: 600px"/>
                  </div>
 
              </div>
