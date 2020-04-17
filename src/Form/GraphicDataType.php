@@ -21,7 +21,7 @@ class GraphicDataType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = $this->getFontAwesome();
+
         $builder
             ->add('type',ChoiceType::class,[
                 'choices'=>[
@@ -30,29 +30,45 @@ class GraphicDataType extends AbstractType
                     'Line'=>'line',
                 ],
 //                'icon' => 'fa-bug',
-
-                'attr' => array('class' => "fa" )
             ])
             ->add('graphicTitle',TextType::class, [
-                    'required'=>'required'
+                    'required'=>'required',
+                    'attr'=>[
+                        'oninvalid'=>"setCustomValidity('Please fill this field')",
+                        'oninput'=>"setCustomValidity('')",
+                    ],
+
                 ])
             ->add('titleX',TextType::class,[
-                'required'=>'required'
+                'required'=>true,
+                'attr'=>[
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
+                ],
             ])
             ->add('titleY',TextType::class,[
-                'required'=>'required'
+                'required'=>'required',
+                'attr'=>[
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
+                ],
             ])
             ->add('dataX',TextareaType::class,[
                 'required'=>'required',
+
                 'label'=>'X axis',
                 'attr'=>[
-                    'cols'=>'8','rows'=>'8','class'=>"dataX"
+                    'cols'=>'8','rows'=>'8','class'=>"dataX",
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
                 ],
             ])
             ->add('dataY',TextareaType::class,[
                 'label'=>'Y axis',
                 'attr'=>[
-                    'cols'=>'8','rows'=>'8','class'=>"dataY"
+                    'cols'=>'8','rows'=>'8','class'=>"dataY",
+                     'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
                 ],
                 'required'=>'required'
             ])
@@ -69,24 +85,11 @@ class GraphicDataType extends AbstractType
             ->add('showGrid',CheckboxType::class,[
                 'required'=>false,
 //                'icon' => 'fa-bug',
-               // 'attr'=>['checked'=>"checked","value"=>"1"]
+                'attr'=>['class'=>"showGrid"]
             ])
         ;
     }
 
-    public function getFontAwesome()
-    {
-
-//        $webroot = $this->get('kernel')->getRootDir() . '/../web';
-//        $pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"\\\\(.+)";\s+}/';
-//        $subject = file_get_contents($webroot . '/assets/vendor/font-awesome/css/font-awesome.css');
-//        preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
-//        foreach ($matches as $match) {
-//            $icons[$match[1]] = '&#x' . $match[2] . ';';
-//        }
-//
-//        return $icons;
-    }
 
     public function configureOptions(OptionsResolver $resolver)
     {

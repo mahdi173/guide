@@ -58,8 +58,13 @@
         datasets:  parseInt(countDataExtra)===0?[{
         data: ({{axeY|json_encode()|raw}}),
         backgroundColor: type!=="pie"?'{{color}}':['{{color}}', "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
-        borderColor: '{{color}}',
-        borderWidth: 1
+        {#borderColor: '{{color}}',#}
+        fill:  type!=="line"?true:false,
+         borderColor: type==="line"?'{{ color }}':false,
+         lineTension: 0.1,
+         borderJoinStyle: 'miter',
+        borderWidth: 1,
+                pointBorderWidth: 5,
         }]:
             [
 
@@ -68,7 +73,12 @@
                 label: 'a0',
                 id: "y-axis-10",
                 backgroundColor: '{{color}}',
-                data: ({{axeY|json_encode()|raw}})
+                data: ({{axeY|json_encode()|raw}}),
+                fill:  type!=="line"?true:false,
+                borderColor: type==="line"?'{{ color }}':false,
+                lineTension: 0.1,
+                borderJoinStyle: 'miter',
+                pointBorderWidth: 5,
             }
               ,
               //  parseInt(countDataExtra)>=1?(
@@ -78,7 +88,11 @@
                     label: 'a',
                     id: "y-axis-20",
                     backgroundColor: ('{{ color1 }}') ? '{{ color1 }}' : "#8e5ea2",
-                    data: ({{ axe1|json_encode()|raw }})
+                    data: ({{ axe1|json_encode()|raw }}),
+                    fill:  type!=="line"?true:false,
+                    borderColor: type==="line"?'{{ color1 }}':false,
+                    borderJoinStyle: 'miter',
+                    pointBorderWidth: 5,
                 },
               //  ):null,
                 parseInt(countDataExtra)>=1?(
@@ -88,7 +102,11 @@
                 label: 'b',
                 id: "y-axis-30",
                 backgroundColor: ('{{ color2 }}') ? '{{ color2 }}' : "#FF5733",
-                data: ({{ axe2|json_encode()|raw }})
+                data: ({{ axe2|json_encode()|raw }}),
+                fill:  type!=="line"?true:false,
+                    borderColor: type==="line"?'{{ color2 }}':false,
+                    borderJoinStyle: 'miter',
+                    pointBorderWidth: 5,
 
 
                }):null
@@ -97,7 +115,11 @@
             label: 'c',
             id: "y-axis-40",
             backgroundColor: ('{{ color3 }}') ? '{{ color3 }}' :"#e8c3b9",
-            data: ({{axe3|json_encode()|raw}})
+            data: ({{axe3|json_encode()|raw}}),
+            fill:  type!=="line"?true:false,
+             borderColor: type==="line"?'{{ color3 }}':false,
+                borderJoinStyle: 'miter',
+                pointBorderWidth: 5,
         }
         //) :''
 

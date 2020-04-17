@@ -2,10 +2,31 @@
 
 {% block stylesheets %}
     <style>
+        #graphic_data_titleY,#graphic_data_graphicTitle{
+            margin-top: 1px;
+        }
+        #graphic_data_color{
+            margin-top: -8px;
+        }
+        #graphic_data_titleX{
+            margin-top: -22px;
+        }
+.checkData label{
+    font-weight: bold;
+    margin-left: 10px;
+
+}
+.checkFirst{
+    margin-left: 15px;
+}
+.showGrid{
+    color:red
+}
     .cee{
     display: inline;
   font-weight:bold;
   color:#555;
+
     }
     .titleBold{
 
@@ -53,26 +74,33 @@
 {% block content %}
 
     <div class="row">
-        <h3 class="text-center text-primary" style="margin-top: 30px;">
-             <i class="fa fa-line-chart" style="color: orangered;font-size: 23px"></i>&nbsp;Graphics generator
+        <h3 class=" text-primary col-md-4" style="margin-top: 20px;">
+             <i class="fa fa-line-chart" style="color: orangered;font-size: 23px;"></i>&nbsp;Graphics generator
         </h3>
+        <a type="button" class="text-dark col-md-4" data-toggle="modal" data-target="#myModal" style="color:#158CBA!important;font-weight: bold;margin-top: 20px;font-size: 19px">How it works?</a>
         <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">
-            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button</p>
+            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button
+
+        </p>
     </div>
+
+
 
     {{ form_start(form)}}
     <div class="settings">
-    <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 10px; padding-top: 30px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
-    <h5 class="settings-title text-primary" style="padding-left: 20px">Chart Settings</h5>
+    <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+    <h5 class="settings-title text-primary" style="padding-left: 20px;font-weight: bold">Chart Settings</h5>
     </div>
     <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px">
 
     <div class="col-md-2">
         {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br><br>
+        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
        {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}
     </div>
      <div class="col-md-3">
+{#     {% for choice in form.type.vars.choices %}#}
+        
         {{ form_widget(form.type)}}<br><br>
         {{ form_widget(form.titleX)}}<br><br>
        {{ form_widget(form.color)}}
@@ -80,20 +108,41 @@
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
             {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br><br>
-             {{ form_row(form.showGrid)}}
+             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div>
         </div>
         <div class="col-md-4">
-            {{ form_widget(form.graphicTitle)}}<br><br>
-            {{ form_widget(form.titleY)}}<br><br>
-             {{ form_row(form.showValues)}}
+            {{ form_widget(form.graphicTitle)}}<br>
+            {{ form_widget(form.titleY)}}<br><br><br>
+            <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div>
         </div>
     </div>
     </div>
      <div class="settings data-settings">
 
-     <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 10px; padding-top: 30px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
-    <h5 class="settings-title text-primary" style="padding-left: 20px">Chart Data</h5>
+     <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+    <div class="row">
+    <h5 class="col-md-3 col-sm-6 settings-title text-primary" style="padding-left: 20px;font-weight: bold">Chart Data</h5>
+{#    <h5 class="col-md-2  settings-title" style="padding-left: 20px">How it works?</h5>#}
 
+
+
+
+
+   </div>
+         <!-- Modal -->
+         <div class="modal fade" id="myModal" role="dialog">
+             <div class="modal-dialog" role="document">
+
+                 <!-- Modal content-->
+                 <div class="modal-content" style="margin-top: 20px">
+                     <div class="modal-header" style="background-color: white;width: 600px;">
+                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     </div>
+                     <img src="{{ asset('assets/images/imageModal.png') }}" style="width: 600px;height: 600px"/>
+                 </div>
+
+             </div>
+         </div>
     </div>
 
         <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px;padding-right: 20px;">
@@ -101,7 +150,7 @@
                   {{ form_label(form.dataX, null, {  'label_attr': {'class': 'cee'} }) }}
                  {{ form_widget(form.dataX )}}
              </div>
-              <div class="col-md-6" id="dataY">
+              <div class="col-md-6" id="dataY" style="margin-left: -15px;">
                   <div style="display: inline">
                       <span style="float: left">{{ form_label(form.dataY, null, {  'label_attr': {'class': 'cee'} }) }}</span>
                          <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #5CB440;float: right;"></i>
@@ -131,8 +180,13 @@
     <div id="blockY">
     </div>
 
+
+
+    </div>
+
 {% endblock  %}
 {% block javascripts %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script>
         $( document ).ready(function() {
         var edit='{{ edit }}'
@@ -451,6 +505,7 @@
               return nb;
 
         }
+
         /****************************************************************************/
 })
 
