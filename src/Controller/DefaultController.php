@@ -44,6 +44,8 @@ class DefaultController extends AbstractController
             $dataX=$form->get('dataX')->getData();
             $showValues=$form->get('showValues')->getData();
             $showGrid=$form->get('showGrid')->getData();
+            $border=$form->get('border')->getData();
+            $roundCorner=$form->get('roundCorners')->getData();
             $axeX=explode("\r\n",$dataX);
 
             $dataY=$form->get('dataY')->getData();
@@ -107,6 +109,8 @@ class DefaultController extends AbstractController
                     'color'=>$color,
                     'showValues'=>$showValues,
                     'showGrid'=>$showGrid,
+                    'border'=>$border,
+                    'roundCorner'=>$roundCorner,
                     'hasMultipleY'=>$hasMultipleY,
                     'titles'=>$titles,
                     'axe1'=>$ax1,

@@ -84,8 +84,15 @@ class GraphicDataType extends AbstractType
             ])
             ->add('showGrid',CheckboxType::class,[
                 'required'=>false,
-//                'icon' => 'fa-bug',
                 'attr'=>['class'=>"showGrid"]
+            ])
+            ->add('border',CheckboxType::class,[
+                'required'=>false,
+                'attr'=>['class'=>"border"]
+            ])
+            ->add('roundCorners',CheckboxType::class,[
+                'required'=>false,
+                'attr'=>['class'=>"roundCorner"]
             ])
         ;
     }

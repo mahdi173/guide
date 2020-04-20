@@ -18,6 +18,8 @@ class GraphicDataDTO
     public $color;
     public $showValues;
     public $showGrid;
+    public $border;
+    public $roundCorners;
 
 
 
