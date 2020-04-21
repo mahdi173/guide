@@ -20,6 +20,8 @@ class GraphicDataDTO
     public $showGrid;
     public $border;
     public $roundCorners;
+    public $width;
+    public $height;
 
 
 

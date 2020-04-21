@@ -6,8 +6,8 @@
 
         margin-top: 20px;
         margin-left: 50px;
-        width:700px !important;
-        height:500px !important;
+        /*width:800px !important;*/
+        /*height:800px !important;*/
         background-color: white !important;
 
     }
@@ -29,17 +29,18 @@
     </div>
 
     <div class="row">
-        <canvas id="myChart" width="100" height="100"></canvas>
+        <canvas id="myChart"></canvas>
     </div>
-    <div class="row visualize" style="margin-left: 40px;margin-top: 50px">
+    <div class="row visualize" style="margin-left: 40px;margin-top: 40px;color:#555">
        <p style="font-weight: bold">Visualize chart as  <a id="bar"  style="margin-left: 10px">Bar</a> <a id="pie"  style="margin-left: 10px">Pie</a> <a id="line" style="margin-left: 10px">Line</a></p>
     </div>
-    <br><div class="row buttons" style="margin-left: 40px;margin-top: 10px">
+    <br><div class="row buttons" style="margin-left: 40px;">
         <a href="#" id="downloadPdf" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download pdf</a>
         <a href="#" id="downloadJpg" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download jpg</a>
         <a href="#" id="downloadTif" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download tif</a>
         <a href="#" id="downloadPic" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download png</a>
         <a href="#" id="editGraph" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px" >Edit graph</a>
+
 {#        <a href="#" id="downloadPic" class="btn" style="padding: 20px;background-color: #B22222;color:white">download image</a>#}
 
     </div>
@@ -47,16 +48,18 @@
 {% endblock  %}
 
 {% block javascripts %}
+
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="{{ asset('assets/js/canvastotiff.min.js') }}" ></script>
+
     <script src="/scripts/FileSaver.js"></script>
 
 
     <script>
-        var newT=''
-        console.log(newT)
+
         var hasMultipleY='{{ hasMultipleY }}'
-        console.log(hasMultipleY,"hasMultipleY");
+
         var showValues='{{ showValues }}';
         var type='{{ type }}';
         var showGrid='{{ showGrid }}';
@@ -65,11 +68,34 @@
         var countColors='{{axe2|json_encode()|raw}}';
         var aa='{{aa|json_encode()|raw}}';
 
+        var widths='{{ width }}'
+        var height='{{ height }}'
+
         var ctx = document.getElementById('myChart').getContext('2d');
+        let elem = document.getElementById('myChart');
+        console.log(ctx.canvas.width,ctx.canvas.height)
+        console.log(elem.width,elem.height)
+        console.log(widths,height)
+        if(widths){
+            // ctx.canvas.width=200
+            ctx.canvas.width=widths
+        }else{
+            ctx.canvas.width=700
+        }
+
+        if(height){
+            ctx.canvas.height=height
+        }else{
+            ctx.canvas.height=700
+        }
         var chart = document.getElementById('myChart');
 
         var border='{{ border }}'
         var roundCorner='{{ roundCorner }}'
+
+
+
+
         if(border){
             $('#myChart').css('border','1px black solid')
             $('#myChart').css('padding','30px')
@@ -82,205 +108,13 @@
         if(roundCorner){
             $('#myChart').css('border-radius','10px')
         }
-        var options={
-            responsive: true,
-            legend: {
-
-                display: false,
-
-            },
-            "hover": {
-                "animationDuration": 0
-            },
-
-            "animation": {
-                "duration": 1,
-                "onComplete":
-
-                    function () {
-                        if (showValues) {
-                            var chartInstance = this.chart,
-                                ctx = chartInstance.ctx;
-
-                            ctx.font = Chart.helpers.fontString(25, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'bottom';
-                            if (type !== "pie"){
-
-                                this.data.datasets.forEach(function (dataset, i) {
-                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                    meta.data.forEach(function (bar, index) {
-                                        var data = dataset.data[index];
-                                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
-
-                                    });
-                                });
-                            }
-                            else {
-                                this.data.datasets.forEach(function (dataset) {
-
-                                    for (var i = 0; i < dataset.data.length; i++) {
-                                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                            total = dataset._meta[Object.keys(dataset._meta)[0]].total,
-                                            mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
-                                            start_angle = model.startAngle,
-                                            end_angle = model.endAngle,
-                                            mid_angle = start_angle + (end_angle - start_angle)/2;
-
-                                        var x = mid_radius * Math.cos(mid_angle);
-                                        var y = mid_radius * Math.sin(mid_angle);
-
-                                        ctx.fillStyle = '#fff';
-                                        if (i == 3){ // Darker text color for lighter background
-                                            ctx.fillStyle = '#444';
-                                        }
-                                        var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
-                                        //Don't Display If Legend is hide or value is 0
-                                        if(dataset.data[i] != 0 && dataset._meta[0].data[i].hidden != true) {
-                                            ctx.fillText(dataset.data[i], model.x + x, model.y + y);
-                                            // Display percent in another line, line break doesn't work for fillText
-                                            //   ctx.fillText(percent, model.x + x, model.y + y + 15);
-
-                                        }
-                                    }
-                                });
-                            }
-                        }
-
-                    }
-
-            },
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return tooltipItem.yLabel;
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        display: type!=="pie"?true:false,
-                        beginAtZero: true,
-                        fontSize: 25
-                    },
-                    scaleLabel: {
-                        display: type!=="pie"?true:false,
-                        labelString: '{{titleY}}',
-                        fontSize:33,
-                        fontStyle:"bold"
-                    },
-                    gridLines:{
-                        display: type!=="pie"?true:false,
-                        // color:"rgb(32, 35, 11)",
-                        color:showGrid?"rgb(32, 35, 11)":null,
-                    }
-                }],
-                xAxes: [{
-                    ticks: {
-                        display: type!=="pie"?true:false,
-                        fontSize: 25
-                    },
-                    scaleFontSize: 40,
-                    scaleLabel: {
-                        display: type!=="pie"?true:false,
-                        labelString: '{{titleX}}',
-                        fontSize:33,
-                        fontStyle:"bold"
-                    },
-                    gridLines:{
-                        display: type!=="pie"?true:false,
-                        //display:false,
-
-                        color:showGrid?"rgb(32, 35, 11)":null,
-
-                    }
-                }]
-            },
-            {#title: {#}
-            {#    fontSize: 36,#}
-            {#    paddingBottom: 50,#}
-            {#    display: true,#}
-            {#     text: '{{graphicTitle}}'#}
-            {#}#}
-        }
-        var data={
-            labels: ({{axeX|json_encode()|raw}}),
-            datasets:  parseInt(countDataExtra)===0?[{
-                    data: ({{axeY|json_encode()|raw}}),
-                    backgroundColor: '{{color}}'!=='#000000'?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
-                        {#borderColor: '{{color}}',#}
-                    fill:  type!=="line" || newT!=="line" ?true:false,
-                    borderColor: type==="line"?'{{ color }}':false,
-                    lineTension: 0.4,
-                    borderJoinStyle: 'miter',
-                    borderWidth:  type==="line"?5:false,
-                    pointBorderWidth: 5,
-                }]:
-                [
-
-                    {
-                        type: '{{ type }}',
-                        label: 'a0',
-                        id: "y-axis-10",
-                        backgroundColor: '{{color}}'!=='#000000'?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
-                        data: ({{axeY|json_encode()|raw}}),
-                        fill:  type!=="line"?true:false,
-                        borderColor: type==="line"?'{{ color }}':false,
-                        lineTension: 0.4,
-                        borderJoinStyle: 'miter',
-                        pointBorderWidth: 5,
-                    }
-                    ,
-                    //  parseInt(countDataExtra)>=1?(
-                    {
-
-                        type: '{{ type }}',
-                        label: 'a',
-                        id: "y-axis-20",
-                        backgroundColor: '{{color1}}'!=='#000000'?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
-                        data: ({{ axe1|json_encode()|raw }}),
-                        fill:  type!=="line"?true:false,
-                        borderColor: type==="line"?'{{ color1 }}':false,
-                        borderJoinStyle: 'miter',
-                        pointBorderWidth: 5,
-                    },
-                    //  ):null,
-                    parseInt(countDataExtra)>=1?(
-                        {
-
-                            type: '{{ type }}',
-                            label: 'b',
-                            id: "y-axis-30",
-                            backgroundColor: '{{color2}}'!=='#000000'?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
-                            data: ({{ axe2|json_encode()|raw }}),
-                            fill:  type!=="line"?true:false,
-                            borderColor: type==="line"?'{{ color2 }}':false,
-                            borderJoinStyle: 'miter',
-                            pointBorderWidth: 5,
 
 
-                        }):null
-                    ,{
-                    type: '{{ type }}',
-                    label: 'c',
-                    id: "y-axis-40",
-                    backgroundColor: '{{color3}}'!=='#000000'?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
-                    data: ({{axe3|json_encode()|raw}}),
-                    fill:  type!=="line"?true:false,
-                    borderColor: type==="line"?'{{ color3 }}':false,
-                    borderJoinStyle: 'miter',
-                    pointBorderWidth: 5,
-                }
-                    //) :''
-
-                ],
-
-        }
         var config = {
-                type: newT.length!==0 ? newT:'{{type}}',
-                data: data,
-                options: options
+                type: '{{type}}',
+                data:getDataChart(type),
+                options: getConfigChart(type)
+                // options: options
             };
 
         var myChart = new Chart(ctx, config);
@@ -315,14 +149,23 @@
 
         $('#downloadTif').click(function(event) {
 
-            var canvas = document.getElementById('myChart');
-            var ctx = canvas.getContext('2d');
+            var c = document.getElementById("myChart");
+            var ctx = c.getContext("2d");
             ctx.globalCompositeOperation = 'destination-over';
             ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            var image = document.getElementById("myChart").toDataURL("image/tiff",1).replace("image/tiff", "image/octet-stream");
-            $("#downloadTif").attr("href", image);
-            $("#downloadTif").attr("download", "{{graphicTitle}}.tiff");
+            ctx.fillRect(0, 0, c.width, c.height);
+
+           {#CanvasToTIFF.toObjectURL(c, function(url) {#}
+           {#     $("#downloadTif").attr("href", url);#}
+           {#     $("#downloadTif").attr("download", "{{graphicTitle}}.tiff");#}
+           {# })#}
+            var image=CanvasToTIFF.toBlob(c, function(blob) {
+                // blob object can be converted to an objectURL and then
+                // set as source for images, or as download target:
+                var url = URL.createObjectURL(blob);
+                $("#downloadTif").attr("href", url);
+                $("#downloadTif").attr("download", "{{graphicTitle}}.tiff");
+            },"image/tiff",1);
 
         })
 
@@ -338,7 +181,7 @@
     });
 
         $( document ).ready(function() {
-            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',border:'{{ border }}',roundCorner:'{{ roundCorner }}',color:'{{ color }}'};
+            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',border:'{{ border }}',roundCorner:'{{ roundCorner }}',color:'{{ color }}',width:'{{ width }}',height:'{{ height }}'};
             const ar1='{{axeX|json_encode()|raw}}';
             const ar2='{{axeY|json_encode()|raw}}';
             const axe1='{{axe1|json_encode()|raw}}';
@@ -367,35 +210,235 @@
 
         var myChartt;
         $("#line").click(function() {
-            newT='line'
             change('line');
-
         });
 
         $("#bar").click(function() {
-            newT='bar'
             change('bar');
         });
         $("#pie").click(function() {
-            newT='pie'
             change('pie');
         });
+
         function change(newType) {
-
             myChart.destroy();
-
-            var config = {
+            var configg = {
                 type: newType,
-                data: data,
-                //data.dataset.fill
-
-                options: options
+                data: getDataChart(newType),
+                options: getConfigChart(newType)
             };
-            myChart = new Chart(ctx,config)
-
-
-
+            myChart = new Chart(ctx,configg)
         };
+
+        function getDataChart(newChartType) {
+            var data={
+                labels: ({{axeX|json_encode()|raw}}),
+                datasets:  parseInt(countDataExtra)===0?[{
+                        data: ({{axeY|json_encode()|raw}}),
+                        backgroundColor: '{{color}}'!=='#000000'?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                        {#borderColor: '{{color}}',#}
+                        fill:  newChartType!=="line"  ?true:false,
+                        borderColor: newChartType==="line"?'{{ color }}':false,
+                        lineTension: 0.4,
+                        borderJoinStyle: 'miter',
+                        borderWidth:  newChartType==="line"?5:false,
+                        pointBorderWidth: 5,
+                        pointBackgroundColor:'#000000'
+                    }]:
+                    [
+                        {
+                            type: newChartType,
+                            label: 'a0',
+                            id: "y-axis-10",
+                            backgroundColor: '{{color}}'!=='#000000'?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            data: ({{axeY|json_encode()|raw}}),
+                            fill:  newChartType!=="line"?true:false,
+                            borderColor: newChartType==="line"?'{{ color }}':false,
+                            lineTension: 0.4,
+                            borderJoinStyle: 'miter',
+                            borderWidth:  newChartType==="line"?5:false,
+                            pointBorderWidth: 5,
+                            pointBackgroundColor:'#000000'
+                        }
+                        ,
+
+                        {
+                            type: newChartType,
+                            label: 'a',
+                            id: "y-axis-20",
+                            backgroundColor: '{{color1}}'!=='#000000'?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                            data: ({{ axe1|json_encode()|raw }}),
+                            fill:  newChartType!=="line"?true:false,
+                            borderColor: newChartType==="line"?'{{ color1 }}':false,
+                            borderJoinStyle: 'miter',
+                            borderWidth:  newChartType==="line"?5:false,
+                            pointBorderWidth: 5,
+                            pointBackgroundColor:'#000000'
+                        },
+                        parseInt(countDataExtra)>=1?(
+                            {
+                                type: newChartType,
+                                label: 'b',
+                                id: "y-axis-30",
+                                backgroundColor: '{{color2}}'!=='#000000'?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
+                                data: ({{ axe2|json_encode()|raw }}),
+                                fill:  newChartType!=="line"?true:false,
+                                borderColor: newChartType==="line"?'{{ color2 }}':false,
+                                borderJoinStyle: 'miter',
+                                borderWidth:  newChartType==="line"?5:false,
+                                pointBorderWidth: 5,
+                                pointBackgroundColor:'#000000'
+
+                            }):null
+                        ,{
+                        type: newChartType,
+                        label: 'c',
+                        id: "y-axis-40",
+                        backgroundColor: '{{color3}}'!=='#000000'?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                        data: ({{axe3|json_encode()|raw}}),
+                        fill:  newChartType!=="line"?true:false,
+                        borderColor: newChartType==="line"?'{{ color3 }}':false,
+                        borderJoinStyle: 'miter',
+                        borderWidth:  newChartType==="line"?5:false,
+                        pointBorderWidth: 5,
+                        pointBackgroundColor:'#000000'
+                    }
+
+                    ],
+
+            }
+            return data
+        }
+        function getConfigChart(newChartType) {
+            var options={
+                layout: {
+                    padding: {
+                        top: 50
+                    }
+                },
+                responsive: false,
+                legend: {
+
+                    display: false,
+
+                },
+                "hover": {
+                    "animationDuration": 0
+                },
+
+                "animation": {
+                    "duration": 500,
+                    "onComplete":
+
+                        function () {
+                            if (showValues) {
+                                var chartInstance = this.chart,
+                                    ctx = chartInstance.ctx;
+
+                                ctx.font = Chart.helpers.fontString(20, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = newChartType==="bar"?'ideographic':'ideographic';
+                                if (newChartType !== "pie"){
+
+                                    this.data.datasets.forEach(function (dataset, i) {
+                                        var meta = chartInstance.controller.getDatasetMeta(i);
+                                        meta.data.forEach(function (bar, index) {
+                                            var data = dataset.data[index];
+                                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+
+                                        });
+                                    });
+                                }
+                                else {
+                                    this.data.datasets.forEach(function (dataset) {
+
+                                        for (var i = 0; i < dataset['data'].length; i++) {
+                                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                                total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                                mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                                start_angle = model.startAngle,
+                                                end_angle = model.endAngle,
+                                                mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                                            var x = mid_radius * Math.cos(mid_angle);
+                                            var y = mid_radius * Math.sin(mid_angle);
+
+                                            ctx.fillStyle = '#111';
+                                            ctx.fontStyle="bold"
+                                            if (i == 3){ // Darker text color for lighter background
+                                                ctx.fillStyle = '#111';
+                                                ctx.fontStyle="bold"
+                                            }
+                                            var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                                            //Don't Display If Legend is hide or value is 0
+                                            if(dataset['data'][i] !== 0) {
+                                                ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                                                // Display percent in another line, line break doesn't work for fillText
+                                                //   ctx.fillText(percent, model.x + x, model.y + y + 15);
+
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.yLabel;
+                        }
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            display: newChartType!=="pie"?true:false,
+                            beginAtZero: true,
+                            fontSize: 20,
+                        },
+                        scaleLabel: {
+                            display: newChartType!=="pie"?true:false,
+                            labelString: '{{titleY}}',
+                            fontSize:25,
+                            fontStyle:"bold"
+                        },
+                        gridLines:{
+                            display: newChartType!=="pie"?true:false,
+                            // color:"rgb(32, 35, 11)",
+                            color:showGrid?"#555":null,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            display: newChartType!=="pie"?true:false,
+                            fontSize: 20
+                        },
+                        scaleFontSize: 40,
+                        scaleLabel: {
+                            display: newChartType!=="pie"?true:false,
+                            labelString: '{{titleX}}',
+                            fontSize:25,
+                            fontStyle:"bold"
+                        },
+                        gridLines:{
+                            display: newChartType!=="pie"?true:false,
+                            //display:false,
+
+                            color:showGrid?"#555":null,
+
+                        }
+                    }]
+                },
+                {#title: {#}
+                {#    fontSize: 36,#}
+                {#    paddingBottom: 50,#}
+                {#    display: true,#}
+                {#     text: '{{graphicTitle}}'#}
+                {#}#}
+            }
+            return options
+        }
 
     </script>
 {% endblock %}

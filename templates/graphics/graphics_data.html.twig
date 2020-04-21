@@ -101,23 +101,27 @@
     <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px">
     <div class="col-md-2">
         {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+        {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
        {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}
     </div>
      <div class="col-md-3">
         {{ form_widget(form.type)}}<br><br>
-        {{ form_widget(form.titleX)}}<br><br>
+        {{ form_widget(form.titleX)}}<br>
+        {{ form_widget(form.width)}}<br><br>
        {{ form_widget(form.color)}}
     </div>
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-            {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
+            {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+            {{ form_label(form.height, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
              <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border)}}</div>
         </div>
         <div class="col-md-4">
             {{ form_widget(form.graphicTitle)}}<br>
-            {{ form_widget(form.titleY)}}<br><br>
+            {{ form_widget(form.titleY)}}<br>
+            {{ form_widget(form.height)}}<br><br>
             <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
             <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>
         </div>
@@ -214,6 +218,9 @@
                     $("#graphic_data_titleY").val(arrayData.titleY);
                     $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
                     $("#graphic_data_color").val(arrayData.color);
+
+                    $("#graphic_data_width").val(arrayData.width)
+                    $("#graphic_data_height").val(arrayData.height);
                     var showGrig=arrayData.showGrig
                     var showValues=arrayData.showValues
                     var border=arrayData.border

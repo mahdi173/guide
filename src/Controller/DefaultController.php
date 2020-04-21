@@ -38,6 +38,8 @@ class DefaultController extends AbstractController
 //            dd($request->request->all());
             $type=$form->get('type')->getData();
             $graphicTitle=$form->get('graphicTitle')->getData();
+            $width=$form->get('width')->getData();
+            $height=$form->get('height')->getData();
             $titleX=$form->get('titleX')->getData();
             $titleY=$form->get('titleY')->getData();
             $color=$form->get('color')->getData();
@@ -122,6 +124,8 @@ class DefaultController extends AbstractController
                     'color1'=>$color1,
                     'color2'=>$color2,
                     'color3'=>$color3,
+                    "width"=>$width,
+                    "height"=>$height
 
 
             ]);
