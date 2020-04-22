@@ -37,7 +37,7 @@
     <br><div class="row buttons" style="margin-left: 40px;">
         <a href="#" id="downloadPdf" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download pdf</a>
         <a href="#" id="downloadJpg" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download jpg</a>
-        <a href="#" id="downloadTif" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download tif</a>
+        <a href="#" id="downloadTif"  class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download tif</a>
         <a href="#" id="downloadPic" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download png</a>
         <a href="#" id="editGraph" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px" >Edit graph</a>
 
@@ -73,8 +73,7 @@
 
         var ctx = document.getElementById('myChart').getContext('2d');
         let elem = document.getElementById('myChart');
-        console.log(ctx.canvas.width,ctx.canvas.height)
-        console.log(elem.width,elem.height)
+
         console.log(widths,height)
         if(widths){
             // ctx.canvas.width=200
@@ -155,17 +154,18 @@
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, c.width, c.height);
 
-           {#CanvasToTIFF.toObjectURL(c, function(url) {#}
+           CanvasToTIFF.toObjectURL(c, function(url) {
+
+               window.location = url;
+               $("#downloadTif").attr("download", "{{graphicTitle}}.tiff");
+            })
+           {# var image=CanvasToTIFF.toBlob(c, function(blob) {#}
+           {#     // blob object can be converted to an objectURL and then#}
+           {#     // set as source for images, or as download target:#}
+           {#     var url = URL.createObjectURL(blob);#}
            {#     $("#downloadTif").attr("href", url);#}
            {#     $("#downloadTif").attr("download", "{{graphicTitle}}.tiff");#}
-           {# })#}
-            var image=CanvasToTIFF.toBlob(c, function(blob) {
-                // blob object can be converted to an objectURL and then
-                // set as source for images, or as download target:
-                var url = URL.createObjectURL(blob);
-                $("#downloadTif").attr("href", url);
-                $("#downloadTif").attr("download", "{{graphicTitle}}.tiff");
-            },"image/tiff",1);
+           {# },"image/tiff",1);#}
 
         })
 
