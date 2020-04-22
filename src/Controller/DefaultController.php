@@ -38,12 +38,16 @@ class DefaultController extends AbstractController
 //            dd($request->request->all());
             $type=$form->get('type')->getData();
             $graphicTitle=$form->get('graphicTitle')->getData();
+            $width=$form->get('width')->getData();
+            $height=$form->get('height')->getData();
             $titleX=$form->get('titleX')->getData();
             $titleY=$form->get('titleY')->getData();
             $color=$form->get('color')->getData();
             $dataX=$form->get('dataX')->getData();
             $showValues=$form->get('showValues')->getData();
             $showGrid=$form->get('showGrid')->getData();
+            $border=$form->get('border')->getData();
+            $roundCorner=$form->get('roundCorners')->getData();
             $axeX=explode("\r\n",$dataX);
 
             $dataY=$form->get('dataY')->getData();
@@ -107,6 +111,8 @@ class DefaultController extends AbstractController
                     'color'=>$color,
                     'showValues'=>$showValues,
                     'showGrid'=>$showGrid,
+                    'border'=>$border,
+                    'roundCorner'=>$roundCorner,
                     'hasMultipleY'=>$hasMultipleY,
                     'titles'=>$titles,
                     'axe1'=>$ax1,
@@ -118,6 +124,8 @@ class DefaultController extends AbstractController
                     'color1'=>$color1,
                     'color2'=>$color2,
                     'color3'=>$color3,
+                    "width"=>$width,
+                    "height"=>$height
 
 
             ]);

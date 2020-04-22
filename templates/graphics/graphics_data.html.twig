@@ -43,7 +43,7 @@
 
     border: 2px #E0E0E0 solid;
     /*padding: 30px 25px;*/
-    background-color:	#F8F8F8;
+    /*background-color:	#F8F8F8;*/
  border-radius: 10px;
  box-shadow: 5px 5px #F8F8F8;
     }
@@ -68,65 +68,71 @@
     #graphic_data_type{
     font-family: 'FontAwesome', 'Second Font name'
     }
+     .text-desc{
+         color: #555;
+         font-weight: bold;
+     }
     </style>
 {% endblock  %}
 
 {% block content %}
+    <div class="row"  style="margin-top: 40px">
+        <h4 class=" text-primary col-md-1" style="margin-top: 20px;font-weight: bold">
+             <i class="fa fa-line-chart" style="color: orangered;font-size: 30px;"></i>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>
+        </h4>
+        <div class="col-md-6">
+            <p class="text-desc">Online Graph Maker is an easy to use chart tool.To start,select your graph type and the apparence of your graph.Then enter your data and hit the create button .For more options,visit the different graph types in the top menu. </p>
+        </div>
+        <div class="col-md-5 pub"></div>
+        <div class="col-md-3 offset-9">
+            <a type="button" class="text-dark col-md-12" data-toggle="modal" data-target="#myModal" style="margin-left: 70px;color:#158CBA!important;font-weight: bold;margin-bottom: 10px;font-size: 17px"> <img src="{{ asset('assets/images/question.png') }}" style="margin-right:10px;width: 25px;height: 25px"/>How it works?</a>
+        </div>
+{#        <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">#}
+{#            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button#}
 
-    <div class="row">
-        <h3 class=" text-primary col-md-4" style="margin-top: 20px;">
-             <i class="fa fa-line-chart" style="color: orangered;font-size: 23px;"></i>&nbsp;Graphics generator
-        </h3>
-        <a type="button" class="text-dark col-md-4" data-toggle="modal" data-target="#myModal" style="color:#158CBA!important;font-weight: bold;margin-top: 20px;font-size: 19px">How it works?</a>
-        <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">
-            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button
-
-        </p>
+{#        </p>#}
     </div>
-
-
 
     {{ form_start(form)}}
     <div class="settings">
-    <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+    <div style="background-color:#7df3f9;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
     <h5 class="settings-title text-primary" style="padding-left: 20px;font-weight: bold">Chart Settings</h5>
     </div>
     <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px">
-
     <div class="col-md-2">
         {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+        {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
        {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}
     </div>
      <div class="col-md-3">
-{#     {% for choice in form.type.vars.choices %}#}
-        
         {{ form_widget(form.type)}}<br><br>
-        {{ form_widget(form.titleX)}}<br><br>
+        {{ form_widget(form.titleX)}}<br>
+        {{ form_widget(form.width)}}<br><br>
        {{ form_widget(form.color)}}
     </div>
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-            {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br><br>
-             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div>
+            {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+            {{ form_label(form.height, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
+             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border)}}</div>
         </div>
         <div class="col-md-4">
             {{ form_widget(form.graphicTitle)}}<br>
-            {{ form_widget(form.titleY)}}<br><br><br>
-            <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div>
+            {{ form_widget(form.titleY)}}<br>
+            {{ form_widget(form.height)}}<br><br>
+            <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
+            <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>
         </div>
     </div>
     </div>
      <div class="settings data-settings">
 
-     <div style="background-color:#F5F5F5;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+     <div style="background-color:#7df3f9;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
     <div class="row">
     <h5 class="col-md-3 col-sm-6 settings-title text-primary" style="padding-left: 20px;font-weight: bold">Chart Data</h5>
 {#    <h5 class="col-md-2  settings-title" style="padding-left: 20px">How it works?</h5>#}
-
-
-
-
 
    </div>
          <!-- Modal -->
@@ -144,13 +150,12 @@
              </div>
          </div>
     </div>
-
         <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px;padding-right: 20px;">
-            <div class="col-md-6 col-sm-12" id="dataX" style="float: left">
+            <div class="col-md-2 col-sm-12" id="dataX" style="float: left">
                   {{ form_label(form.dataX, null, {  'label_attr': {'class': 'cee'} }) }}
                  {{ form_widget(form.dataX )}}
              </div>
-              <div class="col-md-6" id="dataY" style="margin-left: -15px;">
+              <div class="col-md-2" id="dataY" style="margin-left: -15px;">
                   <div style="display: inline">
                       <span style="float: left">{{ form_label(form.dataY, null, {  'label_attr': {'class': 'cee'} }) }}</span>
                          <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #5CB440;float: right;"></i>
@@ -161,10 +166,8 @@
                     <div id="container"></div>
             </div>
         </div>
-{#         <div class="row" style="margin-left: 40px;margin-top: 20px">#}
          <div class="row" style="margin-top: 20px;margin-bottom: 10px">
         {{ form_row(form.createGraph)}}
-
     </div>
     </div>
     {{ form_end(form)}}
@@ -179,9 +182,6 @@
     </div>
     <div id="blockY">
     </div>
-
-
-
     </div>
 
 {% endblock  %}
@@ -192,11 +192,7 @@
         var edit='{{ edit }}'
             if(edit)
             {
-                console.log(localStorage.getItem('dataExtra'))
-                console.log(localStorage.getItem('dataY'))
-
                 if (localStorage.getItem('dataObject')) {
-
                     var retrievedObject = localStorage.getItem('dataObject');
                     var dataX = localStorage.getItem('dataX');
                     var dataY = localStorage.getItem('dataY');
@@ -204,8 +200,6 @@
                     var axe1 = localStorage.getItem('axe1');
                     var axe2 = localStorage.getItem('axe2');
                     var axe3 = localStorage.getItem('axe3');
-
-
 
                     var arrayData = JSON.parse(retrievedObject);
                     var arrayDataX = JSON.parse(dataX);
@@ -215,33 +209,32 @@
                     var arrayAxe2 = JSON.parse(axe2);
                     var arrayAxe3 = JSON.parse(axe3);
 
-
                     var selectedType=arrayData.type;
                     var textareaX=JSON.parse(arrayDataX);
                     var textareaY=JSON.parse(arrayDataY);
-
-
-                   //var item=dataExtra.split(",")
-                //    var a =item[0]
-
-                 //var var3=(a[2].split("\"") )
-
-                 //var values=[var1[1],a[1],var3[0]]
-
 
                     $('#graphic_data_type').val(selectedType);
                     $("#graphic_data_titleX").val(arrayData.titleX);
                     $("#graphic_data_titleY").val(arrayData.titleY);
                     $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
                     $("#graphic_data_color").val(arrayData.color);
+
+                    $("#graphic_data_width").val(arrayData.width)
+                    $("#graphic_data_height").val(arrayData.height);
                     var showGrig=arrayData.showGrig
                     var showValues=arrayData.showValues
+                    var border=arrayData.border
+                    var roundCorner=arrayData.roundCorner
                     if(showGrig){
                          $("#graphic_data_showGrid").prop( "checked", true );
                     } if(showValues){
                          $("#graphic_data_showValues").prop( "checked", true );
                     }
-
+                    if(border){
+                        $("#graphic_data_border").prop( "checked", true );
+                    } if(roundCorner){
+                        $("#graphic_data_roundCorners").prop( "checked", true );
+                    }
 
                     var text1=document.getElementById("graphic_data_dataX");
                     text1.value=textareaX.join('\n');
@@ -259,11 +252,7 @@
 
                             var path = "{{ path('add_new_data') | escape('js')}}";
                            var count=getAxesNumber(arrayAxe1,arrayAxe2,arrayAxe3)
-                           console.log(arrayAxe1)
-                           console.log(arrayAxe2)
-                           console.log(arrayAxe2.length)
-                           console.log(arrayAxe3)
-                           console.log(arrayAxe3.length)
+
                             var data = {"dummy":'rr','count':count}
                             var nombre = parseInt($('#nombreRows').val());
                             $('#nombreRows').val(nombre+1);
