@@ -66,6 +66,8 @@
     <link href="{{ asset('build/website/app.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Language" content="en">
     <title>{% block title %}GuideJournal{% endblock %} | Find journal, with simply query</title>
@@ -76,6 +78,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136620103-1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -116,7 +121,40 @@
         </div>
     </nav>
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <a class="" href="{{ path('favorite_list')}}">{{app.user.firstName}}</a>
+
+
+            <li class="dropdown" style=" list-style-type: none;color:black ">
+{#                    <a class="dropdown-toggle" href="{{ path('favorite_list')}}" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
+
+                {% set media = null %}
+                {% if app.user.contact.avatar is not null %}
+                    {% set media = sulu_resolve_media(app.user.contact.avatar,'fr') %}
+
+                {% endif %}
+
+
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    {% if media is not null %}
+                        <img class="rounded-circle" src="{{ media.url }}" width="50" height="50"/>
+                    {% else %}
+                    {{app.user.firstName}}
+                    {% endif %}
+                    <span class="caret"></span>
+                </a>
+{#                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
+
+
+                <ul  class="dropdown-menu dropdown-menu-right" style="margin-top: 36px;">
+                        <li ><a class="dropdown-item" href="{{ path('sulu_community.profile')}}">Your profile</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a  class="dropdown-item" href="#">Settings</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a  class="dropdown-item" href="#">Help center</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a  class="dropdown-item" href="{{ path('sulu_community.logout') }}">Log out</a></li>
+                    </ul>
+            </li>
+
     {% else %}
         <a class="btn btn-outline-info" href="{{ path('sulu_community.login')}}">Sign in</a>
     {% endif %}
