@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GuideJournal: Add journal{% endblock %}
+
+
+{% block content %}
+{% if content.form %}
+    {% if app.request.get('send') != 'true' %}
+
+        {% form_theme content.form 'Form/addconference.html.twig' %}
+
+    %- block form_widget -%}
+    {% if compound %}
+        {{- block('form_widget_compound') -}}
+    {% else %}
+        {{- block('form_widget_simple') -}}
+    {% endif %}
+{%- endblock form_widget -%}
+
+    {% else %}
+
+        <h1>Thank you</h1>
+
+        {{ view.form.entity.successText|raw }}
+
+    {% endif %}
+{% endif %}
+
+{% endblock %}

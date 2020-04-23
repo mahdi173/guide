@@ -1,16 +1,44 @@
-{% extends: 'base.html.twig' %}
-
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        label p{
+            margin-bottom: 0rem !important;
+        }
+    </style>
+{% endblock %}
+{% block content %}
 <div class="container">
+    <h1 class="my-4">
+{#        <h2 class="text-primary text-center mt-5 mb-5">Add informtations about your journal</h2>#}
+    </h1>
+    <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
 
-
-    {% if content.form %}
-        {% if app.request.get('send') != 'true' %}
-            {# FORM THEME #}
-            {% form_theme content.form '@SuluForm/themes/dynamic.html.twig' %}
-            {{ form(content.form) }}
-        {% else %}
-            {{ view.form.entity.successText|raw }}
+        {% if content.form %}
+            {% if app.request.get('send') != 'true' %}
+                <h2 class="text-primary text-center mt-5 mb-5">Add informtations about your {% block title %}{{ content.title }}{% endblock %}</h2>
+                {# FORM THEME #}
+                {% form_theme content.form 'Form/addJournal.html.twig' %}
+                {{ form(content.form) }}
+            {% else %}
+                <h2 class="text-primary text-center mt-5 mb-5"> Your request has been received </h2>
+{#                {{ view.form.entity.successText|raw }}#}
+                <div class="border border-primary rounded">
+                    <p class="text-primary pt-5 pb-5 pl-3 pr-3">
+                        Your <b>Request</b> will be acknowledged as soon as possible . Please contact us if you have not received an acknowledgement withing two working days.
+                    </p>
+                </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
 
 </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+    $('.datepicker').datepicker();
+    </script>
+{% endblock %}

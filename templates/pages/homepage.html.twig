@@ -98,12 +98,38 @@
 
             </div>
         </div>
-
         <div class="row">
-            <h4 class="mb-n2 mt-5 text-primary" ><b>Recent articles</b></h4>
+            <div class="col-md-12 mt-5 mb-2">
+
+                <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3 float-right ">Submit Your Article</a>
+
+                {% for item in sulu_navigation_root_tree('member') %}
+
+                    {% if (item.title== 'conference')%}
+                        {% set page='conference' %}
+                        <a href="{{ sulu_content_path(item.url, item.webspaceKey, page) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add conference</a>
+                    {% endif %}
+
+                {% endfor %}
+
+                {% for item in sulu_navigation_root_tree('member') %}
+
+                    {% if (item.title== 'Journal')%}
+                        <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add journal</a>
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+         </div>
+        <div class="row">
+
+            <h4 class="mb-n2 mt-2 text-primary" ><b>Recent articles</b></h4>
             <hr class="col-md-12 bg-primary" style="height:2px">
+
         </div>
         <div class="row">
+
             {% set recentarticles= sulu_article_load_recent(6) %}
             {% for a in recentarticles %}
                 <div class="col-md-3">
@@ -111,7 +137,7 @@
                         {% if a.content.content.image %}
                             {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
 {#                            {{ dump(media.thumbnails['sulu-100x100']) }}#}
-                            <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-100x100'] }}" src="{{ media.thumbnails['sulu-100x100'] }}" data-holder-rendered="true"></a>
+                            <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400.png'] }}" src="{{ media.thumbnails['sulu-400x400.png'] }}" data-holder-rendered="true"></a>
                             {% else %}
                                 <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
 
@@ -126,6 +152,8 @@
             {% else %}
                 <p class="alert text-info"></p>
             {% endfor %}
+
+
         </div>
 
         {%  if data_t_scopus is defined and data_t_scopus | length >1 %}

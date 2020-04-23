@@ -10,4 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+
+    /**
+     * @Route("submit-article/details", name="submit-articles")
+     */
+    public function show(){
+        return $this->render('pages/details.html.twig');
+    }
+
 }

@@ -5,7 +5,7 @@
 
     <key>form</key>
 
-    <view>pages/journal</view>
+    <view>addjournal/journal</view>
     <controller>Sulu\Bundle\WebsiteBundle\Controller\DefaultController::indexAction</controller>
     <cacheLifetime>86400</cacheLifetime>
 

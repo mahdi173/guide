@@ -1,93 +1,128 @@
 {#{% extends 'AppBundle:themes:custom-dynamic.html.twig' %}#}
-{% extends '@SuluCommunity/profile-form.html.twig' %}
+{#{% extends '@SuluCommunity/profile-form.html.twig' %}#}
+{% extends 'base.html.twig' %}
 
 {% block title %}GuideJournal: Add journal{% endblock %}
 
-  {% block profile_content %}
+  {% block content %}
       <h1 class="my-4">
-          <small>Submit journals</small>
+          <h2 class="text-primary text-center mt-5 mb-5">Add informtations about your journal</h2>
       </h1>
-{#{{ dump(content.form) }}#}
-      {% if content.form %}
-          {% if app.request.get('send') != 'true' %}
-              {{ form_start(content.form) }}
-{#                   FORM THEME#}
-                 {% form_theme content.form 'Form/addJournal.html.twig' %}
+      <div class="row mt-5">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+          {% if content.form %}
+              {% if app.request.get('send') != 'true' %}
+                  {{ form_start(content.form) }}
 
-{#              {{ form_row(content.form) }}#}
+                     {% form_theme content.form 'Form/addJournal.html.twig' %}
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.title, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.title|raw, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">Title</label>
+                              {{ form_widget(content.form.title|raw, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.title) }}
                       </div>
-                      {{ form_errors(content.form.title) }}
-                  </div>
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.text, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.text|raw, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">Category and descipline ex : Engineering, Computer science</label>
+                              {{ form_widget(content.form.text|raw, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.text) }}
                       </div>
-                      {{ form_errors(content.form.text) }}
-                  </div>
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.text1, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.text1|raw, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">Publisher</label>
+                              {{ form_widget(content.form.text1|raw, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.text1) }}
                       </div>
-                      {{ form_errors(content.form.text1) }}
-                  </div>
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.text2, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.text2, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">P-ISSN</label>
+                              {{ form_widget(content.form.text2, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.text2) }}
                       </div>
-                      {{ form_errors(content.form.text2) }}
-                  </div>
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.text3, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.text3, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">E-ISSN</label>
+                              {{ form_widget(content.form.text3, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.text3) }}
                       </div>
-                      {{ form_errors(content.form.text3) }}
-                  </div>
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.text4, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.text4, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">Editor</label>
+                              {{ form_widget(content.form.text4, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.text4) }}
                       </div>
-                      {{ form_errors(content.form.text4) }}
-                  </div>
 
-                  <div class="form-group row">
-                      {{ form_label(content.form.text5, label|default, { 'label_attr': {'class': 'col-form-label col-sm-2'} }) }}
-                      <div class="col-sm-10">
-                          {{ form_widget(content.form.text5, { 'attr': {'class': 'form-control'} }) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">Email</label>
+                              {{ form_widget(content.form.email, { 'attr': {'class': 'form-control'} }) }}
+                              <small id="emailHelp" class="form-text text-danger">*</small>
+                          </div>
+                          {{ form_errors(content.form.email) }}
                       </div>
-                      {{ form_errors(content.form.text5) }}
-                  </div>
 
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">Image</label>
+                              {{ form_widget(content.form.attachment, { 'attr': {'class': 'form-control'} }) }}
+                          </div>
+                          {{ form_errors(content.form.attachment) }}
+                      </div>
 
-              {#                <input type="hidden" id="%s__token" name="%s[_token]" value="%s" />#}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="text-primary">About</label>
+                              {{ form_widget(content.form.textarea, { 'attr': {'class': 'form-control'} }) }}
+                          </div>
+                          {{ form_errors(content.form.textarea) }}
+                      </div>
 
-                  {{ form_row(content.form.submit) }}
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <label class="checkbox">
+                                  {{ form_widget(content.form.checkbox) }} Terms
+                              </label>
 
+                          </div>
+                          {{ form_errors(content.form.checkbox) }}
+                          <div class="col-md-12">
+                              <a href="{{ path('privacy_page') }}" target="_blank">Accept terms and conditions</a>
+                          </div>
+                      </div>
+{#                  {{ form_widget(content.form._token) }}#}
 
+{#                        <input class="btn btn-outline-info ml-3" type="submit" value="send">#}
+                        {{ form_row(content.form.submit,{'attr':{'class':'btn btn-outline-info ml-3'}}) }}
+                         {{ dump(content.form) }}
+                  {{ form_end(content.form, {'render_rest': false}) }}
 
-              {{ form_end(content.form) }}
-
-
-          {% else %}
-              {{ view.form.entity.successText|raw }}
-{#              <p>successful</p>#}
+              {% else %}
+                  {{ view.form.entity.successText|raw }}
+    {#              <p>successful</p>#}
+              {% endif %}
           {% endif %}
-      {% endif %}
-{#      {% endblock %}#}
+          </div>
+          <div class="col-md-2"></div>
+      </div>
   {% endblock %}
 
 
