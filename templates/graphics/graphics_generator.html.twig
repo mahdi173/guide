@@ -19,6 +19,10 @@
        color:#0d70f2
 
     }
+    .pub{
+        /*border: 2px red solid;*/
+        margin-bottom: 10px;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -29,7 +33,17 @@
     </div>
 
     <div class="row">
-        <canvas id="myChart"></canvas>
+        <div class=" col-md-8">
+           <canvas id="myChart"></canvas>
+        </div>
+        <div class="offset-1 col-md-3 pub">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9897811061542650"
+                 data-ad-slot="1198113282"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
     </div>
     <div class="row visualize" style="margin-left: 40px;margin-top: 40px;color:#555">
        <p style="font-weight: bold">Visualize chart as  <a id="bar"  style="margin-left: 10px">Bar</a> <a id="pie"  style="margin-left: 10px">Pie</a> <a id="line" style="margin-left: 10px">Line</a></p>
@@ -44,10 +58,28 @@
 {#        <a href="#" id="downloadPic" class="btn" style="padding: 20px;background-color: #B22222;color:white">download image</a>#}
 
     </div>
+    <div class="row pub" style="margin-left: 40px;margin-top:30px;">
+
+        <div class="col-md-12">
+
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9897811061542650"
+                 data-ad-slot="8030280795"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+</div>
 
 {% endblock  %}
 
 {% block javascripts %}
+
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
