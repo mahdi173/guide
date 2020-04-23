@@ -235,7 +235,7 @@
                 labels: ({{axeX|json_encode()|raw}}),
                 datasets:  parseInt(countDataExtra)===0?[{
                         data: ({{axeY|json_encode()|raw}}),
-                        backgroundColor: '{{color}}'!=='#000000'?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                        backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie" ?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                         {#borderColor: '{{color}}',#}
                         fill:  newChartType!=="line"  ?true:false,
                         borderColor: newChartType==="line"?'{{ color }}':false,
@@ -250,7 +250,7 @@
                             type: newChartType,
                             label: 'a0',
                             id: "y-axis-10",
-                            backgroundColor: '{{color}}'!=='#000000'?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                             data: ({{axeY|json_encode()|raw}}),
                             fill:  newChartType!=="line"?true:false,
                             borderColor: newChartType==="line"?'{{ color }}':false,
@@ -266,7 +266,7 @@
                             type: newChartType,
                             label: 'a',
                             id: "y-axis-20",
-                            backgroundColor: '{{color1}}'!=='#000000'?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                            backgroundColor: '{{color1}}'!=='#000000' && newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
                             data: ({{ axe1|json_encode()|raw }}),
                             fill:  newChartType!=="line"?true:false,
                             borderColor: newChartType==="line"?'{{ color1 }}':false,
@@ -280,7 +280,7 @@
                                 type: newChartType,
                                 label: 'b',
                                 id: "y-axis-30",
-                                backgroundColor: '{{color2}}'!=='#000000'?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
+                                backgroundColor: '{{color2}}'!=='#000000' && newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
                                 data: ({{ axe2|json_encode()|raw }}),
                                 fill:  newChartType!=="line"?true:false,
                                 borderColor: newChartType==="line"?'{{ color2 }}':false,
@@ -294,7 +294,7 @@
                         type: newChartType,
                         label: 'c',
                         id: "y-axis-40",
-                        backgroundColor: '{{color3}}'!=='#000000'?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                        backgroundColor: '{{color3}}'!=='#000000' && newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
                         data: ({{axe3|json_encode()|raw}}),
                         fill:  newChartType!=="line"?true:false,
                         borderColor: newChartType==="line"?'{{ color3 }}':false,
@@ -317,10 +317,10 @@
                     }
                 },
                 responsive: false,
+                showDatasetLabels : true,
                 legend: {
-
-                    display: false,
-
+                    display: newChartType!=="pie"?false:true,
+                    position: 'bottom',
                 },
                 "hover": {
                     "animationDuration": 0
@@ -335,7 +335,8 @@
                                 var chartInstance = this.chart,
                                     ctx = chartInstance.ctx;
 
-                                ctx.font = Chart.helpers.fontString(20, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                ctx.font = Chart.helpers.fontString(17, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                ctx.fillStyle = '#777';
                                 ctx.textAlign = 'center';
                                 ctx.textBaseline = newChartType==="bar"?'ideographic':'ideographic';
                                 if (newChartType !== "pie"){
@@ -363,10 +364,10 @@
                                             var x = mid_radius * Math.cos(mid_angle);
                                             var y = mid_radius * Math.sin(mid_angle);
 
-                                            ctx.fillStyle = '#111';
+                                            ctx.fillStyle = '#454341';
                                             ctx.fontStyle="bold"
                                             if (i == 3){ // Darker text color for lighter background
-                                                ctx.fillStyle = '#111';
+                                                ctx.fillStyle = '#454341';
                                                 ctx.fontStyle="bold"
                                             }
                                             var percent = String(Math.round(dataset.data[i]/total*100)) + "%";

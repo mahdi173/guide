@@ -102,7 +102,7 @@ class GraphicDataType extends AbstractType
             ])
             ->add('height',IntegerType::class,[
                 'required'=>false,
-                'attr'=>['value'=>"700",'min'  => 0]
+                'attr'=>['value'=>"500",'min'  => 0]
             ])
         ;
     }

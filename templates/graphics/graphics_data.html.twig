@@ -77,8 +77,9 @@
 
 {% block content %}
     <div class="row"  style="margin-top: 40px">
-        <h4 class=" text-primary col-md-1" style="margin-top: 20px;font-weight: bold">
-             <i class="fa fa-line-chart" style="color: orangered;font-size: 30px;"></i>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>
+        <h4 class=" text-primary col-md-1" style="margin-top: 0px;font-weight: bold">
+{#             <i class="fa fa-line-chart" style="color: orangered;font-size: 30px;"></i>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>#}
+             <img class="" src="{{ asset('assets/images/designChart.jpg') }}" style="width: 90px;height: 80px"/>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>
         </h4>
         <div class="col-md-6">
             <p class="text-desc">Online Graph Maker is an easy to use chart tool.To start,select your graph type and the apparence of your graph.Then enter your data and hit the create button .For more options,visit the different graph types in the top menu. </p>
@@ -115,8 +116,10 @@
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
             {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
             {{ form_label(form.height, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+
              <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
-             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border)}}</div>
+            {% set attr = {'checked' :true} %}
+             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
         </div>
         <div class="col-md-4">
             {{ form_widget(form.graphicTitle)}}<br>
@@ -227,12 +230,17 @@
                     var roundCorner=arrayData.roundCorner
                     if(showGrig){
                          $("#graphic_data_showGrid").prop( "checked", true );
-                    } if(showValues){
+                    }
+                    if(showValues){
                          $("#graphic_data_showValues").prop( "checked", true );
                     }
                     if(border){
                         $("#graphic_data_border").prop( "checked", true );
-                    } if(roundCorner){
+                    }
+                    else{
+                        $("#graphic_data_border").prop( "checked", false );
+                    }
+                    if(roundCorner){
                         $("#graphic_data_roundCorners").prop( "checked", true );
                     }
 
