@@ -23,17 +23,18 @@
 
 
     <h5 class="text-primary">Save your profile ?</h5><hr>
-    {% for i in 0..2 %}
+    {% for res in data.result.hits.hit  %}
     <div class="row">
         <div class="col-md-2">
             <img class="rounded-circle" src="{{ asset('assets/images/avatar.png') }}" width="50" height="50"/>
         </div>
-        <div class="col-md-7" style="color:#555;">  <a href="#">Lorem ipsum dolor sit amet</a><br>20 publications <span class="stat"> 0 posts  </span> <span class="stat">17 followers</span><span class="stat"> 3 following</span></div>
+{#        <div class="col-md-7" style="color:#555;">  <a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br>20 publications <span class="stat"> 0 posts  </span> <span class="stat">17 followers</span><span class="stat"> 3 following</span></div>#}
+        <div class="col-md-7" style="color:#555;">  <a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br><span class="stat"> 20 publications</span> </div>
         <div class="col-lg-3"><button class="btn btn-primary saveButton">Save</button></div>
     </div><hr>
     {% endfor %}
 <div class="row">
-    <div class="offset-9 col-lg-3" style="margin-top: 40px"><button class="btn btn-warning">No Thanks</button></div>
+    <div class="offset-9 col-lg-3" style="margin-top: 40px"><a class="btn btn-warning"  href="{{ path('publication_index') }}" style="color: white">No Thanks</a></div>
 </div>
 
 {% endblock %}

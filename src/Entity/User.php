@@ -76,6 +76,20 @@ class User extends BaseUser
      */
     private $favoriteReutersJournals;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $facebook;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $twitter;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $linkedIn;
 
     public function __construct()
     {
@@ -375,5 +389,70 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getApiBasePath(): string
+    {
+        return $this->apiBasePath;
+    }
+
+    /**
+     * @param string $apiBasePath
+     */
+    public function setApiBasePath(string $apiBasePath): void
+    {
+        $this->apiBasePath = $apiBasePath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * @param mixed $facebook
+     */
+    public function setFacebook($facebook): void
+    {
+        $this->facebook = $facebook;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLinkedIn()
+    {
+        return $this->linkedIn;
+    }
+
+    /**
+     * @param mixed $linkedIn
+     */
+    public function setLinkedIn($linkedIn): void
+    {
+        $this->linkedIn = $linkedIn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * @param mixed $twitter
+     */
+    public function setTwitter($twitter): void
+    {
+        $this->twitter = $twitter;
+    }
+
 
 }
