@@ -52,6 +52,11 @@ class User extends BaseUser
     private $publications;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Allpublications", mappedBy="user")
+     */
+    private $allpublications;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="user")
      */
     private $books;
@@ -452,6 +457,22 @@ class User extends BaseUser
     public function setTwitter($twitter): void
     {
         $this->twitter = $twitter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllpublications()
+    {
+        return $this->allpublications;
+    }
+
+    /**
+     * @param mixed $allpublications
+     */
+    public function setAllpublications($allpublications): void
+    {
+        $this->allpublications = $allpublications;
     }
 
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2d139c27813dedf37735008e6320747",
+    "content-hash": "6893bcb015784661de8ca5059432724a",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -2004,16 +2004,16 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "2.5.3",
+            "version": "2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "165b3f4ae1f798ec320b9942f6db921f7b568bed"
+                "reference": "7dfd2165c1170a73e5929e70fb80ef57f5539869"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/165b3f4ae1f798ec320b9942f6db921f7b568bed",
-                "reference": "165b3f4ae1f798ec320b9942f6db921f7b568bed",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/7dfd2165c1170a73e5929e70fb80ef57f5539869",
+                "reference": "7dfd2165c1170a73e5929e70fb80ef57f5539869",
                 "shasum": ""
             },
             "require": {
@@ -2062,7 +2062,7 @@
                 "javascript",
                 "routing"
             ],
-            "time": "2020-01-13T14:06:12+00:00"
+            "time": "2020-04-15T09:21:31+00:00"
         },
         {
             "name": "friendsofsymfony/rest-bundle",

@@ -1,3 +1,8 @@
+//import Swal from 'sweetalert2';
+ const routes = require('../../js/fos_js_routes.json');
+import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+//
+// Routing.setRoutingData(routes);
 $(document).ready(function() {
     "use strict";
 	
@@ -279,3 +284,32 @@ function scrollNav() {
     $('.scrollTop a').scrollTop();
 }
 scrollNav();
+
+function getPublications() {
+// $(document).on("click",".saveButton",function(){
+    console.log('ddd')
+    console.log(routes)
+    console.log(Routing)
+
+    // Swal.fire({
+    //     title: 'Is this profile really for you ?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes!'
+    // }).then((result) =>
+    // {
+    //     var author = $(".saveButton").data("author");
+    //     console.log("author")
+    //     console.log(author)
+    //     // var url = Routing.generate('get_author_allpublication_profile', {
+    //     //     'auteur': author
+    //     // });
+    //     // if (result.value) {
+    //     //     window.location = url;
+    //     // }
+    // })
+
+
+}

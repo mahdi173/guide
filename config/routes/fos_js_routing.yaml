@@ -1,1 +1,3 @@
-# Fos JS Routing is currently only needed for admin and not for website
+#fos_js_routing:
+#  resource: "@FOSJsRoutingBundle/Resources/config/routing/routing-sf4.xml"
+#
