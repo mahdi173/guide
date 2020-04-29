@@ -1,1 +1,5 @@
-# Fos JS Routing is currently only needed for admin and not for website
+get_author_allpublication_profile:
+  path: /allpublications
+  defaults: { _controller: App\Controller\BaseController::callAllpubapi }
+  options:
+    expose: true

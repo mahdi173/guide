@@ -2,7 +2,7 @@
 
 {% block content %}
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
-
+    {% set user= app.user%}
     {% if success is defined and success %}
         <p class="text-center border pt-3 pb-3">
 {#            {{ 'save_profile_finished'|trans }}#}
@@ -33,6 +33,50 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-3" style="color: #555">
+                    Follow me on social <br>media
+                    <a class="btn btn-warning" data-toggle="modal" data-target="#modal_follow" style="color: white;margin-left: 40px">Edit</a><br>
+                    <a href="{% if user.facebook %} {{user.facebook  }}{%else%}#{%endif%}" target="_blank">
+                       <i class="fa fa-facebook icon-social" style="border: 1px solid black;padding: 13px;margin-top: 10px"></i>
+                    </a>
+                    <a href="{% if user.twitter %} {{user.twitter  }}{%else%}#{%endif%}" target="_blank">
+                       <i class="fa fa-twitter icon-social" style="border: 1px solid black;padding: 13px;"></i>
+                    </a>
+                    <a href="{% if user.linkedIn %} {{user.linkedIn  }}{%else%}#{%endif%}" target="_blank">
+                       <i class="fa fa-linkedin icon-social" style="border: 1px solid black;padding: 13px;"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal_follow" role="dialog">
+            <div class="modal-dialog" role="document">
+{#                background-color: #26afe8#}
+                <!-- Modal content-->
+                <div class="modal-content" style="margin-top: 20px;width: 600px;background-color: white;border-radius: 10px">
+                    <div class="modal-header" style="width: 600px;background-color: white;border-radius: 10px">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form method="post" action="{{ url('save_url_social') }}"  style="width: 600px;padding: 30px">
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input type="text" class="form-control" id="facebook" name="facebook" aria-describedby="emailHelp" placeholder="Enter Facebook URL">
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter URL</label>
+                            <input type="text" class="form-control" id="twitter" name="twitter" placeholder="Enter Twitter URL">
+                        </div>
+
+                        <div class="form-group">
+                            <label>LinkedIn URL</label>
+                            <input type="text" class="form-control" id="linkedin"  name="linkedin" placeholder="Enter LinkedIn URL">
+                        </div>
+
+                        <br><button type="submit" class="btn btn-primary" style="color: white">Submit</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     <div class = "container mt-5" >
