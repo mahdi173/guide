@@ -4,9 +4,9 @@ import $ from "jquery";
 // const routes = require('../../../public/js/fos_js_routes.json');
 
 
-// $(document).on("click",".saveButton",function(){
-function myFunctqion() {
-    console.log('ddd')
+$(document).on("click",".saveButton",function(){
+// function myFunctqion() {
+    console.log('ddffd')
     // Swal.fire({
     //     title: 'Is this profile really for you ?',
     //     icon: 'warning',
@@ -26,5 +26,5 @@ function myFunctqion() {
     //     }
     // })
 
-// })
-}
+})
+// }

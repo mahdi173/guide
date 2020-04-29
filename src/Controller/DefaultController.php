@@ -42,6 +42,7 @@ class DefaultController extends AbstractController
             $height=$form->get('height')->getData();
             $titleX=$form->get('titleX')->getData();
             $titleY=$form->get('titleY')->getData();
+            $labelY=$form->get('labelY')->getData();
             $color=$form->get('color')->getData();
             $dataX=$form->get('dataX')->getData();
             $showValues=$form->get('showValues')->getData();
@@ -125,7 +126,8 @@ class DefaultController extends AbstractController
                     'color2'=>$color2,
                     'color3'=>$color3,
                     "width"=>$width,
-                    "height"=>$height
+                    "height"=>$height,
+                    "labelY"=>$labelY
 
 
             ]);

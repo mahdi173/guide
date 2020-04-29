@@ -55,6 +55,11 @@ class GraphicDataType extends AbstractType
                     'oninput'=>"setCustomValidity('')",
                 ],
             ])
+            ->add('labelY',TextType::class, [
+                'required'=>'false',
+                'attr'=>['value'=>"Title"]
+
+            ])
             ->add('dataX',TextareaType::class,[
                 'required'=>'required',
 

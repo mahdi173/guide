@@ -1,8 +1,15 @@
-//import Swal from 'sweetalert2';
- const routes = require('../../js/fos_js_routes.json');
-import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+// import swal from 'sweetalert2';
+
+// import '../../../node_modules/sweetalert2/src/sweetalert2.scss'
+// import '../../../node_modules/sweetalert2/src/sweetalert2.js'
+
+// const routes = require('../../../public/js/fos_js_routes.json');
+//  import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min';
+//
 //
 // Routing.setRoutingData(routes);
+// import Routing from '../../../assets/js/router';
+const Routing = require('../../../assets/js/router');
 $(document).ready(function() {
     "use strict";
 	
@@ -285,13 +292,12 @@ function scrollNav() {
 }
 scrollNav();
 
-function getPublications() {
-// $(document).on("click",".saveButton",function(){
+// function getPublications() {
+$(document).on("click",".saveButton",function(){
     console.log('ddd')
-    console.log(routes)
-    console.log(Routing)
 
-    // Swal.fire({
+    //
+    // swal.fire({
     //     title: 'Is this profile really for you ?',
     //     icon: 'warning',
     //     showCancelButton: true,
@@ -300,16 +306,15 @@ function getPublications() {
     //     confirmButtonText: 'Yes!'
     // }).then((result) =>
     // {
-    //     var author = $(".saveButton").data("author");
-    //     console.log("author")
-    //     console.log(author)
-    //     // var url = Routing.generate('get_author_allpublication_profile', {
-    //     //     'auteur': author
-    //     // });
-    //     // if (result.value) {
-    //     //     window.location = url;
-    //     // }
+        var author = $(".saveButton").data("author");
+        console.log("author")
+        console.log(author)
+    const url = Routing.generate('get_author_allpublication_profile', {'auteur': author});
+    console.log(url)
+        // if (result.value) {
+            window.location = url;
+        // }
     // })
 
 
-}
+})

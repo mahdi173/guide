@@ -52,7 +52,8 @@
                 </td>
 
                 <td style="padding: 20px">
-                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}" onclick="getPublications()">Save</button>
+{#                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}" onclick="getPublications()">Save</button>#}
+                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}">Save</button>
 {#                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}" >Save</button>#}
 
 {#                    <button class="btn btn-primary saveButton"><a href="{{ path('get_author_allpublication_profile', {auteur: res.info.author}) }}">save</a></button>#}
@@ -76,7 +77,8 @@
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script type="module"  src="{{ asset('assets/js/custom.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/custom.js') }}"></script>
+
 
     <script>
 

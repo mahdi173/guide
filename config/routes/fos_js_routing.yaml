@@ -1,3 +1,5 @@
-#fos_js_routing:
-#  resource: "@FOSJsRoutingBundle/Resources/config/routing/routing-sf4.xml"
-#
+get_author_allpublication_profile:
+  path: /allpublications
+  defaults: { _controller: App\Controller\BaseController::callAllpubapi }
+  options:
+    expose: true

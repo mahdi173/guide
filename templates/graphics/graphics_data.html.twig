@@ -76,6 +76,9 @@
             /*border: 2px red solid;*/
             margin-bottom: 10px;
         }
+        #graphic_data_labelY{
+            margin-top: 16px;
+        }
     </style>
 {% endblock  %}
 
@@ -113,13 +116,16 @@
         {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
         {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
         {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-       {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}
+{#       {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}#}
+        {% set attr = {'checked' :true} %}
+        <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
     </div>
      <div class="col-md-3">
         {{ form_widget(form.type)}}<br><br>
         {{ form_widget(form.titleX)}}<br>
         {{ form_widget(form.width)}}<br><br>
-       {{ form_widget(form.color)}}
+         <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>
+
     </div>
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
@@ -127,15 +133,15 @@
             {{ form_label(form.height, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
 
              <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
-            {% set attr = {'checked' :true} %}
-             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
+{#            {% set attr = {'checked' :true} %}#}
+{#             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>#}
         </div>
         <div class="col-md-4">
             {{ form_widget(form.graphicTitle)}}<br>
             {{ form_widget(form.titleY)}}<br>
             {{ form_widget(form.height)}}<br><br>
             <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
-            <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>
+{#            <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>#}
         </div>
     </div>
     </div>
@@ -173,6 +179,8 @@
                          <i id="new_data" class="fa fa-plus" aria-hidden="true" style="color: #5CB440;float: right;"></i>
                   </div>
                   {{ form_widget(form.dataY)}}
+                  {{ form_widget(form.labelY)}}<br>
+                  {{ form_widget(form.color)}}
               </div>
             <div class="col-md-8 col-sm-12" style="float: right">
                     <div id="container"></div>
@@ -242,6 +250,7 @@
                     $("#graphic_data_titleY").val(arrayData.titleY);
                     $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
                     $("#graphic_data_color").val(arrayData.color);
+                    $("#graphic_data_labelY").val(arrayData.labelY);
 
                     $("#graphic_data_width").val(arrayData.width)
                     $("#graphic_data_height").val(arrayData.height);
@@ -319,6 +328,7 @@
                 localStorage.removeItem('axe3');
                 localStorage.removeItem('colors');
                 localStorage.removeItem('titles');
+                localStorage.removeItem('labelY');
             }
             /*ajout data*/
 
