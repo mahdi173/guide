@@ -219,7 +219,7 @@ $(document).ready(function() {
             "Property Management Services": 'images/menu/1.png',
             "Hotel and Resorts": 'images/menu/4.png',
             "Education and Traninings": 'images/menu/2.png',
-            // "Internet Service Providers": 'images/menu/3.png',
+            "Internet Service Providers": 'images/menu/3.png',
             "Computer Repair & Services": 'images/menu/5.png',
             "Coaching & Tuitions": 'images/menu/6.png',
             "Job Training": 'images/menu/6.png',
