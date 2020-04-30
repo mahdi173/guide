@@ -296,9 +296,15 @@
             const titles='{{titles|json_encode()|raw}}';
 
             var arrayTitles = JSON.parse(titles);
-            const titles1=arrayTitles[0];
-            const titles2=arrayTitles[1];
-            const titles3=arrayTitles[2];
+            console.log("arrayTitles")
+            console.log(arrayTitles)
+            var titles1=""; var titles2=""; var titles3="";
+            if(arrayTitles){
+                 titles1=arrayTitles[0];
+                 titles2=arrayTitles[1];
+                 titles3=arrayTitles[2];
+            }
+
 
             console.log("arrayTitles")
             console.log(arrayTitles)
