@@ -5,8 +5,10 @@ namespace App\Controller;
 
 
 
+use App\Entity\Allpublications;
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
+use App\Form\AllPublicationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -48,30 +50,34 @@ class BaseController extends AbstractController
 
     public function author_search(Request $request)
     {
+        $emS = $this->getDoctrine()->getManager();
+        $exist = $emS->getRepository(Allpublications::class)->findBy(['user' => $this->getUser()]);
+        if ($exist) {
+            return $this->redirectToRoute('publication_index');
+        } else {
+            $auteur = $this->getUser()->getFirstName();
 
-        $auteur = $this->getUser()->getFirstName();
 
+            $test = false;
+            if (strpos($request->getUri(), 'authorValue') !== false) {
+                $test = true;
+            }
+            $param = urlencode($auteur); // str_replace(' ','+',$auteur);
+            $data = null;
+            try {
+                $rawData = HttpClient::create()
+                    ->request('GET', "https://dblp.org/search/author/api?q=$param&format=json")
+                    ->getContent();
+                $data = \json_decode($rawData);
+            } catch (TransportExceptionInterface $exception) {
+                $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
+                $this->logger->critical($exception->getTraceAsString());
+            }
 
-        $test=false;
-        if (strpos($request->getUri(), 'authorValue') !== false){
-            $test=true;
+            return $this->render('authors/author_search.html.twig', [
+                'data' => $data
+            ]);
         }
-        $param  = urlencode($auteur); // str_replace(' ','+',$auteur);
-        $data = null;
-        try {
-            $rawData = HttpClient::create()
-                ->request('GET', "https://dblp.org/search/author/api?q=$param&format=json")
-                ->getContent()
-            ;
-            $data = \json_decode($rawData);
-        }catch (TransportExceptionInterface $exception){
-            $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
-            $this->logger->critical($exception->getTraceAsString());
-        }
-
-        return $this->render('authors/author_search.html.twig', [
-          'data'=>$data
-        ]);
     }
     /**
      * @Route("/save_url_social", name="save_url_social")
@@ -105,7 +111,7 @@ class BaseController extends AbstractController
      *
      */
     public function callAllpubapi(Request $request){
-dump($request);
+
         $auteur = $request->get('auteur');
         $param=str_replace(' ','+',$auteur);
         $data_doaj = null;
@@ -188,8 +194,81 @@ dump($request);
             }
         }
 
+
+            if(!empty($array)){
+
+                foreach ($array as $item){
+                    $authors=[];
+                    $pub=new Allpublications();
+                    $pub->setUser($this->getUser());
+                    $pub->setTitle($item->info->title);
+                    $pub->setName($item->info->venue);
+                    if(array_key_exists('volume',$item->info)){
+                        $pub->setVolume($item->info->volume);
+                    }
+                    else{
+                        $pub->setVolume(null);
+                    }
+                    $pub->setYear($item->info->year);
+                    $pub->setUrl($item->info->url);
+                    $pub->setPages($item->info->pages);
+
+                    foreach ($item->info->authors as $a) {
+                        if(!is_array($a)){
+                            array_push($authors,$a->text);
+                            $pub->setAuthors($authors);
+                        }
+                      else{
+                          foreach ($a as $at){
+                              array_push($authors,$at->text);
+                              $pub->setAuthors($authors);
+                          }
+                      }
+                    }
+                    $emS->persist($pub);
+
+                }
+            }
+
+            if(!empty($dd1)){
+                foreach ($dd1 as $item){
+                    $authors=[];
+                    $pub=new Allpublications();
+                    $pub->setUser($this->getUser());
+                    $pub->setTitle($item->info->title);
+                    if(array_key_exists('volume',$item->info)){
+                        $pub->setVolume($item->info->volume);
+                    }
+                    else{
+                        $pub->setVolume(null);
+                    }
+                    $pub->setYear($item->info->year);
+                    $pub->setUrl($item->info->url);
+                    $pub->setPages($item->info->pages);
+
+                    foreach ($item->info->authors as $a) {
+                        if(!is_array($a)){
+                            array_push($authors,$a->text);
+                            $pub->setAuthors($authors);
+                        }
+                        else{
+                            foreach ($a as $at){
+                                array_push($authors,$at->text);
+                                $pub->setAuthors($authors);
+                            }
+                        }
+                    }
+
+                    $emS->persist($pub);
+                }
+            }
+            $emS->flush();
+
+
         /*end*/
-        dump($data_doaj,$array,$dd1,$param);
+
         return $this->render('authors/all_publications_profile.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);
     }
+
+
 }

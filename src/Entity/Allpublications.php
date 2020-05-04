@@ -22,13 +22,13 @@ class Allpublications
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $type;
 
@@ -46,10 +46,17 @@ class Allpublications
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $pages;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $issue;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     *  @var array
+     * @ORM\Column(type="array", length=255, nullable=false)
      */
     private $authors;
 
@@ -79,6 +86,22 @@ class Allpublications
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAuthors(): array
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param array $authors
+     */
+    public function setAuthors(array $authors): void
+    {
+        $this->authors = $authors;
     }
 
 
@@ -119,17 +142,10 @@ class Allpublications
         return $this;
     }
 
-    public function getAuthors(): ?string
-    {
-        return $this->authors;
-    }
 
-    public function setAuthors(?string $authors): self
-    {
-        $this->authors = $authors;
 
-        return $this;
-    }
+
+
 
     public function getYear(): ?int
     {
@@ -185,6 +201,22 @@ class Allpublications
     public function setType($type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * @param mixed $pages
+     */
+    public function setPages($pages): void
+    {
+        $this->pages = $pages;
     }
 
 }

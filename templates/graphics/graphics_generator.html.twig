@@ -329,7 +329,8 @@
                             label: '{{labelY}}',
                             // label: false,
                             id: "y-axis-10",
-                            backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            {#backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],#}
+                            backgroundColor:  newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                             {#data: ({{axeY|json_encode()|raw}}),#}
                             data: parseArray(ar2),
                             fill:  newChartType!=="line"?true:false,
@@ -346,7 +347,8 @@
                             type: newChartType,
                             label: titles1,
                             id: "y-axis-20",
-                            backgroundColor: '{{color1}}'!=='#000000' && newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                            {#backgroundColor: '{{color1}}'!=='#000000' && newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
+                            backgroundColor: newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
                             {#data: ({{ axe1|json_encode()|raw }}),#}
                             data: parseArray(axe1),
                             fill:  newChartType!=="line"?true:false,
@@ -361,7 +363,8 @@
                                 type: newChartType,
                                 label: titles2,
                                 id: "y-axis-30",
-                                backgroundColor: '{{color2}}'!=='#000000' && newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
+                                {#backgroundColor: '{{color2}}'!=='#000000' && newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],#}
+                                backgroundColor:  newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
                                 {#data: ({{ axe2|json_encode()|raw }}),#}
                                 data: parseArray(axe2),
                                 fill:  newChartType!=="line"?true:false,
@@ -376,7 +379,8 @@
                         type: newChartType,
                         label: titles3?titles3:null,
                         id: "y-axis-40",
-                        backgroundColor: '{{color3}}'!=='#000000' && newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                        {#backgroundColor: '{{color3}}'!=='#000000' && newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
+                        backgroundColor: newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
                         {#data: ({{axe3|json_encode()|raw}}),#}
                         data: parseArray(axe3),
                         fill:  newChartType!=="line"?true:false,

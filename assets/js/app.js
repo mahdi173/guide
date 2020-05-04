@@ -18,7 +18,10 @@ import Swal from 'sweetalert2';
 
 Routing.setRoutingData(routes);
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-$(".saveButton").click((e)=> {
+// $(".saveButton").click((e)=> {
+$('.saveButton').each(function () {
+
+    $(this).on("click", function () {
     Swal.fire({
         title: 'Is this profile really for you ?',
         icon: 'warning',
@@ -28,9 +31,12 @@ $(".saveButton").click((e)=> {
         confirmButtonText: 'Yes!'
     })
         .then((result) => {
-            var author = $(".saveButton").data("author");
+            // var author = $(".saveProfile").data("author");
+            var author= $(this).data('author')
             console.log("author")
             console.log(author)
+
+
             var url = Routing.generate('get_author_allpublication_profile', {
                 'auteur': author
             });
@@ -39,26 +45,12 @@ $(".saveButton").click((e)=> {
                 console.log(url)
             }
         })
+    });
 });
-$(document).on("click",".saveButton",function(){
-    // swal.fire({
-    //     title: 'Is this profile really for you ?',
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Yes!'
-    // })
-    //     .then((result) => {
-    //     var author = $(".saveButton").data("author");
-    //     console.log("author")
-    //     console.log(author)
-    //     var url = Routing.generate('get_author_allpublication_profile', {
-    //         'auteur': author
-    //     });
-    //     if (result.value) {
-    //         window.location = url;
-    //     }
-    // })
-
-})
+// });
+// $('.saveButton').each(function () {
+//
+//     $(this).on("click", function () {
+//         console.log($(this).data('author'));
+//     });
+// });

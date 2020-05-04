@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Allpublications;
 use App\Entity\Publication;
+use App\Form\AllPublicationType;
 use App\Form\PublicationType;
 use App\Repository\PublicationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -18,12 +20,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicationController extends AbstractController
 {
     /**
-     * @Route("/", name="publication_index", methods={"GET"})
+     * @Route("/", name="publication_index", methods={"GET","POST"})
      */
-    public function index(PublicationRepository $publicationRepository): Response
+    public function index(Request $request,PublicationRepository $publicationRepository): Response
     {
+        $publication=new Allpublications();
+        $em=$this->getDoctrine()->getManager();
+        $pubs=$publicationRepository->findAll();
+        $pubss=$em->getRepository(Allpublications::class)->findBy(['user'=>$this->getUser()]);
+
+        $form = $this->createForm(AllPublicationType::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('publication_index');
+        }
+
+
         return $this->render('publication/index.html.twig', [
-            'publications' => $publicationRepository->findAll(),
+            'publications' => $pubss,
+            'publication' => $publication,
+            'form' => $form->createView(),
         ]);
     }
 
