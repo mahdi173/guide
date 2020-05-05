@@ -198,7 +198,7 @@ class BaseController extends AbstractController
             if(!empty($array)){
 
                 foreach ($array as $item){
-                    $authors=[];
+                    $authors="";
                     $pub=new Allpublications();
                     $pub->setUser($this->getUser());
                     $pub->setTitle($item->info->title);
@@ -215,12 +215,12 @@ class BaseController extends AbstractController
 
                     foreach ($item->info->authors as $a) {
                         if(!is_array($a)){
-                            array_push($authors,$a->text);
+                            $authors=$authors.' '.$a->text;
                             $pub->setAuthors($authors);
                         }
                       else{
                           foreach ($a as $at){
-                              array_push($authors,$at->text);
+                              $authors=$authors.' '.$at->text;
                               $pub->setAuthors($authors);
                           }
                       }
@@ -266,8 +266,24 @@ class BaseController extends AbstractController
 
 
         /*end*/
+return $this->redirectToRoute('publication_index');
+//        return $this->render('authors/all_publications_profile.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);
+    }
 
-        return $this->render('authors/all_publications_profile.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);
+    /**
+     * @Route("/all_publication/{id}", name="all_publication_delete", methods={"DELETE"}, requirements={"id":"\d+"})
+     */
+    public function delete(Request $request, Allpublications $publication): Response
+    {
+
+//        if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($publication);
+            $entityManager->flush();
+//        }
+
+        return $this->redirectToRoute('publication_index');
     }
 
 

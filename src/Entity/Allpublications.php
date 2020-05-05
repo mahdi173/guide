@@ -55,8 +55,8 @@ class Allpublications
     private $issue;
 
     /**
-     *  @var array
-     * @ORM\Column(type="array", length=255, nullable=false)
+
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $authors;
 
@@ -89,20 +89,22 @@ class Allpublications
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getAuthors(): array
+    public function getAuthors()
     {
         return $this->authors;
     }
 
     /**
-     * @param array $authors
+     * @param mixed $authors
      */
-    public function setAuthors(array $authors): void
+    public function setAuthors($authors): void
     {
         $this->authors = $authors;
     }
+
+
 
 
 

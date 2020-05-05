@@ -22,9 +22,19 @@
 {#                                {{ dump(app.user.contact.avatar.files) }}#}
                                 <img style="max-height: 150px;max-width: 150px" src="{{ asset('assets/images/logo1.png') }}" alt="H" class="img-rounded img-responsive"/>
                             </div>
-                            <div class="col-sm-12 col-md-8 mt-5">
-                                <h4>{{ app.user.username }} | <a href="{{ path('sulu_community.logout') }}">Logout</a></h4>
-                                <p>
+                            <div class="col-sm-12 col-md-8 mt-5" style="display: inline-block">
+{#                                <h4>{{ app.user.username }} | <a href="{{ path('sulu_community.logout') }}">Logout</a></h4>#}
+
+                                <div class="col-sm-12 col-md-1" style="float: left">
+                                    <img style="max-height: 50px;max-width: 50px" src="{{ asset('assets/images/Profil.jpg') }}" alt="H" class="img-rounded img-responsive"/>
+                                </div>
+                                <div class="col-sm-12 col-md-10" style="float: right">
+                                    <h4 class="text-primary"> {{ app.user.firstName }}   {{ app.user.lastName }}</h4>
+                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<strong>0</strong>&nbsp;followers&nbsp;&nbsp;<strong>0</strong> following</h6>
+
+                                </div>
+
+                                <br><br><p style="margin-left: 20px">
                                     <br/>
                                     <a href= "{{ path('sulu_community.profile') }}">Edit Profile</a> |
                                     <a href="{{ path('update-password') }}">Change Password</a>

@@ -47,6 +47,35 @@ $('.saveButton').each(function () {
         })
     });
 });
+
+$('.deletePublication').each(function () {
+
+    $(this).on("click", function () {
+        Swal.fire({
+            title: 'You want to delete this publication ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+        })
+            .then((result) => {
+                // var author = $(".saveProfile").data("author");
+                var publication= $(this).data('publication')
+                console.log("publication")
+                console.log(publication)
+
+
+                var url = Routing.generate('all_publication_delete', {
+                    'id': publication
+                });
+                if (result.value) {
+                    window.location = url;
+                    console.log(url)
+                }
+            })
+    });
+});
 // });
 // $('.saveButton').each(function () {
 //

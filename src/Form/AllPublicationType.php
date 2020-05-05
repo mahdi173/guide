@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Allpublications;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,12 +14,29 @@ class AllPublicationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $date=new \DateTime('now');
+        $year=$date->format('Y');
+
         $builder
             ->add('title')
-            ->add('url')
+            ->add('type',ChoiceType::class,[
+                'choices'=>[
+                    'journal'=>'journal',
+                    'conference'=>'conference',
+                    'book'=>'book',
+                    'chapter'=>'chapter',
+                ]
+            ])
+            ->add('name')
             ->add('volume')
-            ->add('issue')
-            ->add('year')
+            ->add('year',IntegerType::class,[
+                'attr'=>[
+                    'max'=>$year,
+                    'min'=>1900,
+                ]
+            ])
+            ->add('url')
+            ->add('edit',SubmitType::class)
         ;
     }
 

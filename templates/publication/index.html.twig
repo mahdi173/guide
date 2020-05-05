@@ -4,7 +4,7 @@
 
 {% block profile_content %}
 
-            <h1>Publication index</h1>
+{#            <h2 style="color: #555">Publication index</h2>#}
 
             <table class="table">
                 <thead>
@@ -23,14 +23,11 @@
                 </thead>
                 <tbody>
                 {% for publication in publications %}
-                    <tr style="border-bottom: 1px #2f2f2f solid">
+                    <tr style="border-bottom: 1px #c5c5c5 solid">
                         <td colspan="8" class="w-70 border-0">
                             <p class="font-weight-bold text-primary"><a href="{{ publication.url }}" target="_blank"> {{ publication.title }} </a></p>
                             <p class="font-weight-light text-muted mt-n3">
-{#                                <small>Authors : {{ publication.authors }}</small>#}
-                                <small>Authors :
-                                    {% for author in publication.authors%} {{ author }}{% endfor %}
-                                </small><br>
+                                <small>Authors : {{ publication.authors }}</small><br>
 
 {#                            {% if publication.volume%}  <p class="font-weight-light text-muted mt-n3"><small>Volume : {{ publication.volume }}</small></p>{% endif %}#}
                             <small>
@@ -50,7 +47,10 @@
                         <td class="border-0">
 {#                            <a class="btn btn-primary" href="{{ path('publication_show', {'id': publication.id}) }}">show</a><br><br>#}
 {#                            <a href="{{ path('all_publication_edit', {'id': publication.id}) }}">edit</a>#}
-                            <a class="btn btn-warning" data-toggle="modal" data-publication="{{ publication.id }}" data-target="#modal_edit" style="color: white;">Edit</a><br>
+                            <a class="btn btn-warning" data-toggle="modal" data-publication="{{ publication.id }}" data-target="#modal_edit" style="color: white;">Edit</a><br><br>
+                            <button class="deletePublication btn btn-danger" data-publication="{{ publication.id }}" >
+                                <a class="" data-toggle="modal" data-target="#modal_delete" style="color: white;">Delete</a>
+                            </button>
                         </td>
                     </tr>
 
@@ -59,12 +59,14 @@
                             {#                background-color: #26afe8#}
                             <!-- Modal content-->
                             <div class="modal-content" style="margin-top: 20px;width: 600px;background-color: white;border-radius: 10px;padding: 20px;">
-                                <div class="modal-header" style="background-color: white;padding: 20px;">
+                                <div class="modal-header" style="background-color: white;padding: 15px;">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                                <h3 style="color: #1d2b3c;padding-top: 20px;padding-bottom: 20px">Edit  Publication</h3>
+                                <h3 style="color: #1d2b3c;padding-top: 25px;padding-bottom: 20px">Edit  Publication</h3>
 
-                                {{ include('publication/_form.html.twig', {'button_label': 'Update'}) }}
+                                {{ form_start(form) }}
+                                {#                <button class="btn btn-info btn mb-3">{{ button_label|default('Save') }}</button>#}
+                                {{ form_end(form) }}
 
 
                             </div>
@@ -79,7 +81,36 @@
                 </tbody>
             </table>
 
-            <a href="{{ path('publication_new') }}">Create new</a>
+            <a class="btn btn-primary offset-5 mt-3" data-toggle="modal"  data-target="#modal_create" style="color: white;padding: 10px 20px">Add Publication</a>
 
+    <div class="modal fade" id="modal_create" role="dialog">
+        <div class="modal-dialog" role="document">
+            {#                background-color: #26afe8#}
+            <!-- Modal content-->
+            <div class="modal-content" style="margin-top: 20px;width: 600px;background-color: white;border-radius: 10px;padding: 20px;">
+                <div class="modal-header" style="background-color: white;padding: 20px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <h3 style="color: #1d2b3c;padding-top: 20px;padding-bottom: 20px">Add  Publication</h3>
+
+                {{ form_start(form2) }}
+{#                <button class="btn btn-info btn mb-3">{{ button_label|default('Save') }}</button>#}
+                {{ form_end(form2) }}
+
+
+            </div>
+
+        </div>
+    </div>
+{#    href="{{ path('publication_new') }}"#}
+
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ encore_entry_script_tags('app') }}
 
 {% endblock %}

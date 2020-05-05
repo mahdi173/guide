@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Allpublications;
 use App\Entity\Publication;
+use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use App\Form\PublicationType;
 use App\Repository\PublicationRepository;
@@ -38,11 +39,24 @@ class PublicationController extends AbstractController
             return $this->redirectToRoute('publication_index');
         }
 
+        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+        $form_create->handleRequest($request);
+
+        if ($form_create->isSubmitted() && $form_create->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $publication->setUser($this->getUser());
+            $entityManager->persist($publication);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('publication_index');
+        }
+
 
         return $this->render('publication/index.html.twig', [
             'publications' => $pubss,
             'publication' => $publication,
             'form' => $form->createView(),
+            'form2' => $form_create->createView(),
         ]);
     }
 
