@@ -11,7 +11,14 @@
     {% endif %}
 
 {#    {{ form(form) }}#}
+{% set  follows=app.user.follows.values%}
+{% set  count=0%}
 
+    {% for follow in follows %}
+        {% if follow.following == app.user.fullName %}
+           {% set count=count+1%}
+    {% endif %}
+    {% endfor %}
     <div>
         <div class="container margin-top">
             <div class="row">
@@ -30,7 +37,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-10" style="float: right">
                                     <h4 class="text-primary"> {{ app.user.firstName }}   {{ app.user.lastName }}</h4>
-                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<strong>0</strong>&nbsp;followers&nbsp;&nbsp;<strong>0</strong> following</h6>
+                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<strong>{{ count }}</strong>&nbsp;followers&nbsp;&nbsp;<strong>{{ app.user.follows|length }}</strong> following</h6>
 
                                 </div>
 

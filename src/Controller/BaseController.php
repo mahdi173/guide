@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Allpublications;
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
+use App\Entity\Follow;
 use App\Form\AllPublicationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -194,7 +195,7 @@ class BaseController extends AbstractController
             }
         }
 
-
+        $this->getUser()->setFullName($auteur);
             if(!empty($array)){
 
                 foreach ($array as $item){
@@ -260,6 +261,7 @@ class BaseController extends AbstractController
                     }
 
                     $emS->persist($pub);
+                    $emS->persist($this->getUser());
                 }
             }
             $emS->flush();
@@ -284,6 +286,40 @@ return $this->redirectToRoute('publication_index');
 //        }
 
         return $this->redirectToRoute('publication_index');
+    }
+
+    /**
+     * @Route("/add_follower/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"})
+     */
+    public function add_follower(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $auteur = $request->get('author');
+        $exist= $request->get('exist');
+        $route= $request->get('redirect');
+        if($route=="get_authors_publication"){
+            $parameter="auteur";
+        }else{
+            $parameter="authorValue";
+        }
+        $user=$this->getUser();
+      //  $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
+        if($exist==0){
+            $follow=new Follow();
+            $follow->setFollowing($auteur);
+            $follow->addFollower($user);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute($route,[$parameter=>$auteur]);
+        }
+        else{
+            $following=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
+            $entityManager->remove($following[0]);
+            $entityManager->flush();
+            return $this->redirectToRoute($route,[$parameter=>$auteur]);
+        }
     }
 
 

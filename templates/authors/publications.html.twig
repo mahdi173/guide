@@ -28,8 +28,22 @@
         <div class="col-md-2 col-sm-1"></div>
     </div>
 
+    <div class="row">
+
+        <div class="col-md-1  mb-2">  <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/></div>
+        <div class="col-md-9  mb-2">
+            <h5 class="text-primary">{{ auteur }}</h5>
+           <span class="stat_info">   {{  data_dblp| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers }}  followers</span><span class="stat_info"> 0  following</span></p>
+        </div>
+
+        <div class="offset-1 col-md-1  mb-2">
+
+            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ auteur }}" >{% if exist|length!=0 %} UnFollow{% else %}Follow{% endif %}</a>
+        </div>
+    </div>
+
 <div class="row">
-    <div class="col-md-12 mt-5 mb-5">
+    <div class="col-md-12 mt-3 mb-5">
 
         <table class="table" data-toggle="table" data-striped="true">
             <thead>

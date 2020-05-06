@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
+use App\Entity\Follow;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,8 +43,15 @@ class SearchAuthorsController extends AbstractController
      */
     public function callapi(Request $request)
     {
-
+        $entityManager = $this->getDoctrine()->getManager();
         $auteur = $request->get('authorValue');
+
+        $countFollowers=0;
+        $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
+
+        if($exist){
+            $countFollowers=count($exist);
+        }
         $test=false;
         if (strpos($request->getUri(), 'authorValue') !== false){
             $test=true;
@@ -61,7 +69,7 @@ class SearchAuthorsController extends AbstractController
             $this->logger->critical($exception->getTraceAsString());
         }
 
-        return $this->render('authors/authors.html.twig',['data'=> $data,'parametre'=>$test]);
+        return $this->render('authors/authors.html.twig',['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers]);
     }
 
     /**
@@ -72,6 +80,11 @@ class SearchAuthorsController extends AbstractController
     public function callpubapi(Request $request){
 
         $auteur = $request->get('auteur');
+        $exist=$this->entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
+        $countFollowers=0;
+        if($exist){
+            $countFollowers=count($exist);
+        }
         $param=str_replace(' ','+',$auteur);
         $data_doaj = null;
         $data_dblp=null;
@@ -155,7 +168,14 @@ class SearchAuthorsController extends AbstractController
 
         /*end*/
 
-        return $this->render('authors/publications.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);
+        return $this->render('authors/publications.html.twig',
+            ['data_doaj'=>$data_doaj,
+                'data_dblp'=>$array,
+                'dataissn'=>$dd1,
+                'auteur'=> $auteur,
+                'exist'=> $exist,
+                'countFollowers'=> $countFollowers,
+            ]);
     }
 
 }
