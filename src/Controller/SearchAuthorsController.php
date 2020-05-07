@@ -45,9 +45,9 @@ class SearchAuthorsController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $auteur = $request->get('authorValue');
-
         $countFollowers=0;
         $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
+        $allFollowers=$entityManager->getRepository(Follow::class)->findAll();
 
         if($exist){
             $countFollowers=count($exist);
@@ -69,7 +69,7 @@ class SearchAuthorsController extends AbstractController
             $this->logger->critical($exception->getTraceAsString());
         }
 
-        return $this->render('authors/authors.html.twig',['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers]);
+        return $this->render('authors/authors.html.twig',['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers,'allFollowers'=>$allFollowers]);
     }
 
     /**

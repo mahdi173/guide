@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Follow;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -45,6 +46,32 @@ class FollowRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }  */
+    public function findAllFollowers($author)
+    {
+
+        return $this->createQueryBuilder('f')
+            ->select('u.username,u.fullName')
+
+            ->innerJoin("f.followers","u")
+            ->where('f.following=:author')
+            ->setParameter('author', $author)
+            ->getQuery()
+            ->getResult()
+        ;
     }
-    */
+
+    public function findAllFollowing($author)
+    {
+
+        return $this->createQueryBuilder('f')
+            ->select('f.following')
+            ->innerJoin("f.followers","u")
+            ->where('u=:author')
+            ->setParameter('author', $author)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

@@ -2,5 +2,7 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        followers_profile: '@App\Manager\FollowManager'
     form_themes:
         - 'Form/fields.html.twig'

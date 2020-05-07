@@ -1,6 +1,10 @@
 {% extends '@SuluCommunity/base.html.twig' %}
 
 {% block content %}
+
+    {% set followers_profile = followers_profile.followers(app.user.fullName) %}
+
+
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
     {% set user= app.user%}
     {% if success is defined and success %}
@@ -37,7 +41,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-10" style="float: right">
                                     <h4 class="text-primary"> {{ app.user.firstName }}   {{ app.user.lastName }}</h4>
-                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<strong>{{ count }}</strong>&nbsp;followers&nbsp;&nbsp;<strong>{{ app.user.follows|length }}</strong> following</h6>
+                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<a href="{{ path('followers_index') }}" ><strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;</a><a href="{{ path('following_index') }}"> <strong>{{ app.user.follows|length }}</strong> following</a></h6>
 
                                 </div>
 

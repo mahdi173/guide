@@ -321,6 +321,51 @@ return $this->redirectToRoute('publication_index');
             return $this->redirectToRoute($route,[$parameter=>$auteur]);
         }
     }
+    /**
+     * @Route("/followers_index/", name="followers_index", methods={"GET"})
+     */
+    public function followers_index(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user=$this->getUser();
+        $myFollowers=$entityManager->getRepository(Follow::class)->findAllFollowers($user->getFullName());
+
+
+        $allPublication=$entityManager->getRepository(Allpublications::class)->findAll();
+        $allFollow=$entityManager->getRepository(Follow::class)->findAll();
+
+
+            return $this->render("follow/followers_index.html.twig",[
+                'exist'=>$myFollowers,
+                'myFollowers'=>$myFollowers,
+                'allPublication'=>$allPublication,
+                'allFollow'=>$allFollow,
+            ]);
+
+
+    }
+
+    /**
+     * @Route("/following_index/", name="following_index", methods={"GET"})
+     */
+    public function following_index(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user=$this->getUser();
+        $exist=$entityManager->getRepository(Follow::class)->findAllFollowing($user);
+
+        $allPublication=$entityManager->getRepository(Allpublications::class)->findAll();
+        $allFollow=$entityManager->getRepository(Follow::class)->findAll();
+
+
+        return $this->render("follow/following_index.html.twig",[
+            'exist'=>$exist,
+            'allPublication'=>$allPublication,
+            'allFollow'=>$allFollow,
+        ]);
+
+
+    }
 
 
 }

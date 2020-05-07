@@ -33,12 +33,19 @@
         <div class="col-md-1  mb-2">  <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/></div>
         <div class="col-md-9  mb-2">
             <h5 class="text-primary">{{ auteur }}</h5>
-           <span class="stat_info">   {{  data_dblp| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers }}  followers</span><span class="stat_info"> 0  following</span></p>
+           <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers }}  followers</span><span class="stat_info"> 0  following</span></p>
         </div>
 
         <div class="offset-1 col-md-1  mb-2">
+            {% set  follows=app.user.follows.values%}
+            {% set  count=0%}
 
-            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ auteur }}" >{% if exist|length!=0 %} UnFollow{% else %}Follow{% endif %}</a>
+            {% for follow in follows %}
+                {% if follow.following == auteur %}
+                    {% set count=count+1%}
+                {% endif %}
+            {% endfor %}
+            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
         </div>
     </div>
 
