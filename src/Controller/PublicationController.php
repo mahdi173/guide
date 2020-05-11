@@ -34,7 +34,17 @@ class PublicationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+         $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+         $pub->setTitle($form['title']->getData());
+         $pub->setType($form['type']->getData());
+         $pub->setName($form['name']->getData());
+         $pub->setVolume($form['volume']->getData());
+         $pub->setYear($form['year']->getData());
+         $pub->setUrl($form['url']->getData());
+
+         $em->persist($pub);
+         $em->flush();
 
             return $this->redirectToRoute('publication_index');
         }
@@ -43,10 +53,10 @@ class PublicationController extends AbstractController
         $form_create->handleRequest($request);
 
         if ($form_create->isSubmitted() && $form_create->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+
             $publication->setUser($this->getUser());
-            $entityManager->persist($publication);
-            $entityManager->flush();
+            $em->persist($publication);
+            $em->flush();
 
             return $this->redirectToRoute('publication_index');
         }
@@ -88,6 +98,16 @@ class PublicationController extends AbstractController
      * @Route("/{id}", name="publication_show", methods={"GET"})
      */
     public function show(Publication $publication): Response
+    {
+        return $this->render('publication/show.html.twig', [
+            'publication' => $publication,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="all_publication_show", methods={"GET"})
+     */
+    public function show_all_publications(Allpublications $publication): Response
     {
         return $this->render('publication/show.html.twig', [
             'publication' => $publication,

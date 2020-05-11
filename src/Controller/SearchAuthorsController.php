@@ -68,6 +68,56 @@ class SearchAuthorsController extends AbstractController
             $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
             $this->logger->critical($exception->getTraceAsString());
         }
+        $array_doaj = [];
+        $array_dblp = [];
+        foreach ($data->result->hits->hit as $a)
+        {
+
+            // debut
+
+            $aut= $a->info->author;
+            $param  = urlencode($aut); // str_replace(' ','+',$auteur);
+            $data_doaj = null;
+
+            $data_dblp=null;
+            $count_data_dblp=0;
+            $count_data_dblp=0;
+            try {
+                $rawData = HttpClient::create()
+                    ->request('GET', "https://doaj.org/api/v1/search/articles/$param")
+                    ->getContent()
+                ;
+                $data_doaj = \json_decode($rawData);
+                if(count($data_doaj->results)>0){
+                    array_push($array_doaj,count($data_doaj->results));
+                }else{
+                    array_push($array_doaj,0);
+                }
+
+            }catch (TransportExceptionInterface $exception){
+                $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
+                $this->logger->critical($exception->getTraceAsString());
+            }
+
+            // fin
+
+            // debut
+            try {
+                $rawData2 = HttpClient::create()
+                    ->request('GET', "https://dblp.org/search/publ/api?q=.$param.&format=json")
+                    ->getContent()
+                ;
+                $data_dblp = \json_decode($rawData2);
+
+                if(count($data_dblp->result->hits->hit)>0){
+               array_push($array_dblp,count($data_dblp->result->hits->hit));}
+            }catch (TransportExceptionInterface $exception){
+                $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
+                $this->logger->critical($exception->getTraceAsString());
+            }
+
+            // fin
+        }
 
         return $this->render('authors/authors.html.twig',['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers,'allFollowers'=>$allFollowers]);
     }

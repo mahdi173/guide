@@ -37,6 +37,9 @@
                                     Pages :{% if publication.pages  %}{{ publication.pages }}{% endif %}
                             </small></p>
                         </td>
+                        {% set items = {'id': publication.id} %}
+
+                        {% set items = {'type':publication.type ,'title':publication.title ,'year':publication.year,'name':publication.name,'volume':publication.volume,'url':publication.url    }|merge(items) %}
 {#                        <td>{{ publication.journal }}</td>#}
 {#                        <td>{{ publication.url }}</td>#}
 {#                        <td>{{ publication.volume }}</td>#}
@@ -45,11 +48,10 @@
 {#                        <td>{{ publication.volume }}</td>#}
                         <td class="border-0">{{ publication.year }}</td>
                         <td class="border-0">
-{#                            <a class="btn btn-primary" href="{{ path('publication_show', {'id': publication.id}) }}">show</a><br><br>#}
-{#                            <a href="{{ path('all_publication_edit', {'id': publication.id}) }}">edit</a>#}
-                            <a class="btn btn-warning" data-toggle="modal" data-publication="{{ publication.id }}" data-target="#modal_edit" style="color: white;">Edit</a><br><br>
-                            <button class="deletePublication btn btn-danger" data-publication="{{ publication.id }}" >
-                                <a class="" data-toggle="modal" data-target="#modal_delete" style="color: white;">Delete</a>
+
+                            <a class="btn " data-toggle="modal" data-publication="[{{ items|json_encode() }}]" data-target="#modal_edit" style="font-weight:bold;color: white;background-color: #efe3b3">Edit</a><br><br>
+                            <button class="deletePublication btn" data-publication="{{ publication.id }}" style="background-color: #f78239">
+                                <a class="" data-toggle="modal" data-target="#modal_delete" style="font-weight:bold;color: white;">Delete</a>
                             </button>
                         </td>
                     </tr>
@@ -65,7 +67,7 @@
                                 <h3 style="color: #1d2b3c;padding-top: 25px;padding-bottom: 20px">Edit  Publication</h3>
 
                                 {{ form_start(form) }}
-                                {#                <button class="btn btn-info btn mb-3">{{ button_label|default('Save') }}</button>#}
+                                {{ form_widget(form) }}
                                 {{ form_end(form) }}
 
 
@@ -91,7 +93,7 @@
                 <div class="modal-header" style="background-color: white;padding: 20px;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <h3 style="color: #1d2b3c;padding-top: 20px;padding-bottom: 20px">Add  Publication</h3>
+                <h3 style="color: #1d2b3c;padding-top: 20px;padding-bottom: 20px;text-align:center">Add  Publication</h3>
 
                 {{ form_start(form2) }}
 {#                <button class="btn btn-info btn mb-3">{{ button_label|default('Save') }}</button>#}

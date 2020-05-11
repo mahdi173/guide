@@ -9,6 +9,7 @@ use App\Entity\Allpublications;
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
 use App\Entity\Follow;
+use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -53,7 +54,7 @@ class BaseController extends AbstractController
     {
         $emS = $this->getDoctrine()->getManager();
         $exist = $emS->getRepository(Allpublications::class)->findBy(['user' => $this->getUser()]);
-        if ($exist) {
+        if ($exist && $this->getUser()->getFullName()) {
             return $this->redirectToRoute('publication_index');
         } else {
             $auteur = $this->getUser()->getFirstName();
@@ -196,7 +197,7 @@ class BaseController extends AbstractController
         }
 
         $this->getUser()->setFullName($auteur);
-            if(!empty($array)){
+            if(!empty($result)){
 
                 foreach ($array as $item){
                     $authors="";
@@ -231,30 +232,33 @@ class BaseController extends AbstractController
                 }
             }
 
-            if(!empty($dd1)){
-                foreach ($dd1 as $item){
-                    $authors=[];
+            if(!empty($result2)){
+                foreach ($result2 as $item){
+
+                    $authors="";
                     $pub=new Allpublications();
                     $pub->setUser($this->getUser());
-                    $pub->setTitle($item->info->title);
-                    if(array_key_exists('volume',$item->info)){
-                        $pub->setVolume($item->info->volume);
+                    $pub->setTitle($item->bibjson->title);
+                    if(array_key_exists('volume',$item->bibjson->journal)){
+                        $pub->setVolume($item->bibjson->journal->volume);
                     }
                     else{
                         $pub->setVolume(null);
                     }
-                    $pub->setYear($item->info->year);
-                    $pub->setUrl($item->info->url);
-                    $pub->setPages($item->info->pages);
+                    $pub->setYear($item->bibjson->year);
+                    foreach ($item->bibjson->link as $link) {
+                        $pub->setUrl($link->url);
+                    }
+//                    $pub->setPages($item->bibjson->pages);
 
-                    foreach ($item->info->authors as $a) {
+                    foreach ($item->bibjson->author as $a) {
                         if(!is_array($a)){
-                            array_push($authors,$a->text);
+                            $authors=$authors.' '.$a->name;
                             $pub->setAuthors($authors);
                         }
                         else{
                             foreach ($a as $at){
-                                array_push($authors,$at->text);
+                                $authors=$authors.' '.$at->name;
                                 $pub->setAuthors($authors);
                             }
                         }
@@ -366,6 +370,7 @@ return $this->redirectToRoute('publication_index');
 
 
     }
+
 
 
 }

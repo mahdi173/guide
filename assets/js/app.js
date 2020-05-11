@@ -83,3 +83,39 @@ $('.deletePublication').each(function () {
 //         console.log($(this).data('author'));
 //     });
 // });
+
+$('#modal_edit').on('show.bs.modal', function (event) {
+    console.log('rr')
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var id= button.data('publication') // Extract info from data-* attributes
+
+    var modal = $(this)
+    var id0=id[0]
+
+
+    console.log($('#all_publication_title'))
+    var id=id0['id'];
+    var title=id0['title'];
+    var type=id0['type'];
+    var name=id0['name'];
+    var volume=id0['volume'];
+    var year=id0['year'];
+    var url=id0['url'];
+    console.log('id')
+    console.log(id)
+
+    // $('#all_publication_title').val(title)
+    var t=document.getElementById('all_publication_title');
+    t.value=id0['title']
+    $('#all_publication_type').val(type)
+    $('#all_publication_name').val(name)
+    $('#all_publication_volume').val(volume)
+    $('#all_publication_year').val(year)
+    $('#all_publication_url').val(url)
+    $('#all_publication_idPublication').val(id)
+
+
+
+//     modal.find('#all_publication_title').val(title)
+//     modal.find('.modal-body input').val(id)
+})

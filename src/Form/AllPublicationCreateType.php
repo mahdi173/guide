@@ -43,7 +43,7 @@ class AllPublicationCreateType extends AbstractType
                 ]
             ])
             ->add('url')
-            ->add('add',SubmitType::class)
+            ->add('save',SubmitType::class)
 
 
         ;

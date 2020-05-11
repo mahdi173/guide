@@ -44,20 +44,24 @@
 
                 {% endfor %}
                 <td style="padding: 20px" width="60%">
-                    <p class="font-weight-bold saveProfile"  data-author="{{ res.fullName }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.fullName}) }}">{{ res.username }}</a><br><span class="stat_info"> {{ countPubliction}}  publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers}}  followers</span><span class="stat_info"> {{ countFollowing}}  following</span></p>
+                    <p class="font-weight-bold saveProfile"  data-author="{{ res.fullName }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.fullName}) }}">{% if res.fullName %}{{res.fullName  }}{% else %}{{ res.username }}{% endif %}</a><br><span class="stat_info"> {{ countPubliction}}  publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers}}  followers</span><span class="stat_info"> {{ countFollowing}}  following</span></p>
                 </td>
                 {% set  follows=app.user.follows.values%}
 
                 {% set  count=0%}
+                {% set break = 0 %}
 
                 {% for follow in follows %}
 
                     {% if follow.following == res.fullName  %}
                         {% set count=count+1%}
+                        {% set break=1%}
                     {% endif %}
+
+
                 {% endfor %}
                 <td style="padding: 20px" width="20%">
-                    <a href="{{ path('add_follower', {'author': res.fullName,'exist':countFollowing|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.fullName }}" >{% if countFollowing>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                    <a href="{{ path('add_follower', {'author': res.fullName,'exist':break,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.fullName }}" >{% if break>0 %} UnFollow{% else %}Follow{% endif %}</a>
 
                 </td>
             </tr>
