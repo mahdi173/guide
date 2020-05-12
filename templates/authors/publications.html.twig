@@ -107,7 +107,7 @@
                                     {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
                                     {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
                                     Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
-                                    {{ dump(dataissn) }}
+
                                     {% for d in dataissn %}
 
                                         {% for iss in result.bibjson.journal.issns %}
