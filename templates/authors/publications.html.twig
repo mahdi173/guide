@@ -83,7 +83,7 @@
                             <p class="font-weight-light text-muted mt-n3">
                                 <small>Authors :
                                     {% for a in result.bibjson.author[:30] %}
-                                        {{ a.name }}
+                                        <a href="{{ path('get_authors_publication', {auteur: a.name}) }}"> {{ a.name }} </a>
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>
@@ -107,6 +107,7 @@
                                     {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
                                     {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
                                     Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
+                                    {{ dump(dataissn) }}
                                     {% for d in dataissn %}
 
                                         {% for iss in result.bibjson.journal.issns %}
@@ -134,7 +135,7 @@
                             <p class="font-weight-light text-muted mt-n3">
                                 <small>Authors :
                                     {% for a in res.info.authors.author %}
-                                         {{ a.text }}
+                                        <a href="{{ path('get_authors_publication', {auteur: a.text}) }}"> {{ a.text }} </a>
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>

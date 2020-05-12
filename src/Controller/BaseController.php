@@ -217,12 +217,12 @@ class BaseController extends AbstractController
 
                     foreach ($item->info->authors as $a) {
                         if(!is_array($a)){
-                            $authors=$authors.' '.$a->text;
+                            $authors=$authors.' , '.$a->text;
                             $pub->setAuthors($authors);
                         }
                       else{
                           foreach ($a as $at){
-                              $authors=$authors.' '.$at->text;
+                              $authors=$authors.' , '.$at->text;
                               $pub->setAuthors($authors);
                           }
                       }
@@ -253,12 +253,12 @@ class BaseController extends AbstractController
 
                     foreach ($item->bibjson->author as $a) {
                         if(!is_array($a)){
-                            $authors=$authors.' '.$a->name;
+                            $authors=$authors.' , '.$a->name;
                             $pub->setAuthors($authors);
                         }
                         else{
                             foreach ($a as $at){
-                                $authors=$authors.' '.$at->name;
+                                $authors=$authors.' , '.$at->name;
                                 $pub->setAuthors($authors);
                             }
                         }

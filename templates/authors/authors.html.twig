@@ -53,7 +53,9 @@
                          </tr>
                     </thead>
                     <tbody>
+
                     {% for res in data.result.hits.hit  %}
+
                         <tr>
                             <td style="padding: 20px" width="20%">
                                 <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/>
@@ -65,8 +67,9 @@
                                     {% set count=count+1%}
                                 {% endif %}
                             {% endfor %}
+
                           <td style="padding: 20px" width="60%">
-                                <p class="font-weight-bold saveProfile"  data-author="{{ res.info.author }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br><span class="stat_info"> 0  publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ count }}  followers</span><span class="stat_info"> 0  following</span></p>
+                                <p class="font-weight-bold saveProfile"  data-author="{{ res.info.author }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br><span class="stat_info"> 0 publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ count }}  followers</span><span class="stat_info"> 0  following</span></p>
                             </td>
 
                             {% set  follows=app.user.follows.values%}
@@ -83,6 +86,7 @@
                             </td>
                         </tr>
                     {% endfor %}
+
                     </tbody>
                 </table>
             {% elseif parametre==true  %}
