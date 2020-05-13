@@ -68,16 +68,16 @@ class SearchAuthorsController extends AbstractController
             $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
             $this->logger->critical($exception->getTraceAsString());
         }
-        $array_doaj = [];
-        $array_dblp = [];
-
+        $array_doaj = array();
+        $array_dblp = array();
+        $total=array();
         if($data->result->query!==""){
 
         foreach ($data->result->hits->hit as $a)
         {
             // debut
             $aut= $a->info->author;
-            $param  = urlencode($aut); // str_replace(' ','+',$auteur);
+            $par  = urlencode($aut); // str_replace(' ','+',$auteur);
             $data_doaj = null;
 
             $data_dblp=null;
@@ -85,15 +85,21 @@ class SearchAuthorsController extends AbstractController
             $count_data_dblp=0;
             try {
                 $rawData = HttpClient::create()
-                    ->request('GET', "https://doaj.org/api/v1/search/articles/$param")
+                    ->request('GET', "https://doaj.org/api/v1/search/articles/$par")
                     ->getContent()
                 ;
                 $data_doaj = \json_decode($rawData);
-//                if(count($data_doaj->results)>0){
+             $az=str_replace('+',' ',$data_doaj->query);
+             $az=str_replace('.','',$az);
+             $az=str_replace('-',' ',$az);
+
+                if(count($data_doaj->results)>0){
 //                    array_push($array_doaj,count($data_doaj->results));
-//                }else{
+                    $array_doaj[$az]=count($data_doaj->results);
+                }else{
 //                    array_push($array_doaj,0);
-//                }
+                    $array_doaj[$az]=0;
+                }
 
             }catch (TransportExceptionInterface $exception){
                 $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
@@ -105,24 +111,48 @@ class SearchAuthorsController extends AbstractController
             // debut
             try {
                 $rawData2 = HttpClient::create()
-                    ->request('GET', "https://dblp.org/search/publ/api?q=.$param.&format=json")
+                    ->request('GET', "https://dblp.org/search/publ/api?q=.$par.&format=json")
                     ->getContent()
                 ;
                 $data_dblp = \json_decode($rawData2);
 
-//                if(count($data_dblp->result->hits->hit)>0){
-//               array_push($array_dblp,count($data_dblp->result->hits->hit));}
+                $res=str_replace('*','',$data_dblp->result->query);
+
+                if(count($data_dblp->result->hits->hit)>0){
+//               array_push($array_dblp,count($data_dblp->result->hits->hit));
+                    $array_dblp[$res]=count($data_dblp->result->hits->hit);
+                }
+                else{
+//                    array_push($data_dblp,0);
+                    $array_dblp[$res]=0;
+                }
+
             }catch (TransportExceptionInterface $exception){
                 $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
                 $this->logger->critical($exception->getTraceAsString());
             }
 
             // fin
+
         }
+
+//            dd($array_doaj,$array_dblp);
+            foreach ($array_dblp as $key => $value) {
+                foreach ($array_doaj as $key1 => $value1){
+                    if ($key === $key1) {
+                        $total[$key] = $value + $value1;
+
+                    }
+                    else{
+                      //  dd($key,$key1);
+                    }
+            }
+            }
+
 
     }
         return $this->render('authors/authors.html.twig',
-            ['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers,'allFollowers'=>$allFollowers,'array_dblp'=>$array_dblp,'array_doaj'=>$array_doaj]);
+            ['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers,'allFollowers'=>$allFollowers,'array_dblp'=>$array_dblp,'array_doaj'=>$array_doaj,'total'=>$total]);
     }
 
     /**
