@@ -22,7 +22,11 @@
             <hr>
 
             <!-- Preview Image -->
-            <img class="img-fluid rounded" src="{{ sulu_get_media_url(content.image) }}" alt="">
+            {% if content.image %}
+                <img class="img-fluid rounded" src="{{ sulu_get_media_url(content.image) }}" alt="">
+                {% else %}
+                    <img class="img-fluid rounded" src="{{ asset('assets/images/Guidejournal.png') }}" alt="">
+            {% endif %}
 
             <hr>
 
@@ -31,7 +35,11 @@
             {% endfor %}
 
             <!-- Post Content -->
-            <p> {{ content.article|default()|raw }} </p>
+            {% if content.article %}
+                <p> {{ content.article|default()|raw }} </p>
+                {% else %}
+                <p></p>
+            {% endif %}
 
             <div class="sharethis-inline-share-buttons"></div>
 

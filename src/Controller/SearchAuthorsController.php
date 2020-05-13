@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
 use App\Entity\Follow;
+use App\Service\Sortpublication;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -178,7 +179,7 @@ class SearchAuthorsController extends AbstractController
         $param  = urlencode($auteur); // str_replace(' ','+',$auteur);
         try {
             $rawData = HttpClient::create()
-                ->request('GET', "https://doaj.org/api/v1/search/articles/$param")
+                ->request('GET', "https://doaj.org/api/v1/search/articles/$param.?pageSize=100&sort=year:desc")
                 ->getContent()
             ;
             $data_doaj = \json_decode($rawData);
@@ -193,7 +194,7 @@ class SearchAuthorsController extends AbstractController
         // debut
         try {
             $rawData2 = HttpClient::create()
-                ->request('GET', "https://dblp.org/search/publ/api?q=.$param.&format=json")
+                ->request('GET', "https://dblp.org/search/publ/api?q=.$param.&format=json&h=100")
                 ->getContent()
             ;
             $data_dblp = \json_decode($rawData2);
@@ -249,6 +250,8 @@ class SearchAuthorsController extends AbstractController
                 }
             }
 
+        $datadlp=$this->sortdblp($array,count($array));
+
         /*end*/
 
         return $this->render('authors/publications.html.twig',
@@ -259,6 +262,28 @@ class SearchAuthorsController extends AbstractController
                 'exist'=> $exist,
                 'countFollowers'=> $countFollowers,
             ]);
+    }
+
+    /**
+     * sort by date data gived by dblp api
+     * @param $a
+     * @param $b
+     * @return mixed
+     */
+    public function sortdblp($a,$b){
+        $temp=[];
+        for($i=0;$i<$b;$i++){
+            for ($j=0;$j<$b;$j++){
+                if ($a[$i]->info->year > $a[$j]->info->year)
+                {
+                    $temp=$a[$i];
+                    $a[$i]=$a[$j];
+                    $a[$j]=$temp;
+                }
+            }
+        }
+        return $a;
+
     }
 
 }

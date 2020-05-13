@@ -97,17 +97,17 @@
 
                                             {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
                                                 <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"> {{ result.bibjson.journal.title }}</a>
-                                            {% else %}
-                                                    {{ result.bibjson.journal.title }}
+
                                             {% endif %}
                                         {% endfor %}
+                                        {% else %}
+                                            {{ result.bibjson.journal.title }}
                                     {% endfor %}
 
                                     {% endif %},
                                     {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
                                     {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
                                     Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
-
                                     {% for d in dataissn %}
 
                                         {% for iss in result.bibjson.journal.issns %}
@@ -141,10 +141,14 @@
                                 </small></p>
                             <p class="font-weight-light text-muted mt-n4 mb-n3">
                                 <small>
-                                    {{ res.info.venue }},
+                                    {% if res.info.venue is defined %}
+                                        {% for v in res.info.venue %}
+                                            {{ v }}
+                                        {% endfor %}
+                                    {% endif %},
                                     {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
                                     {% if res.info.volume is defined %}({{ res.info.volume }}),
-                                        Pages :{% if res.info.pages is defined %}{{ res.info.pages }}{% endif %}{% endif %}
+                                        {% if res.info.pages is defined %}Pages :{{ res.info.pages }}{% endif %}{% endif %}
                                 </small>
                             </p>
                         </td>

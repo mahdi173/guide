@@ -21,5 +21,5 @@ sulu_core:
 
 sulu_article:
   default_main_webspace: 'guidejournal'
-  index_name: su_articles
+  index_name: "%env(resolve:SULU_ARTICLES_INDEX_NAME)%"
   hosts: ["%env(resolve:ELASTICSEARCH_URL)%"]

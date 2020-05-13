@@ -5,7 +5,6 @@
 
     {% if (app.request.get('send') == 'true')  %}
         <p class="text-center border pt-3 pb-3">
-{#            {{ 'registration_finished'|trans }}#}
             operation was successfully completed, Please confirm from your email acount !
         </p>
     {% else %}
@@ -14,10 +13,12 @@
         <div class="form-label-group ">
             <label for="registration_username">First name :</label>
             {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.firstName) }}
         </div>
         <div class="form-label-group ">
             <label for="registration_lastName">Last name :</label>
             {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.lastName) }}
         </div>
         <div class="form-label-group ">
             <label for="registration_username">Username :</label>
@@ -41,7 +42,7 @@
         </div>
         <div class="checkbox mb-3">
             <label class="mr-lg-2 mt-4">
-                {{ form_widget(form.terms) }} <a href="#">Accept terms and conditions</a>
+                {{ form_widget(form.terms) }} <a href="{{ path('privacy_page') }}" target="_blank">Accept terms and conditions</a>
             </label>
         </div>
         {{ form_widget(form._token) }}
