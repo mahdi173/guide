@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Allpublications;
 use App\Entity\Conference;
+use App\Form\AllPublicationCreateType;
+use App\Form\AllPublicationType;
 use App\Form\ConferenceType;
+use App\Repository\AllPublicationRepository;
 use App\Repository\ConferenceRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,15 +22,55 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConferenceController extends AbstractController
 {
     /**
-     * @Route("/", name="conference_index", methods={"GET"})
+     * @Route("/", name="conference_index", methods={"GET","POST"})
      */
-    public function index(ConferenceRepository $conferenceRepository): Response
+//    public function index(ConferenceRepository $conferenceRepository): Response
+//    {
+//        return $this->render('conference/index.html.twig', [
+//            'conferences' => $conferenceRepository->findAll(),
+//        ]);
+//    }
+    public function index(Request $request,AllPublicationRepository $publicationRepository): Response
     {
-        return $this->render('conference/index.html.twig', [
-            'conferences' => $conferenceRepository->findAll(),
+        $publication=new Allpublications();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(AllPublicationType::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+            $pub->setTitle($form['title']->getData());
+            $pub->setType($form['type']->getData());
+            $pub->setName($form['name']->getData());
+            $pub->setVolume($form['volume']->getData());
+            $pub->setYear($form['year']->getData());
+            $pub->setUrl($form['url']->getData());
+
+            $em->persist($pub);
+            $em->flush();
+
+            return $this->redirectToRoute('conference_index');
+        }
+
+        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+        $form_create->handleRequest($request);
+
+        if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+            $publication->setUser($this->getUser());
+            $em->persist($publication);
+            $em->flush();
+
+            return $this->redirectToRoute('conference_index');
+        }
+        return $this->render('conference/publication_conference.html.twig', [
+            'publications' => $publicationRepository->findPublicationByType('conference'),
+            'form' => $form->createView(),
+            'form2' => $form_create->createView(),
         ]);
     }
-
     /**
      *
      * @Route("/new", name="conference_new", methods={"GET","POST"})

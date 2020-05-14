@@ -1,6 +1,10 @@
 {% extends '@SuluCommunity/base.html.twig' %}
 
 {% block content %}
+
+    {% set followers_profile = followers_profile.followers(app.user.fullName) %}
+
+
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
     {% set user= app.user%}
     {% if success is defined and success %}
@@ -11,7 +15,14 @@
     {% endif %}
 
 {#    {{ form(form) }}#}
+{% set  follows=app.user.follows.values%}
+{% set  count=0%}
 
+    {% for follow in follows %}
+        {% if follow.following == app.user.fullName %}
+           {% set count=count+1%}
+    {% endif %}
+    {% endfor %}
     <div>
         <div class="container margin-top">
             <div class="row">
@@ -19,12 +30,36 @@
                     <div class="well well-sm">
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
-{#                                {{ dump(app.user.contact.avatar.files) }}#}
-                                <img style="max-height: 150px;max-width: 150px" src="{{ asset('assets/images/logo1.png') }}" alt="H" class="img-rounded img-responsive"/>
+                                {% set media = null %}
+                                {% set src = null %}
+                                {% if app.user.contact.avatar is not null %}
+                                    {% set media = sulu_resolve_media(app.user.contact.avatar,'fr') %}
+                                {% endif %}
+
+                                {% if media is not null %}
+                                    {% set src= media.url %}
+
+                                {% else %}
+                                    {% set src=  asset('assets/images/Profil.jpg') %}
+
+                                {% endif %}
+                                <img style="height: 160px;width: 160px;margin-top: 20px;" src={{ src}} alt="H" class="img-rounded img-responsive rounded-circle"/>
                             </div>
+
                             <div class="col-sm-12 col-md-8 mt-5">
-                                <h4>{{ app.user.username }} | <a href="{{ path('sulu_community.logout') }}">Logout</a></h4>
-                                <p>
+{#                                <h4>{{ app.user.username }} | <a href="{{ path('sulu_community.logout') }}">Logout</a></h4>#}
+
+{#                                <div class="col-sm-12 col-md-1" style="float: left">#}
+{#                                    <img style="max-height: 50px;max-width: 50px" src="{{ asset('assets/images/Profil.jpg') }}" alt="H" class="img-rounded img-responsive"/>#}
+{#                                </div>#}
+
+                                <div class="col-sm-12 col-md-11" >
+                                    <h4 class="text-primary"> {{ app.user.firstName }}   {{ app.user.lastName }}</h4>
+                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<a href="{{ path('followers_index') }}" class="followers_index" ><strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;</a><a href="{{ path('following_index') }}" class="following_index"> <strong>{{ app.user.follows|length }}</strong> following</a></h6>
+
+                                </div>
+
+                                <p style="margin-left: 20px">
                                     <br/>
                                     <a href= "{{ path('sulu_community.profile') }}">Edit Profile</a> |
                                     <a href="{{ path('update-password') }}">Change Password</a>
@@ -33,9 +68,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-3" style="color: #555">
+                <div class="col-xs-12 col-sm-12 col-md-3" style="color: #555;padding-top: 45px;">
                     Follow me on social <br>media
-                    <a class="btn btn-warning" data-toggle="modal" data-target="#modal_follow" style="color: white;margin-left: 40px">Edit</a><br>
+                    <a class="btn" data-toggle="modal" data-target="#modal_follow" style="color: white;margin-left: 40px;background-color: #efe3b3">Edit</a><br>
                     <a href="{% if user.facebook %} {{user.facebook  }}{%else%}#{%endif%}" target="_blank">
                        <i class="fa fa-facebook icon-social" style="border: 1px solid black;padding: 13px;margin-top: 10px"></i>
                     </a>
@@ -61,16 +96,16 @@
                     <form method="post" action="{{ url('save_url_social') }}"  style="width: 600px;padding: 30px">
                         <div class="form-group">
                             <label>Facebook URL</label>
-                            <input type="text" class="form-control" id="facebook" name="facebook" aria-describedby="emailHelp" placeholder="Enter Facebook URL">
+                            <input type="text" class="form-control" id="facebook" name="facebook" aria-describedby="emailHelp" placeholder="https://www.facebook.com/yourFacebook" value="{% if user.facebook %} {{user.facebook  }}{%endif%}">
                         </div>
                         <div class="form-group">
                             <label>Twitter URL</label>
-                            <input type="text" class="form-control" id="twitter" name="twitter" placeholder="Enter Twitter URL">
+                            <input type="text" class="form-control" id="twitter" name="twitter" placeholder="https://www.twitter.com/yourTwitter" value="{% if user.twitter %} {{user.twitter  }}{%endif%}">
                         </div>
 
                         <div class="form-group">
                             <label>LinkedIn URL</label>
-                            <input type="text" class="form-control" id="linkedin"  name="linkedin" placeholder="Enter LinkedIn URL">
+                            <input type="text" class="form-control" id="linkedin"  name="linkedin" placeholder=" https://www.linkedin.com/yourLinkedin" value="{% if user.linkedin %} {{user.linkedin  }}{%endif%}">
                         </div>
 
                         <br><button type="submit" class="btn btn-primary" style="color: white">Submit</button>

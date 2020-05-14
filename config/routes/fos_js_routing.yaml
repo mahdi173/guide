@@ -3,3 +3,9 @@ get_author_allpublication_profile:
   defaults: { _controller: App\Controller\BaseController::callAllpubapi }
   options:
     expose: true
+
+all_publication_delete:
+  path: /all_publication/{id}
+  defaults: { _controller: App\Controller\BaseController::delete }
+  options:
+    expose: true

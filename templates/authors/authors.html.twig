@@ -10,7 +10,20 @@
     } %}
 {% endblock %}
 
+{% block stylesheets %}
+
+
+<style>
+    .stat_info{
+        padding-left: 3px;
+        font-size: 11px;
+    }
+
+</style>
+{% endblock %}
 {% block content %}
+
+
     <div class="row">
         <div class="col-md-2 col-sm-1"></div>
         <div class="col-md-8 mt-5 mb-5">
@@ -26,24 +39,70 @@
         </div>
         <div class="col-md-2 col-sm-1"></div>
     </div>
+
     <div class="row">
         <div class="col-md-2 col-sm-12"></div>
         <div class="col-md-8 mt-5 mb-5">
             {% if data.result.hits.hit is defined %}
-                <table id="auteurs" class="table">
+
+                <table id="auteurs" class="table table-striped">
                     <thead>
-                    <tr class="border-0">
-                        <th>Title</th>
-                    </tr>
+                         <tr class="border-0">
+                             <th >Title</th>
+                             <th></th>
+                             <th></th>
+                         </tr>
                     </thead>
                     <tbody>
+
                     {% for res in data.result.hits.hit  %}
+
+
+
+
                         <tr>
-                            <td class="w-70 border-0">
-                                <p class="font-weight-bold text-primary"><a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a></p>
+                            <td style="padding: 20px" width="20%">
+                                <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/>
+                            </td>
+                            {% set  count=0%}
+
+                            {% for follow in allFollowers %}
+                                {% if follow.following == res.info.author %}
+                                    {% set count=count+1%}
+                                {% endif %}
+                            {% endfor %}
+
+                          <td style="padding: 20px" width="60%">
+                                <p class="font-weight-bold saveProfile"  data-author="{{ res.info.author }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br>
+                        {% for keyAuthor,valueAuthor in total %}
+                            {% if keyAuthor == res.info.author|replace({'+': " ", '*': "", '.': "",'-': " "}) %}
+                                    <span class="stat_info">
+                                          {{ valueAuthor }} publications
+                                    </span>
+                            {% endif %}
+                        {% endfor %}
+                                    <span class="stat_info"> 0  posts</span>
+                                    <span class="stat_info"> {{ count }}  followers</span>
+                                    <span class="stat_info"> 0  following</span></p>
+                            </td>
+
+                            {% set  follows=app.user.follows.values%}
+                            {% set  countF=0%}
+
+                            {% for follow in follows %}
+                                {% if follow.following == res.info.author %}
+                                    {% set countF=countF+1%}
+                                {% endif %}
+                            {% endfor %}
+                            <td style="padding: 20px" width="20%">
+                                <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >{% if countF>0 %} UnFollow{% else %}Follow{% endif %}</a>
+
                             </td>
                         </tr>
-                    {% endfor %}
+
+
+                  {% endfor %}
+
                     </tbody>
                 </table>
             {% elseif parametre==true  %}

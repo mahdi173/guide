@@ -82,6 +82,11 @@ class User extends BaseUser
     private $favoriteReutersJournals;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Follow", inversedBy="followers",cascade={"persist"})
+     */
+    private $follows;
+
+    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $facebook;
@@ -105,6 +110,7 @@ class User extends BaseUser
         $this->conferences = new ArrayCollection();
         $this->favoriteScopusJournals = new ArrayCollection();
         $this->favoriteReutersJournals = new ArrayCollection();
+        $this->follows = new ArrayCollection();
     }
 
     public function setEmail($email)
@@ -473,6 +479,32 @@ class User extends BaseUser
     public function setAllpublications($allpublications): void
     {
         $this->allpublications = $allpublications;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFollows()
+    {
+        return $this->follows;
+    }
+
+    public function addFollow(Follow $follow): self
+    {
+        if (!$this->follows->contains($follow)) {
+            $this->follows[] = $follow;
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(Follow $follow): self
+    {
+        if ($this->follows->contains($follow)) {
+            $this->follows->removeElement($follow);
+        }
+
+        return $this;
     }
 
 
