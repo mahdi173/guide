@@ -15,7 +15,7 @@
         </thead>
         <tbody>
         {% if favorite | length==0 %}
-        <tr><td><p class=" alert font-weight-light text-muted "> no journal available !</p></td></tr>
+        <tr><td colspan="4"><p class=" alert font-weight-light text-muted "> no journal available !</p></td></tr>
         {% else %}
         {% for f in favorite %}
         <tr>
