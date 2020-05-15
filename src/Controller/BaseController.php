@@ -376,6 +376,14 @@ return $this->redirectToRoute('publication_index');
 
     }
 
+    /**
+     * @Route("/profile_settings", name="profile_settings", methods={"GET"})
+     */
+    public function profile_settings()
+    {
+        return $this->render("Profile/profile_settings.html.twig");
+    }
+
 
 
 }
