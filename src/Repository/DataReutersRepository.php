@@ -34,4 +34,15 @@ class DataReutersRepository extends ServiceEntityRepository
         }
         return $data_t_thomson;
     }
+    public function selectTopListWeb($em)
+    {
+        return
+
+            $this->createQueryBuilder('data_reuters')
+                ->select("data_reuters")
+                ->orderBy('data_reuters.rank', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult();
+    }
 }
