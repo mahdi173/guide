@@ -40,5 +40,16 @@ class DataTScopusRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
     }
+    public function selectTopListScopus($em)
+    {
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->orderBy('data_tscopus.sjr', 'DESC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult();
+    }
 
 }
