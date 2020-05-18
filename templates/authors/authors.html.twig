@@ -86,6 +86,8 @@
                                     <span class="stat_info"> 0  following</span></p>
                             </td>
 
+                         {% if app.user is not null %}
+
                             {% set  follows=app.user.follows.values%}
                             {% set  countF=0%}
 
@@ -98,6 +100,12 @@
                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >{% if countF>0 %} UnFollow{% else %}Follow{% endif %}</a>
 
                             </td>
+                         {% else %}
+                             <td style="padding: 20px" width="20%">
+                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >Follow</a>
+
+                             </td>
+                         {% endif %}
                         </tr>
 
 

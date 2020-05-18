@@ -6,6 +6,8 @@ use Sulu\Bundle\SecurityBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -77,6 +79,7 @@ class ProfileType extends AbstractType
             'property_path' => 'contact.note',
             'required' => false,
         ]);
+        $builder->add('institution', TextType::class);
 
         $builder->add('submit', SubmitType::class);
     }

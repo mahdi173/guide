@@ -14,7 +14,17 @@ body {
 a:hover{
   text-decoration: none;
 }
-//.namePublication{
-//  width: 82%;
-//  margin-left: 100px;
-//}
+
+.list-sidebar a{
+  padding: 17px;
+}
+.table-publication th{
+  color:rgb(23, 162, 184);
+  background-color: white;
+  border: 1px solid #dee2e6;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+.title-pub{
+  color: #555;
+}

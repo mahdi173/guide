@@ -29,7 +29,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-9">
                     <div class="well well-sm">
                         <div class="row">
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12 col-md-3">
                                 {% set media = null %}
                                 {% set src = null %}
                                 {% if app.user.contact.avatar is not null %}
@@ -46,24 +46,24 @@
                                 <img style="height: 160px;width: 160px;margin-top: 20px;" src={{ src}} alt="H" class="img-rounded img-responsive rounded-circle"/>
                             </div>
 
-                            <div class="col-sm-12 col-md-8 mt-5">
+                            <div class="col-sm-12 col-md-9 mt-5">
 {#                                <h4>{{ app.user.username }} | <a href="{{ path('sulu_community.logout') }}">Logout</a></h4>#}
 
 {#                                <div class="col-sm-12 col-md-1" style="float: left">#}
 {#                                    <img style="max-height: 50px;max-width: 50px" src="{{ asset('assets/images/Profil.jpg') }}" alt="H" class="img-rounded img-responsive"/>#}
 {#                                </div>#}
 
-                                <div class="col-sm-12 col-md-11" >
-                                    <h4 class="text-primary"> {{ app.user.firstName }}   {{ app.user.lastName }}</h4>
+                                <div class="col-sm-12 col-md-11" style="margin-top: 20px;margin-left: -20px">
+                                    <h2 class="text-primary"> {{ app.user.firstName }}   {{ app.user.lastName }}</h2>
                                     <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ app.user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<a href="{{ path('followers_index') }}" class="followers_index" ><strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;</a><a href="{{ path('following_index') }}" class="following_index"> <strong>{{ app.user.follows|length }}</strong> following</a></h6>
 
                                 </div>
 
-                                <p style="margin-left: 20px">
-                                    <br/>
-                                    <a href= "{{ path('sulu_community.profile') }}">Edit Profile</a> |
-                                    <a href="{{ path('update-password') }}">Change Password</a>
-                                </p>
+{#                                <p style="margin-left: 20px">#}
+{#                                    <br/>#}
+{#                                    <a href= "{{ path('sulu_community.profile') }}">Edit Profile</a> |#}
+{#                                    <a href="{{ path('update-password') }}">Change Password</a>#}
+{#                                </p>#}
                             </div>
                         </div>
                     </div>
@@ -72,18 +72,25 @@
                     Follow me on social <br>media
                     <a class="btn" data-toggle="modal" data-target="#modal_follow" style="color: white;margin-left: 40px;background-color: #efe3b3">Edit</a><br>
                     <a href="{% if user.facebook %} {{user.facebook  }}{%else%}#{%endif%}" target="_blank">
-                       <i class="fa fa-facebook icon-social" style="border: 1px solid black;padding: 13px;margin-top: 10px"></i>
+                          <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="H"/>
+
+{#   <i class="fa fa-facebook icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 17px;margin-top: 10px"></i>#}
                     </a>
                     <a href="{% if user.twitter %} {{user.twitter  }}{%else%}#{%endif%}" target="_blank">
-                       <i class="fa fa-twitter icon-social" style="border: 1px solid black;padding: 13px;"></i>
+{#                       <i class="fa fa-twitter icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 15px;"></i>#}
+                        <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/twitter.png')}} alt="H"/>
                     </a>
+
                     <a href="{% if user.linkedIn %} {{user.linkedIn  }}{%else%}#{%endif%}" target="_blank">
-                       <i class="fa fa-linkedin icon-social" style="border: 1px solid black;padding: 13px;"></i>
+{#                       <i class="fa fa-linkedin icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 15px;"></i>#}
+                        <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="H"/>
                     </a>
                 </div>
 
             </div>
         </div>
+
+        <hr style="width: 60%;margin-bottom: 50px">
 
         <div class="modal fade" id="modal_follow" role="dialog">
             <div class="modal-dialog" role="document">
@@ -108,7 +115,7 @@
                             <input type="text" class="form-control" id="linkedin"  name="linkedin" placeholder=" https://www.linkedin.com/yourLinkedin" value="{% if user.linkedin %} {{user.linkedin  }}{%endif%}">
                         </div>
 
-                        <br><button type="submit" class="btn btn-primary" style="color: white">Submit</button>
+                        <br><button type="submit" class="btn btn-primary" style="color: white">Save</button>
                     </form>
                 </div>
 
@@ -119,7 +126,7 @@
         <div class = "row">
 
             {#sidebar#}
-            <div class = "d-flex col-md-3" id = "wrapper">
+            <div class = "d-flex col-md-2"  id = "wrapper">
                 <div class = "bg-light border-right" id = "sidebar-wrapper">
 {#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Blog</div>#}
 {#                    <div class = "list-group list-group-flush" >#}
@@ -131,24 +138,24 @@
 {#                        Tags#}
 {#                        </a>#}
 {#                    </div>#}
-                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>
-                    <div class = "list-group list-group-flush" >
-                        <a href = "{{ path('sulu_community.profile')}}" class = "list-group-item list-group-item-action bg-light" > Infos </a>
-                        <a href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+{#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>#}
+                    <div class = "list-group list-group-flush list-sidebar" >
+{#                        <a href = "{{ path('sulu_community.profile')}}" class = "list-group-item list-group-item-action bg-light" > Infos </a>#}
+                        <a  href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Publications
-                        </a>
-                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        </a> <span role="presentation" class="divider"></span>
+                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Books
-                        </a>
-                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Chapters
-                        </a>
-                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action bg-light">
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Conferences
-                        </a>
-                        <a href="{{ path('favorite_list') }}" class="list-group-item list-group-item-action bg-light">My Journals List</a>
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('favorite_list') }}" class="list-group-item list-group-item-action ">Saved Journals</a>
                         {% for item in sulu_navigation_root_tree('member') %}
-                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="list-group-item list-group-item-action bg-light" title="{{ item.title }}">{{ item.title }}</a>
+                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
                         {% endfor %}
 
                     </div>
@@ -156,37 +163,42 @@
             </div>
             {#end#}
 
-            <div class="col-8">
+            <div style="margin-left: 0px" class="col-9 " >
 
                 {% block profile_content %}
-                <h2>Edit Profile</h2><br/>
+                <h2 class="text-center">Edit Profile</h2><br/>
 
                     {{ form_start(form, { 'attr': {'class': 'form'} }) }}
                     <div class="form-group">
-                        <label for="registration_username">First name :</label>
+                        <label for="registration_username">First name </label>
                         {{ form_widget(form.firstName, { 'attr': {'class': 'form-control '} }) }}
                     </div>
                     <div class="form-group">
-                        <label for="registration_username">First name :</label>
+                        <label for="registration_username">Last name </label>
                         {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group">
-                        <label for="registration_username">First name :</label>
+                        <label for="registration_username">Email</label>
                         {{ form_widget(form.mainEmail, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group">
-                        <label for="registration_username">Avatar :</label>
+                        <label for="registration_username">Avatar </label>
                         {{ form_widget(form.avatar, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group">
-                        <label for="registration_username">Adress :</label>
+                        <label for="registration_username">Address </label>
                         {{ form_widget(form.street, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group ">
-                        <label for="registration_username">Country :</label>
+                        <label for="registration_username">Country </label>
                         {{ form_widget(form.countryCode, { 'attr': {'class': 'form-control'} }) }}
                     </div>
 
+{#                    <div class="form-group ">#}
+{#                        <label for="registration_username">Institution </label>#}
+{#                        {{ form_widget(form.institution, { 'attr': {'class': 'form-control'} }) }}#}
+{#                      #}
+{#                    </div>#}
                     {{ form_widget(form._token) }}
                     <button type="submit" id="registration_submit" name="profile[submit]" class="btn btn-info">Update</button>
 

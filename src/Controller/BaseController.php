@@ -308,21 +308,26 @@ return $this->redirectToRoute('publication_index');
             $parameter="authorValue";
         }
         $user=$this->getUser();
-      //  $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
-        if($exist==0){
-            $follow=new Follow();
-            $follow->setFollowing($auteur);
-            $follow->addFollower($user);
+        if($user) {
 
-            $entityManager->persist($user);
-            $entityManager->flush();
-            return $this->redirectToRoute($route,[$parameter=>$auteur]);
+            //  $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
+            if ($exist == 0) {
+                $follow = new Follow();
+                $follow->setFollowing($auteur);
+                $follow->addFollower($user);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+                return $this->redirectToRoute($route, [$parameter => $auteur]);
+            } else {
+                $following = $entityManager->getRepository(Follow::class)->findBy(['following' => $auteur]);
+                $entityManager->remove($following[0]);
+                $entityManager->flush();
+                return $this->redirectToRoute($route, [$parameter => $auteur]);
+            }
         }
-        else{
-            $following=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
-            $entityManager->remove($following[0]);
-            $entityManager->flush();
-            return $this->redirectToRoute($route,[$parameter=>$auteur]);
+        else {
+            return $this->redirectToRoute("sulu_community.login");
         }
     }
     /**
@@ -369,6 +374,14 @@ return $this->redirectToRoute('publication_index');
         ]);
 
 
+    }
+
+    /**
+     * @Route("/profile_settings", name="profile_settings", methods={"GET"})
+     */
+    public function profile_settings()
+    {
+        return $this->render("Profile/profile_settings.html.twig");
     }
 
 
