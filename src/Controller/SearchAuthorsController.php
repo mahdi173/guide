@@ -72,7 +72,7 @@ class SearchAuthorsController extends AbstractController
         $array_doaj = array();
         $array_dblp = array();
         $total=array();
-        if($data->result->query!==""){
+        if($data && $data->result->query!==""){
 
         foreach ($data->result->hits->hit as $a)
         {

@@ -40,7 +40,7 @@
                                     {% set src= media.url %}
 
                                 {% else %}
-                                    {% set src=  asset('assets/images/Profil.jpg') %}
+                                    {% set src=  asset('assets/images/profil_new.jpg') %}
 
                                 {% endif %}
                                 <img style="height: 160px;width: 160px;margin-top: 20px;" src={{ src}} alt="H" class="img-rounded img-responsive rounded-circle"/>
@@ -71,17 +71,20 @@
                 <div class="col-xs-12 col-sm-12 col-md-3" style="color: #555;padding-top: 45px;">
                     Follow me on social <br>media
                     <a class="btn" data-toggle="modal" data-target="#modal_follow" style="color: white;margin-left: 40px;background-color: #efe3b3">Edit</a><br>
-                    <a href="{% if user.facebook %} {{user.facebook  }}{%else%}#{%endif%}" target="_blank">
+
+                        <a {% if user.facebook %} href="{{user.facebook  }}" target="_blank"{%else%} href="#" {%endif%}">
                           <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="H"/>
 
 {#   <i class="fa fa-facebook icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 17px;margin-top: 10px"></i>#}
                     </a>
-                    <a href="{% if user.twitter %} {{user.twitter  }}{%else%}#{%endif%}" target="_blank">
+
+                        <a{% if user.twitter %}  href="{{user.twitter  }}"  target="_blank"{%else%} href="#"{%endif%}>
 {#                       <i class="fa fa-twitter icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 15px;"></i>#}
                         <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/twitter.png')}} alt="H"/>
                     </a>
 
-                    <a href="{% if user.linkedIn %} {{user.linkedIn  }}{%else%}#{%endif%}" target="_blank">
+
+                        <a {% if user.linkedIn %} href="{{user.linkedIn  }}"  target="_blank"{%else%} href="#"{%endif%}">
 {#                       <i class="fa fa-linkedin icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 15px;"></i>#}
                         <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="H"/>
                     </a>
@@ -207,8 +210,15 @@
 
 
                 {% endblock %}
-                </div>
 
+                {% block profile_share %}
+                    {% set lastname=app.user.lastname %}
+                       {% if lastname is  null %}
+                           {% set lastname=app.user.fullName %}
+                       {% endif %}
+                   <br><div class="mt-5"><button class="btn btn-danger"><a style="color: white" href="{{path('share_your_profile', {id:app.user.id ,firstname:app.user.firstname,lastname:lastname}) }} "> Share your profile</a></button></div>
+                </div>
+               {% endblock  %}
 
 
         </div>

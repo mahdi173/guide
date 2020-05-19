@@ -9,9 +9,12 @@ use App\Entity\Allpublications;
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
 use App\Entity\Follow;
+use App\Entity\User;
 use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
+use App\Repository\AllPublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Proxies\__CG__\Sulu\Bundle\ContactBundle\Entity\Contact;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -200,6 +203,7 @@ class BaseController extends AbstractController
             if(!empty($result)){
 
                 foreach ($array as $item){
+
                     $authors="";
                     $pub=new Allpublications();
                     $pub->setUser($this->getUser());
@@ -246,6 +250,9 @@ class BaseController extends AbstractController
                         $pub->setVolume(null);
                     }
                     $pub->setYear($item->bibjson->year);
+                    $pub->setName($item->bibjson->journal->title);
+                    $pages=$item->bibjson->start_page.'-'.$item->bibjson->end_page;
+                    $pub->setPages($pages);
                     foreach ($item->bibjson->link as $link) {
                         $pub->setUrl($link->url);
                     }
@@ -382,6 +389,52 @@ return $this->redirectToRoute('publication_index');
     public function profile_settings()
     {
         return $this->render("Profile/profile_settings.html.twig");
+    }
+
+
+    /**
+     * @Route("/shareProfile/{firstname}.{lastname}.{id}", name="share_your_profile", methods={"GET"})
+     */
+    public function share_your_profile(Request $request,AllPublicationRepository $allPublicationRepository)
+    {
+        $firstname=$request->get('firstname');
+        $lastname=$request->get('lastname');
+        $id=$request->get('id');
+        $publications=null;
+        $contact=null;
+        $countFollowers=0;$countFolling=0;
+        $em=$this->getDoctrine()->getManager();
+        $user=$em->getRepository(User::class)->find($id);
+        if($user) {
+            $contact = $em->getRepository(Contact::class)->findBy(['mainEmail' => $user->getEmail()]);
+            $myFollowers=$em->getRepository(Follow::class)->findAllFollowers($user->getFullName());
+          //  $followers = $em->getRepository(Follow::class)->findBy(['following'=>$user->getFullName()]);
+          //  $following = $em->getRepository(Follow::class)->findBy(['follow'=>$user]);
+//            $following = $em->getRepository(Follow::class)->findAll();
+            $myFollowing=$em->getRepository(Follow::class)->findAllFollowing($user);
+            $countFollowers=count($myFollowers);
+            $countFolling=count($myFollowing);
+
+        }
+       if($contact){
+           $contact=$contact[0];
+       }
+
+        if($user && $contact && $contact->getFirstName()==$firstname && ($contact->getLastName()==$lastname || $user->getFullName()==$lastname)){
+        $publications=$allPublicationRepository->findBy(['user'=>$user]);
+
+        }
+        else{$user=null;}
+
+        return $this->render("Profile/share_your_profile.html.twig",[
+         'firstname'=>$firstname,
+         'lastname'=>$lastname,
+         'id'=>$id,
+         'publications'=>$publications,
+          'user'=>$user,
+            'countFolling'=>$countFolling,
+            'countFollowers'=>$countFollowers
+        ]);
     }
 
 

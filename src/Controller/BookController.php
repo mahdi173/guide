@@ -66,7 +66,7 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
         return $this->render('book/publication_book.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('book'),
+            'publications' => $publicationRepository->findPublicationByType('book',$this->getUser()),
             'form' => $form->createView(),
             'form2' => $form_create->createView(),
         ]);

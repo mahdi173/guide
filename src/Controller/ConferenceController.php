@@ -66,7 +66,7 @@ class ConferenceController extends AbstractController
             return $this->redirectToRoute('conference_index');
         }
         return $this->render('conference/publication_conference.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('conference'),
+            'publications' => $publicationRepository->findPublicationByType('conference',$this->getUser()),
             'form' => $form->createView(),
             'form2' => $form_create->createView(),
         ]);

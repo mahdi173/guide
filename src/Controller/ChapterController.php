@@ -67,7 +67,7 @@ class ChapterController extends AbstractController
         }
 
         return $this->render('chapter/publication_chapter.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('chapter'),
+            'publications' => $publicationRepository->findPublicationByType('chapter',$this->getUser()),
             'form' => $form->createView(),
             'form2' => $form_create->createView(),
         ]);
