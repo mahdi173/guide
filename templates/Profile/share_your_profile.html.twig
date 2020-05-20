@@ -1,10 +1,12 @@
 {% extends "base.html.twig" %}
 
-{% block title %}GuideJournal: profile{% endblock %}
 
 {% block content %}
 
+    <div class="container margin-top">
+    <div class="row">
     {% if user is null %}
+
         <table class="table table-bordered table-publication mt-5">
         <tr  class="table-light">
 
@@ -12,8 +14,7 @@
         </tr>
         </table>
     {% else %}
-    <div class="container margin-top">
-        <div class="row">
+
             <div class="col-xs-12 col-sm-12 col-md-9">
                 <div class="well well-sm">
                     <div class="row">
@@ -65,7 +66,34 @@
 
         </div>
         <div class="row mt-5">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+         {#sidebar#}
+            <div class = "d-flex col-md-2"  id = "wrapper">
+                <div class = "bg-light border-right" id = "sidebar-wrapper">
+
+                    <div class = "list-group list-group-flush list-sidebar" >
+
+                        <a  href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        Publications
+                        </a> <span role="presentation" class="divider"></span>
+                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        Books
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        Chapters
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        Conferences
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('favorite_list') }}" class="list-group-item list-group-item-action ">Saved Journals</a>
+                        {% for item in sulu_navigation_root_tree('member') %}
+                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9">
             <table class="table table-hover table-bordered table-publication">
                 <thead class="table-light">
                 <tr  class="table-light">
@@ -112,7 +140,8 @@
                 </tbody>
             </table>
             </div>
-        </div>
-    </div>
+
 {% endif %}
+     </div>
+    </div>
 {% endblock %}

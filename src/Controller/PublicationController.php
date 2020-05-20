@@ -7,6 +7,7 @@ use App\Entity\Publication;
 use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use App\Form\PublicationType;
+use App\Repository\AllPublicationRepository;
 use App\Repository\PublicationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,19 +17,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/{_locale}/profile/publication")
+ * @Route("/{_locale}/publication")
  */
 class PublicationController extends AbstractController
 {
     /**
      * @Route("/", name="publication_index", methods={"GET","POST"})
      */
-    public function index(Request $request,PublicationRepository $publicationRepository): Response
+    public function index(Request $request,PublicationRepository $publicationRepository,AllPublicationRepository $allPublicationRepository): Response
     {
         $publication=new Allpublications();
         $em=$this->getDoctrine()->getManager();
         $pubs=$publicationRepository->findAll();
-        $pubss=$em->getRepository(Allpublications::class)->findBy(['user'=>$this->getUser()]);
+        $pubss=$allPublicationRepository->allPublications($this->getUser());
 
         $form = $this->createForm(AllPublicationType::class, $publication);
         $form->handleRequest($request);

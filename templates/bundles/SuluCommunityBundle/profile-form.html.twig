@@ -88,6 +88,14 @@
 {#                       <i class="fa fa-linkedin icon-social img-rounded img-responsive rounded-circle" style="font-size: 20px;border: 1px solid grey;padding: 14px 15px;"></i>#}
                         <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="H"/>
                     </a>
+                    {% set lastname=app.user.lastname %}
+                    {% if lastname is  null %}
+                    {% set lastname=app.user.fullName %}
+                    {% endif %}
+                    <div class="mt-4">
+                        <button class="btn btn-danger">
+                            <a style="color: white" href="{{path('share_your_profile', {id:app.user.id ,firstname:app.user.firstname,lastname:lastname}) }} "> Share profile</a>
+                        </button></div>
                 </div>
 
             </div>
@@ -212,11 +220,7 @@
                 {% endblock %}
 
                 {% block profile_share %}
-                    {% set lastname=app.user.lastname %}
-                       {% if lastname is  null %}
-                           {% set lastname=app.user.fullName %}
-                       {% endif %}
-                   <br><div class="mt-5"><button class="btn btn-danger"><a style="color: white" href="{{path('share_your_profile', {id:app.user.id ,firstname:app.user.firstname,lastname:lastname}) }} "> Share your profile</a></button></div>
+
                 </div>
                {% endblock  %}
 

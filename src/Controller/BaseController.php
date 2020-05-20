@@ -249,14 +249,24 @@ class BaseController extends AbstractController
                     else{
                         $pub->setVolume(null);
                     }
-                    $pub->setYear($item->bibjson->year);
+                    if(array_key_exists('year',$item->bibjson)){
+                        $pub->setYear($item->bibjson->year);
+                    }
+                    else{
+                        $pub->setYear(null);
+                    }
+
                     $pub->setName($item->bibjson->journal->title);
-                    $pages=$item->bibjson->start_page.'-'.$item->bibjson->end_page;
-                    $pub->setPages($pages);
+                    if(array_key_exists('start_page',$item->bibjson) && array_key_exists('end_page',$item->bibjson) ){
+                        $pages=$item->bibjson->start_page.'-'.$item->bibjson->end_page;
+                        $pub->setPages($pages);
+                    }
+                    else{
+                        $pub->setPages(null);
+                    }
                     foreach ($item->bibjson->link as $link) {
                         $pub->setUrl($link->url);
                     }
-//                    $pub->setPages($item->bibjson->pages);
 
                     foreach ($item->bibjson->author as $a) {
                         if(!is_array($a)){
@@ -279,7 +289,7 @@ class BaseController extends AbstractController
 
 
         /*end*/
-return $this->redirectToRoute('publication_index');
+          return $this->redirectToRoute('publication_index');
 //        return $this->render('authors/all_publications_profile.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);
     }
 
@@ -338,7 +348,7 @@ return $this->redirectToRoute('publication_index');
         }
     }
     /**
-     * @Route("/followers_index/", name="followers_index", methods={"GET"})
+     * @Route("/followers", name="followers_index", methods={"GET"})
      */
     public function followers_index(Request $request)
     {
@@ -362,7 +372,7 @@ return $this->redirectToRoute('publication_index');
     }
 
     /**
-     * @Route("/following_index/", name="following_index", methods={"GET"})
+     * @Route("/following", name="following_index", methods={"GET"})
      */
     public function following_index(Request $request)
     {
@@ -384,7 +394,7 @@ return $this->redirectToRoute('publication_index');
     }
 
     /**
-     * @Route("/profile_settings", name="profile_settings", methods={"GET"})
+     * @Route("/settings", name="profile_settings", methods={"GET"})
      */
     public function profile_settings()
     {
@@ -393,7 +403,7 @@ return $this->redirectToRoute('publication_index');
 
 
     /**
-     * @Route("/shareProfile/{firstname}.{lastname}.{id}", name="share_your_profile", methods={"GET"})
+     * @Route("/profile/{firstname}.{lastname}.{id}", name="share_your_profile", methods={"GET"})
      */
     public function share_your_profile(Request $request,AllPublicationRepository $allPublicationRepository)
     {
@@ -421,7 +431,7 @@ return $this->redirectToRoute('publication_index');
        }
 
         if($user && $contact && $contact->getFirstName()==$firstname && ($contact->getLastName()==$lastname || $user->getFullName()==$lastname)){
-        $publications=$allPublicationRepository->findBy(['user'=>$user]);
+        $publications=$allPublicationRepository->allPublications($user);
 
         }
         else{$user=null;}

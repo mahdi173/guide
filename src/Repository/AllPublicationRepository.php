@@ -28,6 +28,18 @@ class AllPublicationRepository extends ServiceEntityRepository
             ->andWhere('p.user=:user')
             ->setParameter('val', $value)
             ->setParameter('user', $user)
+            ->orderBy('p.year','desc')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function allPublications($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.user=:user')
+            ->setParameter('user', $user)
+            ->orderBy('p.year','desc')
             ->getQuery()
             ->getResult()
             ;
