@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Repository\DataReutersRepository;
 use App\Repository\DataScopusRepository;
 use App\Repository\DataTScopusRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\FavoriteRepository;
 use App\Entity\Publication;
@@ -93,14 +94,28 @@ class FavoriteController extends BaseController
     }
 
     /**
-     * @Route("/{_locale}/Favorite", name="favorite_list")
+     * @Route("/{_locale}/Favorite/{firstname}.{lastname}", name="favorite_list",defaults={"lastname" = ""})
      */
-    public function index(){
-        /** @var User $me */
-        $me = $this->getUser();
-        $favorite=array_merge($me->getFavoriteScopusJournals()->toArray(), $me->getFavoriteReutersJournals()->toArray());
+    public function index(Request $request,UserRepository $userRepository){
+        /** @var User $user */
+        $user = $this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
+        $myProfile=false;
+        $em = $this->getDoctrine()->getManager();
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
+        }
 
-        return $this->render('favorite/index.html.twig',['favorite' => $favorite]);
+        if($user==$this->getUser()){
+            $myProfile=true;
+        }
+        $favorite=array_merge($user->getFavoriteScopusJournals()->toArray(), $user->getFavoriteReutersJournals()->toArray());
+
+        return $this->render('favorite/index.html.twig',['favorite' => $favorite,'myProfile'=>$myProfile]);
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Form\AllPublicationType;
 use App\Form\ConferenceType;
 use App\Repository\AllPublicationRepository;
 use App\Repository\ConferenceRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConferenceController extends AbstractController
 {
     /**
-     * @Route("/", name="conference_index", methods={"GET","POST"})
+     * @Route("/{firstname}.{lastname}", name="conference_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
 //    public function index(ConferenceRepository $conferenceRepository): Response
 //    {
@@ -30,45 +31,68 @@ class ConferenceController extends AbstractController
 //            'conferences' => $conferenceRepository->findAll(),
 //        ]);
 //    }
-    public function index(Request $request,AllPublicationRepository $publicationRepository): Response
+    public function index(Request $request,UserRepository $userRepository,AllPublicationRepository $publicationRepository): Response
     {
+
+        $user=$this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
+
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
+        }
+        $myProfile=false;
         $publication=new Allpublications();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(AllPublicationType::class, $publication);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $form=null;$form_create=null;
+        $form_view=null;$form_create_view=null;
 
-            $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+        if($user==$this->getUser()) {
+            $myProfile = true;
+            $form = $this->createForm(AllPublicationType::class, $publication);
+            $form->handleRequest($request);
+            $form_view=$form->createView();
 
-            $pub->setTitle($form['title']->getData());
-            $pub->setType($form['type']->getData());
-            $pub->setName($form['name']->getData());
-            $pub->setVolume($form['volume']->getData());
-            $pub->setYear($form['year']->getData());
-            $pub->setUrl($form['url']->getData());
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $em->persist($pub);
-            $em->flush();
+                $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
 
-            return $this->redirectToRoute('conference_index');
-        }
+                $pub->setTitle($form['title']->getData());
+                $pub->setType($form['type']->getData());
+                $pub->setName($form['name']->getData());
+                $pub->setVolume($form['volume']->getData());
+                $pub->setYear($form['year']->getData());
+                $pub->setUrl($form['url']->getData());
 
-        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
-        $form_create->handleRequest($request);
+                $em->persist($pub);
+                $em->flush();
 
-        if ($form_create->isSubmitted() && $form_create->isValid()) {
+                return $this->redirectToRoute('conference_index',['firstname'=>$firstName,"lastname"=>$lastName]);
+            }
 
-            $publication->setUser($this->getUser());
-            $em->persist($publication);
-            $em->flush();
+            $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+            $form_create->handleRequest($request);
+            $form_create_view=$form_create->createView();
 
-            return $this->redirectToRoute('conference_index');
+            if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                $publication->setUser($this->getUser());
+                $em->persist($publication);
+                $em->flush();
+
+                return $this->redirectToRoute('conference_index',['firstname'=>$firstName,"lastname"=>$lastName]);
+            }
         }
         return $this->render('conference/publication_conference.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('conference',$this->getUser()),
-            'form' => $form->createView(),
-            'form2' => $form_create->createView(),
+            'publications' => $publicationRepository->findPublicationByType('conference',$user),
+            'form' => $form_view,
+            'form2' => $form_create_view,
+            'myProfile'=>$myProfile,
+            'user'=>$user,
         ]);
     }
     /**

@@ -9,6 +9,7 @@ use App\Form\AllPublicationType;
 use App\Form\ChapterType;
 use App\Repository\AllPublicationRepository;
 use App\Repository\ChapterRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChapterController extends AbstractController
 {
     /**
-     * @Route("/", name="chapter_index", methods={"GET","POST"})
+     * @Route("/{firstname}.{lastname}", name="chapter_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
 //    public function index(ChapterRepository $chapterRepository): Response
 //    {
@@ -30,46 +31,64 @@ class ChapterController extends AbstractController
 //            'chapters' => $chapterRepository->findAll(),
 //        ]);
 //    }
-    public function index(Request $request,AllPublicationRepository $publicationRepository): Response
+    public function index(Request $request,UserRepository $userRepository,AllPublicationRepository $publicationRepository): Response
     {
-        $publication=new Allpublications();
+        $user=$this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(AllPublicationType::class, $publication);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
-
-            $pub->setTitle($form['title']->getData());
-            $pub->setType($form['type']->getData());
-            $pub->setName($form['name']->getData());
-            $pub->setVolume($form['volume']->getData());
-            $pub->setYear($form['year']->getData());
-            $pub->setUrl($form['url']->getData());
-
-            $em->persist($pub);
-            $em->flush();
-
-            return $this->redirectToRoute('chapter_index');
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
         }
+        $publication=new Allpublications();
+        $myProfile=false;
+        $form=null;$form_create=null;
+        $form_view=null;$form_create_view=null;
+        if($user==$this->getUser())
+        {
+            $myProfile=true;
 
-        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
-        $form_create->handleRequest($request);
+            $form = $this->createForm(AllPublicationType::class, $publication);
+            $form->handleRequest($request);
 
-        if ($form_create->isSubmitted() && $form_create->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $publication->setUser($this->getUser());
-            $em->persist($publication);
-            $em->flush();
+                $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
 
-            return $this->redirectToRoute('chapter_index');
-        }
+                $pub->setTitle($form['title']->getData());
+                $pub->setType($form['type']->getData());
+                $pub->setName($form['name']->getData());
+                $pub->setVolume($form['volume']->getData());
+                $pub->setYear($form['year']->getData());
+                $pub->setUrl($form['url']->getData());
 
+                $em->persist($pub);
+                $em->flush();
+
+                return $this->redirectToRoute('chapter_index',['firstname'=>$firstName,'lastname'=>$lastName]);
+            }
+
+            $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+            $form_create->handleRequest($request);
+
+            if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                $publication->setUser($this->getUser());
+                $em->persist($publication);
+                $em->flush();
+
+                return $this->redirectToRoute('chapter_index',['firstname'=>$firstName,'lastname'=>$lastName]);
+            }
+      }
         return $this->render('chapter/publication_chapter.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('chapter',$this->getUser()),
-            'form' => $form->createView(),
-            'form2' => $form_create->createView(),
+            'publications' => $publicationRepository->findPublicationByType('chapter',$user),
+            'form' => $form_view,
+            'form2' => $form_create_view,
+            'myProfile'=>$myProfile,
+            'user'=>$user,
         ]);
     }
     /**

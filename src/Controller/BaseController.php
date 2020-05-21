@@ -57,8 +57,11 @@ class BaseController extends AbstractController
     {
         $emS = $this->getDoctrine()->getManager();
         $exist = $emS->getRepository(Allpublications::class)->findBy(['user' => $this->getUser()]);
+       $firstname=$this->getUser()->getContact()->getFirstName();
+       $lastname=$this->getUser()->getContact()->getLastName();
+
         if ($exist && $this->getUser()->getFullName()) {
-            return $this->redirectToRoute('publication_index');
+            return $this->redirectToRoute('publication_index',['firstname'=>$firstname,"lastname"=>$lastname]);
         } else {
             $auteur = $this->getUser()->getFirstName();
 
@@ -394,13 +397,25 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @Route("/settings", name="profile_settings", methods={"GET"})
+     * @Route("/settings", name="settings", methods={"GET"})
      */
-    public function profile_settings()
+    public function settings()
     {
-        return $this->render("Profile/profile_settings.html.twig");
-    }
+        $em=$this->getDoctrine();
+        $contact=$em->getRepository(Contact::class)->findBy(['mainEmail'=>$this->getUser()->getEmail()]);
+        if($contact){
+            $contact=$contact[0];
+            return $this->redirectToRoute("profile_settings",['firstname'=>$contact->getFirstName(),'lastname'=>$contact->getLastName()]);
+        }
 
+    }
+    /**
+     * @Route("/settings/{firstname}.{lastname}", name="profile_settings", methods={"GET"})
+     */
+    public function profile_settings(Request $request)
+    {
+       return $this->render('Profile/profile_settings.html.twig');
+    }
 
     /**
      * @Route("/profile/{firstname}.{lastname}.{id}", name="share_your_profile", methods={"GET"})

@@ -8,7 +8,9 @@ use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use App\Form\PublicationType;
 use App\Repository\AllPublicationRepository;
+use App\Repository\ContactRepository;
 use App\Repository\PublicationRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,41 +19,63 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/{_locale}/publication")
+ * @Route("/{_locale}")
  */
 class PublicationController extends AbstractController
 {
     /**
-     * @Route("/", name="publication_index", methods={"GET","POST"})
+     * @Route("/{firstname}.{lastname}", name="publication_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
-    public function index(Request $request,PublicationRepository $publicationRepository,AllPublicationRepository $allPublicationRepository): Response
+    public function index(Request $request,UserRepository $userRepository,ContactRepository $contactRepository,PublicationRepository $publicationRepository,AllPublicationRepository $allPublicationRepository): Response
     {
+        $user=$this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
+
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
+        }
         $publication=new Allpublications();
+        $myProfile=false;
+
         $em=$this->getDoctrine()->getManager();
         $pubs=$publicationRepository->findAll();
-        $pubss=$allPublicationRepository->allPublications($this->getUser());
+        $pubss=$allPublicationRepository->allPublications($user);
 
-        $form = $this->createForm(AllPublicationType::class, $publication);
-        $form->handleRequest($request);
+        $form=null;$form_create=null;
+        $form_view=null;$form_create_view=null;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-         $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+        if($user==$this->getUser()){
+            $myProfile=true;
+            $form = $this->createForm(AllPublicationType::class, $publication);
+            $form->handleRequest($request);
+            $form_view=$form->createView();
 
-         $pub->setTitle($form['title']->getData());
-         $pub->setType($form['type']->getData());
-         $pub->setName($form['name']->getData());
-         $pub->setVolume($form['volume']->getData());
-         $pub->setYear($form['year']->getData());
-         $pub->setUrl($form['url']->getData());
+            if ($form->isSubmitted() && $form->isValid()) {
+                $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
 
-         $em->persist($pub);
-         $em->flush();
+                $pub->setTitle($form['title']->getData());
+                $pub->setType($form['type']->getData());
+                $pub->setName($form['name']->getData());
+                $pub->setVolume($form['volume']->getData());
+                $pub->setYear($form['year']->getData());
+                $pub->setUrl($form['url']->getData());
 
-            return $this->redirectToRoute('publication_index');
+                $em->persist($pub);
+                $em->flush();
+
+//            return $this->redirectToRoute('publication_index');
+                return $this->redirectToRoute('publication_index',['firstname'=>$firstName,"lastname"=>$lastName]);
         }
+
+
 
         $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
         $form_create->handleRequest($request);
+        $form_create_view=$form_create->createView();
 
         if ($form_create->isSubmitted() && $form_create->isValid()) {
 
@@ -59,15 +83,18 @@ class PublicationController extends AbstractController
             $em->persist($publication);
             $em->flush();
 
-            return $this->redirectToRoute('publication_index');
+//            return $this->redirectToRoute('publication_index');
+            return $this->redirectToRoute('publication_index',['firstname'=>$firstName,"lastname"=>$lastName]);
         }
-
+    }
 
         return $this->render('publication/index.html.twig', [
             'publications' => $pubss,
             'publication' => $publication,
-            'form' => $form->createView(),
-            'form2' => $form_create->createView(),
+            'form' => $form_view,
+            'form2' => $form_create_view,
+            'myProfile'=>$myProfile,
+            'user'=>$user,
         ]);
     }
 

@@ -25,7 +25,9 @@
 {#                        <th>Year</th>#}
 {#                        <th>Volume</th>#}
                         <th>Year</th>
+                        {% if myProfile %}
                         <th>actions</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -62,6 +64,8 @@
 {#                        <td>{{ publication.authors }}</td>#}
 {#                        <td>{{ publication.volume }}</td>#}
                         <td class="border-0">{{ publication.year }}</td>
+
+                        {% if myProfile %}
                         <td class="border-0">
 
                             <a class="btn " data-toggle="modal" data-publication="[{{ items|json_encode() }}]" data-target="#modal_edit" style="padding: 8px 20px;font-weight:bold;color: white;background-color: #efe3b3">Edit</a><br><br>
@@ -69,8 +73,10 @@
                                 <a class="" data-toggle="modal" data-target="#modal_delete" style="font-weight:bold;color: white;">Delete</a>
                             </button>
                         </td>
+                        {% endif %}
                     </tr>
 
+                    {% if form is not null %}
                     <div class="modal fade" id="modal_edit" role="dialog">
                         <div class="modal-dialog" role="document">
                             {#                background-color: #26afe8#}
@@ -90,6 +96,7 @@
 
                         </div>
                     </div>
+                    {% endif %}
                 {% else %}
                     <tr>
                         <td colspan="10">no records found</td>
@@ -98,8 +105,10 @@
                 </tbody>
             </table>
 
+    {% if myProfile %}
             <a class="btn btn-primary offset-5 mt-3" data-toggle="modal"  data-target="#modal_create" style="color: white;padding: 10px 20px">Add Publication</a>
-
+    {% endif %}
+    {% if form2 is not null %}
     <div class="modal fade" id="modal_create" role="dialog">
         <div class="modal-dialog" role="document">
             {#                background-color: #26afe8#}
@@ -144,6 +153,7 @@
 
         </div>
     </div>
+    {% endif %}
 {#    href="{{ path('publication_new') }}"#}
 
 
