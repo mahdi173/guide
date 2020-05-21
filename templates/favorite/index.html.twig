@@ -25,7 +25,7 @@
             <td>{{ f.publisher  }}</td>
             <td>{{ f.subjectArea|default('') }}</td>
             {% if myProfile %}
-               <td><a class="btn btn-danger" target="_blank" href="{{ path('delete_favorite', {id: f.id, 'source': 'reuters'?'scopus'}) }}"><i class="fa fa-remove"></i></a></td>
+               <td><a class="btn btn-danger" target="_blank" href="{{ path('delete_favorite', {id: f.id, 'source': 'reuters'?'scopus','firstname':firstname,'lastname':lastname}) }}"><i class="fa fa-remove"></i></a></td>
             {% endif %}
         </tr>
         {% endfor %}

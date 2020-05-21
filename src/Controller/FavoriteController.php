@@ -113,19 +113,35 @@ class FavoriteController extends BaseController
         if($user==$this->getUser()){
             $myProfile=true;
         }
+
         $favorite=array_merge($user->getFavoriteScopusJournals()->toArray(), $user->getFavoriteReutersJournals()->toArray());
 
-        return $this->render('favorite/index.html.twig',['favorite' => $favorite,'myProfile'=>$myProfile]);
+        return $this->render('favorite/index.html.twig',['favorite' => $favorite,'myProfile'=>$myProfile,'firstname'=>$firstName,'lastname'=>$lastName]);
     }
 
     /**
-     * @Route("/{_locale}/Favorite/delete", name="delete_favorite")
+     * @Route("/{_locale}/Favorite/{firstname}.{lastname}/delete", name="delete_favorite")
      */
-    public function remove(Request $request, DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager,DataReutersRepository $dataReutersRepository){
-        $id=$request->get('id');
+    public function remove(Request $request, UserRepository $userRepository,DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager,DataReutersRepository $dataReutersRepository){
 
-        /** @var User $me */
-        $me = $this->getUser();
+        $id=$request->get('id');
+        $myProfile=false;
+        /** @var User $user */
+        $user = $this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
+
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
+        }
+
+        if($user==$this->getUser()){
+            $myProfile=true;
+        }
+
 
         /** @var DataReuters $journal */
 
@@ -134,18 +150,18 @@ class FavoriteController extends BaseController
         {
 
             $journal = $dataReutersRepository->find($id);
-            $favoriteList = $me->getFavoriteReutersJournals();
+            $favoriteList = $user->getFavoriteReutersJournals();
             if ($favoriteList->contains($journal)) {
-                $me->removeFavoriteScopusJournal($journal);
+                $user->removeFavoriteScopusJournal($journal);
             }
         }elseif ('scopus' === $source){
 
             /** @var DataTScopus $journal */
             $journal = $dscopusRepository->find($id);
-            $favoriteList = $me->getFavoriteScopusJournals();
+            $favoriteList = $user->getFavoriteScopusJournals();
 
             if ($favoriteList->contains($journal)) {
-                $me->removeFavoriteScopusJournal($journal);
+                $user->removeFavoriteScopusJournal($journal);
             }
         }
         else {
@@ -154,7 +170,8 @@ class FavoriteController extends BaseController
 
         $manager->flush();
         $this->addFlash('success','journal was deleted from your favorite with success');
-        $favorite=array_merge($me->getFavoriteScopusJournals()->toArray(), $me->getFavoriteReutersJournals()->toArray());
-        return $this->render('favorite/index.html.twig',['favorite' => $favorite]);
+        $favorite=array_merge($user->getFavoriteScopusJournals()->toArray(), $user->getFavoriteReutersJournals()->toArray());
+//        return $this->render('favorite/index.html.twig',['favorite' => $favorite,"myProfile"=>$myProfile]);
+        return $this->redirectToRoute('favorite_list',['firstname'=>$firstName,'lastname'=>$lastName]);
     }
 }

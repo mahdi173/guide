@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/{_locale}")
+ * @Route("/{_locale}/profil")
  */
 class PublicationController extends AbstractController
 {
