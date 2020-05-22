@@ -65,7 +65,7 @@ class FollowRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('f')
-            ->select('f.following')
+            ->select('f')
             ->innerJoin("f.followers","u")
             ->where('u=:author')
             ->setParameter('author', $author)

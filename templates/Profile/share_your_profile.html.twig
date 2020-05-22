@@ -72,19 +72,19 @@
 
                     <div class = "list-group list-group-flush list-sidebar" >
 
-                        <a  href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        <a  href="{{ path('publication_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Publications
                         </a> <span role="presentation" class="divider"></span>
-                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        <a href="{{ path('book_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Books
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        <a href="{{ path('chapter_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Chapters
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        <a href="{{ path('conference_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Conferences
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('favorite_list') }}" class="list-group-item list-group-item-action ">Saved Journals</a>
+                        <a href="{{ path('favorite_list',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" class="list-group-item list-group-item-action ">Saved Journals</a>
                         {% for item in sulu_navigation_root_tree('member') %}
                             <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
                         {% endfor %}

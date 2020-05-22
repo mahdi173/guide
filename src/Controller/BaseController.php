@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use App\Repository\AllPublicationRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Proxies\__CG__\Sulu\Bundle\ContactBundle\Entity\Contact;
 use Psr\Log\LoggerInterface;
@@ -313,10 +314,11 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @Route("/add_follower/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"})
+     * @Route("/add_follower/{firstname}.{lastname}/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"})
      */
-    public function add_follower(Request $request)
+    public function add_follower(UserRepository $userRepository,Request $request)
     {
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $auteur = $request->get('author');
@@ -327,60 +329,117 @@ class BaseController extends AbstractController
         }else{
             $parameter="authorValue";
         }
-        $user=$this->getUser();
-        if($user) {
+        $currentUser=$this->getUser();
 
-            //  $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
-            if ($exist == 0) {
-                $follow = new Follow();
-                $follow->setFollowing($auteur);
-                $follow->addFollower($user);
+        if($currentUser) {
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-                return $this->redirectToRoute($route, [$parameter => $auteur]);
-            } else {
-                $following = $entityManager->getRepository(Follow::class)->findBy(['following' => $auteur]);
-                $entityManager->remove($following[0]);
-                $entityManager->flush();
-                return $this->redirectToRoute($route, [$parameter => $auteur]);
+            $firstName=$request->get('firstname');
+            $lastName=$request->get('lastname');
+            $user = $userRepository->userFromConctact($firstName, $lastName);
+
+            if ($user) {
+                $user = $user[0];
+                if($user==$currentUser){
+
+                    if ($exist == 0) {
+                        $following = $entityManager->getRepository(Follow::class)->findBy(['following' => $auteur]);
+
+                        if($following) {
+
+                            $following = $following[0];
+                            $following->addFollower($user);
+                            $entityManager->persist($following);
+                            $entityManager->persist($user);
+                            $entityManager->flush();
+                        }
+                        else{
+
+                            $follow = new Follow();
+                            $follow->setFollowing($auteur);
+                            $follow->addFollower($user);
+
+                            $entityManager->persist($user);
+                            $entityManager->flush();
+                        }
+
+
+                        return $this->redirectToRoute($route, [$parameter => $auteur,'firstname'=>$firstName,'lastname'=>$lastName]);
+                    }
+                    else {
+//                       dump($entityManager->getRepository(Follow::class)->findAll()[0]->getFollowers()->getValues());
+                        $following = $entityManager->getRepository(Follow::class)->findBy(['following' => $auteur]);
+                        if($following){
+                            $following=$following[0];
+                            $following->removeFollower($user);
+                            $entityManager->persist($following);
+                      //  $entityManager->remove($following[0]);
+                        $entityManager->flush();
+                        return $this->redirectToRoute($route, [$parameter => $auteur,'firstname'=>$firstName,'lastname'=>$lastName]);
+                    }
+                    }
+                }
+                else{dd('not matched');}
             }
+            //  $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
+
         }
         else {
             return $this->redirectToRoute("sulu_community.login");
         }
     }
     /**
-     * @Route("/followers", name="followers_index", methods={"GET"})
+     * @Route("/{firstname}.{lastname}/followers", name="followers_index", methods={"GET"})
      */
-    public function followers_index(Request $request)
+    public function followers_index(UserRepository $userRepository,Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $user=$this->getUser();
+        $firstname=$request->get('firstname');
+        $lastname=$request->get('lastname');
+        if($firstname && $lastname || ($firstname || $lastname )){
+            $user=$userRepository->userFromConctact($firstname,$lastname);
+            if($user){
+                $user=$user[0];
+            }
+        }
+        $myProfile=false;
+        if($user==$this->getUser()) {
+            $myProfile = true;
+        }
+        $entityManager = $this->getDoctrine()->getManager();
         $myFollowers=$entityManager->getRepository(Follow::class)->findAllFollowers($user->getFullName());
-
-
         $allPublication=$entityManager->getRepository(Allpublications::class)->findAll();
         $allFollow=$entityManager->getRepository(Follow::class)->findAll();
 
-
-            return $this->render("follow/followers_index.html.twig",[
+        return $this->render("follow/followers_index.html.twig",[
                 'exist'=>$myFollowers,
                 'myFollowers'=>$myFollowers,
                 'allPublication'=>$allPublication,
                 'allFollow'=>$allFollow,
+                'myProfile'=>$myProfile,
             ]);
-
-
     }
 
     /**
-     * @Route("/following", name="following_index", methods={"GET"})
+     * @Route("/{firstname}.{lastname}/following", name="following_index", methods={"GET"})
      */
-    public function following_index(Request $request)
+    public function following_index(UserRepository $userRepository,Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+
         $user=$this->getUser();
+        $firstname=$request->get('firstname');
+        $lastname=$request->get('lastname');
+        if($firstname && $lastname || ($firstname || $lastname )){
+            $user=$userRepository->userFromConctact($firstname,$lastname);
+            if($user){
+                $user=$user[0];
+            }
+        }
+        $myProfile=false;
+        if($user==$this->getUser()) {
+            $myProfile = true;
+        }
+        $entityManager = $this->getDoctrine()->getManager();
+
         $exist=$entityManager->getRepository(Follow::class)->findAllFollowing($user);
 
         $allPublication=$entityManager->getRepository(Allpublications::class)->findAll();
@@ -391,6 +450,7 @@ class BaseController extends AbstractController
             'exist'=>$exist,
             'allPublication'=>$allPublication,
             'allFollow'=>$allFollow,
+            'myProfile'=>$myProfile,
         ]);
 
 

@@ -16,6 +16,7 @@
    {% endif %}
 
     {% set followers_profile = followers_profile.followers(user.fullName) %}
+
     {% set currentUser=app.user %}
 
 
@@ -70,7 +71,7 @@
 
                                 <div class="col-sm-12 col-md-11" style="margin-top: 20px;margin-left: -20px">
                                     <h2 class="text-primary"> {{firstname }}   {{ lastname }}</h2>
-                                    <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<a href="{{ path('followers_index') }}" class="followers_index" ><strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;</a><a href="{{ path('following_index') }}" class="following_index"> <strong>{{ user.follows|length }}</strong> following</a></h6>
+                                  <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ user.allpublications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<a href="{{ path('followers_index',{"firstname":user.firstName,'lastname':user.lastName}) }}" class="followers_index" ><strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;</a><a href="{{ path('following_index',{"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong>{{ user.follows|length }}</strong> following</a></h6>
 
                                 </div>
 
@@ -112,9 +113,9 @@
                     <div class="mt-4">
 
                         {% if app.request.get('firstname')==currentUser.firstname and  app.request.get('lastname')==currentUser.lastName %}
-                        <button class="btn btn-danger">
-                            <a style="color: white" href="{{path('share_your_profile', {id:app.user.id ,firstname:app.user.firstname,lastname:lastname}) }} "> Share profile</a>
-                        </button>
+{#                        <button class="btn btn-danger">#}
+{#                            <a style="color: white" href="{{path('share_your_profile', {id:app.user.id ,firstname:app.user.firstname,lastname:lastname}) }} "> Share profile</a>#}
+{#                        </button>#}
                         {% endif %}
                     </div>
                 </div>
