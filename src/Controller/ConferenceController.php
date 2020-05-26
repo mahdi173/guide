@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConferenceController extends AbstractController
 {
     /**
-     * @Route("/{firstname}.{lastname}", name="conference_index", methods={"GET","POST"}, defaults={"lastname" = ""})
+     * @Route("/{firstname}.{lastname}.{id}", name="conference_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
 //    public function index(ConferenceRepository $conferenceRepository): Response
 //    {
@@ -37,9 +37,10 @@ class ConferenceController extends AbstractController
         $user=$this->getUser();
         $firstName=$request->get('firstname');
         $lastName=$request->get('lastname');
+        $id=$request->get('id');
 
         if($firstName && $lastName || ($firstName || $lastName )){
-            $user=$userRepository->userFromConctact($firstName,$lastName);
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
             if($user){
                 $user=$user[0];
             }

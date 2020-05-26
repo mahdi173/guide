@@ -20,7 +20,25 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function userFromConctact($firstName,$lastName=null)
+    public function userFromConctact($id,$firstName,$lastName=null)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->innerJoin("u.contact","c")
+            ->where('c.firstName=:firstName')
+            ->andWhere('c.mainEmail=u.email')
+            ->setParameter('firstName', $firstName)
+            ->andWhere('u.id=:id')
+            ->setParameter('id', $id);
+        if($lastName!=null && $lastName!=""){
+            $qb->andWhere('c.lastName=:lastName')
+                ->setParameter('lastName', $lastName);
+         }
+
+            return $qb ->getQuery()->getResult();
+    }
+
+    public function getSearchedProfile($firstName,$lastName=null)
     {
         $qb = $this->createQueryBuilder('u');
 
@@ -31,9 +49,9 @@ class UserRepository extends ServiceEntityRepository
         if($lastName!=null && $lastName!=""){
             $qb->andWhere('c.lastName=:lastName')
                 ->setParameter('lastName', $lastName);
-         }
+        }
 
-            return $qb ->getQuery()->getResult();
+        return $qb ->getQuery()->getResult();
     }
 
 

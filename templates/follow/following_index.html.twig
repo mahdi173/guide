@@ -57,7 +57,7 @@
 
                 {% endfor %}
                 <td style="padding: 20px" width="20%">
-                    <a href="{{ path('add_follower', {'author': res.following,'exist':count,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" class="btn btn-primary follow" data-author="{{ res.following }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                    <a href="{{ path('add_follower', {'author': res.following,'exist':count,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow" data-author="{{ res.following }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
 
                 </td>
             </tr>

@@ -24,16 +24,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicationController extends AbstractController
 {
     /**
-     * @Route("/{firstname}.{lastname}", name="publication_index", methods={"GET","POST"}, defaults={"lastname" = ""})
+     * @Route("/{firstname}.{lastname}.{id}", name="publication_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
     public function index(Request $request, UserRepository $userRepository, ContactRepository $contactRepository, PublicationRepository $publicationRepository, AllPublicationRepository $allPublicationRepository): Response
     {
+
         $user = $this->getUser();
+
+        $id = $request->get('id');
         $firstName = $request->get('firstname');
         $lastName = $request->get('lastname');
 
         if ($firstName && $lastName || ($firstName || $lastName)) {
-            $user = $userRepository->userFromConctact($firstName, $lastName);
+            $user = $userRepository->userFromConctact($id,$firstName, $lastName);
 
             if ($user) {
                 $user = $user[0];
@@ -94,6 +97,7 @@ class PublicationController extends AbstractController
                 }
             }
 
+
             return $this->render('publication/index.html.twig', [
                 'publications' => $pubss,
                 'publication' => $publication,
@@ -108,7 +112,21 @@ class PublicationController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/{firstname}.{lastname}", name="getSearchedProfile", methods={"GET","POST"}, defaults={"lastname" = ""})
+     */
+    public function getSearchedProfile(Request $request,UserRepository $userRepository){
 
+        $firstName = $request->get('firstname');
+        $lastName = $request->get('lastname');
+
+        if ($firstName && $lastName || ($firstName || $lastName)) {
+            $users = $userRepository->getSearchedProfile($firstName, $lastName);
+
+        }
+
+            return $this->render("Profile/getSearchedProfile.html.twig",['users'=>$users]);
+    }
 
 
     /**

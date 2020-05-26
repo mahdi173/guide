@@ -94,17 +94,18 @@ class FavoriteController extends BaseController
     }
 
     /**
-     * @Route("/{_locale}/Favorite/{firstname}.{lastname}", name="favorite_list",defaults={"lastname" = ""})
+     * @Route("/{_locale}/Favorite/{firstname}.{lastname}.{id}", name="favorite_list",defaults={"lastname" = ""})
      */
     public function index(Request $request,UserRepository $userRepository){
         /** @var User $user */
         $user = $this->getUser();
         $firstName=$request->get('firstname');
         $lastName=$request->get('lastname');
+        $id=$request->get('id');
         $myProfile=false;
         $em = $this->getDoctrine()->getManager();
         if($firstName && $lastName || ($firstName || $lastName )){
-            $user=$userRepository->userFromConctact($firstName,$lastName);
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
             if($user){
                 $user=$user[0];
             }
@@ -120,9 +121,10 @@ class FavoriteController extends BaseController
     }
 
     /**
-     * @Route("/{_locale}/Favorite/{firstname}.{lastname}/delete", name="delete_favorite")
+     * @Route("/{_locale}/Favorite/{firstname}.{lastname}.{id}/delete", name="delete_favorite")
      */
     public function remove(Request $request, UserRepository $userRepository,DataTScopusRepository $dscopusRepository, EntityManagerInterface $manager,DataReutersRepository $dataReutersRepository){
+
 
         $id=$request->get('id');
         $myProfile=false;
@@ -130,9 +132,10 @@ class FavoriteController extends BaseController
         $user = $this->getUser();
         $firstName=$request->get('firstname');
         $lastName=$request->get('lastname');
+        $id=$request->get('id');
 
         if($firstName && $lastName || ($firstName || $lastName )){
-            $user=$userRepository->userFromConctact($firstName,$lastName);
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
             if($user){
                 $user=$user[0];
             }

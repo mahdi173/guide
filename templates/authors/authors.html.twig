@@ -96,12 +96,12 @@
                                 {% endif %}
                             {% endfor %}
                             <td style="padding: 40px 20px" width="20%">
-                                <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >{% if countF>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                                <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >{% if countF>0 %} UnFollow{% else %}Follow{% endif %}</a>
 
                             </td>
                          {% else %}
                              <td style="padding: 40px 20px" width="20%">
-                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" class="btn btn-primary follow follow-btn" data-author="{{ res.info.author }}" >Follow</a>
+                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow follow-btn" data-author="{{ res.info.author }}" >Follow</a>
 
                              </td>
                          {% endif %}

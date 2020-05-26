@@ -62,7 +62,7 @@ class BaseController extends AbstractController
        $lastname=$this->getUser()->getContact()->getLastName();
 
         if ($exist && $this->getUser()->getFullName()) {
-            return $this->redirectToRoute('publication_index',['firstname'=>$firstname,"lastname"=>$lastname]);
+            return $this->redirectToRoute('publication_index',['firstname'=>$firstname,"lastname"=>$lastname,'id'=>$this->getUser()->getId()]);
         } else {
             $auteur = $this->getUser()->getFirstName();
 
@@ -314,7 +314,7 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @Route("/add_follower/{firstname}.{lastname}/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"})
+     * @Route("/add_follower/{firstname}.{lastname}.{id}/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"})
      */
     public function add_follower(UserRepository $userRepository,Request $request)
     {
@@ -335,7 +335,8 @@ class BaseController extends AbstractController
 
             $firstName=$request->get('firstname');
             $lastName=$request->get('lastname');
-            $user = $userRepository->userFromConctact($firstName, $lastName);
+            $id=$request->get('id');
+            $user = $userRepository->userFromConctact($id,$firstName, $lastName);
 
             if ($user) {
                 $user = $user[0];
@@ -388,15 +389,16 @@ class BaseController extends AbstractController
         }
     }
     /**
-     * @Route("/{firstname}.{lastname}/followers", name="followers_index", methods={"GET"})
+     * @Route("/{firstname}.{lastname}.{id}/followers", name="followers_index", methods={"GET"})
      */
     public function followers_index(UserRepository $userRepository,Request $request)
     {
         $user=$this->getUser();
         $firstname=$request->get('firstname');
         $lastname=$request->get('lastname');
+        $id=$request->get('id');
         if($firstname && $lastname || ($firstname || $lastname )){
-            $user=$userRepository->userFromConctact($firstname,$lastname);
+            $user=$userRepository->userFromConctact($id,$firstname,$lastname);
             if($user){
                 $user=$user[0];
             }
@@ -420,7 +422,7 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @Route("/{firstname}.{lastname}/following", name="following_index", methods={"GET"})
+     * @Route("/{firstname}.{lastname}.{id}/following", name="following_index", methods={"GET"})
      */
     public function following_index(UserRepository $userRepository,Request $request)
     {
@@ -428,8 +430,9 @@ class BaseController extends AbstractController
         $user=$this->getUser();
         $firstname=$request->get('firstname');
         $lastname=$request->get('lastname');
+        $id=$request->get('id');
         if($firstname && $lastname || ($firstname || $lastname )){
-            $user=$userRepository->userFromConctact($firstname,$lastname);
+            $user=$userRepository->userFromConctact($id,$firstname,$lastname);
             if($user){
                 $user=$user[0];
             }

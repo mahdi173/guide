@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChapterController extends AbstractController
 {
     /**
-     * @Route("/{firstname}.{lastname}", name="chapter_index", methods={"GET","POST"}, defaults={"lastname" = ""})
+     * @Route("/{firstname}.{lastname}.{id}", name="chapter_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
 //    public function index(ChapterRepository $chapterRepository): Response
 //    {
@@ -36,9 +36,10 @@ class ChapterController extends AbstractController
         $user=$this->getUser();
         $firstName=$request->get('firstname');
         $lastName=$request->get('lastname');
+        $id=$request->get('id');
         $em = $this->getDoctrine()->getManager();
         if($firstName && $lastName || ($firstName || $lastName )){
-            $user=$userRepository->userFromConctact($firstName,$lastName);
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
             if($user){
                 $user=$user[0];
             }

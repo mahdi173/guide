@@ -46,7 +46,7 @@
                     {% set count=count+1%}
                 {% endif %}
             {% endfor %}
-            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" class="btn btn-primary follow follow-btn" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
+            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow follow-btn" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
         </div>
     </div>
 

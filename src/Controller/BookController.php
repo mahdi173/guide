@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     /**
-     * @Route("/{firstname}.{lastname}", name="book_index", methods={"GET","POST"}, defaults={"lastname" = ""})
+     * @Route("/{firstname}.{lastname}.{id}", name="book_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
 //    public function index(BookRepository $bookRepository): Response
 //    {
@@ -36,8 +36,9 @@ class BookController extends AbstractController
         $user=$this->getUser();
         $firstName=$request->get('firstname');
         $lastName=$request->get('lastname');
+        $id=$request->get('id');
         if($firstName && $lastName || ($firstName || $lastName )){
-            $user=$userRepository->userFromConctact($firstName,$lastName);
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
             if($user){
                 $user=$user[0];
             }
