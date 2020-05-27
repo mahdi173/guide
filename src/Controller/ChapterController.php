@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Allpublications;
 use App\Entity\Chapter;
+use App\Form\AllPublicationCreateType;
+use App\Form\AllPublicationType;
 use App\Form\ChapterType;
+use App\Repository\AllPublicationRepository;
 use App\Repository\ChapterRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,15 +22,56 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChapterController extends AbstractController
 {
     /**
-     * @Route("/", name="chapter_index", methods={"GET"})
+     * @Route("/", name="chapter_index", methods={"GET","POST"})
      */
-    public function index(ChapterRepository $chapterRepository): Response
+//    public function index(ChapterRepository $chapterRepository): Response
+//    {
+//        return $this->render('chapter/index.html.twig', [
+//            'chapters' => $chapterRepository->findAll(),
+//        ]);
+//    }
+    public function index(Request $request,AllPublicationRepository $publicationRepository): Response
     {
-        return $this->render('chapter/index.html.twig', [
-            'chapters' => $chapterRepository->findAll(),
+        $publication=new Allpublications();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(AllPublicationType::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+            $pub->setTitle($form['title']->getData());
+            $pub->setType($form['type']->getData());
+            $pub->setName($form['name']->getData());
+            $pub->setVolume($form['volume']->getData());
+            $pub->setYear($form['year']->getData());
+            $pub->setUrl($form['url']->getData());
+
+            $em->persist($pub);
+            $em->flush();
+
+            return $this->redirectToRoute('chapter_index');
+        }
+
+        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+        $form_create->handleRequest($request);
+
+        if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+            $publication->setUser($this->getUser());
+            $em->persist($publication);
+            $em->flush();
+
+            return $this->redirectToRoute('chapter_index');
+        }
+
+        return $this->render('chapter/publication_chapter.html.twig', [
+            'publications' => $publicationRepository->findPublicationByType('chapter'),
+            'form' => $form->createView(),
+            'form2' => $form_create->createView(),
         ]);
     }
-
     /**
      * @Route("/new", name="chapter_new", methods={"GET","POST"})
      */

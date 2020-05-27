@@ -4,3 +4,4 @@ message:
         save_profile_finished: 'Success'
 app:
     journal: "Journals"
+required_field: "please fill this field"

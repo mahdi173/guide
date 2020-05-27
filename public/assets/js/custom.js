@@ -1,3 +1,15 @@
+// import swal from 'sweetalert2';
+// import Swal from 'sweetalert2'
+// import '../../../node_modules/sweetalert2/src/sweetalert2.scss'
+// import '../../../node_modules/sweetalert2/src/sweetalert2.js'
+
+// const routes = require('../../../public/js/fos_js_routes.json');
+//  import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min';
+//
+//
+// Routing.setRoutingData(routes);
+// import Routing from '../../../assets/js/router';
+// const Routing = require('../../../assets/js/router');
 $(document).ready(function() {
     "use strict";
 	
@@ -279,3 +291,30 @@ function scrollNav() {
     $('.scrollTop a').scrollTop();
 }
 scrollNav();
+
+// function getPublications() {
+$(document).on("click",".saveButton",function(){
+    console.log('ddd')
+    // Swal.fire({title: 'Error!', text: 'Do you want to continue', icon: 'error', confirmButtonText: 'Cool'})
+    //
+    // swal.fire({
+    //     title: 'Is this profile really for you ?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes!'
+    // }).then((result) =>
+    // {
+    //     var author = $(".saveButton").data("author");
+    //     console.log("author")
+    //     console.log(author)
+    // const url = Routing.generate('get_author_allpublication_profile', {'auteur': author});
+    // console.log(url)
+    //     // if (result.value) {
+    //         window.location = url;
+        // }
+    // })
+
+
+})

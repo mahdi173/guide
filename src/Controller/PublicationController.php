@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Allpublications;
 use App\Entity\Publication;
+use App\Form\AllPublicationCreateType;
+use App\Form\AllPublicationType;
 use App\Form\PublicationType;
 use App\Repository\PublicationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -18,12 +21,52 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicationController extends AbstractController
 {
     /**
-     * @Route("/", name="publication_index", methods={"GET"})
+     * @Route("/", name="publication_index", methods={"GET","POST"})
      */
-    public function index(PublicationRepository $publicationRepository): Response
+    public function index(Request $request,PublicationRepository $publicationRepository): Response
     {
+        $publication=new Allpublications();
+        $em=$this->getDoctrine()->getManager();
+        $pubs=$publicationRepository->findAll();
+        $pubss=$em->getRepository(Allpublications::class)->findBy(['user'=>$this->getUser()]);
+
+        $form = $this->createForm(AllPublicationType::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+         $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+         $pub->setTitle($form['title']->getData());
+         $pub->setType($form['type']->getData());
+         $pub->setName($form['name']->getData());
+         $pub->setVolume($form['volume']->getData());
+         $pub->setYear($form['year']->getData());
+         $pub->setUrl($form['url']->getData());
+
+         $em->persist($pub);
+         $em->flush();
+
+            return $this->redirectToRoute('publication_index');
+        }
+
+        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+        $form_create->handleRequest($request);
+
+        if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+            $publication->setUser($this->getUser());
+            $em->persist($publication);
+            $em->flush();
+
+            return $this->redirectToRoute('publication_index');
+        }
+
+
         return $this->render('publication/index.html.twig', [
-            'publications' => $publicationRepository->findAll(),
+            'publications' => $pubss,
+            'publication' => $publication,
+            'form' => $form->createView(),
+            'form2' => $form_create->createView(),
         ]);
     }
 
@@ -55,6 +98,16 @@ class PublicationController extends AbstractController
      * @Route("/{id}", name="publication_show", methods={"GET"})
      */
     public function show(Publication $publication): Response
+    {
+        return $this->render('publication/show.html.twig', [
+            'publication' => $publication,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="all_publication_show", methods={"GET"})
+     */
+    public function show_all_publications(Allpublications $publication): Response
     {
         return $this->render('publication/show.html.twig', [
             'publication' => $publication,

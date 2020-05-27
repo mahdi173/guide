@@ -12,7 +12,7 @@
 
 {% block content %}
 
-    <div class="row">
+    <div class="row  mb-3">
         <div class="col-md-2 col-sm-1"></div>
         <div class="col-md-8 mt-5 mb-5">
             <div class="border border-primary rounded">
@@ -23,7 +23,7 @@
             <form class="mt-4" method="get" action="{{ url('get_authors') }}">
                 <h2 class="text-primary">Search for an author profile</h2>
                 <div class="input-group mb-3">
-                    <input type="text" name="authorValue"  class="form-control form-control-lg" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+                    <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
                     <div class="input-group-append">
                         <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
                     </div>
@@ -32,34 +32,35 @@
         </div>
         <div class="col-md-2 col-sm-1"></div>
     </div>
-    <div class="row">
 
-        <div class="col-md-12 mt-5 mb-2">
-            {% for item in sulu_navigation_root_tree('member') %}
+    <div class="row ">
 
-                {% if (item.title== 'conference')%}
-                    {% set page='conference' %}
-                    <a href="{{ sulu_content_path(item.url, item.webspaceKey, page) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add conference</a>
-                {% endif %}
-
-            {% endfor %}
-
-            {% for item in sulu_navigation_root_tree('member') %}
-
-                {% if (item.title== 'Journal')%}
-                    <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add journal</a>
-                {% endif %}
-
-            {% endfor %}
+        <div class="col-md-1  mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" /></div>
+        <div class="col-md-6  mb-2" style="margin-left: 70px;padding-top: 20px;">
+            <h5 class="text-primary">{{ auteur }}</h5>
+           <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers }}  followers</span><span class="stat_info"> 0  following</span></p>
         </div>
 
-    </div>
-<div class="row">
-    <div class="col-md-12 mt-2 mb-5">
+        <div class="offset-2 col-md-2  mb-2" style="padding-left: 70px;padding-top: 20px;">
+            {% set  follows=app.user.follows.values%}
+            {% set  count=0%}
 
-        <table class="table" data-toggle="table" data-striped="true">
-            <thead>
-            <tr class="table-active">
+            {% for follow in follows %}
+                {% if follow.following == auteur %}
+                    {% set count=count+1%}
+                {% endif %}
+            {% endfor %}
+            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow follow-btn" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
+        </div>
+    </div>
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-md-12 mt-3 mb-5">
+
+        <table class="table table-hover table-bordered table-publication" data-toggle="table" data-striped="true">
+            <thead class="table-light">
+            <tr  class="table-light">
+
                 <th colspan="8">Title</th>
                 <th>Year</th>
             </tr>
@@ -71,6 +72,17 @@
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary">
                                 {% for l in result.bibjson.link %}
+
+{#                                    {% for s in result.bibjson.journal.issns %}#}
+{#                                        {% for ds in dataissn.printissn %}#}
+{#                                        {% if (ds == s|replace({'-':''})) %}#}
+{#                                            {{ dump(ds) }}#}
+{#                                        {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                    {% endfor %}#}
+
+                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
+
                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
                                 {% endfor %}
                             </p>
@@ -116,7 +128,12 @@
                                 </small>
                             </p>
                         </td>
-                        <td class="border-0">{{ result.bibjson.year }}</td>
+                        <td class="border-0">
+                            {% if result.bibjson.year is defined %}
+                            {{ result.bibjson.year }}
+
+                            {% endif%}
+                        </td>
                     </tr>
                 {% endfor %}
 
@@ -129,7 +146,7 @@
                             <p class="font-weight-light text-muted mt-n3">
                                 <small>Authors :
                                     {% for a in res.info.authors.author %}
-                                        <a href="{{ path('get_authors_publication', {auteur: a.text}) }}">{{ a.text }}</a>
+                                        <a href="{{ path('get_authors_publication', {auteur: a.text}) }}"> {{ a.text }} </a>
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>
@@ -149,10 +166,15 @@
                         <td class="border-0">{{ res.info.year }}</td>
                     </tr>
                 {% endfor %}
-            {% else %}
-                    <tr>
-                        <td colspan="9">no results found</td>
-                    </tr>
+{#            {% else %}#}
+{#                    <tr>#}
+{#                        <td colspan="9">no results fzound</td>#}
+{#                    </tr>#}
+            {% endif %}
+            {% if data_doaj| length ==0 and data_doaj| length%}
+            <tr>
+                <td colspan="9">no results found</td>
+           </tr>
             {% endif %}
             </tbody>
         </table>

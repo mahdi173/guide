@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Allpublications;
 use App\Entity\Book;
+use App\Form\AllPublicationCreateType;
+use App\Form\AllPublicationType;
 use App\Form\BookType;
+use App\Repository\AllPublicationRepository;
 use App\Repository\BookRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +22,53 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     /**
-     * @Route("/", name="book_index", methods={"GET"})
+     * @Route("/", name="book_index", methods={"GET","POST"})
      */
-    public function index(BookRepository $bookRepository): Response
+//    public function index(BookRepository $bookRepository): Response
+//    {
+//        return $this->render('book/index.html.twig', [
+//            'books' => $bookRepository->findAll(),
+//        ]);
+//    }
+    public function index(Request $request,AllPublicationRepository $publicationRepository): Response
     {
-        return $this->render('book/index.html.twig', [
-            'books' => $bookRepository->findAll(),
+        $publication=new Allpublications();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(AllPublicationType::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+            $pub->setTitle($form['title']->getData());
+            $pub->setType($form['type']->getData());
+            $pub->setName($form['name']->getData());
+            $pub->setVolume($form['volume']->getData());
+            $pub->setYear($form['year']->getData());
+            $pub->setUrl($form['url']->getData());
+
+            $em->persist($pub);
+            $em->flush();
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+        $form_create->handleRequest($request);
+
+        if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+            $publication->setUser($this->getUser());
+            $em->persist($publication);
+            $em->flush();
+
+            return $this->redirectToRoute('book_index');
+        }
+        return $this->render('book/publication_book.html.twig', [
+            'publications' => $publicationRepository->findPublicationByType('book'),
+            'form' => $form->createView(),
+            'form2' => $form_create->createView(),
         ]);
     }
 

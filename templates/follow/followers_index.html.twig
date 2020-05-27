@@ -1,0 +1,81 @@
+{% extends '@SuluCommunity/profile-form.html.twig' %}
+
+
+
+{% block profile_content %}
+
+    <table id="followers" class="table table-striped">
+        <thead>
+        <tr class="border-0">
+            <th >Title</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for res in myFollowers  %}
+            <tr>
+                <td style="padding: 20px" width="20%">
+                    <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/>
+                </td>
+
+                {% set  countPubliction=0%}
+                {% set  countFollowers=0%}
+                {% set  countFollowing=0%}
+
+                {% for publication in allPublication %}
+                    {% if publication.user.username == res.username  %}
+                        {% set countPubliction=countPubliction+1%}
+                    {% endif %}
+                {% endfor %}
+
+                {% for follow in allFollow %}
+                    {% if res.fullName and follow.following== res.fullName   %}
+                        {% set countFollowers=countFollowers+1%}
+                    {% endif %}
+
+
+
+                {% for user in follow.followers.values %}
+                     {% if user.username== res.username   %}
+                     {% set countFollowing=countFollowing+1%}
+                     {% endif %}
+                {% endfor %}
+
+                {% endfor %}
+                <td style="padding: 20px" width="60%">
+                    <p class="font-weight-bold saveProfile"  data-author="{{ res.fullName }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.fullName}) }}">{% if res.fullName %}{{res.fullName  }}{% else %}{{ res.username }}{% endif %}</a><br><span class="stat_info"> {{ countPubliction}}  publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers}}  followers</span><span class="stat_info"> {{ countFollowing}}  following</span></p>
+                </td>
+                {% set  follows=app.user.follows.values%}
+
+                {% set  count=0%}
+                {% set break = 0 %}
+
+                {% for follow in follows %}
+
+                    {% if follow.following == res.fullName  %}
+                        {% set count=count+1%}
+                        {% set break=1%}
+                    {% endif %}
+
+
+                {% endfor %}
+                <td style="padding: 20px" width="20%">
+                    <a href="{{ path('add_follower', {'author': res.fullName,'exist':break,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.fullName }}" >{% if break>0 %} UnFollow{% else %}Follow{% endif %}</a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock  %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#followers').DataTable();
+        } );
+
+    </script>
+{% endblock %}
