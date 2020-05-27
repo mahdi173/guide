@@ -174,18 +174,20 @@ class SearchAuthorsController extends AbstractController
      */
     public function callpubapi(Request $request){
 
-        $exist=null;
+        $exist=null;$followers=[];
         $auteur = $request->get('auteur');
         $checkFollowing=$this->entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
         if($checkFollowing){
             $checkFollowing=$checkFollowing[0];
-        }
-        $followers=$checkFollowing->getFollowers()->getValues();
-        foreach ($followers as $follower){
-            if($follower==$this->getUser()){
-                $exist=1;
+            $followers=$checkFollowing->getFollowers()->getValues();
+            foreach ($followers as $follower){
+                if($follower==$this->getUser()){
+                    $exist=1;
+                }
             }
         }
+
+
 
         $countFollowers=count($followers);
 

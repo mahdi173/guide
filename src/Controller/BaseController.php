@@ -342,6 +342,7 @@ class BaseController extends AbstractController
                 $user = $user[0];
                 if($user==$currentUser){
 
+
                     if ($exist == 0) {
                         $following = $entityManager->getRepository(Follow::class)->findBy(['following' => $auteur]);
 
@@ -354,7 +355,7 @@ class BaseController extends AbstractController
                             $entityManager->flush();
                         }
                         else{
-
+                            dd('rr');
                             $follow = new Follow();
                             $follow->setFollowing($auteur);
                             $follow->addFollower($user);
@@ -364,7 +365,7 @@ class BaseController extends AbstractController
                         }
 
 
-                        return $this->redirectToRoute($route, [$parameter => $auteur,'firstname'=>$firstName,'lastname'=>$lastName]);
+                        return $this->redirectToRoute($route, [$parameter => $auteur,'firstname'=>$firstName,'lastname'=>$lastName,'id'=>$id]);
                     }
                     else {
 //                       dump($entityManager->getRepository(Follow::class)->findAll()[0]->getFollowers()->getValues());
@@ -375,7 +376,7 @@ class BaseController extends AbstractController
                             $entityManager->persist($following);
                       //  $entityManager->remove($following[0]);
                         $entityManager->flush();
-                        return $this->redirectToRoute($route, [$parameter => $auteur,'firstname'=>$firstName,'lastname'=>$lastName]);
+                        return $this->redirectToRoute($route, [$parameter => $auteur,'firstname'=>$firstName,'lastname'=>$lastName,'id'=>$id]);
                     }
                     }
                 }
@@ -454,6 +455,7 @@ class BaseController extends AbstractController
             'allPublication'=>$allPublication,
             'allFollow'=>$allFollow,
             'myProfile'=>$myProfile,
+            'user'=>$user
         ]);
 
 

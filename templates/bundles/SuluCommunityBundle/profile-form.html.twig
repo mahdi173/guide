@@ -18,7 +18,9 @@
    {% endif %}
 
     {% if fullname and fullname!="" %}
-       {% set followers_profile = followers_profile.followers(fullname) %}
+
+       {% set followers_profile = followers_profile.followers(user.fullName) %}
+
     {% endif %}
 
     {% set currentUser=app.user %}

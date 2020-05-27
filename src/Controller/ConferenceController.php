@@ -51,50 +51,54 @@ class ConferenceController extends AbstractController
 
         $form=null;$form_create=null;
         $form_view=null;$form_create_view=null;
-
-        if($user==$this->getUser()) {
-            $myProfile = true;
-            $form = $this->createForm(AllPublicationType::class, $publication);
-            $form->handleRequest($request);
-            $form_view=$form->createView();
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
-
-                $pub->setTitle($form['title']->getData());
-                $pub->setType($form['type']->getData());
-                $pub->setName($form['name']->getData());
-                $pub->setVolume($form['volume']->getData());
-                $pub->setYear($form['year']->getData());
-                $pub->setUrl($form['url']->getData());
-
-                $em->persist($pub);
-                $em->flush();
-
-                return $this->redirectToRoute('conference_index',['firstname'=>$firstName,"lastname"=>$lastName]);
-            }
-
-            $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
-            $form_create->handleRequest($request);
-            $form_create_view=$form_create->createView();
-
-            if ($form_create->isSubmitted() && $form_create->isValid()) {
-
-                $publication->setUser($this->getUser());
-                $em->persist($publication);
-                $em->flush();
-
-                return $this->redirectToRoute('conference_index',['firstname'=>$firstName,"lastname"=>$lastName]);
-            }
+        if(!$user){
+            return $this->render("Profile/profile_not_found.html.twig");
         }
-        return $this->render('conference/publication_conference.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('conference',$user),
-            'form' => $form_view,
-            'form2' => $form_create_view,
-            'myProfile'=>$myProfile,
-            'user'=>$user,
-        ]);
+        else {
+            if ($user == $this->getUser()) {
+                $myProfile = true;
+                $form = $this->createForm(AllPublicationType::class, $publication);
+                $form->handleRequest($request);
+                $form_view = $form->createView();
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+                    $pub->setTitle($form['title']->getData());
+                    $pub->setType($form['type']->getData());
+                    $pub->setName($form['name']->getData());
+                    $pub->setVolume($form['volume']->getData());
+                    $pub->setYear($form['year']->getData());
+                    $pub->setUrl($form['url']->getData());
+
+                    $em->persist($pub);
+                    $em->flush();
+
+                    return $this->redirectToRoute('conference_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                }
+
+                $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+                $form_create->handleRequest($request);
+                $form_create_view = $form_create->createView();
+
+                if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                    $publication->setUser($this->getUser());
+                    $em->persist($publication);
+                    $em->flush();
+
+                    return $this->redirectToRoute('conference_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                }
+            }
+            return $this->render('conference/publication_conference.html.twig', [
+                'publications' => $publicationRepository->findPublicationByType('conference', $user),
+                'form' => $form_view,
+                'form2' => $form_create_view,
+                'myProfile' => $myProfile,
+                'user' => $user,
+            ]);
+        }
     }
     /**
      *

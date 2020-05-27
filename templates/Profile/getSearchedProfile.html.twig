@@ -29,8 +29,18 @@
 
                  <tr>
 
-                    <td width="30%" style="padding-left: 60px">  <img  class="rounded-circle" src="{{ src }}" width="90" height="90"/></td>
-                    <td width="30%" style="padding-top:30px;font-size: 20px;text-transform: capitalize"><a href="{{ path('publication_index',{"firstname":user.firstName,'lastname':user.lastName,'id':user.id}) }}"> {{ user.firstName }} {{ user.lastName }}</a></td>
+
+                         <td width="30%" style="padding-left: 60px">
+                             <a href="{{ path('publication_index',{"firstname":user.firstName,'lastname':user.lastName,'id':user.id}) }}">
+                                 <img  class="rounded-circle" src="{{ src }}" width="90" height="90"/>
+                             </a>
+                         </td>
+                    <td width="30%" style="padding-top:30px;font-size: 20px;text-transform: capitalize">
+                        <a href="{{ path('publication_index',{"firstname":user.firstName,'lastname':user.lastName,'id':user.id}) }}">
+                             {{ user.firstName }} {{ user.lastName }}
+                        </a>
+                    </td>
+
                     <td width="30%" style="padding-left: 60px">
                        <a {% if user.facebook %} href="{{user.facebook  }}" target="_blank"{%else%} href="#" {%endif%}">
                            <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="H"/>

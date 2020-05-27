@@ -96,28 +96,32 @@ class FavoriteController extends BaseController
     /**
      * @Route("/{_locale}/Favorite/{firstname}.{lastname}.{id}", name="favorite_list",defaults={"lastname" = ""})
      */
-    public function index(Request $request,UserRepository $userRepository){
+    public function index(Request $request,UserRepository $userRepository)
+    {
         /** @var User $user */
         $user = $this->getUser();
-        $firstName=$request->get('firstname');
-        $lastName=$request->get('lastname');
-        $id=$request->get('id');
-        $myProfile=false;
+        $firstName = $request->get('firstname');
+        $lastName = $request->get('lastname');
+        $id = $request->get('id');
+        $myProfile = false;
         $em = $this->getDoctrine()->getManager();
-        if($firstName && $lastName || ($firstName || $lastName )){
-            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
-            if($user){
-                $user=$user[0];
+        if ($firstName && $lastName || ($firstName || $lastName)) {
+            $user = $userRepository->userFromConctact($id, $firstName, $lastName);
+            if ($user) {
+                $user = $user[0];
             }
         }
+        if (!$user) {
+            return $this->render("Profile/profile_not_found.html.twig");
+        } else {
+            if ($user == $this->getUser()) {
+                $myProfile = true;
+            }
 
-        if($user==$this->getUser()){
-            $myProfile=true;
+            $favorite = array_merge($user->getFavoriteScopusJournals()->toArray(), $user->getFavoriteReutersJournals()->toArray());
+
+            return $this->render('favorite/index.html.twig', ['favorite' => $favorite, 'myProfile' => $myProfile, 'firstname' => $firstName, 'lastname' => $lastName]);
         }
-
-        $favorite=array_merge($user->getFavoriteScopusJournals()->toArray(), $user->getFavoriteReutersJournals()->toArray());
-
-        return $this->render('favorite/index.html.twig',['favorite' => $favorite,'myProfile'=>$myProfile,'firstname'=>$firstName,'lastname'=>$lastName]);
     }
 
     /**

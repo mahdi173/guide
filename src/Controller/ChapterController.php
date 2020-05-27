@@ -48,49 +48,53 @@ class ChapterController extends AbstractController
         $myProfile=false;
         $form=null;$form_create=null;
         $form_view=null;$form_create_view=null;
-        if($user==$this->getUser())
-        {
-            $myProfile=true;
+        if(!$user){
+            return $this->render("Profile/profile_not_found.html.twig");
+        }
+        else {
+            if ($user == $this->getUser()) {
+                $myProfile = true;
 
-            $form = $this->createForm(AllPublicationType::class, $publication);
-            $form->handleRequest($request);
+                $form = $this->createForm(AllPublicationType::class, $publication);
+                $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+                if ($form->isSubmitted() && $form->isValid()) {
 
-                $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+                    $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
 
-                $pub->setTitle($form['title']->getData());
-                $pub->setType($form['type']->getData());
-                $pub->setName($form['name']->getData());
-                $pub->setVolume($form['volume']->getData());
-                $pub->setYear($form['year']->getData());
-                $pub->setUrl($form['url']->getData());
+                    $pub->setTitle($form['title']->getData());
+                    $pub->setType($form['type']->getData());
+                    $pub->setName($form['name']->getData());
+                    $pub->setVolume($form['volume']->getData());
+                    $pub->setYear($form['year']->getData());
+                    $pub->setUrl($form['url']->getData());
 
-                $em->persist($pub);
-                $em->flush();
+                    $em->persist($pub);
+                    $em->flush();
 
-                return $this->redirectToRoute('chapter_index',['firstname'=>$firstName,'lastname'=>$lastName]);
+                    return $this->redirectToRoute('chapter_index', ['firstname' => $firstName, 'lastname' => $lastName]);
+                }
+
+                $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+                $form_create->handleRequest($request);
+
+                if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                    $publication->setUser($this->getUser());
+                    $em->persist($publication);
+                    $em->flush();
+
+                    return $this->redirectToRoute('chapter_index', ['firstname' => $firstName, 'lastname' => $lastName]);
+                }
             }
-
-            $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
-            $form_create->handleRequest($request);
-
-            if ($form_create->isSubmitted() && $form_create->isValid()) {
-
-                $publication->setUser($this->getUser());
-                $em->persist($publication);
-                $em->flush();
-
-                return $this->redirectToRoute('chapter_index',['firstname'=>$firstName,'lastname'=>$lastName]);
-            }
-      }
-        return $this->render('chapter/publication_chapter.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('chapter',$user),
-            'form' => $form_view,
-            'form2' => $form_create_view,
-            'myProfile'=>$myProfile,
-            'user'=>$user,
-        ]);
+            return $this->render('chapter/publication_chapter.html.twig', [
+                'publications' => $publicationRepository->findPublicationByType('chapter', $user),
+                'form' => $form_view,
+                'form2' => $form_create_view,
+                'myProfile' => $myProfile,
+                'user' => $user,
+            ]);
+        }
     }
     /**
      * @Route("/new", name="chapter_new", methods={"GET","POST"})
