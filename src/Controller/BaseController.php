@@ -355,7 +355,6 @@ class BaseController extends AbstractController
                             $entityManager->flush();
                         }
                         else{
-                            dd('rr');
                             $follow = new Follow();
                             $follow->setFollowing($auteur);
                             $follow->addFollower($user);
