@@ -7,6 +7,7 @@ use App\Entity\Publication;
 use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use App\Form\PublicationType;
+use App\Manager\PublicationManager;
 use App\Repository\AllPublicationRepository;
 use App\Repository\ContactRepository;
 use App\Repository\PublicationRepository;
@@ -26,7 +27,7 @@ class PublicationController extends AbstractController
     /**
      * @Route("/{firstname}.{lastname}.{id}", name="publication_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
-    public function index(Request $request, UserRepository $userRepository, ContactRepository $contactRepository, PublicationRepository $publicationRepository, AllPublicationRepository $allPublicationRepository): Response
+    public function index(Request $request, UserRepository $userRepository, ContactRepository $contactRepository, PublicationRepository $publicationRepository, AllPublicationRepository $allPublicationRepository,PublicationManager $publicationManager): Response
     {
 
         $user = $this->getUser();
@@ -45,7 +46,7 @@ class PublicationController extends AbstractController
         }
 
         if ($user) {
-
+            $authors=$publicationManager->getAuthorsList($user);
             $publication = new Allpublications();
             $myProfile = false;
 
@@ -105,6 +106,7 @@ class PublicationController extends AbstractController
                 'form2' => $form_create_view,
                 'myProfile' => $myProfile,
                 'user' => $user,
+                'authors' => $authors,
             ]);
         }
         else{

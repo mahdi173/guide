@@ -12,6 +12,7 @@ use App\Entity\Follow;
 use App\Entity\User;
 use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
+use App\Manager\PublicationManager;
 use App\Repository\AllPublicationRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -290,10 +291,17 @@ class BaseController extends AbstractController
                 }
             }
             $emS->flush();
+            $user=$this->getUser();
+           if($user)
+           {
+               $contact=$user->getContact();
+
+           }
+
 
 
         /*end*/
-          return $this->redirectToRoute('publication_index');
+          return $this->redirectToRoute('publication_index',['id'=>$user->getId(),'firstname'=>$contact->getFirstName(),'lastname'=>$contact->getLastName()]);
 //        return $this->render('authors/all_publications_profile.html.twig',['data_doaj'=>$data_doaj,'data_dblp'=>$array,'dataissn'=>$dd1]);
     }
 
@@ -458,6 +466,27 @@ class BaseController extends AbstractController
         ]);
 
 
+    }
+    /**
+     * @Route("/{firstname}.{lastname}.{id}/co_authors", name="co_authors_index", methods={"GET"})
+     */
+    public function co_authors_index(Request $request,UserRepository $userRepository,PublicationManager $publicationManager){
+        $user=$this->getUser();
+        $firstname=$request->get('firstname');
+        $lastname=$request->get('lastname');
+        $id=$request->get('id');
+        if($firstname && $lastname || ($firstname || $lastname )){
+            $user=$userRepository->userFromConctact($id,$firstname,$lastname);
+            if($user){
+                $user=$user[0];
+            }
+        }
+        $authors= $publicationManager->getAuthorsList($user);
+        return $this->render("Profile/co_authors.html.twig",
+            [
+                'user'=>$user,
+                "authors"=>$authors
+        ]);
     }
 
     /**

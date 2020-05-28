@@ -12,14 +12,15 @@
       {% set lastname = app.request.get('lastname') %}
       {% set id = app.request.get('id') %}
       {% set user = userRepository.userFromConctact(id,firstname,lastname) %}
+
         {% if user %}
           {% set user=user.0 %}
    {% endif %}
    {% endif %}
-
+    {% set authors = publicationManager.authorsList(user) %}
     {% if fullname and fullname!="" %}
 
-       {% set followers_profile = followers_profile.followers(user.fullName) %}
+       {% set followers_count= followers_profile.followers(user.fullName)|length %}
 
     {% endif %}
 
@@ -84,10 +85,10 @@
                                      <h6  style="color: #2f2f2f;font-size: 16px">
                                          <strong>{{   user.allpublications|length }}</strong> publications&nbsp;&nbsp;
                                          <strong>0</strong> posts&nbsp;&nbsp;
-                                         {% if followers_profile>0  %}
-                                           <a href="{{ path('followers_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="followers_index" ><strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;</a>
+                                         {% if followers_count>0  %}
+                                           <a href="{{ path('followers_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="followers_index" ><strong>{{ followers_count }}</strong>&nbsp;followers&nbsp;&nbsp;</a>
                                         {% else %}
-                                            <strong>{{ followers_profile }}</strong>&nbsp;followers&nbsp;&nbsp;
+                                            <strong>{{ followers_count }}</strong>&nbsp;followers&nbsp;&nbsp;
                                          {% endif %}
                                          {% if user.follows|length>0  %}
                                             <a href="{{ path('following_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong>{{ user.follows|length }}</strong> following</a>
@@ -227,7 +228,7 @@
             </div>
             {#end#}
 
-            <div style="margin-left: 0px" class="col-9 " >
+            <div style="margin-left: 0px" class="col-7 " >
 
                 {% block profile_content %}
                 <h2 class="text-center">Edit Profile</h2><br/>
@@ -273,10 +274,86 @@
 
                 {% block profile_share %}
 
-                </div>
+
                {% endblock  %}
+        </div>
+         <div class="col-3" style="border: solid 2px #e6e6e6;">
 
+             {% block left_sidebar %}
+                 <table class="table">
+                     <tr>
+                         <th class="header">Top co-authors
+                            <a href="{{ path('co_authors_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
+                         </th>
+                     </tr>
+                     <tr>
+                         <td>
+                             {% if authors|length >0 %}
+                                 {% for author in authors|slice(0,3) %}
+                                     <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
+                                         <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> {{ author}}<br>
+                                     </a>
+                                 {% endfor %}
+                             {% else %}
+                                 <span style="padding-top: 20px"> No co-authors </span>
+                             {% endif %}
+                         </td>
+                     </tr>
+                     <tr>
+                         <th class="header">
+                             Following ({{user.follows|length  }})
+                             <a href="{{ path('following_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
 
+                         </th>
+                     </tr>
+                     <tr>
+
+                         <td>
+                             {% if user.follows.values|length >0 %}
+                                 {% for follow in user.follows.values|slice(0,3) %}
+                                 <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
+                                     <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 2px">
+                                     {{ follow.following }}
+                                 </a>
+                                     <br>
+                                 {% endfor %}
+                             {% else %}
+                                 <span style="padding-top: 20px">No following </span>
+                             {% endif %}
+                         </td>
+                     </tr>
+
+                     <tr>
+                         {% set followers=followers_profile.followers(user.fullName) %}
+
+                         <th class="header">Followers ({{ followers_count }})
+                             <a href="{{ path('followers_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
+                         </th>
+                     </tr>
+                     <tr>
+                         <td>
+                             {% if followers|length >0 %}
+                                 {% for follower in followers %}
+                                     {% if follower.fullName is null or follower.fullName=="" %}
+                                         <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 2px">
+                                         {{ follower.username }}<br>
+                                     {% else %}
+
+                                         <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
+                                             <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 2px">
+                                             {{ follower.fullName }}<br>
+                                         </a>
+                                     {% endif %}
+                                 {% endfor %}
+                             {% else %}
+                                   <span style="padding-top: 20px"> No followers </span>
+                             {% endif %}
+                         </td>
+                     </tr>
+                 </table>
+             {% endblock  %}
+
+         </div>
         </div>
 
     </div>
