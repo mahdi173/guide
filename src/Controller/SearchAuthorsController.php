@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\DataReuters;
 use App\Entity\DataTScopus;
 use App\Entity\Follow;
+use App\Entity\User;
+use App\Manager\PublicationManager;
 use App\Service\Sortpublication;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -50,6 +52,12 @@ class SearchAuthorsController extends AbstractController
         $auteur = $request->get('authorValue');
         $countFollowers=0;
         $checkFollowing=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
+
+        $author_db=$entityManager->getRepository(User::class)->findBy(['fullName'=>$auteur]);
+        if($author_db){
+            $author_db=$author_db[0];
+        }
+
         if($checkFollowing){
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
@@ -127,7 +135,6 @@ class SearchAuthorsController extends AbstractController
                     ->getContent()
                 ;
                 $data_dblp = \json_decode($rawData2);
-
                 $res=str_replace('*','',$data_dblp->result->query);
 
                 if(count($data_dblp->result->hits->hit)>0){
@@ -164,7 +171,7 @@ class SearchAuthorsController extends AbstractController
 
     }
         return $this->render('authors/authors.html.twig',
-            ['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers,'allFollowers'=>$allFollowers,'array_dblp'=>$array_dblp,'array_doaj'=>$array_doaj,'total'=>$total]);
+            ['data'=> $data,'parametre'=>$test,'exist'=>$exist,'countFollowers'=>$countFollowers,'allFollowers'=>$allFollowers,'array_dblp'=>$array_dblp,'array_doaj'=>$array_doaj,'total'=>$total,'author_db'=>$author_db]);
     }
 
     /**
@@ -172,7 +179,7 @@ class SearchAuthorsController extends AbstractController
      *
      * find a publications of author
      */
-    public function callpubapi(Request $request){
+    public function callpubapi(Request $request,PublicationManager $publicationManager){
 
         $exist=null;$followers=[];
         $auteur = $request->get('auteur');
@@ -231,6 +238,35 @@ class SearchAuthorsController extends AbstractController
         $result = $data_dblp->result->hits;
         $result2= $data_doaj->results;
 
+        $authors1=[];
+        $authors2=[];
+
+        /*get Authors list*/
+        foreach ($result->hit as $r){
+            foreach ($r->info->authors as $author){
+                if(!is_array($author)){
+                     array_push($authors1,$author->text);
+                }
+                else{
+                    foreach ($author as $at){
+                        array_push($authors1,$at->text);
+                    }
+                }
+            }
+        }
+        foreach ($result2 as $res){
+            foreach ($res->bibjson->author as $r) {
+                array_push($authors2,$r->name);
+            }
+        }
+        $emS = $this->getDoctrine()->getManager();
+        $co_authors=$publicationManager->getAuthorsListForAuthor( $auteur,$authors1,$authors2);
+        $author_db=$emS->getRepository(User::class)->findBy(['fullName'=>$auteur]);
+        if($author_db){
+            $author_db=$author_db[0];
+        }
+
+        /*get Authors list*/
         $inc = false;
         $array = [];
         foreach ($result->hit as $r){
@@ -249,7 +285,7 @@ class SearchAuthorsController extends AbstractController
 
 
         $data=[];
-        $emS = $this->getDoctrine()->getManager();
+
         $em = $this->entityManager->getRepository(DataTScopus::class);
         $em22 = $this->entityManager->getRepository(DataTScopus::class)->findAll();
         $em2 = $this->entityManager->getRepository(DataReuters::class);
@@ -276,13 +312,16 @@ class SearchAuthorsController extends AbstractController
 
         /*end*/
 
+
         return $this->render('authors/publications.html.twig',
             ['data_doaj'=>$data_doaj,
                 'data_dblp'=>$array,
                 'dataissn'=>$dd1,
                 'auteur'=> $auteur,
+                'co_authors'=> $co_authors,
                 'exist'=> $exist,
                 'countFollowers'=> $countFollowers,
+                'author_db'=> $author_db,
             ]);
     }
 

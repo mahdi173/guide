@@ -41,4 +41,25 @@ class PublicationManager
 
        return array_unique($list);
     }
+
+    public function getAuthorsListForAuthor($author,$list1,$list2){
+        $res1=[];
+        $res2=[];
+
+        foreach ($list1 as $aut)
+        {
+                if ($aut!="" && trim($aut) != trim($author)) {
+                    array_push($res1, trim($aut));
+                }
+        }
+
+        foreach ($list2 as $a)
+        {
+                if ($a!="" && trim($a) != trim($author)) {
+                    array_push($res2, trim($a));
+            }
+        }
+        return array_unique(array_merge(($res1),($res2)));
+    }
+
 }
