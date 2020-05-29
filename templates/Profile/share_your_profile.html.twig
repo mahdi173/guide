@@ -1,0 +1,147 @@
+{% extends "base.html.twig" %}
+
+
+{% block content %}
+
+    <div class="container margin-top">
+    <div class="row">
+    {% if user is null %}
+
+        <table class="table table-bordered table-publication mt-5">
+        <tr  class="table-light">
+
+            <th>No user found</th>
+        </tr>
+        </table>
+    {% else %}
+
+            <div class="col-xs-12 col-sm-12 col-md-9">
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 " style="padding-left: 50px;">
+                            {% set media = null %}
+                            {% set src = null %}
+                            {% if user.contact.avatar is not null %}
+                                {% set media = sulu_resolve_media(user.contact.avatar,'fr') %}
+                            {% endif %}
+
+                            {% if media is not null %}
+                                {% set src= media.url %}
+
+                            {% else %}
+                                {% set src=  asset('assets/images/profil_new.jpg') %}
+
+                            {% endif %}
+                            <img style="height: 160px;width: 160px;margin-top: 20px;" src={{ src}} alt="H" class="img-rounded img-responsive rounded-circle"/>
+                        </div>
+
+                        <div class="col-sm-12 col-md-9 mt-5">
+
+
+                            <div class="col-sm-12 col-md-11" style="margin-top: 20px;margin-left: 30px">
+                                <h2 class="text-primary"> {{ firstname }}   {{ lastname }}</h2>
+                                <h6  style="color: #2f2f2f;font-size: 16px"><strong>{{ publications|length }}</strong> publications&nbsp;&nbsp;<strong>0</strong> posts&nbsp;&nbsp;<strong>{{ countFollowers }}</strong>&nbsp;followers&nbsp;&nbsp; <strong>{{ countFolling }}</strong> following</h6>
+
+                            </div>
+       </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3" style="color: #555;padding-top: 45px;">
+               <br>
+
+                <a {% if user.facebook %} href="{{user.facebook  }}" target="_blank"{%else%} href="#" {%endif%}">
+                    <img style="margin-top:10px;height: 50px;width: 50px;" src={{ asset('assets/images/facebook.png')}} alt="facebook"/>
+
+                </a>
+                <a{% if user.twitter %}  href="{{user.twitter  }}"  target="_blank"{%else%} href="#"{%endif%}>
+                    <img style="margin-top:10px;height: 50px;width: 50px;" src={{ asset('assets/images/twitter.png')}} alt="twitter"/>
+                </a>
+
+                <a {% if user.linkedIn %} href="{{user.linkedIn  }}"  target="_blank"{%else%} href="#"{%endif%}">
+                   <img style="margin-top:10px;height: 55px;width: 55px;" src={{ asset('assets/images/linkedin.png')}} alt="linkedIn"/>
+                </a>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+         {#sidebar#}
+            <div class = "d-flex col-md-2"  id = "wrapper">
+                <div class = "bg-light border-right" id = "sidebar-wrapper">
+
+                    <div class = "list-group list-group-flush list-sidebar" >
+
+                        <a  href="{{ path('publication_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        Publications
+                        </a> <span role="presentation" class="divider"></span>
+                        <a href="{{ path('book_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        Books
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('chapter_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        Chapters
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('conference_index',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        Conferences
+                        </a><span role="presentation" class="divider"></span>
+                        <a href="{{ path('favorite_list',{'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" class="list-group-item list-group-item-action ">Saved Journals</a>
+                        {% for item in sulu_navigation_root_tree('member') %}
+                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9">
+            <table class="table table-hover table-bordered table-publication">
+                <thead class="table-light">
+                <tr  class="table-light">
+                    <th colspan="8">Title</th>
+                    <th>Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for publication in publications %}
+                    <tr style="border-bottom: 1px #c5c5c5 solid">
+                        <td colspan="8" class="w-70 border-0">
+                            <p class="font-weight-bold text-primary"><a href="{{ publication.url }}" target="_blank"> {{ publication.title }} </a></p>
+                            <p class="font-weight-light text-muted mt-n3">
+
+                                {% set authors=publication.authors|split(',') %}
+                                <small>Authors :
+                                    {% for author in authors %}
+                                        {% if author!=" " %}
+                                            <a  href="{{ path('get_authors_publication', {auteur:author}) }}"> {{ author }}</a>,
+                                        {% endif  %}
+                                    {% endfor  %}
+                                </small><br>
+                                <small>
+                                    {{ publication.name }},
+
+                                    {% if publication.volume  %}({{ publication.volume }}),{% endif %}
+                                    Pages :{% if publication.pages  %}{{ publication.pages }}{% endif %}
+                                </small></p>
+                        </td>
+                        {% set items = {'id': publication.id} %}
+
+                        {% set items = {'type':publication.type ,'title':publication.title ,'year':publication.year,'name':publication.name,'volume':publication.volume,'url':publication.url    }|merge(items) %}
+
+                        <td class="border-0">{{ publication.year }}</td>
+
+                    </tr>
+
+
+                {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+
+{% endif %}
+     </div>
+    </div>
+{% endblock %}

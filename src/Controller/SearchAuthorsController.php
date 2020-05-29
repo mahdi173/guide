@@ -44,15 +44,26 @@ class SearchAuthorsController extends AbstractController
      */
     public function callapi(Request $request)
     {
+        $exist=null;
+        $followers=[];
         $entityManager = $this->getDoctrine()->getManager();
         $auteur = $request->get('authorValue');
         $countFollowers=0;
-        $exist=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
+        $checkFollowing=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
+        if($checkFollowing){
+            $checkFollowing=$checkFollowing[0];
+            $followers=$checkFollowing->getFollowers()->getValues();
+            foreach ($followers as $follower){
+                if($follower==$this->getUser()){
+                    $exist=1;
+                }
+            }
+
+        }
+
+        $countFollowers=count($followers);
         $allFollowers=$entityManager->getRepository(Follow::class)->findAll();
 
-        if($exist){
-            $countFollowers=count($exist);
-        }
         $test=false;
         if (strpos($request->getUri(), 'authorValue') !== false){
             $test=true;
@@ -72,7 +83,7 @@ class SearchAuthorsController extends AbstractController
         $array_doaj = array();
         $array_dblp = array();
         $total=array();
-        if($data->result->query!==""){
+        if($data && $data->result->query!==""){
 
         foreach ($data->result->hits->hit as $a)
         {
@@ -163,12 +174,23 @@ class SearchAuthorsController extends AbstractController
      */
     public function callpubapi(Request $request){
 
+        $exist=null;$followers=[];
         $auteur = $request->get('auteur');
-        $exist=$this->entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
-        $countFollowers=0;
-        if($exist){
-            $countFollowers=count($exist);
+        $checkFollowing=$this->entityManager->getRepository(Follow::class)->findBy(['following'=>$auteur]);
+        if($checkFollowing){
+            $checkFollowing=$checkFollowing[0];
+            $followers=$checkFollowing->getFollowers()->getValues();
+            foreach ($followers as $follower){
+                if($follower==$this->getUser()){
+                    $exist=1;
+                }
+            }
         }
+
+
+
+        $countFollowers=count($followers);
+
         $param=str_replace(' ','+',$auteur);
         $data_doaj = null;
         $data_dblp=null;

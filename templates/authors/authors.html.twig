@@ -17,6 +17,7 @@
     .stat_info{
         padding-left: 3px;
         font-size: 14px;
+        color: #555;
     }
     .borderless td, .borderless th {
         border: none;
@@ -69,13 +70,7 @@
                             <td style="padding: 20px" width="20%">
                                 <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="100" height="100"/>
                             </td>
-                            {% set  count=0%}
 
-                            {% for follow in allFollowers %}
-                                {% if follow.following == res.info.author %}
-                                    {% set count=count+1%}
-                                {% endif %}
-                            {% endfor %}
 
                           <td style="padding: 40px 20px" width="60%">
                                 <p class="font-weight-bold saveProfile"  data-author="{{ res.info.author }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br>
@@ -87,7 +82,7 @@
                             {% endif %}
                         {% endfor %}
                                     <span class="stat_info"> 0  posts</span>
-                                    <span class="stat_info"> {{ count }}  followers</span>
+                                    <span class="stat_info"> {{ countFollowers }}  followers</span>
                                     <span class="stat_info"> 0  following</span></p>
                             </td>
 
@@ -102,12 +97,12 @@
                                 {% endif %}
                             {% endfor %}
                             <td style="padding: 40px 20px" width="20%">
-                                <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >{% if countF>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                                <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow" data-author="{{ res.info.author }}" >{% if countF>0 %} UnFollow{% else %}Follow{% endif %}</a>
 
                             </td>
                          {% else %}
                              <td style="padding: 40px 20px" width="20%">
-                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow follow-btn" data-author="{{ res.info.author }}" >Follow</a>
+                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow follow-btn" data-author="{{ res.info.author }}" >Follow</a>
 
                              </td>
                          {% endif %}

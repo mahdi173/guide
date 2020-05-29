@@ -71,7 +71,7 @@
     </table>
 
 <div class="row">
-    <div class="offset-9 col-lg-3" style="margin-top: 40px"><a class="btn btn-warning"  href="{{ path('publication_index') }}" style="color: white">No Thanks</a></div>
+    <div class="offset-9 col-lg-3" style="margin-top: 40px"><a class="btn btn-warning"  href="{{ path('publication_index',{"id":app.user.id,'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" style="color: white">No Thanks</a></div>
 </div>
 
 {% endblock %}

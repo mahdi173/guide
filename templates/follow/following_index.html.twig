@@ -4,7 +4,7 @@
 
 {% block profile_content %}
 
-    <table id="followers" class="table table-striped">
+    <table id="followers" class="table">
         <thead>
         <tr class="border-0">
             <th >Title</th>
@@ -13,10 +13,13 @@
         </tr>
         </thead>
         <tbody>
+
         {% for res in exist  %}
+
             <tr>
-                <td style="padding: 20px" width="20%">
-                    <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/>
+
+                <td style="padding: 20px" width="10%">
+                    <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="80" height="80"/>
                 </td>
 
                 {% set  countPubliction=0%}
@@ -31,32 +34,37 @@
 
                 {% for follow in allFollow %}
 
-                    {% if  follow.following== res.following   %}
-                        {% set countFollowers=countFollowers+1%}
-                    {% endif %}
-
-
-                {% for user in follow.followers.values %}
-                     {% if user.username== res.following   %}
-                     {% set countFollowing=countFollowing+1%}
-                     {% endif %}
-                {% endfor %}
+                    {% for user in follow.followers.values %}
+                         {% if user.username== res.following   %}
+                            {% set countFollowing=countFollowing+1%}
+                         {% endif %}
+                    {% endfor %}
 
                 {% endfor %}
-                <td style="padding: 20px" width="60%">
-                    <p class="font-weight-bold saveProfile"  data-author="{{ res.following }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.following}) }}">{{ res.following }}</a><br><span class="stat_info"> {{ countPubliction}}  publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers}}  followers</span><span class="stat_info"> {{ countFollowing}}  following</span></p>
+                <td style="padding: 30px 20px" width="60%">
+                    <p class="font-weight-bold saveProfile text-center"  data-author="{{ res.following }}">
+                        <a class="savePro" href="{{ path('get_authors_publication', {auteur: res.following}) }}"><span >{{ res.following }}</span></a><br>
+                        <span class="follow_info">{{ countPubliction}}  publications</span>
+                        <span class="follow_info"> 0  posts</span>
+                        <span class="follow_info"> {{ res.followers.values|length}}  followers</span>
+                        <span class="follow_info"> {{ countFollowing}}  following</span>
+                    </p>
                 </td>
                 {% set  follows=app.user.follows.values%}
 
                 {% set  count=0%}
 
                 {% for follow in follows %}
+
                     {% if follow.following == res.following  %}
-                        {% set count=count+1%}
+
+                        {% set count=1%}
+
                     {% endif %}
+
                 {% endfor %}
-                <td style="padding: 20px" width="20%">
-                    <a href="{{ path('add_follower', {'author': res.following,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow" data-author="{{ res.following }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                <td style="padding: 35px 20px" width="20%">
+                    <a href="{{ path('add_follower', {'author': res.following,'exist':count,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow" data-author="{{ res.following }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
 
                 </td>
             </tr>

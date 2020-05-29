@@ -7,7 +7,11 @@ use App\Entity\Publication;
 use App\Form\AllPublicationCreateType;
 use App\Form\AllPublicationType;
 use App\Form\PublicationType;
+use App\Manager\PublicationManager;
+use App\Repository\AllPublicationRepository;
+use App\Repository\ContactRepository;
 use App\Repository\PublicationRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,59 +20,116 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/{_locale}/profile/publication")
+ * @Route("/profile")
  */
 class PublicationController extends AbstractController
 {
     /**
-     * @Route("/", name="publication_index", methods={"GET","POST"})
+     * @Route("/{firstname}.{lastname}.{id}", name="publication_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
-    public function index(Request $request,PublicationRepository $publicationRepository): Response
+    public function index(Request $request, UserRepository $userRepository, ContactRepository $contactRepository, PublicationRepository $publicationRepository, AllPublicationRepository $allPublicationRepository,PublicationManager $publicationManager): Response
     {
-        $publication=new Allpublications();
-        $em=$this->getDoctrine()->getManager();
-        $pubs=$publicationRepository->findAll();
-        $pubss=$em->getRepository(Allpublications::class)->findBy(['user'=>$this->getUser()]);
 
-        $form = $this->createForm(AllPublicationType::class, $publication);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-         $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+        $id = $request->get('id');
+        $firstName = $request->get('firstname');
+        $lastName = $request->get('lastname');
 
-         $pub->setTitle($form['title']->getData());
-         $pub->setType($form['type']->getData());
-         $pub->setName($form['name']->getData());
-         $pub->setVolume($form['volume']->getData());
-         $pub->setYear($form['year']->getData());
-         $pub->setUrl($form['url']->getData());
+        if ($firstName && $lastName || ($firstName || $lastName)) {
+            $user = $userRepository->userFromConctact($id,$firstName, $lastName);
 
-         $em->persist($pub);
-         $em->flush();
+            if ($user) {
+                $user = $user[0];
+            }
 
-            return $this->redirectToRoute('publication_index');
         }
 
-        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
-        $form_create->handleRequest($request);
+        if ($user) {
+            $authors=$publicationManager->getAuthorsList($user);
+            $publication = new Allpublications();
+            $myProfile = false;
 
-        if ($form_create->isSubmitted() && $form_create->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $pubs = $publicationRepository->findAll();
+            $pubss = $allPublicationRepository->allPublications($user);
 
-            $publication->setUser($this->getUser());
-            $em->persist($publication);
-            $em->flush();
+            $form = null;
+            $form_create = null;
+            $form_view = null;
+            $form_create_view = null;
 
-            return $this->redirectToRoute('publication_index');
+            if ($user == $this->getUser()) {
+                $myProfile = true;
+                $form = $this->createForm(AllPublicationType::class, $publication);
+                $form->handleRequest($request);
+                $form_view = $form->createView();
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+                    $pub->setTitle($form['title']->getData());
+                    $pub->setType($form['type']->getData());
+                    $pub->setName($form['name']->getData());
+                    $pub->setVolume($form['volume']->getData());
+                    $pub->setYear($form['year']->getData());
+                    $pub->setUrl($form['url']->getData());
+
+                    $em->persist($pub);
+                    $em->flush();
+
+//            return $this->redirectToRoute('publication_index');
+                    return $this->redirectToRoute('publication_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                }
+
+
+                $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+                $form_create->handleRequest($request);
+                $form_create_view = $form_create->createView();
+
+                if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                    $publication->setUser($this->getUser());
+                    $em->persist($publication);
+                    $em->flush();
+
+//            return $this->redirectToRoute('publication_index');
+                    return $this->redirectToRoute('publication_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                }
+            }
+
+
+            return $this->render('publication/index.html.twig', [
+                'publications' => $pubss,
+                'publication' => $publication,
+                'form' => $form_view,
+                'form2' => $form_create_view,
+                'myProfile' => $myProfile,
+                'user' => $user,
+                'authors' => $authors,
+            ]);
         }
-
-
-        return $this->render('publication/index.html.twig', [
-            'publications' => $pubss,
-            'publication' => $publication,
-            'form' => $form->createView(),
-            'form2' => $form_create->createView(),
-        ]);
+        else{
+            return $this->render("Profile/profile_not_found.html.twig");
+        }
     }
+
+    /**
+     * @Route("/{firstname}.{lastname}", name="getSearchedProfile", methods={"GET","POST"}, defaults={"lastname" = ""})
+     */
+    public function getSearchedProfile(Request $request,UserRepository $userRepository){
+
+        $firstName = $request->get('firstname');
+        $lastName = $request->get('lastname');
+
+        if ($firstName && $lastName || ($firstName || $lastName)) {
+            $users = $userRepository->getSearchedProfile($firstName, $lastName);
+
+        }
+
+            return $this->render("Profile/getSearchedProfile.html.twig",['users'=>$users]);
+    }
+
 
     /**
      * @Route("/new", name="publication_new", methods={"GET","POST"})
@@ -112,6 +173,14 @@ class PublicationController extends AbstractController
         return $this->render('publication/show.html.twig', [
             'publication' => $publication,
         ]);
+    }
+
+    /**
+     * @Route("/profile_not_found", name="profile_not_found")
+     */
+    public function profile_not_found()
+    {
+        return $this->render("Profile/profile_not_found.html.twig");
     }
 
     /**

@@ -90,7 +90,7 @@
                 {% if media is not null %}
                     {% set src= media.url %}
                 {% else %}
-                    {% set src=  asset('assets/images/Profil.jpg') %}
+                    {% set src=  asset('assets/images/profil_new.jpg') %}
                 {% endif %}
 
 
@@ -107,7 +107,7 @@
                         <li ><a class="dropdown-item" href="{{ path('author_search')}}">Your profile</a></li>
 {#                        <li ><a class="dropdown-item" href="{{ path('sulu_community.profile')}}">Your profile</a></li>#}
                         <div class="dropdown-divider"></div>
-                        <li><a  class="dropdown-item" href="{{ path('profile_settings') }}">Settings</a></li>
+                        <li><a  class="dropdown-item" href="{{ path('settings') }}">Settings</a></li>
 {#                        <div class="dropdown-divider"></div>#}
 {#                        <li><a  class="dropdown-item" href="#">Help center</a></li>#}
                         <div class="dropdown-divider"></div>

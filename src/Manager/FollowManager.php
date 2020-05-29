@@ -24,6 +24,7 @@ class FollowManager
     public function followers($author)
     {
 
-        return count($this->followRepository->findAllFollowers($author));
+
+        return $this->followRepository->findAllFollowers($author);
     }
 }

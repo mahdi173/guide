@@ -1,0 +1,64 @@
+{% extends '@SuluCommunity/profile-form.html.twig' %}
+
+
+
+
+{% block content %}
+
+      <table class="offset-1 table" style="margin-top: 90px;margin-bottom: 90px;width: 80%">
+
+        <thead>
+        <tr class="bg-primary">
+            <th colspan="3" style="color: white">PROFILES</th>
+        </tr>
+        </thead>
+          {% if users %}
+        {% for user in users %}
+
+                {% set media = null %}
+                {% set src = null %}
+                {% if user.contact.avatar is not null %}
+                    {% set media = sulu_resolve_media(user.contact.avatar,'fr') %}
+                {% endif %}
+
+                {% if media is not null %}
+                    {% set src= media.url %}
+                {% else %}
+                    {% set src=  asset('assets/images/profil_new.jpg') %}
+                {% endif %}
+
+                 <tr>
+
+
+                         <td width="30%" style="padding-left: 60px">
+                             <a href="{{ path('publication_index',{"firstname":user.firstName,'lastname':user.lastName,'id':user.id}) }}">
+                                 <img  class="rounded-circle" src="{{ src }}" width="90" height="90"/>
+                             </a>
+                         </td>
+                    <td width="30%" style="padding-top:30px;font-size: 20px;text-transform: capitalize">
+                        <a href="{{ path('publication_index',{"firstname":user.firstName,'lastname':user.lastName,'id':user.id}) }}">
+                             {{ user.firstName }} {{ user.lastName }}
+                        </a>
+                    </td>
+
+                    <td width="30%" style="padding-left: 60px">
+                       <a {% if user.facebook %} href="{{user.facebook  }}" target="_blank"{%else%} href="#" {%endif%}">
+                           <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="H"/>
+                       </a>
+
+                       <a{% if user.twitter %}  href="{{user.twitter  }}"  target="_blank"{%else%} href="#"{%endif%}>
+                           <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/twitter.png')}} alt="H"/>
+                       </a>
+
+                       <a {% if user.linkedIn %} href="{{user.linkedIn  }}"  target="_blank"{%else%} href="#"{%endif%}">
+                           <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="H"/>
+                       </a>
+                    </td>
+                 </tr>
+        {% endfor %}
+            {% else %}
+            <tr  class="text-center"><td colspan="3" style="border-bottom: 1px solid grey">USER PROFILES NOT FOUND</td></tr>
+        {% endif %}
+
+    </table>
+{% endblock  %}
