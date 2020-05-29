@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
 
     <style>
+        .hide{display: none}
     .stat{
         padding-left: 10px;
     }
@@ -25,7 +26,7 @@
 {% block profile_content %}
 
 
-    <h5 class="text-primary">Save your profile ?</h5>
+    <h5 class="text-primary">Save your profile ?</h5><br>
 {#    {% for res in data.result.hits.hit  %}#}
 {#    <div class="row">#}
 {#        <div class="col-md-2">#}
@@ -38,22 +39,26 @@
 {#    {% endfor %}#}
 
     <table id="profiles" class="table table-striped">
-
+    <thead class="hide">
+    <th></th>
+    <th></th>
+    <th></th>
+    </thead>
         <tbody>
         {% for res in data.result.hits.hit  %}
             <tr >
 
                 <td style="padding: 20px">
-                    <img class="rounded-circle" src="{{ asset('assets/images/avatar.png') }}" width="50" height="50"/>
+                    <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="50" height="50"/>
                 </td>
 
                 <td style="padding: 20px">
-                    <p class="font-weight-bold"><a href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br><span class="stat"> 20  publications</span></p>
+                    <p class="font-weight-bold saveProfile"  data-author="{{ res.info.author }}"><a class="savePro" href="{{ path('get_authors_publication', {auteur: res.info.author}) }}">{{ res.info.author }}</a><br><span class="stat"> 0  publications</span></p>
                 </td>
 
                 <td style="padding: 20px">
 {#                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}" onclick="getPublications()">Save</button>#}
-                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}">Save</button>
+                    <button class="btn btn-primary saveButton" data-author="{{ res.info.author }}" >Save</button>
 {#                    <button class="btn btn-primary saveButton"  data-author="{{ res.info.author }}" >Save</button>#}
 
 {#                    <button class="btn btn-primary saveButton"><a href="{{ path('get_author_allpublication_profile', {auteur: res.info.author}) }}">save</a></button>#}
@@ -66,31 +71,35 @@
     </table>
 
 <div class="row">
-    <div class="offset-9 col-lg-3" style="margin-top: 40px"><a class="btn btn-warning"  href="{{ path('publication_index') }}" style="color: white">No Thanks</a></div>
+    <div class="offset-9 col-lg-3" style="margin-top: 40px"><a class="btn btn-warning"  href="{{ path('publication_index',{"id":app.user.id,'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" style="color: white">No Thanks</a></div>
 </div>
 
 {% endblock %}
 
 {% block javascripts %}
+{#    <script type="text/javascript" src="{{ asset('build/website/pages/author.js') }}"></script>#}
+{#    <script type="text/javascript" src="{{ asset('build/website/app.js') }}"></script>#}
+    {{ encore_entry_script_tags('app') }}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
 {#    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>#}
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script type="module" src="{{ asset('assets/js/custom.js') }}"></script>
+
 
 
     <script>
 
         $(document).ready(function() {
             $('#profiles').dataTable( {
-                "pageLength": 50
+                "pageLength": 5
             } );
 
         } );
 
         // $(document).on("click",".saveButton",function(){
-        //     Swal.fire({
+        //     swal.fire({
         //         title: 'Is this profile really for you ?',
         //         icon: 'warning',
         //         showCancelButton: true,

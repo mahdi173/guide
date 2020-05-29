@@ -82,18 +82,22 @@
 {#                    <a class="dropdown-toggle" href="{{ path('favorite_list')}}" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
 
                 {% set media = null %}
+                {% set src = null %}
                 {% if app.user.contact.avatar is not null %}
                     {% set media = sulu_resolve_media(app.user.contact.avatar,'fr') %}
+                {% endif %}
 
+                {% if media is not null %}
+                    {% set src= media.url %}
+                {% else %}
+                    {% set src=  asset('assets/images/profil_new.jpg') %}
                 {% endif %}
 
 
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                    {% if media is not null %}
-                        <img class="rounded-circle" src="{{ media.url }}" width="50" height="50"/>
-                    {% else %}
-                    {{app.user.firstName}}
-                    {% endif %}
+
+                        <img class="rounded-circle" src="{{ src }}" width="50" height="50"/>
+
                     <span class="caret"></span>
                 </a>
 {#                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
@@ -103,9 +107,9 @@
                         <li ><a class="dropdown-item" href="{{ path('author_search')}}">Your profile</a></li>
 {#                        <li ><a class="dropdown-item" href="{{ path('sulu_community.profile')}}">Your profile</a></li>#}
                         <div class="dropdown-divider"></div>
-                        <li><a  class="dropdown-item" href="#">Settings</a></li>
-                        <div class="dropdown-divider"></div>
-                        <li><a  class="dropdown-item" href="#">Help center</a></li>
+                        <li><a  class="dropdown-item" href="{{ path('settings') }}">Settings</a></li>
+{#                        <div class="dropdown-divider"></div>#}
+{#                        <li><a  class="dropdown-item" href="#">Help center</a></li>#}
                         <div class="dropdown-divider"></div>
                         <li><a  class="dropdown-item" href="{{ path('sulu_community.logout') }}">Log out</a></li>
                     </ul>

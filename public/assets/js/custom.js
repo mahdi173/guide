@@ -1,5 +1,5 @@
 // import swal from 'sweetalert2';
-
+// import Swal from 'sweetalert2'
 // import '../../../node_modules/sweetalert2/src/sweetalert2.scss'
 // import '../../../node_modules/sweetalert2/src/sweetalert2.js'
 
@@ -9,7 +9,7 @@
 //
 // Routing.setRoutingData(routes);
 // import Routing from '../../../assets/js/router';
-const Routing = require('../../../assets/js/router');
+// const Routing = require('../../../assets/js/router');
 $(document).ready(function() {
     "use strict";
 	
@@ -295,7 +295,7 @@ scrollNav();
 // function getPublications() {
 $(document).on("click",".saveButton",function(){
     console.log('ddd')
-
+    // Swal.fire({title: 'Error!', text: 'Do you want to continue', icon: 'error', confirmButtonText: 'Cool'})
     //
     // swal.fire({
     //     title: 'Is this profile really for you ?',
@@ -306,13 +306,13 @@ $(document).on("click",".saveButton",function(){
     //     confirmButtonText: 'Yes!'
     // }).then((result) =>
     // {
-        var author = $(".saveButton").data("author");
-        console.log("author")
-        console.log(author)
-    const url = Routing.generate('get_author_allpublication_profile', {'auteur': author});
-    console.log(url)
-        // if (result.value) {
-            window.location = url;
+    //     var author = $(".saveButton").data("author");
+    //     console.log("author")
+    //     console.log(author)
+    // const url = Routing.generate('get_author_allpublication_profile', {'auteur': author});
+    // console.log(url)
+    //     // if (result.value) {
+    //         window.location = url;
         // }
     // })
 

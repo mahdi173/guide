@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Allpublications;
 use App\Entity\Conference;
+use App\Form\AllPublicationCreateType;
+use App\Form\AllPublicationType;
 use App\Form\ConferenceType;
+use App\Repository\AllPublicationRepository;
 use App\Repository\ConferenceRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,20 +18,88 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/{_locale}/profile/conference")
+ * @Route("/{_locale}/conference")
  */
 class ConferenceController extends AbstractController
 {
     /**
-     * @Route("/", name="conference_index", methods={"GET"})
+     * @Route("/{firstname}.{lastname}.{id}", name="conference_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
-    public function index(ConferenceRepository $conferenceRepository): Response
+//    public function index(ConferenceRepository $conferenceRepository): Response
+//    {
+//        return $this->render('conference/index.html.twig', [
+//            'conferences' => $conferenceRepository->findAll(),
+//        ]);
+//    }
+    public function index(Request $request,UserRepository $userRepository,AllPublicationRepository $publicationRepository): Response
     {
-        return $this->render('conference/index.html.twig', [
-            'conferences' => $conferenceRepository->findAll(),
-        ]);
-    }
 
+        $user=$this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
+        $id=$request->get('id');
+
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
+        }
+        $myProfile=false;
+        $publication=new Allpublications();
+        $em = $this->getDoctrine()->getManager();
+
+        $form=null;$form_create=null;
+        $form_view=null;$form_create_view=null;
+        if(!$user){
+            return $this->render("Profile/profile_not_found.html.twig");
+        }
+        else {
+            if ($user == $this->getUser()) {
+                $myProfile = true;
+                $form = $this->createForm(AllPublicationType::class, $publication);
+                $form->handleRequest($request);
+                $form_view = $form->createView();
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
+
+                    $pub->setTitle($form['title']->getData());
+                    $pub->setType($form['type']->getData());
+                    $pub->setName($form['name']->getData());
+                    $pub->setVolume($form['volume']->getData());
+                    $pub->setYear($form['year']->getData());
+                    $pub->setUrl($form['url']->getData());
+
+                    $em->persist($pub);
+                    $em->flush();
+
+                    return $this->redirectToRoute('conference_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                }
+
+                $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+                $form_create->handleRequest($request);
+                $form_create_view = $form_create->createView();
+
+                if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                    $publication->setUser($this->getUser());
+                    $em->persist($publication);
+                    $em->flush();
+
+                    return $this->redirectToRoute('conference_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                }
+            }
+            return $this->render('conference/publication_conference.html.twig', [
+                'publications' => $publicationRepository->findPublicationByType('conference', $user),
+                'form' => $form_view,
+                'form2' => $form_create_view,
+                'myProfile' => $myProfile,
+                'user' => $user,
+            ]);
+        }
+    }
     /**
      *
      * @Route("/new", name="conference_new", methods={"GET","POST"})
