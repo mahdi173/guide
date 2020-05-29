@@ -50,9 +50,9 @@
     <!--style="background-color: #f6f6f6"-->
     <div class="container" >
 
-        <div class="row col-sm-12" align="center" style="height: 150px">
+        <div class="row col-sm-12" align="center">
 
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
             <!-- Home_page_horizontal1 -->
             <ins class="adsbygoogle"
                  style="display:block"
@@ -71,6 +71,9 @@
             <div class="col-md-2 col-sm-1"></div>
             <div class="col-md-8">
                 {% include '_includes/search_form.html.twig' %}
+                {% if show_ad is defined  %}
+                {% include '_includes/advanced_search_form.html.twig' %}
+                {% endif %}
 
             </div>
             <div class="col-md-2 col-sm-1"></div>
@@ -84,13 +87,20 @@
     </div>
     <div class="container-fluid" >
 
-
+        {% if data_t_scopus_advanced is defined %}
+            {% if data_t_scopus_advanced | length >0   %}
+            {% include '_includes/result_for_adanced_research' %}
+                {% endif %}
+            {% if data_t_scopus_advanced | length == 0   %}
+                {% include '_includes/error.html.twig' %}
+            {% endif %}
+        {% endif %}
         {%  if data_t_scopus | length >1 %}
         {% set test=0 %}
         {% set tests=0 %}
         <div class="row">
             <div class="col-md-2">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                 <!-- horizontal_several_results1 -->
                 <ins class="adsbygoogle"
                      style="display:block"
@@ -111,7 +121,7 @@
                 <div class="row" style="height: 92px; width: 869px; text-align: center; margin-left: 2px">
                     <div class="col-sm-12">
                         <!-- /21831250958/AdManager_S_results_1 -->
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                         <!-- Several_result -->
                         <ins class="adsbygoogle"
                              style="display:inline-block;width:728px;height:90px"
@@ -140,7 +150,7 @@
                                 </div>
                                 <div class="col-md-9" >
                                     <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
-                                        <h4><b><a href={{ path('data_t_scopus_results', {'eISSN': issn})}}>{{ t.title }}</a> </b></h4>
+                                        <h4><b><a href={{ path('data_t_scopus_results', {'eISSN': issn})}} target="_blank">{{ t.title }}</a> </b></h4>
                                       <div class="row">
                                           <div class="col-sm-6">
                                               <h6 >
@@ -176,7 +186,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2" align="center" style="margin-top: 50px; color: white">
-                                    <a  class="btn btn-primary" href={{ path('data_t_scopus_results', {'eISSN': issn})}}>More details</a>
+                                    <a  class="btn btn-primary" href={{ path('data_t_scopus_results', {'eISSN': issn})}} target="_blank">More details</a>
                                 </div>
                             </div>
                         </div>
@@ -189,13 +199,7 @@
                 {% endif %}
             </div>
             <div class="col-md-2">
-                <!-- ajouter pour la publicité -->
-                {%  if data_t_scopus | length >1 %}
-                    <div class="row" ></div>
 
-                {% endif %}
-
-                <!-- fin publicité -->
             </div>
         </div>
 
@@ -214,9 +218,9 @@
             </div>
         <div class="row" >
             <div class="col-md-2 col-sm-2">
-                    <div id="id_publicite_SorW_1" style="">
+                    <div id="id_publicite_SorW_1">
 
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                         <!-- One_result_slide_gauche -->
                         <ins class="adsbygoogle"
                              style="display:block"
@@ -666,7 +670,7 @@
         </div>
          <div class="row" style="height: 210px;  margin-top: 20px; text-align: center">
          <div class="col-sm-12">
-             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
              <!-- Apres_top_g_list -->
              <ins class="adsbygoogle"
                   style="display:block"
@@ -851,9 +855,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <!--publicite slide d_OneS_OR_W-->
-                        <div style="height:100px; width: 320px; background-color: #0b4961 ">
+                        <div>
 
-                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                             <!-- slide_droit_recommender -->
                             <ins class="adsbygoogle"
                                  style="display:inline-block;width:320px;height:100px"

@@ -51,5 +51,181 @@ class DataTScopusRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
     }
+    public function selectALLCategories($em)
+    {
+        return
 
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus.scopussubsubjectarea")
+                ->distinct()
+                ->orderBy('data_tscopus.scopussubsubjectarea', 'ASC')
+                ->getQuery()
+                ->getResult();
+    }
+    public function selectALLPublishers($em)
+    {
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus.publisher")
+                ->distinct()
+                ->orderBy('data_tscopus.publisher', 'ASC')
+                ->getQuery()
+                ->getResult();
+    }
+    public function selectForAdvancesearch($em,$publisher, $subject_area, $tab_qrtle, $ta_openaccs, $sjr_value, $operation)
+    {
+        if($operation=="op2"){
+
+            return
+
+                $this->createQueryBuilder('data_tscopus')
+                    ->select("data_tscopus")
+                    ->where("data_tscopus.publisher = :value")
+                    ->setParameter('value', $publisher)
+                    ->andWhere("data_tscopus.scopussubsubjectarea = :value1")
+                    ->setParameter('value1', $subject_area)
+                    ->andWhere("data_tscopus.quartile IN (:value2)")
+                    ->setParameter('value2', $tab_qrtle)
+                    ->andWhere("data_tscopus.openaccess IN (:value4)")
+                    ->setParameter('value4', $ta_openaccs)
+                    ->andWhere("data_tscopus.sjr <= :value3")
+                    ->setParameter('value3', $sjr_value)
+                    ->getQuery()
+                    ->getResult();
+        }
+        else {
+
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->where("data_tscopus.publisher = :value")
+                ->setParameter('value', $publisher)
+                ->andWhere("data_tscopus.scopussubsubjectarea = :value1")
+                ->setParameter('value1', $subject_area)
+                ->andWhere("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr >= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+        }
+    }
+    public function selectForAdvancesearchSJRInf($em,$publisher, $subject_area, $tab_qrtle, $ta_openaccs, $sjr_value)
+    {
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->where("data_tscopus.publisher = :value")
+                ->setParameter('value', $publisher)
+                ->andWhere("data_tscopus.scopussubsubjectarea = :value1")
+                ->setParameter('value1', $subject_area)
+                ->andWhere("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr <= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+    }
+    public function selectForAdvancesearchWithoutSubjectAndPublisher($em, $tab_qrtle, $ta_openaccs, $sjr_value, $operation)
+    {
+        if($operation=="op2"){
+            return
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->Where("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr <= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+        }
+        else {
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->Where("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr >= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+        }
+    }
+    public function selectForAdvancesearchWithoutSubjectarea($em,$publisher, $tab_qrtle, $ta_openaccs, $sjr_value, $operation)
+    {
+        if($operation=="op2"){
+            return
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->where("data_tscopus.publisher = :value")
+                ->setParameter('value', $publisher)
+                ->andWhere("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr <= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+        }
+else
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->where("data_tscopus.publisher = :value")
+                ->setParameter('value', $publisher)
+                ->andWhere("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr >= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+    }
+    public function selectForAdvancesearchWithoutPublisher($em,$subject_area, $tab_qrtle, $ta_openaccs, $sjr_value, $operation)
+    {
+if($operation=="op2"){
+    return
+    $this->createQueryBuilder('data_tscopus')
+        ->select("data_tscopus")
+        ->Where("data_tscopus.quartile IN (:value2)")
+        ->setParameter('value2', $tab_qrtle)
+        ->andWhere("data_tscopus.scopussubsubjectarea = :value1")
+        ->setParameter('value1', $subject_area)
+        ->andWhere("data_tscopus.openaccess IN (:value4)")
+        ->setParameter('value4', $ta_openaccs)
+        ->andWhere("data_tscopus.sjr <= :value3")
+        ->setParameter('value3', $sjr_value)
+        ->getQuery()
+        ->getResult();
+}
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->Where("data_tscopus.quartile IN (:value2)")
+                ->setParameter('value2', $tab_qrtle)
+                ->andWhere("data_tscopus.scopussubsubjectarea = :value1")
+                ->setParameter('value1', $subject_area)
+                ->andWhere("data_tscopus.openaccess IN (:value4)")
+                ->setParameter('value4', $ta_openaccs)
+                ->andWhere("data_tscopus.sjr >= :value3")
+                ->setParameter('value3', $sjr_value)
+                ->getQuery()
+                ->getResult();
+    }
 }

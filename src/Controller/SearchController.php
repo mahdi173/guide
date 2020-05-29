@@ -60,6 +60,7 @@ class SearchController extends BaseController
         $pagination_slide=null;
         $topjournallistScopus=null;
         $eISSNSend=null;
+
         $form = $this->createForm(SearchType::class, $objet);
         //$form->handleRequest($request);
 
@@ -239,6 +240,7 @@ class SearchController extends BaseController
         $topjournallistScopus=$em->selectTopListScopus($emS);
         $topjournallistWebofs=$em2->selectTopListWeb($emS);
 
+        //echo sizeof($publishers);
         return $this->render('default/searchV.html.twig', [
             'form' => $form->createView(),
             'data_reuter' => $data_reuters,
@@ -246,6 +248,7 @@ class SearchController extends BaseController
             'tpjlistScopus'=>$topjournallistScopus,
             'tpjlistWebof'=>$topjournallistWebofs,
             'eISSN' => $eISSNSend,
+
             'pagination'=>$pagination,
             'paginationR'=>$pagination_slide
         ]);
@@ -293,7 +296,7 @@ class SearchController extends BaseController
                     if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
                     if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
 
-                    $eISSNS = str_replace("-", "", $eISSNS);
+
 
                     $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
                 }
@@ -339,10 +342,12 @@ class SearchController extends BaseController
                 if ($data_t_scopus != null && $data_reuters == null) {
 
                     if ($data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
+                    $eISSNT=str_replace("-", "", $eISSNT);
                     $eISSNT = substr_replace($eISSNT, "-", 4, 0);
                     $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
                     if ($data_reuters == null) {
                         if ($data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
+                        $eISSNT=str_replace("-", "", $eISSNT);
                         $eISSNT = substr_replace($eISSNT, "-", 4, 0);
                         $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
                     }
@@ -387,5 +392,223 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
     }
 
 
+    /**
+     * Lists all data_t_scopus entities.
+     *
+     * @Route("/advanced_search", name="advanced_search_scopus_web_ofs")
+     */
+    public function advanced_search_params(){
 
+
+        $data_t_scopus = array();
+        $data_reuters = array();
+        $data_t_advanced_scopus = null;
+        $data_advanced_reuters = null;
+        $categories=null;
+        $publishers=null;
+        $var_title="";
+
+
+        $emS = $this->getDoctrine()->getManager();
+        $em = $this->entityManager->getRepository(DataTScopus::class);
+        $categories=$em->selectALLCategories($emS);
+        $publishers=$em->selectALLPublishers($emS);
+        $show_advanced=1;
+        //echo sizeof($publishers);
+        return $this->render('default/searchV.html.twig', [
+
+            'data_reuter' => $data_reuters,
+            'data_t_scopus' => $data_t_scopus,
+            //'data_reuter_advanced' => $data_advanced_reuters,
+            //'data_t_scopus_advanced' => $data_t_advanced_scopus,
+            'listcategories'=>$categories,
+            'listpublishers'=>$publishers,
+            'show_ad'=>$show_advanced
+
+        ]);
+    }
+
+
+    /**
+     *
+     * @Route("/advanced_query", name="data__advanced_search_by_several_params")
+     */
+    public function advancedsearchByParams(Request $request)
+    {
+        $emS = $this->getDoctrine()->getManager();
+        $em = $this->entityManager->getRepository(DataTScopus::class);
+        $em2 = $this->entityManager->getRepository(DataReuters::class);
+        $categories=$em->selectALLCategories($emS);
+        $publishers=$em->selectALLPublishers($emS);
+        $objet = new Search();
+        $data_t_advanced_scopus = null;
+        $data_advanced_reuters = null;
+        $data_t_scopus = array();
+        $data_intermediate= array();
+        $data_reuters = array();
+        $sjr_value=0;
+        $show_advanced=1;
+
+        $form = $this->createForm(SearchType::class, $objet);
+        $publisher= $request->get('name_of_publisher');
+        $subject_area=$request->get('subjectarea');
+        $openaccess_yes= $request->get('yes');
+        $openaccess_no= $request->get('no');
+
+
+
+        $j=0;
+        $ta_openaccs=null;
+        if($openaccess_yes=="yes"){
+            $ta_openaccs[$j]="YES";
+            $j=$j+1;
+        }
+        if($openaccess_no=="no"){
+            $ta_openaccs[$j]="NO";
+        }
+        if($ta_openaccs==null){
+            $ta_openaccs[0]="NO";
+            $ta_openaccs[1]="YES";
+        }
+        $i=0;
+        $tab_qrtle=null;
+        $qrtl1=$request->get('q1');
+
+        if($qrtl1=="Quartile 1"){
+            $tab_qrtle[$i]="Quartile 1";
+            $i=$i+1;
+        }
+        $qrtl2=$request->get('q2');
+        if($qrtl2=="Quartile 2"){
+            $tab_qrtle[$i]="Quartile 2";
+            $i=$i+1;
+        }
+        $qrtl3=$request->get('q3');
+        if($qrtl3=="Quartile 3"){
+            $tab_qrtle[$i]="Quartile 3";
+            $i=$i+1;
+        }
+        $qrtl4=$request->get('q4');
+        if($qrtl4=="Quartile 4"){
+            $tab_qrtle[$i]="Quartile 4";
+
+        }
+
+        if( $tab_qrtle==null){
+            $tab_qrtle[0]="Quartile 1";
+            $tab_qrtle[1]="Quartile 2";
+            $tab_qrtle[2]="Quartile 3";
+            $tab_qrtle[3]="Quartile 4";
+        }
+        $operation="op1";
+       if($request->get('sjr_r')=="option1")
+       {
+
+           $sjr_value=$request->get('sjr_sup');
+           $sjr_value=str_replace(".", ",", $sjr_value);
+           $operation="op1";
+       }
+       elseif($request->get('sjr_r')=="option2"){
+           $sjr_value=$request->get('sjr_inf');
+           $sjr_value=str_replace(".", ",", $sjr_value);
+           $operation="op2";
+       }
+       else {$sjr_value=0;
+       $operation="op1";
+       }
+        if($publisher=="All" && $subject_area=="All"){
+            $data_t_advanced_scopus=$em->selectForAdvancesearchWithoutSubjectAndPublisher($emS, $tab_qrtle, $ta_openaccs, $sjr_value, $operation);
+        }
+        elseif ($publisher!="All" && $subject_area=="All")
+        {
+
+            $data_t_advanced_scopus=$em->selectForAdvancesearchWithoutSubjectarea($em,$publisher, $tab_qrtle, $ta_openaccs, $sjr_value, $operation);
+        }
+        elseif ($publisher=="All" && $subject_area!="All")
+        {
+
+            $data_t_advanced_scopus=$em->selectForAdvancesearchWithoutPublisher($em,$subject_area, $tab_qrtle, $ta_openaccs, $sjr_value, $operation);
+        }
+        elseif($request->get('sjr_r')=="option1" && $request->get('sjr_sup')!="" ){
+
+            $sjr_value=$request->get('sjr_sup');
+            $data_t_advanced_scopus=$em->selectForAdvancesearch($emS,$publisher, $subject_area, $tab_qrtle ,$ta_openaccs, $sjr_value, $operation);
+        }elseif($request->get('sjr_r')=="option2" && $request->get('sjr_inf')!="" ){
+
+            $sjr_value=$request->get('sjr_inf');
+            $data_t_advanced_scopus=$em->selectForAdvancesearchSJRInf($emS,$publisher, $subject_area, $tab_qrtle ,$ta_openaccs, $sjr_value);
+        }
+
+
+
+
+
+
+        if($request->get('jcr_r')=="option1" || $request->get('jcr_r')=="option2")
+        {
+
+            $journal_inst=null;
+            $i=0;
+            foreach ($data_t_advanced_scopus as $journal){
+                $eISSNTP="";
+                $eISSNTE="";
+                if ($journal->getPrintISSN() != null){ $eISSNTP = $journal->getPrintISSN();
+
+
+                $eISSNTP = substr_replace($eISSNTP, "-", 4, 0);
+                $journal_inst = $em2->findInThomsonByIssn($eISSNTP, $emS);
+                //echo $journal_inst;
+                }
+                if ($journal_inst == null) {
+                    if ($journal->getEISSN() != null) $eISSNTE = $journal->getEISSN();
+                    $eISSNTE = substr_replace($eISSNTE, "-", 4, 0);
+
+                    $journal_inst = $em2->findInThomsonByIssn($eISSNTE, $emS);
+
+                }
+                if ($journal_inst != null) {
+                    if ($request->get('jcr_r') == "option1"){
+                        $jcr_value=$request->get('jcr_sup');
+                        $jcr_value=str_replace(",", ".", $jcr_value);
+                        if ($journal_inst->getJournalimpactfactor() != null && $journal_inst->getJournalimpactfactor() >= $jcr_value) {
+                            $data_intermediate[$i] = $journal;
+                            $i = $i + 1;
+                        }
+                }
+                    elseif ($request->get('jcr_r') == "option2"){
+                        $jcr_value=$request->get('jcr_inf');
+                        $jcr_value=str_replace(",", ".", $jcr_value);
+                        if ($journal_inst->getJournalimpactfactor() != null && $journal_inst->getJournalimpactfactor() <= $jcr_value || $journal_inst->getJournalimpactfactor() =="Not Available" ) {
+                            $data_intermediate[$i] = $journal;
+                            $i = $i + 1;
+                        }
+                    }
+                }
+
+
+    }
+        }
+
+        if($data_intermediate!=null)$data_t_advanced_scopus=$data_intermediate;
+        $pagination=0;
+        if(!is_null($data_t_advanced_scopus) && is_iterable($data_t_advanced_scopus)){
+            $pagination = $this->paginator->paginate(
+                $data_t_advanced_scopus, /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+                20 /*limit per page*/
+            );
+        }
+return $this->render('default/searchV.html.twig', [
+
+    'data_reuter_advanced' => $data_advanced_reuters,
+    'data_t_scopus_advanced' => $data_t_advanced_scopus,
+    'data_reuter' => $data_reuters,
+    'data_t_scopus' => $data_t_scopus,
+    'listcategories'=>$categories,
+    'listpublishers'=>$publishers,
+    'pagination'=>$pagination,
+    'show_ad'=>$show_advanced
+
+]);
+    }
 }
