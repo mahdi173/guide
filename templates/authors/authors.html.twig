@@ -62,11 +62,7 @@
                     <tbody>
 
                     {% for res in data.result.hits.hit  %}
-
-
-
-
-                        <tr>
+                            <tr>
                             <td style="padding: 20px" width="20%">
                                 <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="100" height="100"/>
                             </td>
@@ -83,7 +79,8 @@
                         {% endfor %}
                                     <span class="stat_info"> 0  posts</span>
                                     <span class="stat_info"> {{ countFollowers }}  followers</span>
-                                    <span class="stat_info"> 0  following</span></p>
+                                    <span class="stat_info">   {% if author_db %}{{author_db.follows|length  }}
+                                        {% else %} 0 {% endif %} following</span></p>
                             </td>
 
                          {% if app.user is not null %}
@@ -102,7 +99,7 @@
                             </td>
                          {% else %}
                              <td style="padding: 40px 20px" width="20%">
-                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow follow-btn" data-author="{{ res.info.author }}" >Follow</a>
+                                 <a href="{{ path('add_follower', {'author': res.info.author,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':" ",'lastname':" ",'id':0}) }}" class="btn btn-primary follow " data-author="{{ res.info.author }}" >Follow</a>
 
                              </td>
                          {% endif %}

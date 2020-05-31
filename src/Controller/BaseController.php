@@ -322,7 +322,7 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @Route("/add_follower/{firstname}.{lastname}.{id}/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"})
+     * @Route("/add_follower/{firstname}.{lastname}.{id}/{author}/{exist}/{redirect}", name="add_follower", methods={"GET"}, defaults={"id" = 0,"firstname" = "","lastname" = ""})
      */
     public function add_follower(UserRepository $userRepository,Request $request)
     {
@@ -397,6 +397,7 @@ class BaseController extends AbstractController
         }
     }
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/{firstname}.{lastname}.{id}/followers", name="followers_index", methods={"GET"})
      */
     public function followers_index(UserRepository $userRepository,Request $request)
@@ -430,6 +431,7 @@ class BaseController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/{firstname}.{lastname}.{id}/following", name="following_index", methods={"GET"})
      */
     public function following_index(UserRepository $userRepository,Request $request)
@@ -487,6 +489,22 @@ class BaseController extends AbstractController
                 'user'=>$user,
                 "authors"=>$authors
         ]);
+    }
+
+    /**
+     * @Route("/co_authors/{author}", name="co_authors_list_author", methods={"GET"})
+     */
+    public function co_authors_list_author(Request $request,UserRepository $userRepository,PublicationManager $publicationManager){
+
+        $author_search=$request->get('author');
+
+
+        $authors= $publicationManager->getAuthorsListForAuthor($author_search);
+        return $this->render("Profile/co_authors.html.twig",
+            [
+                'author'=>$author_search,
+                "authors"=>$authors
+            ]);
     }
 
     /**
