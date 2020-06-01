@@ -22,10 +22,14 @@
             <hr>
 
             <!-- Preview Image -->
-            {% if content.image %}
+            {% if content.video %}
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="{{ content.video }}?rel=0" allowfullscreen></iframe>
+                </div>
+            {% elseif content.image %}
                 <img class="img-fluid rounded" src="{{ sulu_get_media_url(content.image) }}" alt="">
-                {% else %}
-                    <img class="img-fluid rounded" src="{{ asset('assets/images/Guidejournal.png') }}" alt="">
+            {% else %}
+                <img class="img-fluid rounded" src="{{ asset('assets/images/Guidejournal.png') }}" alt="">
             {% endif %}
 
             <hr>
@@ -37,7 +41,7 @@
             <!-- Post Content -->
             {% if content.article %}
                 <p> {{ content.article|default()|raw }} </p>
-                {% else %}
+            {% else %}
                 <p></p>
             {% endif %}
 
@@ -87,12 +91,12 @@
             </div>
 
             <!-- Side Widget -->
-{#            <div class="card my-4">#}
-{#                <h5 class="card-header">Side Widget</h5>#}
-{#                <div class="card-body">#}
-{#                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!#}
-{#                </div>#}
-{#            </div>#}
+            {#            <div class="card my-4">#}
+            {#                <h5 class="card-header">Side Widget</h5>#}
+            {#                <div class="card-body">#}
+            {#                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!#}
+            {#                </div>#}
+            {#            </div>#}
 
         </div>
 
