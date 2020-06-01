@@ -52,6 +52,11 @@ class User extends BaseUser
     private $publications;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Allpublications", mappedBy="user")
+     */
+    private $allpublications;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="user")
      */
     private $books;
@@ -76,6 +81,25 @@ class User extends BaseUser
      */
     private $favoriteReutersJournals;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Follow", inversedBy="followers",cascade={"persist"})
+     */
+    private $follows;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $facebook;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $twitter;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $linkedIn;
 
     public function __construct()
     {
@@ -86,6 +110,7 @@ class User extends BaseUser
         $this->conferences = new ArrayCollection();
         $this->favoriteScopusJournals = new ArrayCollection();
         $this->favoriteReutersJournals = new ArrayCollection();
+        $this->follows = new ArrayCollection();
     }
 
     public function setEmail($email)
@@ -375,5 +400,112 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getApiBasePath(): string
+    {
+        return $this->apiBasePath;
+    }
+
+    /**
+     * @param string $apiBasePath
+     */
+    public function setApiBasePath(string $apiBasePath): void
+    {
+        $this->apiBasePath = $apiBasePath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * @param mixed $facebook
+     */
+    public function setFacebook($facebook): void
+    {
+        $this->facebook = $facebook;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLinkedIn()
+    {
+        return $this->linkedIn;
+    }
+
+    /**
+     * @param mixed $linkedIn
+     */
+    public function setLinkedIn($linkedIn): void
+    {
+        $this->linkedIn = $linkedIn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * @param mixed $twitter
+     */
+    public function setTwitter($twitter): void
+    {
+        $this->twitter = $twitter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllpublications()
+    {
+        return $this->allpublications;
+    }
+
+    /**
+     * @param mixed $allpublications
+     */
+    public function setAllpublications($allpublications): void
+    {
+        $this->allpublications = $allpublications;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFollows()
+    {
+        return $this->follows;
+    }
+
+    public function addFollow(Follow $follow): self
+    {
+        if (!$this->follows->contains($follow)) {
+            $this->follows[] = $follow;
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(Follow $follow): self
+    {
+        if ($this->follows->contains($follow)) {
+            $this->follows->removeElement($follow);
+        }
+
+        return $this;
+    }
+
 
 }

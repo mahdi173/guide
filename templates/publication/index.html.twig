@@ -2,55 +2,168 @@
 
 {% block title %}GuideJournal: Publications{% endblock %}
 
-{% block profile_content %}
+    {% block stylesheet %}
+        <style>
+            .namePublication{
+                width: 50%;
+            }
 
-            <h1>Publication index</h1>
+        </style>
+    {% endblock %}
+    {% block profile_content %}
 
-            <table class="table">
-                <thead>
-                    <tr class="table-active">
-                        <th colspan="8">Title</th>
-{#                        <th>Journal</th>#}
-{#                        <th>Url</th>#}
-{#                        <th>Volume</th>#}
-{#                        <th>Issue</th>#}
-{#                        <th>Authors</th>#}
-{#                        <th>Year</th>#}
-{#                        <th>Volume</th>#}
-                        <th>Year</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for publication in publications %}
-                    <tr>
-                        <td colspan="8" class="w-70 border-0">
-                            <p class="font-weight-bold text-primary">{{ publication.title }}</p>
-                            <p class="font-weight-light text-muted mt-n3"><small>Authors : {{ publication.authors }}</small></p>
-                            <p class="font-weight-light text-muted mt-n3"><small>Volume : {{ publication.volume }}</small></p>
+    {#            <h2 style="color: #555">Publication index</h2>#}
 
-                        </td>
-{#                        <td>{{ publication.journal }}</td>#}
-{#                        <td>{{ publication.url }}</td>#}
-{#                        <td>{{ publication.volume }}</td>#}
-{#                        <td>{{ publication.issue }}</td>#}
-{#                        <td>{{ publication.authors }}</td>#}
-{#                        <td>{{ publication.volume }}</td>#}
-                        <td class="border-0">{{ publication.year }}</td>
-                        <td class="border-0">
-                            <a href="{{ path('publication_show', {'id': publication.id}) }}">show</a>
-                            <a href="{{ path('publication_edit', {'id': publication.id}) }}">edit</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="9">no records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                <table class="table table-hover table-bordered table-publication">
+                    <thead class="table-light">
+                        <tr  class="table-light">
+                            <th colspan="8">Title</th>
+    {#                        <th>Journal</th>#}
+    {#                        <th>Url</th>#}
+    {#                        <th>Volume</th>#}
+    {#                        <th>Issue</th>#}
+    {#                        <th>Authors</th>#}
+    {#                        <th>Year</th>#}
+    {#                        <th>Volume</th>#}
+                            <th>Year</th>
+                            {% if myProfile %}
+                            <th>actions</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for publication in publications %}
+                        <tr style="border-bottom: 1px #c5c5c5 solid">
+                            <td colspan="8" class="w-70 border-0">
+                                <p class="font-weight-bold text-primary"><a href="{{ publication.url }}" target="_blank"> {{ publication.title }} </a></p>
+                                <p class="font-weight-light text-muted mt-n3">
 
-            <a href="{{ path('publication_new') }}">Create new</a>
+                                    {% set authors=publication.authors|split(',') %}
+                                    <small>Authors :
+                                        {% for author in authors %}
+                                            {% if author!=" " %}
+                                            <a  href="{{ path('get_authors_publication', {auteur:author}) }}"> {{ author }}</a>,
+                                        {% endif  %}
+                                        {% endfor  %}
+                                    </small><br>
+
+    {#                            {% if publication.volume%}  <p class="font-weight-light text-muted mt-n3"><small>Volume : {{ publication.volume }}</small></p>{% endif %}#}
+                                <small>
+                                    {{ publication.name }},
+
+                                    {% if publication.volume  %}({{ publication.volume }}),{% endif %}
+                                        Pages :{% if publication.pages  %}{{ publication.pages }}{% endif %}
+                                </small></p>
+                            </td>
+                            {% set items = {'id': publication.id} %}
+
+                            {% set items = {'type':publication.type ,'title':publication.title ,'year':publication.year,'name':publication.name,'volume':publication.volume,'url':publication.url    }|merge(items) %}
+    {#                        <td>{{ publication.journal }}</td>#}
+    {#                        <td>{{ publication.url }}</td>#}
+    {#                        <td>{{ publication.volume }}</td>#}
+    {#                        <td>{{ publication.issue }}</td>#}
+    {#                        <td>{{ publication.authors }}</td>#}
+    {#                        <td>{{ publication.volume }}</td>#}
+                            <td class="border-0">{{ publication.year }}</td>
+
+                            {% if myProfile %}
+                            <td class="border-0">
+
+                                <a class="btn " data-toggle="modal" data-publication="[{{ items|json_encode() }}]" data-target="#modal_edit" style="padding: 8px 20px;font-weight:bold;color: white;background-color: #efe3b3">Edit</a><br><br>
+                                <button class="deletePublication btn" data-publication="{{ publication.id }}" style="background-color: #f78239">
+                                    <a class="" data-toggle="modal" data-target="#modal_delete" style="font-weight:bold;color: white;">Delete</a>
+                                </button>
+                            </td>
+                            {% endif %}
+                        </tr>
+
+                        {% if form is not null %}
+                        <div class="modal fade" id="modal_edit" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                {#                background-color: #26afe8#}
+                                <!-- Modal content-->
+                                <div class="modal-content" style="margin-top: 20px;width: 600px;background-color: white;border-radius: 10px;padding: 20px;">
+                                    <div class="modal-header" style="background-color: white;padding: 15px;">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <h3 style="text-align:center;color: #1d2b3c;padding-top: 25px;padding-bottom: 20px">Edit Publication</h3>
+
+                                    {{ form_start(form) }}
+                                    {{ form_widget(form) }}
+                                    {{ form_end(form) }}
 
 
-{% endblock %}
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td colspan="10">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+        {% if myProfile %}
+                <a class="btn btn-primary offset-5 mt-3" data-toggle="modal"  data-target="#modal_create" style="color: white;padding: 10px 20px">Add Publication</a>
+        {% endif %}
+        {% if form2 is not null %}
+                <div class="modal fade" id="modal_create" role="dialog">
+            <div class="modal-dialog" role="document">
+                {#                background-color: #26afe8#}
+                <!-- Modal content-->
+                <div class="modal-content" style="margin-top: 20px;width: 600px;background-color: white;border-radius: 10px;padding: 20px;">
+                    <div class="modal-header" style="background-color: white;padding: 20px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <h3 style="color: #1d2b3c;padding-top: 20px;padding-bottom: 20px;text-align:center">Add  Publication</h3>
+
+                    {{ form_start(form2) }}
+
+                    {{ form_row(form2.title) }}
+                    {{ form_row(form2.type) }}
+
+
+                    <div class="row" style="margin-bottom: 15px">
+                        <div class="col-md-2">
+                             <span style="margin-top: 10px">
+                                 <span>Name of</span><br>
+                                <div style="margin-top: 10px;"><small style="margin-top: 10px">journal/conference/chapter/book</small></div>
+                            </span>
+                         </div>
+                        <div class="col-md-10">
+                            <span>
+                            {{ form_widget(form2.name, { 'attr': {'class': 'form-control namePublication'} }) }}<br>
+                           </span>
+                        </div>
+                    </div>
+
+                    {{ form_row(form2.authors) }}
+                    {{ form_row(form2.volume) }}
+
+                    {{ form_row(form2.year) }}
+                    {{ form_row(form2.url) }}
+
+    {#                <button class="btn btn-info btn mb-3">{{ button_label|default('Save') }}</button>#}
+                    {{ form_end(form2) }}
+
+
+                </div>
+
+            </div>
+        </div>
+        {% endif %}
+    {#    href="{{ path('publication_new') }}"#}
+
+
+
+    {% endblock %}
+
+
+    {% block javascripts %}
+
+        {{ encore_entry_script_tags('app') }}
+
+    {% endblock %}

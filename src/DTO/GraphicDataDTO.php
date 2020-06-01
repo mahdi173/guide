@@ -13,6 +13,7 @@ class GraphicDataDTO
     public $graphicTitle;
     public $titleX;
     public $titleY;
+    public $labelY;
     public $dataX;
     public $dataY;
     public $color;

@@ -24,79 +24,44 @@
     {% set issn="" %}
     <div class="container">
 
-        <!-- Pubi 0001-->
 
-        <!-- /21831250958/guidejournal_home_pub0001 -->
-        <div id='div-gpt-ad-1563781924570-0' style="align-content: center">
+
+        <div class="row col-sm-12" align="center">
+
+            <!-- home_page -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9897811061542650"
+                 data-ad-slot="9578484962"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
             <script>
-                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1563781924570-0'); });
+                (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
-
         <!-- Fin pub 0001-->
         <div class="row">
             <div class="col-sm-12"> </div>
             <div class="col-md-2 col-sm-1"></div>
             <div class="col-md-8 mt-5">
                 {% include '_includes/search_form.html.twig' %}
-                <!-- fin publicité adSense 1-->
+
             </div>
             <div class="col-md-2 col-sm-1"></div>
         </div>
 
-        <div class="row" >
-            <div class="col-sm-2">
-
-                <!-- ajouter pour la publicité -->
-                <!-- Publicité  -->
-                <div class="row" style="margin-bottom: 2px" name="pub3" id="pub3">
-                    <!--  <h1 align="center">Bonjour ici mettre votre publicité 3 </h1>-->
-
-                    <!-- /21831250958/guidejournal_home_droit_pub3 -->
-                    <div id='div-gpt-ad-1563190598897-0'>
-                        <script>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1563190598897-0'); });
-                        </script>
-                    </div>
-
-                </div>
-                <!-- Publicité  -->
-
-                <!-- fin publicité -->
-            </div>
-            <div class="col-sm-8" name="pub1" id="pub1">
-                <!-- Publicité  -->
-                <div class="row col-sm-12" style="height: 50px"></div>
-                <div class="row">
-
-                    <div class="col-sm-12" >
-                        <!--   <h1 align="center">Bonjour ici mettre votre publicité 1 </h1>-->
-                        <!-- /21831250958/guidejournal_home_pub1 -->
-                        <div id='div-gpt-ad-1563189608012-0'>
-                            <script>
-                                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1563189608012-0'); });
-                            </script>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Publicité  -->
-            </div>
-            <div class="col-sm-2">
-                <!-- Publicité  -->
-                <div class="row" style=" margin-bottom: 2px" name="pub44" id="pub44">
-                    <!--  <h1 align="center">Bonjour ici mettre votre publicité 4 </h1> -->
-
-                    <!-- /21831250958/guidejournal_Home_gauche_Pub44 -->
-                    <div id='div-gpt-ad-1563190410863-0'>
-                        <script>
-                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1563190410863-0'); });
-                        </script>
-                    </div>
-                </div>
-                <!-- Publicité  -->
-
-            </div>
+        <div class="row col-sm-12" align="center" style="height: 150px">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- pub_adsence_horizontal_pageH -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9897811061542650"
+                 data-ad-slot="7418984239"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
         <div class="row">
@@ -128,257 +93,7 @@
             {% endfor %}
         </div>
 
-        {%  if data_t_scopus is defined and data_t_scopus | length >1 %}
-        {% set test=0 %}
-        {% set tests=0 %}
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
-                <div class="row" style="height: 50px">
-                    <div class="col-md-12">
-                        <h3 align="center">The following title(s) matched your request</h3>
-                    </div>
-                </div>
 
-
-                <table class="table table-striped tabResult">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">E-ISSN</th>
-                        <th scope="col">P-ISSN</th>
-                        <th scope="col">Open Access </th>
-                        <th scope="col">Publisher</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for t in data_t_scopus %}
-                        {% set compteur=compteur+1 %}
-                        {% if (t.eISSN) =="" %}
-                            {% set issn=t.printISSN %}
-                        {% elseif(t.eISSN) !="" %}
-                            {% set issn=t.eISSN %}
-                        {% endif %}
-
-                        <tr>
-                            <td><a href={{issn}}>{{ t.title }}</a> </td>
-                            <td>{{ t.eISSN }}</td>
-                            <td>{{ t.printISSN }}</td>
-                            <td>{{ t.openAccess }}</td>
-                            <td>{{ t.publisher }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
-                {% endif %}
-            </div>
-            <div class="col-md-2">
-                <!-- ajouter pour la publicité -->
-                {%  if data_t_scopus is defined and data_t_scopus | length >1 %}
-                    <div class="row" ></div>
-
-
-
-
-                {% endif %}
-
-                <!-- fin publicité -->
-            </div>
-        </div>
-        {%  if data_reuter is defined and data_reuter | length ==1
-            or data_t_scopus is defined and data_t_scopus | length==1 %}
-            <div class="row" >
-                <div class="col-md-12">
-                    <h3 align="center">The following title(s) matched your request</h3>
-                </div>
-            </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-md-1 col-sm-1"></div>
-            <div class="col-md-5 col-sm-5">
-
-                {%  if data_reuter is defined and data_reuter | length ==1 %}
-                    {% set test=0 %}
-
-                    {% set url="http://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?PC=MASTER&ISSN=*" %}
-                    {% if data_reuter.iSSN !=null %}
-                        {% set url=url~data_reuter.iSSN %}
-                    {% else  %}
-                        {% set url=url~data_reuter.eISSN %}
-                    {% endif %}
-
-                    <div class="alert bg-light" style="height: 95%;width: 95%">
-
-
-                        <h3><img src="{{ asset('assets/images/thomson1.png') }}" style="width: 3rem; height: 3rem;"> Thomson Reuters Database</h3>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12">Title : <a href={{ url }} target="_blank">{{ data_reuter.title }} </a></div>
-                            </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6">Impact Factor : {{ data_reuter.journalImpactFactor }}</div>
-                                    <div class="col-sm-6 col-md-6">Rank : {{ data_reuter.rank }}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6">Total Cites : {{ data_reuter.totalCites }} </div>
-                                    <div class="col-sm-6 col-md-6">Category name : {{ data_reuter.categoryname }} </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6">ISSN : {{ data_reuter.iSSN }}</div>
-                                    <div class="col-sm-6 col-md-6">E-ISSN : {{ data_reuter.eISSN }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% elseif data_t_scopus | length >1 %}
-                    {% set test=0 %}
-                {% else  %}
-                    {% set test=1 %}
-                {% endif %}
-                {% if test ==1 and data_reuter is not null %}
-                    <div class="alert bg-light" style="height: 95%;width: 95%">
-
-
-                        <h3><img src="{{ asset('assets/images/thomson1.png') }}" style="width: 3rem; height: 3rem;"> Thomson Reuters Database</h3>
-
-                        <h1>Not Found</h1>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="col-md-5 col-sm-5">
-                {%  if data_t_scopus is defined and data_t_scopus | length ==1 %}
-                {% set tests=0 %}
-                <div class="alert bg-light" style="height: 95%;width: 95%">
-
-
-                    <h3><img src="{{ asset('assets/images/scopus3.png') }}" style="width: 3rem; height: 3rem;"> Scopus Database</h3>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12">Title : <a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </div>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6">SJR : {{ data_t_scopus.sJR }}</div>
-                                <div class="col-sm-6 col-md-6">Rank : {{ data_t_scopus.rANK }} </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6">Publisher : {{ data_t_scopus.publisher }} </div>
-                                <div class="col-sm-6 col-md-6">Open Access : {{ data_t_scopus.openAccess }} </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6">Quartile : {{ data_t_scopus.quartile }}</div>
-                                <div class="col-sm-6 col-md-6">Citation Count : {{ data_t_scopus.citationCount }} </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6">ISSN : {{ data_t_scopus.printISSN }}</div>
-                                <div class="col-sm-6 col-md-6">E-ISSN : {{ data_t_scopus.eISSN }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    {% elseif data_t_scopus | length >1 %}
-                        {% set tests=0 %}
-                    {% else  %}
-                        {% set tests=1 %}
-                    {% endif %}
-                    {% if tests==1 and  data_t_scopus is not null %}
-                        <div class="alert bg-light" style="height: 95%;width: 95%">
-                            <h3><img src="{{ asset('assets/images/scopus3.png') }}" style="width: 3rem; height: 3rem;"> Scopus Database</h3>
-                            <h1>Not Found </h1>
-
-                        </div>
-                    {% endif %}
-
-
-
-                </div>
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12 text-center">
-                {% if eISSN is defined  %}
-                    {% set url = absolute_url(path('data_t_scopus_results', {'eISSN': eISSN})) %}
-                    {%  if data_reuter | length ==1 %}
-                        {% set text_to_share = data_reuter.title %}
-                    {%  elseif data_t_scopus | length ==1 %}
-                        {% set text_to_share = data_t_scopus.title %}
-                    {% else %}
-                        {% set text_to_share = 'Journal : ' %}
-                    {% endif %}
-                    <div class="fb-share-button center"
-                         data-href="{{ url }}"
-                         data-layout="button_count">
-                    </div>
-                    <a class="btn"
-                       href="https://twitter.com/intent/tweet?
-                       &size=large
-                       &text={{ text_to_share }}
-                       &url={{ url }}">
-                        <i></i>
-                        <span class="label" id="l">Tweet</span>
-                    </a>
-                    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
-                    <script type="IN/Share" data-url="{{ url }}"></script>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="row">
-            {%  if data_reuter | length ==1 or data_t_scopus | length==1 %}
-                <div class="col-sm-2">
-                    <!-- ad sense publicite 2-->
-
-                    <!-- carre_un_resultat_gauche -->
-                    <ins class="adsbygoogle"
-                         style="display:inline-block;width:200px;height:200px"
-                         data-ad-client="ca-pub-9897811061542650"
-                         data-ad-slot="6788803898"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                    <!-- fin ad sense publicite 2-->
-
-                </div>
-                <div class="col-sm-8">
-                    <!-- Publicité  -->
-                    <div class="row" name="pub2" id="pub2">
-
-                        <div class="col-sm-12" >
-                            <!-- <h1 align="center">Bonjour ici mettre votre publicité 4 à la place de 2 </h1>-->
-                            <!-- /21831250958/guidejournal_home_Pub4 -->
-                            <div id='div-gpt-ad-1563190020499-0'>
-                                <script>
-                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1563190020499-0'); });
-                                </script>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Publicité  -->
-                </div>
-                <div class="col-sm-2">
-
-                    <!-- ad sense publicite 3-->
-
-                    <!-- carre_un_resultat_droit -->
-                    <ins class="adsbygoogle"
-                         style="display:inline-block;width:200px;height:200px"
-                         data-ad-client="ca-pub-9897811061542650"
-                         data-ad-slot="5966676816"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                    <!-- fin ad sense publicite 3-->
-
-                </div>
-            {% endif %}
-        </div>
-
-    </div>
-
+</div>
 
 {% endblock %}

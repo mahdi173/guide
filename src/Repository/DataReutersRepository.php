@@ -19,9 +19,9 @@ class DataReutersRepository extends ServiceEntityRepository
     {
 
         $data_t_thomson = $this->findOneBy(array('eissn' => $value));
-//        if ($data_t_thomson == null) {
-//            $data_t_thomson = $this->findOneBy(array('printissn' => $value));
-//        }
+       if ($data_t_thomson == null) {
+           $data_t_thomson = $this->findOneBy(array('issn' => $value));
+       }
         return $data_t_thomson;
     }
 
@@ -33,5 +33,16 @@ class DataReutersRepository extends ServiceEntityRepository
             $data_t_thomson = $this->findBy(array('title' => $value));
         }
         return $data_t_thomson;
+    }
+    public function selectTopListWeb($em)
+    {
+        return
+
+            $this->createQueryBuilder('data_reuters')
+                ->select("data_reuters")
+                ->orderBy('data_reuters.rank', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult();
     }
 }

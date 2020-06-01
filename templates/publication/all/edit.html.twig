@@ -1,0 +1,17 @@
+{% extends '@SuluCommunity/profile-form.html.twig' %}
+
+{% block title %}GuideJournal: Publications{% endblock %}
+
+{% block profile_content %}
+
+
+            <h1>Edit All Publication</h1>
+
+            {{ include('publication/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <a href="{{ path('publication_index') }}">back to list</a>
+
+            {{ include('publication/_delete_form.html.twig') }}
+
+
+{% endblock %}

@@ -11,11 +11,19 @@
 {#</div>#}
 
 <form method="get" action="{{ url('data_search_by_several_values') }}">
-    <h2 class="text-primary">Find the best journal for your research</h2>
-    <div class="input-group mb-3">
-        <input type="text" name="searchValue"  class="form-control" placeholder="Title, word, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+    <h2 class="text-primary"><b>Find the best journal for your research</b></h2>
+    <div class="input-group mb-3" >
+        <input type="text" name="searchValue" style="height: 40px; font-size: large" class="form-control" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
         <div class="input-group-append">
             <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
         </div>
+
     </div>
+    <div class="row">
+
+        <div class="col-sm-12" style="text-align: right; margin-top: -15px;">
+        <a href="/advanced_search" > <b>Advanced search ?</b></a>
+        </div>
+    </div>
+
 </form>
