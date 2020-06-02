@@ -40,6 +40,15 @@
             <tag name="sulu_article.article_route"/>
         </property>
 
+        <property name="video" type="text_line">
+            <meta>
+                <title lang="en">Youtube link</title>
+                <title lang="fr">Lien youtube</title>
+            </meta>
+
+            <tag name="sulu_article.youtube_link"/>
+        </property>
+
         <property name="teaser" type="text_area">
             <meta>
                 <title lang="en">Teaser</title>
@@ -55,7 +64,7 @@
             </meta>
         </property>
 
-       <property name="image" type="single_media_selection">
+       <property mandatory="true" name="image" type="single_media_selection">
             <meta>
                 <title lang="en">Image</title>
                 <title lang="fr">Image</title>
