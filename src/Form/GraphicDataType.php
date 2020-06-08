@@ -30,6 +30,7 @@ class GraphicDataType extends AbstractType
                     'Bar'=>'bar',
                     'Pie'=>'pie',
                     'Line'=>'line',
+                    'Doughnut'=>'doughnut',
                 ],
 //                'icon' => 'fa-bug',
             ])
