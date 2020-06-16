@@ -73,6 +73,38 @@ class DataTScopusRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
     }
+    public function selectonepublisher($em,$publisher){
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->where("data_tscopus.publisher = :value")
+                ->setParameter('value', $publisher)
+                ->getQuery()
+                ->getResult();
+    }
+    public function selectOneSubjectarea($em,$subject_area){
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+
+                ->where("data_tscopus.scopussubsubjectarea = :value1")
+                ->setParameter('value1', $subject_area)
+            
+                ->getQuery()
+                ->getResult();
+    }
+    public function selectByQuartlle($em,$tab_qrtle){
+        return
+
+            $this->createQueryBuilder('data_tscopus')
+                ->select("data_tscopus")
+                ->where("data_tscopus.quartile =:value2")
+                ->setParameter('value2', $tab_qrtle)
+                ->getQuery()
+                ->getResult();
+    }
     public function selectForAdvancesearch($em,$publisher, $subject_area, $tab_qrtle, $ta_openaccs, $sjr_value, $operation)
     {
         if($operation=="op2"){
