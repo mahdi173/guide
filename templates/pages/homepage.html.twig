@@ -81,8 +81,8 @@
                     <div class="card mb-4 box-shadow">
                         {% if a.content.content.image %}
                             {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
-{#                            {{ dump(media.thumbnails['sulu-100x100']) }}#}
-                            <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-100x100'] }}" src="{{ media.thumbnails['sulu-100x100'] }}" data-holder-rendered="true"></a>
+{#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
+                            <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
                             {% else %}
                                 <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
 
