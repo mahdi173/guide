@@ -459,7 +459,30 @@
                                     });
                                 }
                                 else {
+                                    for (var i = 0; i <this.data.datasets.length; i++) {
+                                                    console.log(this.data.datasets[i])
+                                                    console.log('rrr')
+                                       var model = this.data.datasets[i]._meta[Object.keys(this.data.datasets[i]._meta)[0]].data[i]._model,
+                                            total = this.data.datasets[i]._meta[Object.keys(this.data.datasets[i]._meta)[0]].total,
+                                            mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                            start_angle = model.startAngle,
+                                            end_angle = model.endAngle,
+                                            mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                                        var x = mid_radius * Math.cos(mid_angle);
+                                        var y = mid_radius * Math.sin(mid_angle);
+                                        if(this.data.datasets[i].label !=undefined){
+                                            console.log(this.data.datasets[i].label)
+                                            console.log('this.data.datasets[i].label')
+                                            ctx.fillText(this.data.datasets[i].label, 244+x , 322+y);
+                                            ctx.fillStyle = '#ff0000';
+                                            ctx.fontStyle="bold"
+                                        }
+                                    }
                                     this.data.datasets.forEach(function (dataset) {
+                                        // if(dataset.label !=undefined){
+                                        //     ctx.fillText(dataset.label, 355 , 322);
+                                        // }
 
                                         for (var i = 0; i < dataset['data'].length; i++) {
                                             var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
@@ -482,6 +505,10 @@
                                             //Don't Display If Legend is hide or value is 0
                                             if(dataset['data'][i] !== 0) {
                                                 ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                                                // ctx.fillText(dataset.label, model.x+i*10 , model.y+i*10);
+                                                console.log(model.x)
+                                                console.log(model.y)
+                                                console.log('model.x')
                                                 // Display percent in another line, line break doesn't work for fillText
                                                 //   ctx.fillText(percent, model.x + x, model.y + y + 15);
 
