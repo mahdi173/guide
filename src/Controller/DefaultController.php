@@ -38,6 +38,7 @@ class DefaultController extends AbstractController
 //            dd($request->request->all());
             $type=$form->get('type')->getData();
             $graphicTitle=$form->get('graphicTitle')->getData();
+            $graphicTitleColor=$form->get('titleColor')->getData();
             $width=$form->get('width')->getData();
             $height=$form->get('height')->getData();
             $titleX=$form->get('titleX')->getData();
@@ -47,8 +48,11 @@ class DefaultController extends AbstractController
             $dataX=$form->get('dataX')->getData();
             $showValues=$form->get('showValues')->getData();
             $showGrid=$form->get('showGrid')->getData();
+            $gridColor=$form->get('gridColor')->getData();
             $border=$form->get('border')->getData();
             $roundCorner=$form->get('roundCorners')->getData();
+            $graphBackgroundColor=$form->get('graphBackgroundColor')->getData();
+            $showTitles=$form->get('titleXAndY')->getData();
             $axeX=explode("\r\n",$dataX);
 
             $dataY=$form->get('dataY')->getData();
@@ -105,6 +109,7 @@ class DefaultController extends AbstractController
                 'graphics/graphics_generator.html.twig', [
                     'type'=>$type,
                     'graphicTitle'=>$graphicTitle,
+                    'graphicTitleColor'=>$graphicTitleColor,
                     'titleX'=>$titleX,
                     'titleY'=>$titleY,
                     'axeX'=>$axeX,
@@ -112,6 +117,7 @@ class DefaultController extends AbstractController
                     'color'=>$color,
                     'showValues'=>$showValues,
                     'showGrid'=>$showGrid,
+                    'gridColor'=>$gridColor,
                     'border'=>$border,
                     'roundCorner'=>$roundCorner,
                     'hasMultipleY'=>$hasMultipleY,
@@ -127,7 +133,9 @@ class DefaultController extends AbstractController
                     'color3'=>$color3,
                     "width"=>$width,
                     "height"=>$height,
-                    "labelY"=>$labelY
+                    "labelY"=>$labelY,
+                    "graphBackgroundColor"=>$graphBackgroundColor,
+                    "showTitles"=>$showTitles,
 
 
             ]);

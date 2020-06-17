@@ -3,19 +3,18 @@
 {% block stylesheets %}
 <style>
     #myChart{
-
         margin-top: 20px;
         margin-left: 50px;
         /*width:800px !important;*/
         /*height:800px !important;*/
-        background-color: white !important;
+        background-color: white ;
 
     }
-    #bar,#line,#pie,#doughnut:hover{
+    #bar,#line,#pie,#radar,#horizontalBar,#doughnut:hover{
         cursor: pointer;
 
     }
-    #bar,#line,#pie,#doughnut{
+    #bar,#line,#pie,#doughnut,#radar,#horizontalBar{
        color:#0d70f2
 
     }
@@ -26,7 +25,7 @@
 </style>
 {% endblock %}
 {% block content %}
-    <div class="row" style="margin-top: 50px">
+    <div class="row" style="margin-top: 20px">
 {#        <div class="offset-3 col-md-9">#}
 {#           <h3 style="margin-left: 40px;font-weight: bold">{{ graphicTitle }}</h3>#}
 {#       </div>#}
@@ -51,6 +50,8 @@
            <a id="pie"  style="margin-left: 10px">Pie</a>
            <a id="line" style="margin-left: 10px">Line</a>
            <a id="doughnut" style="margin-left: 10px">Doughnut</a>
+           <a id="radar" style="margin-left: 10px">Radar</a>
+           <a id="horizontalBar" style="margin-left: 10px">Horizontal Bar</a>
        </p>
     </div>
     <br><div class="row buttons" style="margin-left: 40px;">
@@ -102,6 +103,7 @@
         var showValues='{{ showValues }}';
         var type='{{ type }}';
         var showGrid='{{ showGrid }}';
+        var gridColor='{{ gridColor }}';
         var countDataExtra='{{ dataExtra|length }}';
 
         var countColors='{{axe2|json_encode()|raw}}';
@@ -130,13 +132,17 @@
 
         var border='{{ border }}'
         var roundCorner='{{ roundCorner }}'
+        var graphBackgroundColor='{{ graphBackgroundColor }}'
 
+        if(graphBackgroundColor){
+            $('#myChart').css('backgroundColor',graphBackgroundColor)
 
+        }
 
 
         if(border){
             $('#myChart').css('border','1px black solid')
-            $('#myChart').css('padding','20px 40px')
+            $('#myChart').css('padding','30px 40px 30px 5px')
         }
          else{
             $('.buttons').css('margin-left','65px')
@@ -220,7 +226,7 @@
     });
 
         $( document ).ready(function() {
-            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',border:'{{ border }}',roundCorner:'{{ roundCorner }}',color:'{{ color }}',width:'{{ width }}',height:'{{ height }}',labelY:'{{ labelY }}'};
+            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',border:'{{ border }}',roundCorner:'{{ roundCorner }}',color:'{{ color }}',width:'{{ width }}',height:'{{ height }}',labelY:'{{ labelY }}',graphicTitleColor:'{{ graphicTitleColor }}',gridColor:'{{ gridColor }}',graphBackgroundColor:'{{ graphBackgroundColor }}',showXY:'{{ showTitles }}'};
             const ar1='{{axeX|json_encode()|raw}}';
             const ar2='{{axeY|json_encode()|raw}}';
             const axe1='{{axe1|json_encode()|raw}}';
@@ -274,6 +280,12 @@
         $("#doughnut").click(function() {
             change('doughnut');
         });
+        $("#radar").click(function() {
+            change('radar');
+        });
+        $("#horizontalBar").click(function() {
+            change('horizontalBar');
+        });
         function parseArray(ar2) {
             var az = []
 
@@ -322,7 +334,7 @@
                     [{
                         {#data: ({{axeY|json_encode()|raw}}),#}
                         data: parseArray(ar2),
-                        backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie" && newChartType!=="doughnut" ?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                        backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie" && newChartType!=="doughnut" ?'{{color}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                         {#borderColor: '{{color}}',#}
                         fill:  newChartType!=="line"  ?true:false,
                         borderColor: newChartType==="line"?'{{ color }}':false,
@@ -338,7 +350,7 @@
                             label: '{{labelY}}',
                             // label: false,
                             id: "y-axis-10",
-                            backgroundColor:  newChartType!=="pie" && newChartType!=="doughnut"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            backgroundColor:  newChartType!=="pie" && newChartType!=="doughnut"?'{{color}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                             {#backgroundColor:  newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],#}
                             {#data: ({{axeY|json_encode()|raw}}),#}
                             data: parseArray(ar2),
@@ -356,7 +368,7 @@
                             type: newChartType,
                             label: titles1,
                             id: "y-axis-20",
-                            backgroundColor:  newChartType!=="pie" && newChartType!=="doughnut" ?'{{color1}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            backgroundColor:  newChartType!=="pie" && newChartType!=="doughnut" ?'{{color1}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                             {#backgroundColor: newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
                             {#data: ({{ axe1|json_encode()|raw }}),#}
                             data: parseArray(axe1),
@@ -372,7 +384,7 @@
                                 type: newChartType,
                                 label: titles2,
                                 id: "y-axis-30",
-                                backgroundColor: newChartType!=="pie" && newChartType!=="doughnut" ?'{{color2}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                                backgroundColor: newChartType!=="pie" && newChartType!=="doughnut" ?'{{color2}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                                 {#backgroundColor:  newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],#}
                                 {#data: ({{ axe2|json_encode()|raw }}),#}
                                 data: parseArray(axe2),
@@ -388,7 +400,7 @@
                         type: newChartType,
                         label: titles3?titles3:null,
                         id: "y-axis-40",
-                        backgroundColor: newChartType!=="pie" && newChartType!=="doughnut"?'{{color3}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                        backgroundColor: newChartType!=="pie" && newChartType!=="doughnut"?'{{color3}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                         {#backgroundColor: newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
                         {#data: ({{axe3|json_encode()|raw}}),#}
                         data: parseArray(axe3),
@@ -440,9 +452,7 @@
 
                         function () {
                             if (showValues) {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-
+                                var chartInstance = this.chart, ctx = chartInstance.ctx;
                                 ctx.font = Chart.helpers.fontString(14, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                                 ctx.fillStyle = '#777';
                                 ctx.textAlign = 'center';
@@ -454,35 +464,22 @@
                                         meta.data.forEach(function (bar, index) {
                                             var data = dataset.data[index];
                                             ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                                            if(newChartType!=="radar"){
+                                                ctx.fillStyle = '#454341';
+                                            }
+                                            else{
+                                                ctx.fillStyle = '#555'
+                                            }
+                                            ctx.fontStyle="bold"
 
                                         });
                                     });
                                 }
                                 else {
-                                    for (var i = 0; i <this.data.datasets.length; i++) {
-                                                    console.log(this.data.datasets[i])
-                                                    console.log('rrr')
-                                       var model = this.data.datasets[i]._meta[Object.keys(this.data.datasets[i]._meta)[0]].data[i]._model,
-                                            total = this.data.datasets[i]._meta[Object.keys(this.data.datasets[i]._meta)[0]].total,
-                                            mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
-                                            start_angle = model.startAngle,
-                                            end_angle = model.endAngle,
-                                            mid_angle = start_angle + (end_angle - start_angle)/2;
+                                    var dd=this.data.datasets;
+                                    var ee=dd.reverse();
 
-                                        var x = mid_radius * Math.cos(mid_angle);
-                                        var y = mid_radius * Math.sin(mid_angle);
-                                        if(this.data.datasets[i].label !=undefined){
-                                            console.log(this.data.datasets[i].label)
-                                            console.log('this.data.datasets[i].label')
-                                            ctx.fillText(this.data.datasets[i].label, 244+x , 322+y);
-                                            ctx.fillStyle = '#ff0000';
-                                            ctx.fontStyle="bold"
-                                        }
-                                    }
-                                    this.data.datasets.forEach(function (dataset) {
-                                        // if(dataset.label !=undefined){
-                                        //     ctx.fillText(dataset.label, 355 , 322);
-                                        // }
+                                    ee.forEach(function (dataset) {
 
                                         for (var i = 0; i < dataset['data'].length; i++) {
                                             var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
@@ -492,32 +489,50 @@
                                                 end_angle = model.endAngle,
                                                 mid_angle = start_angle + (end_angle - start_angle)/2;
 
+
                                             var x = mid_radius * Math.cos(mid_angle);
                                             var y = mid_radius * Math.sin(mid_angle);
 
-                                            ctx.fillStyle = '#454341';
-                                            ctx.fontStyle="bold"
-                                            if (i == 3){ // Darker text color for lighter background
-                                                ctx.fillStyle = '#454341';
-                                                ctx.fontStyle="bold"
-                                            }
+                                            // if (i == 3){ // Darker text color for lighter background
+                                            //     ctx.fillStyle = '#454341';
+                                            //     ctx.fontStyle="bold"
+                                            // }
                                             var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
                                             //Don't Display If Legend is hide or value is 0
                                             if(dataset['data'][i] !== 0) {
                                                 ctx.fillText(dataset.data[i], model.x + x, model.y + y);
                                                 // ctx.fillText(dataset.label, model.x+i*10 , model.y+i*10);
-                                                console.log(model.x)
-                                                console.log(model.y)
-                                                console.log('model.x')
+
                                                 // Display percent in another line, line break doesn't work for fillText
                                                 //   ctx.fillText(percent, model.x + x, model.y + y + 15);
 
                                             }
                                         }
+                                        console.log("ee")
+                                        console.log(ee)
+                                        for (var j = 0; j <ee.length; j++) {
+                                            var  mid_radius1 = 110, mid_angle1 = -1.18;
+                                            var x1 = mid_radius1 * Math.cos(mid_angle1);
+                                            var y1 = mid_radius1 * Math.sin(mid_angle1);
+                                            if(ee[j].label !==undefined && ee[j].label){
+
+                                                if(newChartType==="pie"){
+                                                    ctx.fillText(ee[j].label, 300+x1+j*-45 , 390+y1+j*-10);
+                                                }
+                                                else{
+                                                    ctx.fillText(ee[j].label, 190+x1+j*-5 , 360+y1+j*35);
+                                                }
+                                                ctx.fillStyle = '#111';
+                                                ctx.fontStyle="bold"
+                                            }
+                                        }
                                     });
+
                                 }
+
                             }
                         }
+
                 },
                 tooltips: {
                     callbacks: {
@@ -530,56 +545,58 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            display: newChartType!=="pie"  && newChartType!=="doughnut"? true:false,
+                            display: newChartType!=="pie"  && newChartType!=="doughnut" && newChartType!=="radar"? true:false,
                             beginAtZero: true,
                             fontSize: 15,
                             fontStyle:"bold"
                         },
                         scaleLabel: {
-                            display: newChartType!=="pie"  && newChartType!=="doughnut"?true:false,
+                            display: newChartType!=="pie"  && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             // display: true,
-                            labelString: '{{titleY}}',
+                            labelString: '{{ showTitles }}'? '{{titleY}}':'',
                             fontSize:20,
                             padding:20,
                             fontStyle:"bold"
                         },
                         gridLines:{
-                            display: newChartType!=="pie" && newChartType!=="doughnut" ?true:false,
+                            display: newChartType!=="pie" && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             // color:"rgb(32, 35, 11)",
-                            borderDash: [8, 4],
-                            color:showGrid?"#C0C0C0":null,
+                            borderDash: [0, 0],
+                            lineHeight:2,
+                            color:showGrid==="horizental" || showGrid==="both"?gridColor:null,
 
                         }
                     }],
                     xAxes: [{
                         ticks: {
-                            display: newChartType!=="pie" && newChartType!=="doughnut"?true:false,
+                            display: newChartType!=="pie" && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             fontSize: 15,
                             fontStyle:"bold"
                         },
                         scaleFontSize: 40,
                         scaleLabel: {
-                            display: newChartType!=="pie"  && newChartType!=="doughnut"?true:false,
+                            display: newChartType!=="pie"  && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             // display: true,
-                            labelString: '{{titleX}}',
+                            labelString: '{{ showTitles }}'? '{{titleX}}':'',
                             fontSize:20,
                             padding:20,
                             fontStyle:"bold"
                         },
                         gridLines:{
-                            display: newChartType!=="pie" && newChartType!=="doughnut" ?true:false,
+                            display: newChartType!=="pie" && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             //display:false,
-                            borderDash: [8, 4],
-                            color:showGrid?"#C0C0C0":null,
+                            borderDash: [0, 0],
+                            color:showGrid==="vertical" || showGrid==="both"?gridColor:null,
 
                         }
                     }]
                 },
                 title: {
                     fontSize: 29,
-                    padding: 50,
+                    padding: 40,
                     display: true,
-                     text: '{{graphicTitle}}'
+                     text: '{{graphicTitle}}',
+                    fontColor:'{{ graphicTitleColor }}'
                 }
             }
             return options
