@@ -140,7 +140,7 @@
             {{ form_label(form.height, null, {  'label_attr': {'class': 'cee widthLabel'} }) }}<br><br><br>
             {{ form_label(form.showGrid, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
             {{ form_label(form.gridColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-            <div style="margin-top: 20px" class="checkData">{{ form_widget(form.titleXAndY)}}</div><br><br><br>
+            <div style="margin-top: 20px" class="checkData">{{ form_widget(form.titleXAndY, {'attr' : attr})}}</div><br><br><br>
 
 {#             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>#}
 {#            {% set attr = {'checked' :true} %}#}

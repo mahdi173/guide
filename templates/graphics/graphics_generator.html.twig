@@ -170,7 +170,7 @@
         var canvas = document.getElementById('myChart');
         var ctx = canvas.getContext('2d');
         ctx.globalCompositeOperation = 'destination-over';
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = '{{ graphBackgroundColor }}';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         var image = document.getElementById("myChart").toDataURL("image/png",1).replace("image/png", "image/octet-stream");
         $("#downloadPic").attr("href", image);
@@ -183,7 +183,9 @@
             var canvas = document.getElementById('myChart');
             var ctx = canvas.getContext('2d');
             ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = 'white';
+            console.log('{{ graphBackgroundColor }}')
+            console.log(' graphBackgroundColor ')
+            ctx.fillStyle = '{{ graphBackgroundColor }}';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             var image = document.getElementById("myChart").toDataURL("image/jpeg",1).replace("image/jpeg", "image/octet-stream");
             $("#downloadJpg").attr("href", image);
@@ -196,7 +198,7 @@
             var c = document.getElementById("myChart");
             var ctx = c.getContext("2d");
             ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = 'white';
+            ctx.fillStyle = '{{ graphBackgroundColor }}';
             ctx.fillRect(0, 0, c.width, c.height);
 
            CanvasToTIFF.toObjectURL(c, function(url) {
@@ -219,7 +221,9 @@
         var canvas = document.getElementById('myChart');
         var canvasImg = canvas.toDataURL("image/png", 1);
         var doc = new jsPDF('landscape');
+       doc.setFillColor(50, 79,122,0);
         doc.setFontSize(20);
+        canvasImg.backgroundColor = "#000";
         doc.addImage(canvasImg, 'PNG', 10, 30, 280, 150 );
         var title='{{graphicTitle}}';
         doc.save(title+'.pdf');
@@ -593,7 +597,8 @@
                 },
                 title: {
                     fontSize: 29,
-                    padding: 40,
+                    paddingBottom: 40,
+                    marginTop: -40,
                     display: true,
                      text: '{{graphicTitle}}',
                     fontColor:'{{ graphicTitleColor }}'
