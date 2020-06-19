@@ -71,6 +71,31 @@
         </div>
 
         <div class="row">
+            <div class="col-md-12 mt-5 mb-2">
+
+                <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3 float-right ">Submit Your Article</a>
+
+                {% for item in sulu_navigation_root_tree('member') %}
+
+                    {% if (item.title== 'Conference')%}
+                        {% set page='conference' %}
+                        <a href="{{ sulu_content_path(item.url, item.webspaceKey, page) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add conference</a>
+                    {% endif %}
+
+                {% endfor %}
+
+                {% for item in sulu_navigation_root_tree('member') %}
+
+                    {% if (item.title== 'Journal')%}
+                        <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add journal</a>
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="row">
             <h4 class="mb-n2 mt-5 text-primary" ><b>Recent articles</b></h4>
             <hr class="col-md-12 bg-primary" style="height:2px">
         </div>

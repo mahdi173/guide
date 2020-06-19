@@ -12,17 +12,9 @@
 
 {% block content %}
 
-    <div class="row  mb-3">
+    <div class="row">
         <div class="col-md-2 col-sm-1"></div>
         <div class="col-md-8 mt-5 mb-5">
-            <div class="border border-primary rounded">
-                <p class="text-primary pt-3 pb-1 pl-3 pr-3">
-                    Search more than 10 million authors from all countries, and follow, share, and discuss their researches. We're guided by our mission to help and connect authors and make research open to all.
-                </p>
-            </div>
-            <form class="mt-4" method="get" action="{{ url('get_authors') }}">
-                <h2 class="text-primary">Search for an author profile</h2>
-        <div class="col-md-7 mt-5 mb-5">
             <form method="get" action="{{ url('get_authors') }}">
 
                 <div class="input-group mb-3">
@@ -33,243 +25,112 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-3 col-sm-1"></div>
+        <div class="col-md-2 col-sm-1"></div>
     </div>
+    <div class="row">
+        <div class="col-md-12 mt-5 mb-5">
 
-    <div class="row ">
-
-        <div class="col-md-1  mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" /></div>
-        <div class="col-md-6  mb-2" style="margin-left: 70px;padding-top: 20px;">
-            <h5 class="text-primary">{{ auteur }}</h5>
-           {% set followers_count= followers_profile.followers(auteur)|length %}
-
-           <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ followers_count }}  followers</span>
-
-
-            <span class="stat_info">  {% if author_db %}{{author_db.follows|length }} {% else%} 0 {% endif %}following</span></p>
-        </div>
-
-        <div class="offset-1 col-md-2  mb-2" style="padding-left: 70px;padding-top: 20px;">
-            {% if app.user %}
-            {% set  follows=app.user.follows.values%}
-
-            {% set  count=0%}
-
-            {% for follow in follows %}
-                {% if follow.following == auteur %}
-                    {% set count=count+1%}
-                {% endif %}
-            {% endfor %}
-            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route')}) }}" class="btn btn-primary follow follow-btn" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
-        </div>
-    </div>
-
-<div class="row" style="margin-top: 30px">
-    <div class="col-md-12 mt-3 mb-5">
-
-        <table class="table table-hover table-bordered table-publication" data-toggle="table" data-striped="true">
-            <thead class="table-light">
-            <tr  class="table-light">
-
-                <th colspan="8">Title</th>
-                <th>Year</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if data_doaj| length >0 %}
-                {% for result in data_doaj.results %}
-                    <tr>
-                        <td colspan="8" class="w-70 border-0 mb-n5">
-                            <p class="font-weight-bold text-primary">
-                                {% for l in result.bibjson.link %}
-
-{#                                    {% for s in result.bibjson.journal.issns %}#}
-{#                                        {% for ds in dataissn.printissn %}#}
-{#                                        {% if (ds == s|replace({'-':''})) %}#}
-{#                                            {{ dump(ds) }}#}
-{#                                        {% endif %}#}
-{#                                            {% endfor %}#}
-{#                                    {% endfor %}#}
-
-                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
-
-                                   {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
-                                {% endfor %}
-                            </p>
-                            <p class="font-weight-light text-muted mt-n3">
-                                <small>Authors :
-                                    {% for a in result.bibjson.author[:30] %}
-                                        <a href="{{ path('get_authors_publication', {auteur: a.name}) }}"> {{ a.name }} </a>
-                                        {% if not loop.last %}, {% endif %}
+            <table class="table" data-toggle="table" data-striped="true">
+                <thead>
+                <tr class="table-active">
+                    <th colspan="8">Title</th>
+                    <th>Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if data_doaj| length >0 %}
+                    {% for result in data_doaj.results %}
+                        <tr>
+                            <td colspan="8" class="w-70 border-0 mb-n5">
+                                <p class="font-weight-bold text-primary">
+                                    {% for l in result.bibjson.link %}
+                                        {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
                                     {% endfor %}
-                                </small></p>
-                            <p class="font-weight-light text-muted mt-n4 mb-n3">
-                                <small>
-                                    {% if result.bibjson.identifier| length >0 %}
-                                    {% for d in dataissn %}
-
-                                        {% for iss in result.bibjson.journal.issns %}
-                                            {#                                            {{ dump(iss) }}#}
-
-                                            {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
-                                                <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"> {{ result.bibjson.journal.title }}</a>
-
-                                            {% endif %}
+                                </p>
+                                <p class="font-weight-light text-muted mt-n3">
+                                    <small>Authors :
+                                        {% for a in result.bibjson.author[:30] %}
+                                            <a href="{{ path('get_authors_publication', {auteur: a.name}) }}"> {{ a.name }} </a>
+                                            {% if not loop.last %}, {% endif %}
                                         {% endfor %}
+                                    </small></p>
+                                <p class="font-weight-light text-muted mt-n4 mb-n3">
+                                    <small>
+                                        {% if result.bibjson.identifier| length >0 %}
+                                        {% for d in dataissn %}
+
+                                            {% for iss in result.bibjson.journal.issns %}
+                                                {#                                                                                        {{ dump(iss) }}#}
+
+                                                {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
+                                                    <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"> {{ result.bibjson.journal.title }}</a>
+
+                                                {% endif %}
+                                            {% endfor %}
                                         {% else %}
                                             {{ result.bibjson.journal.title }}
-                                    {% endfor %}
-
-                                    {% endif %},
-                                    {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
-                                    {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
-                                    Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
-                                    {% for d in dataissn %}
-
-                                        {% for iss in result.bibjson.journal.issns %}
-{#                                            {{ dump(iss) }}#}
-
-                                            {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
-                                                <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"><span class="badge badge-primary">Verified by </span> <img src="{{ asset('assets/images/logo1.png') }}"  class="rounded" title="Guidejournal" alt="Guidejournal" height="20" width="20"></a>
-
-                                            {% endif %}
                                         {% endfor %}
-                                    {% endfor %}
-                                </small>
-                            </p>
-                        </td>
-                        <td class="border-0">
-                            {% if result.bibjson.year is defined %}
-                            {{ result.bibjson.year }}
 
-                            {% endif%}
-                        </td>
-                    </tr>
-                {% endfor %}
+                                        {% endif %},
+                                        {% if result.bibjson.journal.number is defined %}{{ result.bibjson.journal.number }}{% endif %}
+                                        {% if result.bibjson.journal.volume is defined %}({{ result.bibjson.journal.volume }}){% endif %},
+                                        Pages :{% if result.bibjson.start_page is defined %}{{ result.bibjson.start_page }}{% endif %}{% if result.bibjson.end_page is defined %}-{{ result.bibjson.end_page }}{% endif %}
+                                        {% for d in dataissn %}
 
-            {% endif %}
-            {% if data_dblp| length >0 %}
-                {% for res in data_dblp  %}
-                    <tr>
-                        <td colspan="8" class="w-70 border-0 mb-n5">
-                            <p class="font-weight-bold text-primary"><a href="{{ res.info.url }}" target="_blank"> {{ res.info.title }} </a></p>
-                            <p class="font-weight-light text-muted mt-n3">
-                                <small>Authors :
-                                    {% for a in res.info.authors.author %}
-                                        <a href="{{ path('get_authors_publication', {auteur: a.text}) }}"> {{ a.text }} </a>
-                                        {% if not loop.last %}, {% endif %}
-                                    {% endfor %}
-                                </small></p>
-                            <p class="font-weight-light text-muted mt-n4 mb-n3">
-                                <small>
-                                    {% if res.info.venue is defined %}
-                                        {% for v in res.info.venue %}
-                                            {{ v }}
+                                            {% for iss in result.bibjson.journal.issns %}
+                                                {#                                            {{ dump(iss) }}#}
+
+                                                {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
+                                                    <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"><span class="badge badge-primary">Verified by </span> <img src="{{ asset('assets/images/logo1.png') }}"  class="rounded" title="Guidejournal" alt="Guidejournal" height="20" width="20"></a>
+
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endif %},
-                                    {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
-                                    {% if res.info.volume is defined %}({{ res.info.volume }}),
-                                        {% if res.info.pages is defined %}Pages :{{ res.info.pages }}{% endif %}{% endif %}
-                                </small>
-                            </p>
-                        </td>
-                        <td class="border-0">{{ res.info.year }}</td>
-                    </tr>
-                {% endfor %}
-{#            {% else %}#}
-{#                    <tr>#}
-{#                        <td colspan="9">no results fzound</td>#}
-{#                    </tr>#}
-            {% endif %}
-            {% if data_doaj| length ==0 and data_doaj| length%}
-            <tr>
-                <td colspan="9">no results found</td>
-           </tr>
-            {% endif %}
-            </tbody>
-        </table>
-    </div>
-    <div class="offset-0 col-md-3 mt-3" style="border: solid 2px #e6e6e6;">
-        <table class="table">
-            <tr>
-                <th class="header">Top co-authors
-{#                    <a href="{{ path('co_authors_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> #}
-{#                        <strong style="float: right">View all</strong>#}
-{#                    </a>#}
-                </th>
-            </tr>
-            <tr>
+                                    </small>
+                                </p>
+                            </td>
+                            <td class="border-0">{{ result.bibjson.year }}</td>
+                        </tr>
+                    {% endfor %}
 
-                <td>
-                    {% if co_authors|length>0  %}
-                        {% for author in co_authors|slice(0,3) %}
-                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
-                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> {{ author}}<br>
-                            </a>
-                        {% endfor %}
-                    {% else %}
-                        <span style="padding-top: 20px"> No co-authors </span>
-                    {% endif %}
-                </td>
-
-            <tr>
-
-            <tr>
-                <th class="header">  {% if author_db %}
-                    Following ({{author_db.follows|length  }})
-                    <a href="{{ path('following_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
-
+                {% endif %}
+                {% if data_dblp| length >0 %}
+                    {% for res in data_dblp  %}
+                        <tr>
+                            <td colspan="8" class="w-70 border-0 mb-n5">
+                                <p class="font-weight-bold text-primary"><a href="{{ res.info.url }}" target="_blank"> {{ res.info.title }} </a></p>
+                                <p class="font-weight-light text-muted mt-n3">
+                                    <small>Authors :
+                                        {% for a in res.info.authors.author %}
+                                            <a href="{{ path('get_authors_publication', {auteur: a.text}) }}">{{ a.text }}</a>
+                                            {% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </small></p>
+                                <p class="font-weight-light text-muted mt-n4 mb-n3">
+                                    <small>
+                                        {% if res.info.venue is defined %}
+                                            {% for v in res.info.venue %}
+                                                {{ v }}
+                                            {% endfor %}
+                                        {% endif %},
+                                        {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
+                                        {% if res.info.volume is defined %}({{ res.info.volume }}),
+                                            {% if res.info.pages is defined %}Pages :{{ res.info.pages }}{% endif %}{% endif %}
+                                    </small>
+                                </p>
+                            </td>
+                            <td class="border-0">{{ res.info.year }}</td>
+                        </tr>
+                    {% endfor %}
                 {% else %}
-                    Following (0){% endif %}
-                </th>
-            </tr>
-            <tr>
-
-                <td>
-                    {% if author_db and author_db.follows.values|length >0 %}
-                        {% for follow in author_db.follows.values|slice(0,3) %}
-                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
-                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
-                                {{ follow.following }}
-                            </a>
-                            <br>
-                        {% endfor %}
-                    {% else %}
-                        <span style="padding-top: 20px">No following </span>
-                    {% endif %}
-                </td>
-            </tr>
-
-
-                {% set followers=followers_profile.followers(auteur) %}
-                <th class="header">Followers ({{ followers|length }})
-                    {% if author_db %}
-                         <a href="{{ path('followers_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
-                    {% endif %}
-                </th>
-            </tr>
-           <tr>
-               <td>
-                   {% if followers|length>0  %}
-                       {% for follower in followers|slice(0,3) %}
-                           {% if follower.fullName and follower.fullName !=""  %}
-                           <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
-                               <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.fullName  }}<br>
-                           </a>
-
-                           {% else %}
-                               <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.username  }}<br>
-
-                       {% endif %}
-                       {% endfor %}
-                   {% else %}
-                       <span style="padding-top: 20px"> No followers </span>
-                   {% endif %}
-               </td>
-           </tr>
-        </table>
+                    <tr>
+                        <td colspan="9">no results found</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
 
 
