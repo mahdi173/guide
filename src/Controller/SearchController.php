@@ -400,8 +400,8 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
     public function advanced_search_params(){
 
 
-        $data_t_scopus = array();
-        $data_reuters = array();
+        $data_t_scopus = null;
+        $data_reuters = null;
         $data_t_advanced_scopus = null;
         $data_advanced_reuters = null;
         $categories=null;
@@ -610,5 +610,56 @@ return $this->render('default/searchV.html.twig', [
     'show_ad'=>$show_advanced
 
 ]);
+    }
+
+    /**
+     * Lists all data_t_scopus entities for one publisher or subject area or quartlle.
+     *
+     * @Route("/search_journal_query", name="search_journals_for_scopus")
+     */
+    public function search_journal_for(Request $request)
+    {
+        $emS = $this->getDoctrine()->getManager();
+        $em = $this->entityManager->getRepository(DataTScopus::class);
+
+        $data_t_scopus = array();
+        $data_reuters=null;
+        $objet = new Search();
+        $val="";
+        if ($request->get("quartile")) {
+
+
+            $val = $request->get("quartile");
+            $data_t_scopus = $em->selectByQuartlle($emS, $val);}
+        else if ($request->get("subject_area")) {
+
+
+            $val = $request->get("subject_area");
+            $data_t_scopus = $em->selectOneSubjectarea($emS, $val);}
+        else if ($request->get("publisher")) {
+
+
+            $val = $request->get("publisher");
+            $data_t_scopus = $em->selectonepublisher($emS, $val);}
+
+
+            $pagination=0;
+            if(!is_null($data_t_scopus) && is_iterable($data_t_scopus)){
+                $pagination = $this->paginator->paginate(
+                    $data_t_scopus, /* query NOT result */
+                    $request->query->getInt('page', 1), /*page number*/
+                    20 /*limit per page*/
+                );
+            }
+
+
+        return $this->render('default/searchV.html.twig', [
+
+            'data_t_scopus' => $data_t_scopus,
+
+            'data_reuter' => $data_reuters,
+            'pagination'=>$pagination,
+
+        ]);
     }
 }

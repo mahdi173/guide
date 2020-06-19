@@ -28,6 +28,9 @@
   color:#555;
 
     }
+    .widthLabel{
+        margin-top: 11px
+    }
     .titleBold{
 
      font-weight:bold;
@@ -114,33 +117,42 @@
     <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px">
     <div class="col-md-2">
         {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
-        {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.titleColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+        {{ form_label(form.graphBackgroundColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
 {#       {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}#}
         {% set attr = {'checked' :true} %}
-        <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
+        <div style="margin-top: 15px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
     </div>
      <div class="col-md-3">
-        {{ form_widget(form.type)}}<br><br>
+        {{ form_widget(form.type)}}<br>
+        {{ form_widget(form.titleColor)}}<br><br>
         {{ form_widget(form.titleX)}}<br>
         {{ form_widget(form.width)}}<br><br>
-         <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>
+        {{ form_widget(form.graphBackgroundColor)}}<br><br><br>
+         <div style="margin-top: -15px" class="checkData">{{ form_row(form.roundCorners)}}</div>
 
     </div>
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
             {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
-            {{ form_label(form.height, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            {{ form_label(form.height, null, {  'label_attr': {'class': 'cee widthLabel'} }) }}<br><br><br>
+            {{ form_label(form.showGrid, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            {{ form_label(form.gridColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            <div style="margin-top: 20px" class="checkData">{{ form_widget(form.titleXAndY, {'attr' : attr})}}</div><br><br><br>
 
-             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
+{#             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>#}
 {#            {% set attr = {'checked' :true} %}#}
 {#             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>#}
         </div>
         <div class="col-md-4">
             {{ form_widget(form.graphicTitle)}}<br>
             {{ form_widget(form.titleY)}}<br>
-            {{ form_widget(form.height)}}<br><br>
-            <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
+            {{ form_widget(form.height)}}<br>
+            {{ form_widget(form.showGrid)}}<br><br>
+            {{ form_widget(form.gridColor)}}<br><br>
+            <div style="margin-top: 20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
 {#            <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>#}
         </div>
     </div>
@@ -266,8 +278,13 @@
                     $("#graphic_data_titleX").val(arrayData.titleX);
                     $("#graphic_data_titleY").val(arrayData.titleY);
                     $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
+                    $("#graphic_data_titleColor").val(arrayData.graphicTitleColor)
                     $("#graphic_data_color").val(arrayData.color);
                     $("#graphic_data_labelY").val(arrayData.labelY);
+                    $("#graphic_data_showGrid").val(arrayData.showGrig);
+                    $("#graphic_data_gridColor").val(arrayData.gridColor);
+                    $("#graphic_data_graphBackgroundColor").val(arrayData.graphBackgroundColor);
+                    $("#graphic_data_titleXAndY").val(arrayData.showXY);
 
                     $("#graphic_data_width").val(arrayData.width)
                     $("#graphic_data_height").val(arrayData.height);
@@ -275,9 +292,11 @@
                     var showValues=arrayData.showValues
                     var border=arrayData.border
                     var roundCorner=arrayData.roundCorner
-                    if(showGrig){
-                         $("#graphic_data_showGrid").prop( "checked", true );
-                    }
+                    var gridColor=arrayData.gridColor
+                    var showTitles=arrayData.showXY
+                    // if(showGrig){
+                    //      $("#graphic_data_showGrid").prop( "checked", true );
+                    // }
                     if(showValues){
                          $("#graphic_data_showValues").prop( "checked", true );
                     }
@@ -289,6 +308,9 @@
                     }
                     if(roundCorner){
                         $("#graphic_data_roundCorners").prop( "checked", true );
+                    }
+                    if(showTitles){
+                        $("#graphic_data_titleXAndY").prop( "checked", true );
                     }
 
                     var text1=document.getElementById("graphic_data_dataX");
@@ -552,6 +574,11 @@
         }
 
         /****************************************************************************/
+            $('#graphic_data_showGrid').on('change', function() {
+                if( this.value ==="none"){
+                    $("#graphic_data_gridColor").val("#000000");
+                }
+            });
 })
 
     </script>

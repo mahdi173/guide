@@ -31,6 +31,8 @@ class GraphicDataType extends AbstractType
                     'Pie'=>'pie',
                     'Line'=>'line',
                     'Doughnut'=>'doughnut',
+                    'Radar'=>'radar',
+                    'Horizontal Bar'=>'horizontalBar',
                 ],
 //                'icon' => 'fa-bug',
             ])
@@ -90,9 +92,18 @@ class GraphicDataType extends AbstractType
                 'required'=>false,
               //  'attr'=>['checked'=>"checked","value"=>"1"]
             ])
-            ->add('showGrid',CheckboxType::class,[
-                'required'=>false,
-                'attr'=>['class'=>"showGrid"]
+//            ->add('showGrid',CheckboxType::class,[
+//                'required'=>false,
+//                'attr'=>['class'=>"showGrid"]
+//            ])
+            ->add('showGrid',ChoiceType::class,[
+                'choices'=>[
+                    'None'=>'none',
+                    'Horizental'=>'horizental',
+                    'Vertical'=>'vertical',
+                    'Both'=>'both',
+                ],
+                  'attr'=>['class'=>"showGrrid"]
             ])
             ->add('border',CheckboxType::class,[
                 'required'=>false,
@@ -109,6 +120,19 @@ class GraphicDataType extends AbstractType
             ->add('height',IntegerType::class,[
                 'required'=>false,
                 'attr'=>['value'=>"500",'min'  => 0]
+            ])
+            ->add('titleColor',ColorType::class,[
+                'attr'=>['class'=>""]
+            ])
+            ->add('gridColor',ColorType::class,[
+                'attr'=>['class'=>""]
+            ])
+            ->add('graphBackgroundColor',ColorType::class,[
+                'attr'=>['class'=>"",'value'=>"#ffffff"]
+            ])
+            ->add('titleXAndY',CheckboxType::class,[
+                'required'=>false,
+                //  'attr'=>['checked'=>"checked","value"=>"1"]
             ])
         ;
     }
