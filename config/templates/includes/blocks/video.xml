@@ -1,0 +1,24 @@
+<properties xmlns="http://schemas.sulu.io/template/template"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <block name="blocks" default-type="video">
+        <types>
+            <type name="video">
+                <meta>
+                    <title lang="en">video</title>
+                </meta>
+
+                <properties>
+                    <property name="video" type="text_line">
+                        <meta>
+                            <title lang="en">Youtube link</title>
+                            <title lang="fr">Lien youtube</title>
+                        </meta>
+
+                        <tag name="sulu_article.youtube_link"/>
+                    </property>
+                </properties>
+            </type>
+        </types>
+    </block>
+</properties>

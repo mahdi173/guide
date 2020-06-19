@@ -55,6 +55,20 @@
             </meta>
         </property>
 
+        <block name="blocks" default-type="text" minOccurs="0">
+            <meta>
+                <title lang="en">Content</title>
+            </meta>
+
+            <types>
+                <xi:include href="../includes/blocks.xml"
+                            xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)xpointer(/sulu:properties/sulu:block/sulu:types/*)"/>
+
+                <xi:include href="../includes/blocks/similar-articles.xml"
+                            xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)xpointer(/sulu:properties/sulu:block/sulu:types/sulu:type)"/>
+            </types>
+        </block>
+
        <property name="image" type="single_media_selection">
             <meta>
                 <title lang="en">Image</title>
