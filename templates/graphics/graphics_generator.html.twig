@@ -38,6 +38,9 @@
         padding: 20px;
         border-radius: 10px;
     }
+    .framData .col-md-4{
+        padding-top: 20px;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -60,15 +63,19 @@
                 <input type="text" value="{{ titleX }}"  class="form-control newAxeX">
             </div>
             <div class="form-group form-inline">
-                <label>Axe y </label>
+                <label>Axe Y </label>
                 <input type="text" value="{{ titleY }}" class="form-control newAxeY">
+            </div>
+            <div class="form-group form-inline">
+                <label>Width</label>
+                <input type="number" value="{{ width }}" class="form-control newWidth">
             </div>
         </div>
         <div class=" col-md-4" style="margin-left: -40px">
 
             <div class="form-group form-inline axe1">
                 <label >Grid Line</label>
-                                <select class="selectGrid form-control input-lg">
+                                <select class="selectGrid form-control input-lg" id="graph_gridLine" style="width: 60%">
                                     <option value="none">None</option>
                                     <option value="horizental">Horizental</option>
                                     <option value="vertical">Vertical</option>
@@ -78,34 +85,49 @@
             </div>
             <div class="form-group form-inline axe3">
                 <label>Graph Type </label>
-                <input type="text" value="{{ type }}" class="form-control">
+{#                <input type="text" value="{{ type }}" class="form-control">#}
+                <select id="graphic_edit_type" class="form-control" style="width: 60%">
+                    <option value="bar">Bar</option>
+                    <option value="pie">Pie</option>
+                    <option value="line">Line</option>
+                    <option value="doughnut">Doughnut</option>
+                    <option value="radar">Radar</option>
+                    <option value="horizontalBar">Horizontal Bar</option>
+                </select>
             </div>
             <div class="form-group form-inline axe3">
-                <label>Width,height </label>
-                <input type="text" value="{{ width }} x {{ height }}" class="form-control">
+                <label>Height </label>
+                <input type="number" value="{{ height }}" class="form-control newHeight" style="margin-left: 35px">
+            </div>
+            <div class="form-group form-inline axe3">
+                <label>Border </label>
+                <input type="checkbox" value="{{ border }}" class=" form-check-input newBorder">
             </div>
         </div>
         <div class=" col-md-4" >
             <div class="row">
                 <div class="col-md-6">  <label>Title color </label></div>
                 <div class="col-md-6">
-                     <input type="color" value="{{ graphicTitleColor }}" class="form-control">
+                     <input type="color" value="{{ graphicTitleColor }}" class="form-control titleColor">
                 </div>
             </div>
 
             <div class="row" style="margin-top: 10px">
                 <div class="col-md-6"> <label>Graph background color </label></div>
                 <div class="col-md-6">
-                    <input type="color" value="{{ graphBackgroundColor }}" class="form-control">
+                    <input type="color" value="{{ graphBackgroundColor }}" class="form-control graphBackgroundColor">
                 </div>
             </div>
             <div class="row" style="margin-top: 0px">
                 <div class="col-md-6"> <label>Grid color </label></div>
                 <div class="col-md-6">
-                    <input type="color" value="{{ gridColor }}" class="form-control">
+                    <input type="color" value="{{ gridColor }}" class="form-control gridColor">
                 </div>
             </div>
-
+            <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <label>Round corner </label>
+                <input type="checkbox" value="{{ roundCorner }}" class=" form-check-input newBorderRadius">
+            </div>
         </div>
 
     </div>
@@ -181,6 +203,14 @@
     <script>
         $( document ).ready(function() {
             $('.selectGrid option[value="{{ showGrid }}"]').attr("selected", true);
+            $('#graphic_edit_type option[value="{{ type }}"]').attr("selected", true);
+          if(border){
+              $(".newBorder").prop( "checked", true );
+          }
+          if(roundCorner){
+              $(".newBorderRadius").prop( "checked", true );
+          }
+
             $('.newTitle').change(function() {
                 updateConfigByMutating(myChart)
             })
@@ -190,18 +220,90 @@
             $('.newAxeX').change(function() {
                 updateAxeX(myChart)
             })
+            $('#graph_gridLine').change(function() {
+                updateType(myChart)
+            })
+            $('.gridColor').change(function() {
+                updateType(myChart)
+            })
+            $('#graphic_edit_type').change(function() {
+
+                var editType=$('#graphic_edit_type').val()
+                change(editType)
+            })
+            $('.titleColor').change(function() {
+                updateTitleColor(myChart)
+            })
+            $('.newBorder').change(function() {
+                var newBorder=( $('.newBorder').is(':checked') )
+                if(newBorder){
+                    $('#myChart').css("border", "1px solid black")
+                }
+               else{ $('#myChart').css("border", "none")}
+                myChart.update();
+            })
+            $('.newBorderRadius').change(function() {
+                var newBorder=( $('.newBorderRadius').is(':checked') )
+                if(newBorder){
+                    $('#myChart').css("border-radius", "10px")
+                }
+               else{ $('#myChart').css("border-radius", "0px")}
+                myChart.update();
+            })
+            $('.graphBackgroundColor').change(function() {
+                $('#myChart').css("backgroundColor", $('.graphBackgroundColor').val())
+                myChart.update();
+            })
+            $('.newWidth').change(function() {
+                $('#myChart').css("width", $('.newWidth').val())
+                myChart.update();
+            })
+            $('.newHeight').change(function() {
+                $('#myChart').css("height", $('.newHeight').val())
+                myChart.update();
+            })
             function updateConfigByMutating(chart) {
                 chart.options.title.text =  $('.newTitle').val();
                 chart.update();
             }
             function updateAxeY(chart) {
-                console.log(chart.options.scales)
-                console.log("chart.options")
+
                 chart.options.scales.yAxes[0].scaleLabel.labelString =  $('.newAxeY').val();
                 chart.update();
             }
             function updateAxeX(chart) {
                 chart.options.scales.xAxes[0].scaleLabel.labelString =  $('.newAxeX').val();
+                chart.update();
+            }
+            function updateTitleColor(chart) {
+                chart.options.title.fontColor =  $('.titleColor').val();
+                chart.update();
+            }
+            function updateType(chart) {
+                if(  $('#graph_gridLine').val()==="vertical"){
+                    chart.options.scales.xAxes[0].gridLines.display=true;
+                    chart.options.scales.yAxes[0].gridLines.display=false;
+                    chart.options.scales.xAxes[0].gridLines.color=$('.gridColor').val();
+
+                }
+                if(  $('#graph_gridLine').val()==="horizental"){
+                    chart.options.scales.yAxes[0].gridLines.display=true;
+                    chart.options.scales.xAxes[0].gridLines.display=false;
+                    chart.options.scales.yAxes[0].gridLines.color=$('.gridColor').val();
+
+                }
+                if( $('#graph_gridLine').val()==="none"){
+                    chart.options.scales.yAxes[0].gridLines.display=false;
+                    chart.options.scales.xAxes[0].gridLines.display=false;
+
+                }
+                if( $('#graph_gridLine').val()==="both"){
+                    chart.options.scales.xAxes[0].gridLines.display=true;
+                    chart.options.scales.xAxes[0].gridLines.color=$('.gridColor').val();
+                    chart.options.scales.yAxes[0].gridLines.display=true;
+                    chart.options.scales.yAxes[0].gridLines.color=$('.gridColor').val();
+
+                }
                 chart.update();
             }
 
@@ -243,7 +345,8 @@
         var graphBackgroundColor='{{ graphBackgroundColor }}'
 
         if(graphBackgroundColor){
-            $('#myChart').css('backgroundColor',graphBackgroundColor)
+            // $('#myChart').css('backgroundColor',graphBackgroundColor)
+            $('#myChart').css('backgroundColor',$('.graphBackgroundColor').val())
 
         }
 
@@ -278,7 +381,8 @@
         var canvas = document.getElementById('myChart');
         var ctx = canvas.getContext('2d');
         ctx.globalCompositeOperation = 'destination-over';
-        ctx.fillStyle = '{{ graphBackgroundColor }}';
+        {#ctx.fillStyle = '{{ graphBackgroundColor }}';#}
+        ctx.fillStyle =  $('.graphBackgroundColor').val();
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         var image = document.getElementById("myChart").toDataURL("image/png",1).replace("image/png", "image/octet-stream");
         $("#downloadPic").attr("href", image);
@@ -291,9 +395,8 @@
             var canvas = document.getElementById('myChart');
             var ctx = canvas.getContext('2d');
             ctx.globalCompositeOperation = 'destination-over';
-            console.log('{{ graphBackgroundColor }}')
-            console.log(' graphBackgroundColor ')
-            ctx.fillStyle = '{{ graphBackgroundColor }}';
+            {#ctx.fillStyle = '{{ graphBackgroundColor }}';#}
+            ctx.fillStyle =  $('.graphBackgroundColor').val();
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             var image = document.getElementById("myChart").toDataURL("image/jpeg",1).replace("image/jpeg", "image/octet-stream");
             $("#downloadJpg").attr("href", image);
@@ -306,7 +409,8 @@
             var c = document.getElementById("myChart");
             var ctx = c.getContext("2d");
             ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = '{{ graphBackgroundColor }}';
+            ctx.fillStyle =  $('.graphBackgroundColor').val();
+            {#ctx.fillStyle = '{{ graphBackgroundColor }}';#}
             ctx.fillRect(0, 0, c.width, c.height);
 
            CanvasToTIFF.toObjectURL(c, function(url) {
