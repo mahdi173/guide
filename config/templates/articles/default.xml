@@ -40,6 +40,15 @@
             <tag name="sulu_article.article_route"/>
         </property>
 
+        <property name="video" type="text_line">
+            <meta>
+                <title lang="en">Youtube link</title>
+                <title lang="fr">Lien youtube</title>
+            </meta>
+
+            <tag name="sulu_article.youtube_link"/>
+        </property>
+
         <property name="teaser" type="text_area">
             <meta>
                 <title lang="en">Teaser</title>
@@ -54,20 +63,6 @@
                 <title lang="fr">description</title>
             </meta>
         </property>
-
-        <block name="blocks" default-type="text" minOccurs="0">
-            <meta>
-                <title lang="en">Content</title>
-            </meta>
-
-            <types>
-                <xi:include href="../includes/blocks.xml"
-                            xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)xpointer(/sulu:properties/sulu:block/sulu:types/*)"/>
-
-                <xi:include href="../includes/blocks/similar-articles.xml"
-                            xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)xpointer(/sulu:properties/sulu:block/sulu:types/sulu:type)"/>
-            </types>
-        </block>
 
        <property name="image" type="single_media_selection">
             <meta>

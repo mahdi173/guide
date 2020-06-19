@@ -50,9 +50,9 @@
     <!--style="background-color: #f6f6f6"-->
     <div class="container" >
 
-        <div class="row col-sm-12" align="center" style="height: 150px">
+        <div class="row col-sm-12" align="center">
 
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
             <!-- Home_page_horizontal1 -->
             <ins class="adsbygoogle"
                  style="display:block"
@@ -66,31 +66,47 @@
         </div>
 
 
+
+        <div class="card">
+            <div class="card-body">
+
         <div class="row mt-5">
             <div class="col-sm-12"> </div>
             <div class="col-md-2 col-sm-1"></div>
             <div class="col-md-8">
                 {% include '_includes/search_form.html.twig' %}
+                {% if show_ad is defined  %}
+                {% include '_includes/advanced_search_form.html.twig' %}
+                {% endif %}
 
             </div>
             <div class="col-md-2 col-sm-1"></div>
         </div>
+            </div>
+        </div>
     </div>
 
-    <div class="row" style="height: 110px">
+    <div class="row" style="height: 30px">
 
         <div class="col-sm-12"></div>
 
     </div>
     <div class="container-fluid" >
 
-
-        {%  if data_t_scopus | length >1 %}
+        {% if data_t_scopus_advanced is defined %}
+            {% if data_t_scopus_advanced | length >0   %}
+            {% include '_includes/result_for_adanced_research' %}
+                {% endif %}
+            {% if data_t_scopus_advanced | length == 0   %}
+                {% include '_includes/error.html.twig' %}
+            {% endif %}
+        {% endif %}
+        {%  if  data_t_scopus is defined and data_t_scopus | length >1 %}
         {% set test=0 %}
         {% set tests=0 %}
         <div class="row">
             <div class="col-md-2">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                 <!-- horizontal_several_results1 -->
                 <ins class="adsbygoogle"
                      style="display:block"
@@ -111,7 +127,7 @@
                 <div class="row" style="height: 92px; width: 869px; text-align: center; margin-left: 2px">
                     <div class="col-sm-12">
                         <!-- /21831250958/AdManager_S_results_1 -->
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                         <!-- Several_result -->
                         <ins class="adsbygoogle"
                              style="display:inline-block;width:728px;height:90px"
@@ -140,7 +156,7 @@
                                 </div>
                                 <div class="col-md-9" >
                                     <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
-                                        <h4><b><a href={{ path('data_t_scopus_results', {'eISSN': issn})}}>{{ t.title }}</a> </b></h4>
+                                        <h4><b><a href={{ path('data_t_scopus_results', {'eISSN': issn})}} target="_blank">{{ t.title }}</a> </b></h4>
                                       <div class="row">
                                           <div class="col-sm-6">
                                               <h6 >
@@ -176,7 +192,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2" align="center" style="margin-top: 50px; color: white">
-                                    <a  class="btn btn-primary" href={{ path('data_t_scopus_results', {'eISSN': issn})}}>More details</a>
+                                    <a  class="btn btn-primary" href={{ path('data_t_scopus_results', {'eISSN': issn})}} target="_blank">More details</a>
                                 </div>
                             </div>
                         </div>
@@ -189,22 +205,16 @@
                 {% endif %}
             </div>
             <div class="col-md-2">
-                <!-- ajouter pour la publicité -->
-                {%  if data_t_scopus | length >1 %}
-                    <div class="row" ></div>
 
-                {% endif %}
-
-                <!-- fin publicité -->
             </div>
         </div>
 
 
 
+        {% if data_t_scopus_advanced is not defined   %}
 
 
-
-        {%  if data_reuter | length ==1 or data_t_scopus | length==1 %}
+        {% if  data_reuter | length ==1 or data_t_scopus | length==1 or data_t_scopus | length==0 and data_t_scopus is not null %}
             <div class="row" >
                 <div class="col-md-2 col-sm-2"></div>
                 <div class="col-md-7">
@@ -214,14 +224,24 @@
             </div>
         <div class="row" >
             <div class="col-md-2 col-sm-2">
-                    <div id="id_publicite_SorW_1" style="">
+                    <div id="id_publicite_SorW_1">
 
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                         <!-- One_result_slide_gauche -->
                         <ins class="adsbygoogle"
                              style="display:block"
                              data-ad-client="ca-pub-9897811061542650"
                              data-ad-slot="7064116234"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                        <!-- gauche_one_result_SWOS -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-9897811061542650"
+                             data-ad-slot="7367296155"
                              data-ad-format="auto"
                              data-full-width-responsive="true"></ins>
                         <script>
@@ -320,7 +340,7 @@
                                 {% else  %}
                                     {% set tests=1 %}
                                 {% endif %}
-                                {% if tests==1 and  data_t_scopus is not null %}
+                                {% if data_t_scopus | length ==0 %}
 
 
                                     <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
@@ -411,7 +431,7 @@
                                     {% else  %}
                                         {% set test=1 %}
                                     {% endif %}
-                                    {% if test ==1 and data_reuter is not null %}
+                                    {% if test ==1 and data_reuter | length ==0 %}
 
 
                                         <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
@@ -496,17 +516,87 @@
                                 {% endif %}
                                 <!-- end user dosen't logged in -->
 
-                        <div class="row">
+                        <div class="row text-center">
+                            <div class="row" style="width: 100%">
                             <div class="col-md-12 text-center">
                                 {% if eISSN is defined  %}
 
                                     <div class="sharethis-inline-share-buttons"></div>
 
                                 {% endif %}
-                                <hr class="col-md-12 bg-secondary" style="height:1px; width: 95%">
+                                <hr class="col-md-12 bg-secondary" style="height:1px; width: 100%">
+
+                            </div>
+                            </div>
+                            {% if data_t_scopus is defined and data_t_scopus| length ==1  %}
+                            <div class="row" style="width: 100%">
+
+                                    <div class="col-md-3 text-center">
+                                    <h5 class="text-primary"><b>Search journals for : </b></h5>
+                                    </div>
+
+                                    <div class="col-md-3 text-center">
+                                        <a href={{ path('search_journals_for_scopus', {'publisher': data_t_scopus.publisher})}}>
+                                            <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
+
+                                                <h6 class="text-primary"><b>Publisher : </b></h6>
+                                                <span class=" badge-info rounded" >{{ data_t_scopus.publisher }}</span>
+                                                </div>
+
+                                            </a>
+
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <a href={{ path('search_journals_for_scopus', {'subject_area': data_t_scopus.scopussubsubjectarea})}}>
+                                            <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
+                                            <div class="card-body">
+                                                <h6 class="text-primary"><b>Subject area : </b></h6>
+                                                <span class=" badge-dark rounded" >{{ data_t_scopus.scopussubsubjectarea }}</span>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <a href={{ path('search_journals_for_scopus', {'quartile': data_t_scopus.quartile})}}>
+                                        <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
+                                            <div class="card-body">
+                                                <h6 class="text-primary"><b>Quartile  : </b></h6>
+                                                <span class=" badge-warning rounded btn-outline-primary" >{{ data_t_scopus.quartile }}</span>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            {% endif %}
+                            <div class="row" style="width: 100%;">
+                                <div class="col-md-12 text-center">
+                                    <hr class="col-md-12 bg-secondary text-center" style="height:1px; width: 100%">
+                                    <div class="card" style="width: 100%;">
+                                        <div class="card-header" style="width: 100%;">
+                                            <h6 style="text-justify: distribute-center-last; text-align: justify; color: #777777">
+                                                <b>SJR</b> (SCImago Journal & Country Rank) is a publicly available portal that includes the journals and country scientific indicators
+                                                developed from the information contained in the Scopus database (Elsevier B.V.).
+                                                These indicators can be used to assess and analyze scientific domains.
+                                                The SJCR allows you also to embed significative journal metrics into your web as a clickable image widget This platform takes its name from the SCImago Journal Rank (SJR) indicator, developed by SCImago from the widely known algorithm Google PageRank™.
+                                                This indicator shows the visibility of the journals contained in the Scopus® database from 1996.
+                                            </h6>
+                                            <h6 style="text-justify: distribute-center-last; text-align: justify; color: #777777">
+                                                <b>JCR</b> (impact factor) is a unique database of web of science, which is used to determine the relative importance of journals within their subject categories.
+                                                An impact factor is one measure of the quality of a journal. This is calculated by the number of citations received by the journal,
+                                                from other journals within the Web of Science database.
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <hr class="col-md-12 bg-secondary" style="height:1px; width: 100%">
+                                </div>
                             </div>
 
                         </div>
+
+
+
+
         <div class="row">
                 <div class="col-sm-12">
                 {%  if tpjlistScopus is defined %}
@@ -664,9 +754,9 @@
                         {% endif %}
             </div>
         </div>
-         <div class="row" style="height: 210px;  margin-top: 20px; text-align: center">
+         <div class="row" style="margin-top: 20px; text-align: center">
          <div class="col-sm-12">
-             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
              <!-- Apres_top_g_list -->
              <ins class="adsbygoogle"
                   style="display:block"
@@ -851,9 +941,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <!--publicite slide d_OneS_OR_W-->
-                        <div style="height:100px; width: 320px; background-color: #0b4961 ">
+                        <div>
 
-                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
                             <!-- slide_droit_recommender -->
                             <ins class="adsbygoogle"
                                  style="display:inline-block;width:320px;height:100px"
@@ -931,13 +1021,27 @@
                 <!-- fin mutiple results-->
             {% endfor %}
 {% endif %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- apres_recommendation_liste -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-9897811061542650"
+                         data-ad-slot="7259484949"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
         </div>
 
 
             <!--fin row-->
         </div>
         {% endif %}
-
+        {% endif %}
 
     </div>
 

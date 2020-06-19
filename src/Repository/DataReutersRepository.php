@@ -19,9 +19,9 @@ class DataReutersRepository extends ServiceEntityRepository
     {
 
         $data_t_thomson = $this->findOneBy(array('eissn' => $value));
-//        if ($data_t_thomson == null) {
-//            $data_t_thomson = $this->findOneBy(array('printissn' => $value));
-//        }
+       if ($data_t_thomson == null) {
+           $data_t_thomson = $this->findOneBy(array('issn' => $value));
+       }
         return $data_t_thomson;
     }
 

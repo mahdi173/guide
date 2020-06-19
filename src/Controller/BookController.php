@@ -9,6 +9,7 @@ use App\Form\AllPublicationType;
 use App\Form\BookType;
 use App\Repository\AllPublicationRepository;
 use App\Repository\BookRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @IsGranted("ROLE_USER")
- * @Route("/{_locale}/profile/book")
+ * @Route("/{_locale}/book")
  */
 class BookController extends AbstractController
 {
     /**
-     * @Route("/", name="book_index", methods={"GET","POST"})
+     * @Route("/{firstname}.{lastname}.{id}", name="book_index", methods={"GET","POST"}, defaults={"lastname" = ""})
      */
 //    public function index(BookRepository $bookRepository): Response
 //    {
@@ -30,46 +31,71 @@ class BookController extends AbstractController
 //            'books' => $bookRepository->findAll(),
 //        ]);
 //    }
-    public function index(Request $request,AllPublicationRepository $publicationRepository): Response
+    public function index(Request $request,UserRepository $userRepository,AllPublicationRepository $publicationRepository): Response
     {
+        $user=$this->getUser();
+        $firstName=$request->get('firstname');
+        $lastName=$request->get('lastname');
+        $id=$request->get('id');
+        if($firstName && $lastName || ($firstName || $lastName )){
+            $user=$userRepository->userFromConctact($id,$firstName,$lastName);
+            if($user){
+                $user=$user[0];
+            }
+        }
+        $myProfile=false;
+        $form=null;$form_create=null;
+        $form_view=null;$form_create_view=null;
         $publication=new Allpublications();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(AllPublicationType::class, $publication);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $pub=$em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
-
-            $pub->setTitle($form['title']->getData());
-            $pub->setType($form['type']->getData());
-            $pub->setName($form['name']->getData());
-            $pub->setVolume($form['volume']->getData());
-            $pub->setYear($form['year']->getData());
-            $pub->setUrl($form['url']->getData());
-
-            $em->persist($pub);
-            $em->flush();
-
-            return $this->redirectToRoute('book_index');
+        if(!$user){
+            return $this->render("Profile/profile_not_found.html.twig");
         }
+        else {
+            if ($user == $this->getUser()) {
+                $myProfile = true;
+                $form = $this->createForm(AllPublicationType::class, $publication);
+                $form->handleRequest($request);
+                $form_view = $form->createView();
 
-        $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
-        $form_create->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
 
-        if ($form_create->isSubmitted() && $form_create->isValid()) {
+                    $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
 
-            $publication->setUser($this->getUser());
-            $em->persist($publication);
-            $em->flush();
+                    $pub->setTitle($form['title']->getData());
+                    $pub->setType($form['type']->getData());
+                    $pub->setName($form['name']->getData());
+                    $pub->setVolume($form['volume']->getData());
+                    $pub->setYear($form['year']->getData());
+                    $pub->setUrl($form['url']->getData());
 
-            return $this->redirectToRoute('book_index');
+                    $em->persist($pub);
+                    $em->flush();
+
+                    return $this->redirectToRoute('book_index', ['firstname' => $firstName, 'lastname' => $lastName]);
+                }
+
+                $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
+                $form_create->handleRequest($request);
+                $form_create_view = $form_create->createView();
+
+                if ($form_create->isSubmitted() && $form_create->isValid()) {
+
+                    $publication->setUser($this->getUser());
+                    $em->persist($publication);
+                    $em->flush();
+
+                    return $this->redirectToRoute('book_index', ['firstname' => $firstName, 'lastname' => $lastName]);
+                }
+            }
+            return $this->render('book/publication_book.html.twig', [
+                'publications' => $publicationRepository->findPublicationByType('book', $user),
+                'form' => $form_view,
+                'form2' => $form_create_view,
+                'myProfile' => $myProfile,
+                'user' => $user,
+            ]);
         }
-        return $this->render('book/publication_book.html.twig', [
-            'publications' => $publicationRepository->findPublicationByType('book'),
-            'form' => $form->createView(),
-            'form2' => $form_create->createView(),
-        ]);
     }
 
     /**

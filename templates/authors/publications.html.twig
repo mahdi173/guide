@@ -22,6 +22,9 @@
             </div>
             <form class="mt-4" method="get" action="{{ url('get_authors') }}">
                 <h2 class="text-primary">Search for an author profile</h2>
+        <div class="col-md-7 mt-5 mb-5">
+            <form method="get" action="{{ url('get_authors') }}">
+
                 <div class="input-group mb-3">
                     <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
                     <div class="input-group-append">
@@ -30,7 +33,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-2 col-sm-1"></div>
+        <div class="col-md-3 col-sm-1"></div>
     </div>
 
     <div class="row ">
@@ -38,11 +41,18 @@
         <div class="col-md-1  mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" /></div>
         <div class="col-md-6  mb-2" style="margin-left: 70px;padding-top: 20px;">
             <h5 class="text-primary">{{ auteur }}</h5>
-           <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ countFollowers }}  followers</span><span class="stat_info"> 0  following</span></p>
+           {% set followers_count= followers_profile.followers(auteur)|length %}
+
+           <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ followers_count }}  followers</span>
+
+
+            <span class="stat_info">  {% if author_db %}{{author_db.follows|length }} {% else%} 0 {% endif %}following</span></p>
         </div>
 
-        <div class="offset-2 col-md-2  mb-2" style="padding-left: 70px;padding-top: 20px;">
+        <div class="offset-1 col-md-2  mb-2" style="padding-left: 70px;padding-top: 20px;">
+            {% if app.user %}
             {% set  follows=app.user.follows.values%}
+
             {% set  count=0%}
 
             {% for follow in follows %}
@@ -99,7 +109,7 @@
                                     {% for d in dataissn %}
 
                                         {% for iss in result.bibjson.journal.issns %}
-{#                                                                                        {{ dump(iss) }}#}
+                                            {#                                            {{ dump(iss) }}#}
 
                                             {% if(d.issn|replace({'-':''}) == iss|replace({'-':''})) %}
                                                 <a href="{{ path('data_t_scopus_results', {'eISSN': d.issn })}}"> {{ result.bibjson.journal.title }}</a>
@@ -177,6 +187,86 @@
            </tr>
             {% endif %}
             </tbody>
+        </table>
+    </div>
+    <div class="offset-0 col-md-3 mt-3" style="border: solid 2px #e6e6e6;">
+        <table class="table">
+            <tr>
+                <th class="header">Top co-authors
+{#                    <a href="{{ path('co_authors_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> #}
+{#                        <strong style="float: right">View all</strong>#}
+{#                    </a>#}
+                </th>
+            </tr>
+            <tr>
+
+                <td>
+                    {% if co_authors|length>0  %}
+                        {% for author in co_authors|slice(0,3) %}
+                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
+                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> {{ author}}<br>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <span style="padding-top: 20px"> No co-authors </span>
+                    {% endif %}
+                </td>
+
+            <tr>
+
+            <tr>
+                <th class="header">  {% if author_db %}
+                    Following ({{author_db.follows|length  }})
+                    <a href="{{ path('following_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
+
+                {% else %}
+                    Following (0){% endif %}
+                </th>
+            </tr>
+            <tr>
+
+                <td>
+                    {% if author_db and author_db.follows.values|length >0 %}
+                        {% for follow in author_db.follows.values|slice(0,3) %}
+                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
+                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                {{ follow.following }}
+                            </a>
+                            <br>
+                        {% endfor %}
+                    {% else %}
+                        <span style="padding-top: 20px">No following </span>
+                    {% endif %}
+                </td>
+            </tr>
+
+
+                {% set followers=followers_profile.followers(auteur) %}
+                <th class="header">Followers ({{ followers|length }})
+                    {% if author_db %}
+                         <a href="{{ path('followers_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
+                    {% endif %}
+                </th>
+            </tr>
+           <tr>
+               <td>
+                   {% if followers|length>0  %}
+                       {% for follower in followers|slice(0,3) %}
+                           {% if follower.fullName and follower.fullName !=""  %}
+                           <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
+                               <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.fullName  }}<br>
+                           </a>
+
+                           {% else %}
+                               <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.username  }}<br>
+
+                       {% endif %}
+                       {% endfor %}
+                   {% else %}
+                       <span style="padding-top: 20px"> No followers </span>
+                   {% endif %}
+               </td>
+           </tr>
         </table>
     </div>
 </div>

@@ -1,0 +1,39 @@
+{% extends '@SuluCommunity/profile-form.html.twig' %}
+
+{% block title %}GuideJournal: Publications{% endblock %}
+
+{% block profile_content %}
+    <table class="table" >
+        <tr>
+            <th  style="color: #555;border: none;">CO AUTHORS</th>
+
+        </tr>
+        {% for author in authors %}
+        <tr style="border-bottom: 1px solid grey;padding-top: 15px">
+
+        <td>
+
+
+                <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
+                    <img src="{{  asset('assets/images/profil_new.jpg') }}" width="80px" height="80px" style="margin-right: 20px;margin-bottom: 2px;margin-left: 20px">
+                    {{ author }}
+                </a>
+        </td>
+                {% set  follows=app.user.follows.values%}
+                {% set  count=0%}
+                {% for follow in follows %}
+                    {% if follow.following == author  %}
+                        {% set count=1%}
+                    {% endif %}
+                {% endfor %}
+          <td>
+                <a style="margin: 20px 30px " href="{{ path('add_follower', {'author': author,'exist':count,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                <br><br>
+
+
+        </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock  %}

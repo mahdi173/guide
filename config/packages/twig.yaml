@@ -4,5 +4,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         followers_profile: '@App\Manager\FollowManager'
+        userRepository: '@App\Repository\UserRepository'
+        publicationManager: '@App\Manager\PublicationManager'
     form_themes:
         - 'Form/fields.html.twig'
