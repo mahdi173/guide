@@ -282,19 +282,22 @@
             function updateType(chart) {
                 if(  $('#graph_gridLine').val()==="vertical"){
                     chart.options.scales.xAxes[0].gridLines.display=true;
-                    chart.options.scales.yAxes[0].gridLines.display=false;
+                    chart.options.scales.yAxes[0].gridLines.display=true;
+                    chart.options.scales.yAxes[0].gridLines.color=false;
                     chart.options.scales.xAxes[0].gridLines.color=$('.gridColor').val();
 
                 }
                 if(  $('#graph_gridLine').val()==="horizental"){
                     chart.options.scales.yAxes[0].gridLines.display=true;
-                    chart.options.scales.xAxes[0].gridLines.display=false;
+                    chart.options.scales.xAxes[0].gridLines.display=true;
+                    chart.options.scales.xAxes[0].gridLines.color=false;
                     chart.options.scales.yAxes[0].gridLines.color=$('.gridColor').val();
 
                 }
                 if( $('#graph_gridLine').val()==="none"){
                     chart.options.scales.yAxes[0].gridLines.display=false;
-                    chart.options.scales.xAxes[0].gridLines.display=false;
+                    chart.options.scales.yAxes[0].gridLines.color=$('.graphBackgroundColor').val();
+                    chart.options.scales.xAxes[0].gridLines.color=$('.graphBackgroundColor').val();
 
                 }
                 if( $('#graph_gridLine').val()==="both"){
