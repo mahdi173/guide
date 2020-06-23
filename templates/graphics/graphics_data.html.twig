@@ -16,6 +16,9 @@
     margin-left: 10px;
 
 }
+#graphic_data_dataX{
+
+}
 .checkFirst{
     margin-left: 15px;
 }
@@ -42,14 +45,7 @@
     .titleG{
     float: right;
     }
-    .settings{
 
-    border: 2px #E0E0E0 solid;
-    /*padding: 30px 25px;*/
-    /*background-color:	#F8F8F8;*/
- border-radius: 10px;
- box-shadow: 5px 5px #F8F8F8;
-    }
     .settings-title{
     padding-bottom: 10px;
     padding-top:0px;
@@ -71,10 +67,7 @@
     #graphic_data_type{
     font-family: 'FontAwesome', 'Second Font name'
     }
-     .text-desc{
-         color: #555;
-         font-weight: bold;
-     }
+
         .pub{
             /*border: 2px red solid;*/
             margin-bottom: 10px;
@@ -216,12 +209,16 @@
     </div>
     <div class="row" style="margin-top: 20px;margin-bottom: 10px">
 
-        <div class="col-md-12 col-sm-12 pub" style="margin-left: 25px;width: 130px;height: 550px;">
+{#        <div class="col-md-12 col-sm-12 pub" style="margin-left: 25px;width: 130px;height: 550px;">#}
+        <div class="col-md-12 col-sm-12 pub" style="margin-left: 25px;width: 130px;">
             {#                 <ins class="adsbygoogle"#}
             {#                      style="display:inline-block;width:860px;height:90px"#}
             {#                      data-ad-client="ca-pub-9897811061542650"#}
             {#                      data-ad-slot="1126601729"></ins>#}
-            <div id="amzn-assoc-ad-ba91bf71-283a-4787-a84b-dfae34ebf792" style="height: 550px"></div>
+{#            <div id="amzn-assoc-ad-ba91bf71-283a-4787-a84b-dfae34ebf792" style="height: 550px">#}
+            <div id="amzn-assoc-ad-ba91bf71-283a-4787-a84b-dfae34ebf792">
+
+            </div>
 {#            <img class="" src="{{ asset('assets/images/designChart.jpg') }}" style="height: 550px"/>&nbsp;#}
 
 
@@ -250,6 +247,84 @@
     <script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=ba91bf71-283a-4787-a84b-dfae34ebf792"></script>
     <script>
         $( document ).ready(function() {
+            // $('#graphic_data_dataX').each(function() {
+            //     $(this).height($(this).prop('scrollHeight'));
+            // });
+            // dinamicHeightTextarea('graphic_data_dataX');
+            // dinamicHeightTextarea('graphic_data_dataY');
+            function dinamicHeightTextarea(selector){
+                let textareas = document.querySelectorAll(selector),
+                    hiddenDiv = document.createElement('div'),
+                    content = null;
+
+                for (let j of textareas) {
+                    j.classList.add('txtstuff');
+                }
+                hiddenDiv.classList.add('txta'+selector);
+                hiddenDiv.style.display = 'none';
+                hiddenDiv.style.whiteSpace = 'pre-wrap';
+                hiddenDiv.style.wordWrap = 'break-word';
+
+                for(let i of textareas) {
+                    (function(i) {
+
+                        i.addEventListener('input', function() {
+                            i.parentNode.appendChild(hiddenDiv);
+                            i.style.resize = 'none';
+                            i.style.overflow = 'hidden';
+                            content = i.value;
+                            content = content.replace(/\n/g, '<br>');
+                            hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+                            hiddenDiv.style.visibility = 'hidden';
+                            hiddenDiv.style.display = 'block';
+                            i.style.height = hiddenDiv.offsetHeight + 'px';
+
+                            hiddenDiv.style.visibility = 'visible';
+                            hiddenDiv.style.display = 'none';
+                        });
+                    })(i);
+                }
+            }
+                         /*textarea*/
+            function displayInlineDate(selector){
+                const dataConvertY = [];
+                var value=($(selector).val()).split(',')
+                for(var i=0;i<value.length;i++) {
+                    dataConvertY.push(value[i])
+                }
+                $(selector).val(dataConvertY.join("\n"))
+
+                dinamicHeightTextarea(selector);
+            }
+                $('#graphic_data_dataX').bind('change propertychange', function() {
+                    // const dataConvert = [];
+                    //
+                    // var value = ($(this).val()).split(',')
+                    // for (var i = 0; i < value.length; i++) {
+                    //     val = value[i] + '\n'
+                    //     dataConvert.push(value[i])
+                    // }
+                    //
+                    // dinamicHeightTextarea('graphic_data_dataX');
+                    // $('#graphic_data_dataX').val(dataConvert.join("\n"))
+                    displayInlineDate('#graphic_data_dataX')
+
+                })
+
+                    $('#graphic_data_dataY').bind('change propertychange', function() {
+                        // const dataConvertY = [];
+                        //
+                        // var value=($(this).val()).split(',')
+                        // for(var i=0;i<value.length;i++){
+                        //     val=value[i]+'\n'
+                        //     dataConvertY.push(value[i])
+                        // }
+                        // $('#graphic_data_dataY').val(dataConvertY.join("\n"))
+                        // dinamicHeightTextarea('graphic_data_dataY');
+                        displayInlineDate('#graphic_data_dataY')
+
+            });
+                             /*textarea*/
         var edit='{{ edit }}'
             if(edit)
             {
