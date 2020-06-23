@@ -79,28 +79,9 @@
 {% endblock  %}
 
 {% block content %}
-    <div class="row"  style="margin-top: 40px">
-        <h4 class=" text-primary col-md-1" style="margin-top: 0px;font-weight: bold">
-{#             <i class="fa fa-line-chart" style="color: orangered;font-size: 30px;"></i>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>#}
-             <img class="" src="{{ asset('assets/images/designChart.jpg') }}" style="width: 90px;height: 80px"/>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>
-        </h4>
-        <div class="col-md-6">
-            <p class="text-desc">Online Graph Maker is an easy to use chart tool.To start,select your graph type and the apparence of your graph.Then enter your data and hit the create button .For more options,visit the different graph types in the top menu. </p>
-        </div>
-        <div class="col-md-5 pub">
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:460px;height:130px"
-                 data-ad-client="ca-pub-9897811061542650"
-                 data-ad-slot="1365634245"></ins>
-        </div>
-        <div class="col-md-3 offset-9">
-            <a type="button" class="text-dark col-md-12" data-toggle="modal" data-target="#myModal" style="margin-left: 70px;color:#158CBA!important;font-weight: bold;margin-bottom: 10px;font-size: 17px"> <img src="{{ asset('assets/images/question.png') }}" style="margin-right:10px;width: 25px;height: 25px"/>How it works?</a>
-        </div>
-{#        <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">#}
-{#            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button#}
-
-{#        </p>#}
-    </div>
+{#   hearder#}
+    {% include 'graphics/includes/hearderGraph.html.twig' %}
+{#   hearder#}
 
     {{ form_start(form)}}
     <div class="settings">
