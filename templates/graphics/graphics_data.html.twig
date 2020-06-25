@@ -269,11 +269,24 @@
                          /*textarea*/
             function displayInlineDate(selector){
                 const dataConvertY = [];
-                var value=($(selector).val()).split(',')
+                const dataConvertDash = [];
+                var value=($(selector).val()).split(' ')
+                // var valueDash=($(selector).val()).split('-')
+                console.log(value)
+
                 for(var i=0;i<value.length;i++) {
                     dataConvertY.push(value[i])
                 }
-                $(selector).val(dataConvertY.join("\n"))
+                // for(var i=0;i<valueDash.length;i++) {
+                //     dataConvertDash.push(value[i])
+                // }
+                if(dataConvertY.length>0){
+                    $(selector).val(dataConvertY.join("\n"))
+                }
+                // if(dataConvertDash.length>0){
+                //     $(selector).val(dataConvertDash.join("\n"))
+                // }
+
 
                 dinamicHeightTextarea(selector);
             }
@@ -288,7 +301,7 @@
                     //
                     // dinamicHeightTextarea('graphic_data_dataX');
                     // $('#graphic_data_dataX').val(dataConvert.join("\n"))
-                    displayInlineDate('#graphic_data_dataX')
+                    // displayInlineDate('#graphic_data_dataX')
 
                 })
 

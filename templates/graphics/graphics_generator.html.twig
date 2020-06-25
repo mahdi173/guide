@@ -162,86 +162,158 @@
                 <h5 class="settings-title text-primary" style="padding-left: 20px;font-weight: bold;padding: 10px">Pie Settings</h5>
             </div>
         </div>
-
-        <div class="row">
-            <div class=" col-md-3">
+        {#        pie 1#}
+        <div class="row showPie1">
+            <div class=" col-md-12">
                 <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 30px;">
                     <label><strong>Pie 1 </strong></label>
 
                 </div>
             </div>
-            <div class=" col-md-3">
-                <div class="form-group form-inline axe3" style="margin-top: 15px">
-                    <label><strong>Pie 2 </strong></label>
 
+        </div>
+
+        <div class="row showPie1" style="margin-left: 20px">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title </label>
+                    <input type="text" class="form-control pieTitle1" value="{{labelY}}">
                 </div>
             </div>
-            <div class=" col-md-3">
-                <div class="form-group form-inline axe3" style="margin-top: 15px">
-                    <label><strong>Pie 3 </strong></label>
-
-                </div>
-            </div>
-            <div class=" col-md-3">
-                <div class="form-group form-inline axe3" style="margin-top: 15px">
-                    <label><strong>Pie 4 </strong></label>
-
-                </div>
-            </div>
-        </div>
-        <div class="row" style="padding-left: 10px;padding-right: 10px;">
-        <div class=" col-md-3">
-            <div class="form-group form-inline axe3" style="margin-top: 15px">
-                <label>Title </label>
-                <input type="text" class="form-control pieTitle1">
-            </div>
-        </div>
-        <div class=" col-md-3">
-            <div class="form-group form-inline axe3" style="margin-top: 15px">
-                <label>Title </label>
-                <input type="text" class="form-control pieTitle2">
-            </div>
-        </div>
-        <div class=" col-md-3">
-            <div class="form-group form-inline axe3" style="margin-top: 15px">
-                <label>Title  </label>
-                <input type="text" class="form-control pieTitle3">
-            </div>
-        </div>
-        <div class=" col-md-3">
-            <div class="form-group form-inline axe3" style="margin-top: 15px">
-                <label>Title  </label>
-                <input type="text" class="form-control pieTitle4">
-            </div>
-        </div>
-        </div>
-
-        <div class="row">
             <div class=" col-md-3 ">
                 <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
                     <label>Title Color</label>
                     <input type="color" class="form-control pieTitleColor1" style="width: 45%">
                 </div>
             </div>
+
+            <div class=" col-md-3 ">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround</label>
+                    <input type="color" class="form-control pieColor1" style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3 ">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Border</label>
+                    <input type="checkbox" class="form-control pieBorder1" value="{{ border }}">
+                </div>
+            </div>
+        </div><hr class="showPie2">
+        {#        pie 2#}
+        <div class="row showPie2">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 2 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row showPie2" style="margin-left: 20px;">
             <div class=" col-md-3">
-                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title </label>
+                    <input type="text" class="form-control pieTitle2" value="{{ titles[0] }}">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
                     <label>Title Color </label>
                     <input type="color" class="form-control pieTitleColor2" style="width: 45%">
                 </div>
             </div>
             <div class=" col-md-3">
-                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround </label>
+                    <input type="color" class="form-control pieColor2" style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Border </label>
+                    <input type="checkbox" class="form-control pieBorder2" value="{{ border }}">
+                </div>
+            </div>
+        </div><hr class="showPie3">
+{#pie 3#}
+
+        <div class="row showPie3">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3"style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 3 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row showPie3" style="margin-left: 20px">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title  </label>
+                    <input type="text" class="form-control pieTitle3" {% if titles[1]%} value="{{ titles[1] }}"{% endif %}>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
                     <label>Title Color </label>
                     <input type="color" class="form-control pieTitleColor3" style="width: 45%">
                 </div>
             </div>
+
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround </label>
+                    <input type="color" class="form-control pieColor3" style="width: 37%">
+                </div>
+            </div>
             <div class=" col-md-3">
                 <div class="form-group form-inline axe3" style="margin-top: 15px">
-                    <label>Title Color</label>
+                    <label>Border </label>
+                    <input type="checkbox" class="form-control pieBorder3" value="{{ border }}">
+                </div>
+            </div>
+        </div><hr class="showPie4">
+
+{#        pie 4#}
+        <div class="row showPie4">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3"style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 4 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row showPie4" style="margin-left: 20px">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title  </label>
+                    <input type="text" class="form-control pieTitle4" {%  if titles|length==3%} value="{{ titles[2] }}"{% endif %}>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Title Color </label>
                     <input type="color" class="form-control pieTitleColor4" style="width: 45%">
                 </div>
             </div>
+
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround </label>
+                    <input type="color" class="form-control pieColor4" style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label>Border </label>
+                    <input type="checkbox" class="form-control pieBorder4" value="{{ border }}">
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div class="row">
@@ -352,7 +424,7 @@
             })
             $('.pieTitle4').change(function() {
 
-                updateTitlePie(chart4,$('.pieTitle3').val())
+                updateTitlePie(chart4,$('.pieTitle4').val())
             })
             // titleCart
             $('.pieTitleColor1').change(function() {
@@ -372,8 +444,55 @@
 
                 updateTitleColorPie(chart4,$('.pieTitleColor4').val())
             })
+            //backgroundColor
+            $('.pieColor1').change(function() {
+                updateBackGroundPie(chart1, $('.pieColor1').val())
+            })
+            $('.pieColor2').change(function() {
+                updateBackGroundPie(chart2, $('.pieColor2').val())
+            })
+            $('.pieColor3').change(function() {
+                updateBackGroundPie(chart3, $('.pieColor3').val())
+            })
+            $('.pieColor4').change(function() {
+                updateBackGroundPie(chart4, $('.pieColor4').val())
+            })
+            //border pies
+            $('.pieBorder1').change(function() {
+                borderPie(chart1,"#chartContainer",'.pieBorder1')
+            })
+            $('.pieBorder2').change(function () {
+                borderPie(chart2,"#chartContainer2",'.pieBorder2')
+            })
+            $('.pieBorder3').change(function () {
+                borderPie(chart3,"#chartContainer3",'.pieBorder3')
+            })
+            $('.pieBorder4').change(function () {
+                borderPie(chart4,"#chartContainer4",'.pieBorder4')
+            })
+
+           function borderPie(chart,chartId,checkboxClass) {
+               var newBorder=( $(checkboxClass).is(':checked') )
+               if(newBorder){
+                   $( chartId+" canvas:nth-child(2)" ).css( "border", "2px solid grey" );
+                   // $( chartId+" canvas:nth-child(1)" ).css( "padding-top", "12px" );
+                   // $( chartId+" canvas:nth-child(2)" ).css( "padding-top", "12px" );
+                   // $( chartId+" canvas:nth-child(2)" ).css( "padding-bottom", "12px" );
+
+               }
+               else{  $( chartId+" canvas:nth-child(2)").css('border',"none")
+                   // $( chartId+" canvas:nth-child(1)" ).css( "padding-top", "0px" );
+                   // $( chartId+" canvas:nth-child(2)" ).css( "padding-bottom", "0px" );
+               }
+               chart.render();
+           }
+
             function updateTitlePie(chart,value) {
                 chart.options.title.text = value ;
+                chart.render();
+            }
+            function updateBackGroundPie(chart,value) {
+                chart.options.backgroundColor = value ;
                 chart.render();
             }
             function updateTitleColorPie(chart,value) {
@@ -424,9 +543,10 @@
                 });
 
             }
-            function hideChart(id,array){
+            function hideChart(id,array,rowSetting){
                 if(array.length===0){
                     $('#'+id).css('display','none')
+                    $('.'+rowSetting).css('display','none')
                 }
                 else{
                     $('#'+id).css('display','block')
@@ -452,9 +572,9 @@
                     $('#chartContainer').css('display','block')
                     $('.extraSettings').css('display','block')
 
-                    hideChart("chartContainer2",axeExt1)
-                    hideChart("chartContainer3",axeExt2)
-                    hideChart("chartContainer4",axeExt3)
+                    hideChart("chartContainer2",axeExt1,'showPie2')
+                    hideChart("chartContainer3",axeExt2,'showPie3')
+                    hideChart("chartContainer4",axeExt3,'showPie4')
                 }
             else{
                     $('#myChart').css('display','block')
@@ -571,6 +691,14 @@
             $('#graphic_edit_type option[value="{{ type }}"]').attr("selected", true);
           if(border){
               $(".newBorder").prop( "checked", true );
+              $(".pieBorder1").prop( "checked", true );
+              borderPie(chart1,"#chartContainer",'.pieBorder1')
+              $(".pieBorder2").prop( "checked", true );
+              borderPie(chart2,"#chartContainer2",'.pieBorder2')
+              $(".pieBorder3").prop( "checked", true );
+              borderPie(chart3,"#chartContainer3",'.pieBorder3')
+              $(".pieBorder4").prop( "checked", true );
+              borderPie(chart4,"#chartContainer4",'.pieBorder3')
           }
           if(roundCorner){
               $(".newBorderRadius").prop( "checked", true );
