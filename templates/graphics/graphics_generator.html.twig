@@ -156,12 +156,90 @@
         </div>
 
     </div>
-    <div class="row extraSettings" style="border: 1px #B8B8B8 solid;width: 50%;margin-left: 5px;padding: 5px;display: none;border-radius: 10px">
-        <div class=" col-md-6" style="padding: 10px">Pie settings</div><hr>
-        <div class=" col-md-6">
+    <div class="row extraSettings" style="background-color: white;border: 1px #B8B8B8 solid;width: 100%;margin-left: 5px;display: none;border-radius: 10px;">
+        <div class="settings" style="margin-top: -5px;">
+            <div style="background-color:#7df3f9;width: 100%;padding-top: 10px;padding-bottom: 5px; padding-left: 20px!important;border-bottom: 2px #F0BD8F solid">
+                <h5 class="settings-title text-primary" style="padding-left: 20px;font-weight: bold;padding: 10px">Pie Settings</h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 1 </strong></label>
+
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label><strong>Pie 2 </strong></label>
+
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label><strong>Pie 3 </strong></label>
+
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label><strong>Pie 4 </strong></label>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 10px;padding-right: 10px;">
+        <div class=" col-md-3">
             <div class="form-group form-inline axe3" style="margin-top: 15px">
-                <label>Pie </label>
-                <input type="text"  class=" form-check-input newBorderRadius">
+                <label>Title </label>
+                <input type="text" class="form-control pieTitle1">
+            </div>
+        </div>
+        <div class=" col-md-3">
+            <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <label>Title </label>
+                <input type="text" class="form-control pieTitle2">
+            </div>
+        </div>
+        <div class=" col-md-3">
+            <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <label>Title  </label>
+                <input type="text" class="form-control pieTitle3">
+            </div>
+        </div>
+        <div class=" col-md-3">
+            <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <label>Title  </label>
+                <input type="text" class="form-control pieTitle4">
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
+            <div class=" col-md-3 ">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Title Color</label>
+                    <input type="color" class="form-control pieTitleColor1" style="width: 45%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label>Title Color </label>
+                    <input type="color" class="form-control pieTitleColor2" style="width: 45%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label>Title Color </label>
+                    <input type="color" class="form-control pieTitleColor3" style="width: 45%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label>Title Color</label>
+                    <input type="color" class="form-control pieTitleColor4" style="width: 45%">
+                </div>
             </div>
         </div>
     </div>
@@ -169,8 +247,13 @@
     <div class="row">
 
         <div class=" col-md-8">
+
            <canvas id="myChart"></canvas>
+
         </div>
+
+
+
         <div class="offset-1 col-md-3 pub">
             <ins class="adsbygoogle"
                  style="display:block"
@@ -180,19 +263,35 @@
                  data-full-width-responsive="true"></ins>
         </div>
     </div>
+    {#        pie canvas#}
 
+    <div class="row mt-4" >
+        <div class=" col-md-6 mb-4">
 
-    <div class="row visualize" style="margin-left: 40px;margin-top: 40px;color:#555">
-       <p style="font-weight: bold">Visualize chart as
-           <a id="bar"  style="margin-left: 10px">Bar</a>
-           <a id="pie"  style="margin-left: 10px">Pie</a>
-           <a id="line" style="margin-left: 10px">Line</a>
-           <a id="doughnut" style="margin-left: 10px">Doughnut</a>
-           <a id="radar" style="margin-left: 10px">Radar</a>
-           <a id="horizontalBar" style="margin-left: 10px">Horizontal Bar</a>
-       </p>
+            <div id="chartContainer" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
+        <div class=" col-md-6 mb-4">
+            <div id="chartContainer2" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
+        <div id="pie3" class=" col-md-6 " style="margin-top: 50px">
+            <div id="chartContainer3" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
+        <div class=" col-md-6 mb-4" style="margin-top: 50px">
+            <div id="chartContainer4" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
     </div>
-    <br><div class="row buttons" style="margin-left: 40px;">
+    {#        pie canvas#}
+{#    <div class="row visualize" style="margin-left: 40px;margin-top: 40px;color:#555">#}
+{#       <p style="font-weight: bold">Visualize chart as#}
+{#           <a id="bar"  style="margin-left: 10px">Bar</a>#}
+{#           <a id="pie"  style="margin-left: 10px">Pie</a>#}
+{#           <a id="line" style="margin-left: 10px">Line</a>#}
+{#           <a id="doughnut" style="margin-left: 10px">Doughnut</a>#}
+{#           <a id="radar" style="margin-left: 10px">Radar</a>#}
+{#           <a id="horizontalBar" style="margin-left: 10px">Horizontal Bar</a>#}
+{#       </p>#}
+{#    </div>#}
+    <br><div class="row buttons" style="margin-left: 40px;margin-top: 40px">
         <a href="#" id="downloadPdf" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download pdf</a>
         <a href="#" id="downloadJpg" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download jpg</a>
         <a href="#" id="downloadTif"  class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download tif</a>
@@ -233,9 +332,241 @@
 
     <script src="/scripts/FileSaver.js"></script>
 
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 
     <script>
         $( document ).ready(function() {
+            // setting pie chart
+            $('.pieTitle1').change(function() {
+
+                updateTitlePie(chart1,$('.pieTitle1').val())
+            })
+            $('.pieTitle2').change(function() {
+
+                updateTitlePie(chart2,$('.pieTitle2').val())
+            })
+            $('.pieTitle3').change(function() {
+
+                updateTitlePie(chart3,$('.pieTitle3').val())
+            })
+            $('.pieTitle4').change(function() {
+
+                updateTitlePie(chart4,$('.pieTitle3').val())
+            })
+            // titleCart
+            $('.pieTitleColor1').change(function() {
+
+                updateTitleColorPie(chart1,$('.pieTitleColor1').val())
+
+            })
+            $('.pieTitleColor2').change(function() {
+
+                updateTitleColorPie(chart2,$('.pieTitleColor2').val())
+            })
+            $('.pieTitleColor3').change(function() {
+
+                updateTitleColorPie(chart3,$('.pieTitleColor3').val())
+            })
+            $('.pieTitleColor4').change(function() {
+
+                updateTitleColorPie(chart4,$('.pieTitleColor4').val())
+            })
+            function updateTitlePie(chart,value) {
+                chart.options.title.text = value ;
+                chart.render();
+            }
+            function updateTitleColorPie(chart,value) {
+                chart.options.title.fontColor = value ;
+                chart.render();
+            }
+            // setting pie chart
+
+            const titles='{{titles|json_encode()|raw}}';
+
+            var arrayTitles = JSON.parse(titles);
+
+            var titles1=""; var titles2=""; var titles3="";
+            if(arrayTitles){
+                titles1=arrayTitles[0];
+                titles2=arrayTitles[1];
+                titles3=arrayTitles[2];
+            }
+            var labels={{axeX|json_encode()|raw}}
+            var pie1=[],pieExtra1=[],pieExtra2=[],pieExtra3=[];
+
+            const ar2='{{axeY|json_encode()|raw}}';
+            const axe1='{{axe1|json_encode()|raw}}';
+            const axe2='{{axe2|json_encode()|raw}}';
+            const axe3='{{axe3|json_encode()|raw}}';
+
+            var axey=parseArray(ar2)
+            var axeExt1=parseArray(axe1)
+            var axeExt2=parseArray(axe2)
+            var axeExt3=parseArray(axe3)
+            for (var j = 0; j < labels.length; j++) {
+
+                pie1.push({
+                    y: axey[j],
+                    label: labels[j]
+                });
+                pieExtra1.push({
+                    y: axeExt1[j],
+                    label: labels[j]
+                });
+                pieExtra2.push({
+                    y: axeExt2[j],
+                    label: labels[j]
+                });
+                pieExtra3.push({
+                    y: axeExt3[j],
+                    label: labels[j]
+                });
+
+            }
+            function hideChart(id,array){
+                if(array.length===0){
+                    $('#'+id).css('display','none')
+                }
+                else{
+                    $('#'+id).css('display','block')
+                }
+            }
+            // hideChart("chartContainer2",axeExt1)
+            // hideChart("chartContainer3",axeExt2)
+            // hideChart("chartContainer4",axeExt3)
+            if(axeExt3.length===0){
+                $('#pie3').addClass("offset-3")
+            }
+            else{
+                $('#pie3').removeClass("offset-3")
+            }
+            showCanvasPie()
+            function showCanvasPie(){
+                var type='{{ type }}'
+                var editType=$('#graphic_edit_type').val()
+                console.log('ee')
+                console.log(type==="pie" || editType==="pie")
+                if(type==="pie" || editType==="pie"){
+                    $('#myChart').css('display','none')
+                    $('#chartContainer').css('display','block')
+                    $('.extraSettings').css('display','block')
+
+                    hideChart("chartContainer2",axeExt1)
+                    hideChart("chartContainer3",axeExt2)
+                    hideChart("chartContainer4",axeExt3)
+                }
+            else{
+                    $('#myChart').css('display','block')
+                    $('#chartContainer').css('display','none')
+                    $('#chartContainer2').css('display','none')
+                    $('#chartContainer3').css('display','none')
+                    $('#chartContainer4').css('display','none')
+                    $('#chartContainer').css('display','none')
+
+                }
+            }
+
+
+            var chart1 = new CanvasJS.Chart("chartContainer", {
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: '{{labelY}}',
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints:pie1
+                }]
+
+            });
+            chart1.render();
+            var chart2 = new CanvasJS.Chart("chartContainer2", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: titles1,
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints: pieExtra1
+
+                }]
+
+            });
+            chart2.render();
+            var chart3 = new CanvasJS.Chart("chartContainer3", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: titles2,
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints: pieExtra2
+                }
+                ]
+            });
+            chart3.render();
+            var chart4 = new CanvasJS.Chart("chartContainer4", {
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: titles3,
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints: pieExtra3
+                }
+                ]
+            });
+            chart4.render();
+
+
             $('.selectGrid option[value="{{ showGrid }}"]').attr("selected", true);
             $('#graphic_edit_type option[value="{{ type }}"]').attr("selected", true);
           if(border){
@@ -263,13 +594,17 @@
             $('#graphic_edit_type').change(function() {
 
                 var editType=$('#graphic_edit_type').val()
-                if(editType=="pie"){
+                showCanvasPie()
+                if(editType==="pie"){
+
                     $(".extraSettings").css('display','block')
                 }
           else{
                     $(".extraSettings").css('display','none')
+                    change(editType)
                 }
-                change(editType)
+
+
             })
             $('.titleColor').change(function() {
                 updateTitleColor(myChart)
@@ -576,18 +911,15 @@
             const titles='{{titles|json_encode()|raw}}';
 
             var arrayTitles = JSON.parse(titles);
-            console.log("arrayTitles")
-            console.log(arrayTitles)
+
             var titles1=""; var titles2=""; var titles3="";
             if(arrayTitles){
-                 titles1=arrayTitles[0];
-                 titles2=arrayTitles[1];
-                 titles3=arrayTitles[2];
+                titles1=arrayTitles[0];
+                titles2=arrayTitles[1];
+                titles3=arrayTitles[2];
             }
 
 
-            console.log("arrayTitles")
-            console.log(arrayTitles)
             var data={
                 labels: ({{axeX|json_encode()|raw}}),
                 datasets:  parseInt(countDataExtra)===0?
