@@ -30,7 +30,7 @@ class GraphicDataType extends AbstractType
                     'Bar'=>'bar',
                     'Pie'=>'pie',
                     'Line'=>'line',
-                    'Doughnut'=>'doughnut',
+//                    'Doughnut'=>'doughnut',
                     'Radar'=>'radar',
                     'Horizontal Bar'=>'horizontalBar',
                 ],
