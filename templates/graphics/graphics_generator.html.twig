@@ -97,7 +97,18 @@
             </div>
         </div>
         <div class=" col-md-4" style="margin-left: -40px">
-
+            <div class="form-group form-inline axe3">
+                <label>Graph Type </label>
+                {#                <input type="text" value="{{ type }}" class="form-control">#}
+                <select id="graphic_edit_type" class="form-control" style="width: 60%">
+                    <option value="bar">Bar</option>
+                    <option value="pie">Pie</option>
+                    <option value="line">Line</option>
+                    {#                    <option value="doughnut">Doughnut</option>#}
+                    <option value="radar">Radar</option>
+                    <option value="horizontalBar">Horizontal Bar</option>
+                </select>
+            </div>
             <div class="form-group form-inline axe1">
                 <label >Grid Line</label>
                                 <select class="selectGrid form-control input-lg" id="graph_gridLine" style="width: 60%">
@@ -108,18 +119,7 @@
                                 </select>
 {#                <input type="text" value="{{ showGrid }}" class="form-control">#}
             </div>
-            <div class="form-group form-inline axe3">
-                <label>Graph Type </label>
-{#                <input type="text" value="{{ type }}" class="form-control">#}
-                <select id="graphic_edit_type" class="form-control" style="width: 60%">
-                    <option value="bar">Bar</option>
-                    <option value="pie">Pie</option>
-                    <option value="line">Line</option>
-{#                    <option value="doughnut">Doughnut</option>#}
-                    <option value="radar">Radar</option>
-                    <option value="horizontalBar">Horizontal Bar</option>
-                </select>
-            </div>
+
             <div class="form-group form-inline axe3">
                 <label>Height </label>
                 <input type="number" value="{{ height }}" class="form-control newHeight" style="margin-left: 35px">
@@ -337,7 +337,7 @@
     </div>
     {#        pie canvas#}
 
-    <div class="row mt-4" >
+    <div class="row " style="margin-top: 40px">
         <div class=" col-md-6 mb-4">
 
             <div id="chartContainer" style="height: 370px; width: 100%;padding: 10px"></div>
