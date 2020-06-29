@@ -57,3 +57,29 @@ a:hover{
 //#graphic_data_dataX,#graphic_data_dataY,#dataExtraText{
 //  height: 300px;
 //}
+.imageindex{
+  height:400px;
+  margin-top: -15px;
+  margin-bottom: 35px;
+  background-image: url("../../../public/assets/images/labo.jpg") ;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Verdana","Chandas";
+}
+.intro-text{
+  padding: 20px;
+  margin-left: 20px;
+  margin-top: 60px;
+}
+.services-list{
+  padding: 20px;
+}
+.icon-size{
+  font-size: 40px !important;
+}
+.title-service{
+  font-size: 19px;
+}
+.text-intro{
+  font-family: "Georgia","serif";
+}
