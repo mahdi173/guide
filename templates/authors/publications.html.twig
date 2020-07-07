@@ -185,8 +185,9 @@
         </table>
     </div>
     <div class="offset-0 col-md-3 mt-3" style="border: solid 2px #e6e6e6;">
+
         <table class="table">
-            <tr>
+            <tr style="border: none">
                 <th class="header">Top co-authors
 {#                    <a href="{{ path('co_authors_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> #}
 {#                        <strong style="float: right">View all</strong>#}
@@ -199,7 +200,12 @@
                     {% if co_authors|length>0  %}
                         {% for author in co_authors|slice(0,3) %}
                             <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
-                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> {{ author}}<br>
+                                <div class="row">
+                                    <div  class="col-md-3">
+                                      <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                    </div>
+                                    <div  style="padding-top: 10px" class="col-md-9"> {{ author}}</div>
+                                </div>
                             </a>
                         {% endfor %}
                     {% else %}
@@ -224,10 +230,33 @@
                     {% if author_db and author_db.follows.values|length >0 %}
                         {% for follow in author_db.follows.values|slice(0,3) %}
                             <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
-                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
-                                {{ follow.following }}
+
+                                {% set stocked=publicationManager.isAuthorStocked( follow.following)  %}
+
+                                {% set media = null %}
+                                {% set src = null %}
+                                {% if stocked and stocked.contact.avatar is not null %}
+                                    {% set media = sulu_resolve_media(stocked.contact.avatar,'fr') %}
+                                {% endif %}
+
+                                {% if media is not null %}
+                                    {% set src_stocked= media.url %}
+
+                                {% else %}
+                                    {% set src_stocked=  asset('assets/images/profil_new.jpg') %}
+
+                                {% endif %}
+                                <div class="row">
+                                    <div  class="col-md-3">
+                                       <img  class="img-rounded img-responsive rounded-circle" src="{{  src_stocked }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                    </div>
+                                    <div style="padding-top: 10px" class="col-md-9">
+
+                                         {{ follow.following }}
+                                    </div>
+                                </div>
                             </a>
-                            <br>
+
                         {% endfor %}
                     {% else %}
                         <span style="padding-top: 20px">No following </span>
@@ -249,11 +278,34 @@
                        {% for follower in followers|slice(0,3) %}
                            {% if follower.fullName and follower.fullName !=""  %}
                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
-                               <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.fullName  }}<br>
+                               {% set stocked=publicationManager.isAuthorStocked(follower.fullName)  %}
+
+                               {% set media = null %}
+                               {% set src = null %}
+                               {% if stocked and stocked.contact.avatar is not null %}
+                                   {% set media = sulu_resolve_media(stocked.contact.avatar,'fr') %}
+                               {% endif %}
+
+                               {% if media is not null %}
+                                   {% set src_stocked= media.url %}
+
+                               {% else %}
+                                   {% set src_stocked=  asset('assets/images/profil_new.jpg') %}
+
+                               {% endif %}
+                               <div class="row">
+                               <div  class="col-md-3">
+                                   <img  class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                </div>
+                                <div style="padding-top: 10px" class="col-md-9">
+                                  {{ follower.fullName  }}
+                                </div>
+                               </div>
+
                            </a>
 
                            {% else %}
-                               <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.username  }}<br>
+                               <img  class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.username  }}<br>
 
                        {% endif %}
                        {% endfor %}

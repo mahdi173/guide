@@ -19,10 +19,14 @@ class GraphicDataDTO
     public $color;
     public $showValues;
     public $showGrid;
+    public $gridColor;
     public $border;
     public $roundCorners;
     public $width;
     public $height;
+    public $titleColor;
+    public $graphBackgroundColor;
+    public $titleXAndY;
 
 
 

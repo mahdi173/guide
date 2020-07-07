@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @IsGranted("ROLE_USER")
+
  * @Route("/{_locale}/conference")
  */
 class ConferenceController extends AbstractController

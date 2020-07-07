@@ -4,7 +4,9 @@
 namespace App\Manager;
 
 
+use App\Entity\User;
 use App\Repository\AllPublicationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class PublicationManager
@@ -12,13 +14,18 @@ class PublicationManager
     /** @var AllPublicationRepository */
     private $allPublicationRepository;
 
+    /** @var EntityManagerInterface */
+    private $em;
+
     /**
      * FollowManager constructor.
      * @param AllPublicationRepository $allPublicationRepository
+     * @param EntityManagerInterface $em;
      */
-    public function __construct(AllPublicationRepository $allPublicationRepository)
+    public function __construct(AllPublicationRepository $allPublicationRepository,EntityManagerInterface $em)
     {
         $this->allPublicationRepository = $allPublicationRepository;
+        $this->em = $em;
     }
 
 
@@ -60,6 +67,21 @@ class PublicationManager
             }
         }
         return array_unique(array_merge(($res1),($res2)));
+    }
+
+    public function isAuthorStocked($author){
+
+        $exist=false;
+        $user=null;
+       $users=$this->em->getRepository(User::class)->findAll();
+        foreach ($users as $user)
+        {
+            if ($user->getFullName()==$author) {
+               $exist=true;
+               return $user;break;
+            }
+        }
+        return $user;
     }
 
 }

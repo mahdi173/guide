@@ -3,20 +3,18 @@
 {% block content %}
 
     {%  set user=app.user %}
-    {% set firstname = user.firstName %}
-    {% set lastname = user.lastName %}
-    {% set fullname = user.fullName %}
+    {% set firstname = null %}
+    {% set lastname = null %}
+    {% set fullname = null  %}
+    {% set authors = null  %}
+    {% set currentUser = app.user  %}
+    {% if user %}
+        {% set firstname = user.firstName %}
+        {% set lastname = user.lastName %}
+        {% set fullname = user.fullName %}
 
-    {% if app.request.get('firstname') and app.request.get('lastname') %}
-      {% set firstname = app.request.get('firstname') %}
-      {% set lastname = app.request.get('lastname') %}
-      {% set id = app.request.get('id') %}
-      {% set user = userRepository.userFromConctact(id,firstname,lastname) %}
 
-        {% if user %}
-          {% set user=user.0 %}
-   {% endif %}
-   {% endif %}
+
     {% set authors = publicationManager.authorsList(user) %}
     {% if fullname and fullname!="" %}
 
@@ -25,7 +23,19 @@
     {% endif %}
 
     {% set currentUser=app.user %}
+  {% endif %}
+    {% if app.request.get('firstname') and app.request.get('lastname') %}
+        {% set firstname = app.request.get('firstname') %}
+        {% set lastname = app.request.get('lastname') %}
+        {% set id = app.request.get('id') %}
+        {% set user = userRepository.userFromConctact(id,firstname,lastname) %}
 
+        {% if user %}
+            {% set user=user.0 %}
+            {% set followers_count= followers_profile.followers(user.fullName)|length %}
+            {% set authors = publicationManager.authorsList(user) %}
+        {% endif %}
+    {% endif %}
 
 
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
@@ -80,7 +90,7 @@
 {#                                </div>#}
 
                                 <div class="col-sm-12 col-md-11" style="margin-top: 20px;margin-left: -20px">
-                                    <h2 class="text-primary"> {{firstname }}   {{ lastname }}</h2>
+                                    <h2 class="text-primary" style="text-transform: capitalize"> {{firstname }}   {{ lastname }}</h2>
                                  {% if user %}
                                      <h6  style="color: #2f2f2f;font-size: 16px">
                                          <strong>{{   user.allpublications|length }}</strong> publications&nbsp;&nbsp;
@@ -112,7 +122,7 @@
                 {% if user %}
                    <div class="col-xs-12 col-sm-12 col-md-3" style="color: #555;padding-top: 45px;">
                     Follow me on social <br>media
-                    {% if app.request.get('firstname') and  app.request.get('lastname') %}
+                    {% if app.request.get('firstname') and  app.request.get('lastname') and currentUser %}
                         {% if app.request.get('id')==currentUser.id and app.request.get('firstname')==currentUser.firstname and  app.request.get('lastname')==currentUser.lastName %}
                            <a class="btn" data-toggle="modal" data-target="#modal_follow" style="color: white;margin-left: 40px;background-color: #efe3b3">Edit</a>
                         {% endif %}
@@ -132,13 +142,15 @@
                            <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="H"/>
                         </a>
 
-                    {% set lastname=app.user.lastname %}
-                    {% if lastname is  null %}
-                    {% set lastname=app.user.fullName %}
-                    {% endif %}
+                       {% if app.user %}
+                            {% set lastname=app.user.lastname %}
+                            {% if lastname is  null %}
+                            {% set lastname=app.user.fullName %}
+                            {% endif %}
+                       {% endif %}
                     <div class="mt-4">
 
-                        {% if app.request.get('firstname')==currentUser.firstname and  app.request.get('lastname')==currentUser.lastName %}
+                        {% if currentUser and app.request.get('firstname')==currentUser.firstname and  app.request.get('lastname')==currentUser.lastName %}
 {#                        <button class="btn btn-danger">#}
 {#                            <a style="color: white" href="{{path('share_your_profile', {id:app.user.id ,firstname:app.user.firstname,lastname:lastname}) }} "> Share profile</a>#}
 {#                        </button>#}
@@ -152,7 +164,7 @@
 {#        <hr style="width: 90%;margin-bottom: 0px">#}
         <hr style="width: 88%; margin-top: 20px;margin-bottom: 20px; margin-left: 20px;"/>
 
-        {% if user==currentUser %}
+        {% if user and currentUser and user==currentUser  %}
               <div class="modal fade" id="modal_follow" role="dialog">
             <div class="modal-dialog" role="document">
 {#                background-color: #26afe8#}
@@ -291,7 +303,12 @@
                              {% if authors|length >0 %}
                                  {% for author in authors|slice(0,3) %}
                                      <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
-                                         <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> {{ author}}<br>
+                                         <div class="row">
+                                             <div  class="col-md-3">
+                                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> <br>
+                                             </div>
+                                             <div style="padding-top: 10px" class="col-md-9">{{ author}}</div>
+                                         </div>
                                      </a>
                                  {% endfor %}
                              {% else %}
@@ -312,10 +329,31 @@
                              {% if user.follows.values|length >0 %}
                                  {% for follow in user.follows.values|slice(0,3) %}
                                  <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
-                                     <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
-                                     {{ follow.following }}
+
+
+                                     {% set stock=publicationManager.isAuthorStocked(follow.following )  %}
+
+                                     {% set media = null %}
+                                     {% set src = null %}
+                                     {% if stock and stock.contact.avatar is not null %}
+                                         {% set media = sulu_resolve_media(stock.contact.avatar,'fr') %}
+                                     {% endif %}
+
+                                     {% if media is not null %}
+                                         {% set src= media.url %}
+
+                                     {% else %}
+                                         {% set src_stocked=  asset('assets/images/profil_new.jpg') %}
+
+                                     {% endif %}
+                                     <div class="row">
+                                         <div  class="col-md-3">
+                                             <img src="{{  src_stocked }}" class="img-rounded img-responsive rounded-circle" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                         </div>
+                                         <div style="padding-top: 10px" class="col-md-9"> {{ follow.following }}</div>
+                                     </div>
                                  </a>
-                                     <br>
+
                                  {% endfor %}
                              {% else %}
                                  <span style="padding-top: 20px">No following </span>
@@ -340,8 +378,29 @@
                                      {% else %}
 
                                          <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
-                                             <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
-                                             {{ follower.fullName }}<br>
+
+                                             {% set stocked=publicationManager.isAuthorStocked(follower.fullName )  %}
+
+                                                 {% set media = null %}
+                                                 {% set src = null %}
+                                                 {% if stocked and stocked.contact.avatar is not null %}
+                                                     {% set media = sulu_resolve_media(stocked.contact.avatar,'fr') %}
+                                                 {% endif %}
+
+                                                 {% if media is not null %}
+                                                     {% set src_stocked= media.url %}
+
+                                                 {% else %}
+                                                     {% set src_stocked=  asset('assets/images/profil_new.jpg') %}
+
+                                                 {% endif %}
+
+                                             <div class="row">
+                                                 <div  class="col-md-3">
+                                                    <img src="{{  src_stocked }}"  class="img-rounded img-responsive rounded-circle" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                                 </div>
+                                                 <div style="padding-top: 10px" class="col-md-9"> {{ follower.fullName }}</div>
+                                             </div>
                                          </a>
                                      {% endif %}
                                  {% endfor %}

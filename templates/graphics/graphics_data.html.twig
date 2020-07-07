@@ -16,6 +16,9 @@
     margin-left: 10px;
 
 }
+#graphic_data_dataX{
+
+}
 .checkFirst{
     margin-left: 15px;
 }
@@ -28,6 +31,9 @@
   color:#555;
 
     }
+    .widthLabel{
+        margin-top: 11px
+    }
     .titleBold{
 
      font-weight:bold;
@@ -39,14 +45,7 @@
     .titleG{
     float: right;
     }
-    .settings{
 
-    border: 2px #E0E0E0 solid;
-    /*padding: 30px 25px;*/
-    /*background-color:	#F8F8F8;*/
- border-radius: 10px;
- box-shadow: 5px 5px #F8F8F8;
-    }
     .settings-title{
     padding-bottom: 10px;
     padding-top:0px;
@@ -68,10 +67,7 @@
     #graphic_data_type{
     font-family: 'FontAwesome', 'Second Font name'
     }
-     .text-desc{
-         color: #555;
-         font-weight: bold;
-     }
+
         .pub{
             /*border: 2px red solid;*/
             margin-bottom: 10px;
@@ -83,28 +79,9 @@
 {% endblock  %}
 
 {% block content %}
-    <div class="row"  style="margin-top: 40px">
-        <h4 class=" text-primary col-md-1" style="margin-top: 0px;font-weight: bold">
-{#             <i class="fa fa-line-chart" style="color: orangered;font-size: 30px;"></i>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>#}
-             <img class="" src="{{ asset('assets/images/designChart.jpg') }}" style="width: 90px;height: 80px"/>&nbsp;Graph <span style="color:#F0BD8F;">Maker</span>
-        </h4>
-        <div class="col-md-6">
-            <p class="text-desc">Online Graph Maker is an easy to use chart tool.To start,select your graph type and the apparence of your graph.Then enter your data and hit the create button .For more options,visit the different graph types in the top menu. </p>
-        </div>
-        <div class="col-md-5 pub">
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:460px;height:130px"
-                 data-ad-client="ca-pub-9897811061542650"
-                 data-ad-slot="1365634245"></ins>
-        </div>
-        <div class="col-md-3 offset-9">
-            <a type="button" class="text-dark col-md-12" data-toggle="modal" data-target="#myModal" style="margin-left: 70px;color:#158CBA!important;font-weight: bold;margin-bottom: 10px;font-size: 17px"> <img src="{{ asset('assets/images/question.png') }}" style="margin-right:10px;width: 25px;height: 25px"/>How it works?</a>
-        </div>
-{#        <p style=" border-radius: 10px;box-shadow: 5px 5px #F8F8F8;color:#555;font-family: 'Open Sans',sans-serif;border:1px #E0E0E0 solid;margin-bottom: 60px;padding:20px 20px;background-color: #F8F8F8;margin-top: 40px;text-align: center;width: 100%;margin-left: 5px;margin-right: 5px">#}
-{#            <span class="text-primary">Graphics generator</span> create online graphics, bar, pie or line charts. <br><br>Just paste your data into the data section of the graph and click the Create Graph button#}
-
-{#        </p>#}
-    </div>
+{#   hearder#}
+    {% include 'graphics/includes/hearderGraph.html.twig' %}
+{#   hearder#}
 
     {{ form_start(form)}}
     <div class="settings">
@@ -114,33 +91,42 @@
     <div class="row params" style="padding-top: 30px!important;padding-left: 20px;padding-bottom: 20px">
     <div class="col-md-2">
         {{ form_label(form.type, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
-        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
-        {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.titleColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+        {{ form_label(form.titleX, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+        {{ form_label(form.width, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
+        {{ form_label(form.graphBackgroundColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
 {#       {{ form_label(form.color, null, {  'label_attr': {'class': 'cee'} }) }}#}
         {% set attr = {'checked' :true} %}
-        <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
+        <div style="margin-top: 15px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>
     </div>
      <div class="col-md-3">
-        {{ form_widget(form.type)}}<br><br>
+        {{ form_widget(form.type)}}<br>
+        {{ form_widget(form.titleColor)}}<br><br>
         {{ form_widget(form.titleX)}}<br>
         {{ form_widget(form.width)}}<br><br>
-         <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>
+        {{ form_widget(form.graphBackgroundColor)}}<br><br><br>
+         <div style="margin-top: -15px" class="checkData">{{ form_row(form.roundCorners)}}</div>
 
     </div>
         <div class="col-md-2">
             {{ form_label(form.graphicTitle, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
             {{ form_label(form.titleY, null, {  'label_attr': {'class': 'cee'} }) }}<br><br>
-            {{ form_label(form.height, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            {{ form_label(form.height, null, {  'label_attr': {'class': 'cee widthLabel'} }) }}<br><br><br>
+            {{ form_label(form.showGrid, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            {{ form_label(form.gridColor, null, {  'label_attr': {'class': 'cee'} }) }}<br><br><br>
+            <div style="margin-top: 20px" class="checkData">{{ form_widget(form.titleXAndY, {'attr' : attr})}}</div><br><br><br>
 
-             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>
+{#             <div style="margin-top: -10px" class="checkData checkFirst">{{ form_row(form.showGrid)}}</div><br>#}
 {#            {% set attr = {'checked' :true} %}#}
 {#             <div style="margin-top: -20px" class="checkData checkFirst">{{ form_row(form.border, {'attr' : attr})}}</div>#}
         </div>
         <div class="col-md-4">
             {{ form_widget(form.graphicTitle)}}<br>
             {{ form_widget(form.titleY)}}<br>
-            {{ form_widget(form.height)}}<br><br>
-            <div style="margin-top: -20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
+            {{ form_widget(form.height)}}<br>
+            {{ form_widget(form.showGrid)}}<br><br>
+            {{ form_widget(form.gridColor)}}<br><br>
+            <div style="margin-top: 20px" class="checkData">{{ form_row(form.showValues)}}</div><br>
 {#            <div style="margin-top: -20px" class="checkData">{{ form_row(form.roundCorners)}}</div>#}
         </div>
     </div>
@@ -204,12 +190,16 @@
     </div>
     <div class="row" style="margin-top: 20px;margin-bottom: 10px">
 
-        <div class="col-md-12 col-sm-12 pub" style="margin-left: 25px;width: 130px;height: 550px;">
+{#        <div class="col-md-12 col-sm-12 pub" style="margin-left: 25px;width: 130px;height: 550px;">#}
+        <div class="col-md-12 col-sm-12 pub" style="margin-left: 25px;width: 130px;">
             {#                 <ins class="adsbygoogle"#}
             {#                      style="display:inline-block;width:860px;height:90px"#}
             {#                      data-ad-client="ca-pub-9897811061542650"#}
             {#                      data-ad-slot="1126601729"></ins>#}
-            <div id="amzn-assoc-ad-ba91bf71-283a-4787-a84b-dfae34ebf792" style="height: 550px"></div>
+{#            <div id="amzn-assoc-ad-ba91bf71-283a-4787-a84b-dfae34ebf792" style="height: 550px">#}
+            <div id="amzn-assoc-ad-ba91bf71-283a-4787-a84b-dfae34ebf792">
+
+            </div>
 {#            <img class="" src="{{ asset('assets/images/designChart.jpg') }}" style="height: 550px"/>&nbsp;#}
 
 
@@ -238,6 +228,97 @@
     <script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=ba91bf71-283a-4787-a84b-dfae34ebf792"></script>
     <script>
         $( document ).ready(function() {
+            // $('#graphic_data_dataX').each(function() {
+            //     $(this).height($(this).prop('scrollHeight'));
+            // });
+            // dinamicHeightTextarea('graphic_data_dataX');
+            // dinamicHeightTextarea('graphic_data_dataY');
+            function dinamicHeightTextarea(selector){
+                let textareas = document.querySelectorAll(selector),
+                    hiddenDiv = document.createElement('div'),
+                    content = null;
+
+                for (let j of textareas) {
+                    j.classList.add('txtstuff');
+                }
+                hiddenDiv.classList.add('txta'+selector);
+                hiddenDiv.style.display = 'none';
+                hiddenDiv.style.whiteSpace = 'pre-wrap';
+                hiddenDiv.style.wordWrap = 'break-word';
+
+                for(let i of textareas) {
+                    (function(i) {
+
+                        i.addEventListener('input', function() {
+                            i.parentNode.appendChild(hiddenDiv);
+                            i.style.resize = 'none';
+                            i.style.overflow = 'hidden';
+                            content = i.value;
+                            content = content.replace(/\n/g, '<br>');
+                            hiddenDiv.innerHTML = content + '<br style="line-height: 3px;">';
+                            hiddenDiv.style.visibility = 'hidden';
+                            hiddenDiv.style.display = 'block';
+                            i.style.height = hiddenDiv.offsetHeight + 'px';
+
+                            hiddenDiv.style.visibility = 'visible';
+                            hiddenDiv.style.display = 'none';
+                        });
+                    })(i);
+                }
+            }
+                         /*textarea*/
+            function displayInlineDate(selector){
+                const dataConvertY = [];
+                const dataConvertDash = [];
+                var value=($(selector).val()).split(' ')
+                // var valueDash=($(selector).val()).split('-')
+                console.log(value)
+
+                for(var i=0;i<value.length;i++) {
+                    dataConvertY.push(value[i])
+                }
+                // for(var i=0;i<valueDash.length;i++) {
+                //     dataConvertDash.push(value[i])
+                // }
+                if(dataConvertY.length>0){
+                    $(selector).val(dataConvertY.join("\n"))
+                }
+                // if(dataConvertDash.length>0){
+                //     $(selector).val(dataConvertDash.join("\n"))
+                // }
+
+
+                dinamicHeightTextarea(selector);
+            }
+                $('#graphic_data_dataX').bind('change propertychange', function() {
+                    // const dataConvert = [];
+                    //
+                    // var value = ($(this).val()).split(',')
+                    // for (var i = 0; i < value.length; i++) {
+                    //     val = value[i] + '\n'
+                    //     dataConvert.push(value[i])
+                    // }
+                    //
+                    // dinamicHeightTextarea('graphic_data_dataX');
+                    // $('#graphic_data_dataX').val(dataConvert.join("\n"))
+                    // displayInlineDate('#graphic_data_dataX')
+
+                })
+
+                    $('#graphic_data_dataY').bind('change propertychange', function() {
+                        // const dataConvertY = [];
+                        //
+                        // var value=($(this).val()).split(',')
+                        // for(var i=0;i<value.length;i++){
+                        //     val=value[i]+'\n'
+                        //     dataConvertY.push(value[i])
+                        // }
+                        // $('#graphic_data_dataY').val(dataConvertY.join("\n"))
+                        // dinamicHeightTextarea('graphic_data_dataY');
+                        displayInlineDate('#graphic_data_dataY')
+
+            });
+                             /*textarea*/
         var edit='{{ edit }}'
             if(edit)
             {
@@ -266,8 +347,13 @@
                     $("#graphic_data_titleX").val(arrayData.titleX);
                     $("#graphic_data_titleY").val(arrayData.titleY);
                     $("#graphic_data_graphicTitle").val(arrayData.graphicTitle)
+                    $("#graphic_data_titleColor").val(arrayData.graphicTitleColor)
                     $("#graphic_data_color").val(arrayData.color);
                     $("#graphic_data_labelY").val(arrayData.labelY);
+                    $("#graphic_data_showGrid").val(arrayData.showGrig);
+                    $("#graphic_data_gridColor").val(arrayData.gridColor);
+                    $("#graphic_data_graphBackgroundColor").val(arrayData.graphBackgroundColor);
+                    $("#graphic_data_titleXAndY").val(arrayData.showXY);
 
                     $("#graphic_data_width").val(arrayData.width)
                     $("#graphic_data_height").val(arrayData.height);
@@ -275,9 +361,11 @@
                     var showValues=arrayData.showValues
                     var border=arrayData.border
                     var roundCorner=arrayData.roundCorner
-                    if(showGrig){
-                         $("#graphic_data_showGrid").prop( "checked", true );
-                    }
+                    var gridColor=arrayData.gridColor
+                    var showTitles=arrayData.showXY
+                    // if(showGrig){
+                    //      $("#graphic_data_showGrid").prop( "checked", true );
+                    // }
                     if(showValues){
                          $("#graphic_data_showValues").prop( "checked", true );
                     }
@@ -289,6 +377,9 @@
                     }
                     if(roundCorner){
                         $("#graphic_data_roundCorners").prop( "checked", true );
+                    }
+                    if(showTitles){
+                        $("#graphic_data_titleXAndY").prop( "checked", true );
                     }
 
                     var text1=document.getElementById("graphic_data_dataX");
@@ -552,6 +643,11 @@
         }
 
         /****************************************************************************/
+            $('#graphic_data_showGrid').on('change', function() {
+                if( this.value ==="none"){
+                    $("#graphic_data_gridColor").val("#000000");
+                }
+            });
 })
 
     </script>
