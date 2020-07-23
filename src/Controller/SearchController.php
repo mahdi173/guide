@@ -54,6 +54,7 @@ class SearchController extends BaseController
     public function searchByValue(Request $request)
     {
 
+
         $objet = new Search();
         $data_t_scopus = null;
         $data_reuters = null;
@@ -66,7 +67,8 @@ class SearchController extends BaseController
 
 
         if ($request->get("searchValue")) {
-
+           if ($request->get("searchOption")) {
+            if ($request->get("searchOption")=="journal") {
 
             // modification par outmane le 11/05/2020 à 10h00
             $val=$request->get("searchValue");
@@ -252,7 +254,7 @@ class SearchController extends BaseController
             'pagination'=>$pagination,
             'paginationR'=>$pagination_slide
         ]);
-    }
+    }}}
 
     /**
      * Lists all data_t_scopus entities.

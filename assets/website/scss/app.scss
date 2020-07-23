@@ -57,19 +57,33 @@ a:hover{
 //#graphic_data_dataX,#graphic_data_dataY,#dataExtraText{
 //  height: 300px;
 //}
+@font-face {
+  font-family: "Adobe Arabic Regular";
+  src: url("../../../public/assets/font/Adobe Arabic Regular.otf");
+}
 .imageindex{
-  height:600px;
+  height:400px;
   margin-top: -15px;
   margin-bottom: 35px;
-  background-image: url("../../../public/assets/images/photo-labo.jpeg") ;
+  background-image: url("../../../public/assets/images/bg-transparent.png") ;
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: "Verdana","Chandas";
+  font-family: "Adobe Arabic Regular","sans-serif";
+
+}
+.services{
+  font-family: "Adobe Arabic Regular","sans-serif";
+  font-size: 30px;
 }
 .intro-text{
   margin-top: 160px;
   padding: 20px;
-  margin-left: 20px;
+ // margin-left: 20px;
+
+}
+.intro-text h2{
+  font-size: 45px;
+
 
 }
 .services-list{
@@ -82,5 +96,5 @@ a:hover{
   font-size: 19px;
 }
 .text-intro{
-  font-family: "Georgia","serif";
+  font-family: "Adobe Arabic Regular","sans-serif";
 }
