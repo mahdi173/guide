@@ -12,18 +12,21 @@
 
 <form method="get" action="{{ url('data_search_by_several_values') }}">
 {#    <h2 class="text-primary"><b>Find the best journal for your research</b></h2>#}
-    <h2 class="text-primary"><b>Find journal or Authors</b></h2>
+    <h2 class="text-primary"><b>Find Journals or Authors</b></h2>
     <div class="input-group-prepend mb-3" >
-        <select class="form-control" style="width:30%;height: 50px">
+        <select name="searchOption" class="form-control" style="width:30%;height: 40px">
             <option value="journal">Journal</option>
             <option value="author">Author</option>
         </select>
-        <input type="text" name="searchValue" style="height: 50px; font-size: large" class="form-control" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
-        <div class="input-group-prepend">
-            <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
+
+
+        <input type="text" name="searchValue" style="height: 40px; font-size: large" class="form-control" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+
+
+            <button class="btn btn-outline-info" type="submit" id="texte-bouton" style="width: 130px;height: 40px"><i class="fa fa-search"></i> Search</button>
         </div>
 
-    </div>
+
     <div class="row">
 
         <div class="col-sm-12" style="text-align: right; margin-top: -15px;">

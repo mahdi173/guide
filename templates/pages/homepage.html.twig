@@ -25,11 +25,9 @@
     {#        image index#}
     <div class="container-fluid imageindex">
         <div class="row ">
-            <div class="col-md-4 intro-text" style="color: white">
-                <h2>Empowering Knowledge</h2>
-                <p class="text-intro" style="font-size: 18px;"><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin blandit sapien vitae tellus suscipit, in sodales odio varius</strong></p>
-                 <button class="btn btn-primary-outline" style="color: white;border: white 1px solid">Learn more about  <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                 </button>
+            <div class="offset-3 col-md-6 intro-text">
+                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>
+
             </div>
 
         </div>
@@ -54,7 +52,7 @@
         <!-- Fin pub 0001-->
         <div class="row col-sm-12">
             <div class="col-sm-12 col-md-12">
-                <h4 class="text-primary" style="font-weight: bold">Free service for you</h4>
+                <h4 class=" services">Free Service for you</h4>
             </div>
 
             <div class="col-sm-12 col-md-4 services-list " style="padding-left: 43px">
@@ -63,18 +61,24 @@
                     <i class="fa fa-file icon-size" aria-hidden="true"></i>
                 </div>
                 <div class="col-sm-12 col-md-10">
-                    <p class="text-primary title-service">Journal search</p>
+                    <p class="title-service">
+                        <a href="{{ path('journalSearch') }}">Journal search</a>
+
+                    </p>
                     <p><span style="color: #e07b39;padding-right: 5px">ScienceDirect</span> <span style="color: #555" >Empowering smarter research at every step</span></p>
                 </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 services-list text-primary">
                 <div class="row ">
-                    <div class="col-sm-12 col-md-2 text-primary">
+                    <div class="col-sm-12 col-md-2 ">
                       <i class="fa fa-search icon-size" aria-hidden="true"></i>
                     </div>
                     <div class="col-sm-12 col-md-10">
-                        <p class="text-primary title-service">Author search</p>
+                        <p class="title-service">
+                            <a  href="{{ path('get_authors') }}" >Author search</a>
+                        </p>
+
                         <p>
                             <span style="color: #555" >Publishing with</span>
                             <span style="color: #e07b39;padding-right: 5px">Elsevier</span>
@@ -83,13 +87,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-4 services-list text-primary">
+            <div class="col-sm-12 col-md-4 services-list ">
                 <div class="row ">
                     <div class="col-sm-12 col-md-2 text-primary">
                         <i class="fa fa-bar-chart icon-size" aria-hidden="true"></i>
                     </div>
                     <div class="col-sm-12 col-md-10">
-                        <p class="text-primary title-service">  Graph maker</p>
+                        <p class="title-service">
+                            <a  href="{{ path('graphic_data') }}" class=" title-service">Graph Maker</a></p>
                         <p>
                             <span style="color: #555" >Quantify the reach and impact of your published research</span>
                         </p>
@@ -115,7 +120,7 @@
 
 
 
-        <div class="row col-sm-12" align="center" style="height: 150px">
+        <div class="row col-sm-12" align="center" style="height: 60px">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <!-- pub_adsence_horizontal_pageH -->
             <ins class="adsbygoogle"
@@ -133,32 +138,47 @@
             <h4 class="mb-n2 mt-5 text-primary" ><b>Recent articles</b></h4>
             <hr class="col-md-12 bg-primary" style="height:2px">
         </div>
-        <div class="row">
+
+
+        <div class="main-slider" >
             {% set recentarticles= sulu_article_load_recent(6) %}
             {% for a in recentarticles %}
-                <div class="col-md-3">
-                    <div class="card mb-4 box-shadow">
-                        {% if a.content.content.image %}
-                            {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
-{#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
-                            <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
-                            {% else %}
-                                <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
+                <div class="card mb-4 box-shadow" style="margin-right: 5px">
 
-                        {% endif %}
-                        <div class="card-body">
+                    {% if a.content.content.image %}
+                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
+                        {#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
+                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
+                    {% else %}
+                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
+
+                    {% endif %}
+                         <div class="card-body">
                             <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>
                             {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}
                             <a href="{{ a.routePath }}" style="float: right">Read More →</a>
-                        </div>
-                    </div>
+                         </div>
                 </div>
-            {% else %}
-                <p class="alert text-info"></p>
             {% endfor %}
         </div>
 
-
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+
+
+            $(document).ready(function(){
+                $('.main-slider').slick({
+                    slidesToShow: 5,
+                    slidesToScroll: 5
+
+
+            });
+        })
+
+    </script>
 {% endblock %}
