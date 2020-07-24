@@ -52,7 +52,7 @@
         <!-- Fin pub 0001-->
         <div class="row col-sm-12">
             <div class="col-sm-12 col-md-12">
-                <h4 class="text-primary services">Free service for you</h4>
+                <h4 class=" services">Free Service for you</h4>
             </div>
 
             <div class="col-sm-12 col-md-4 services-list " style="padding-left: 43px">
@@ -61,7 +61,7 @@
                     <i class="fa fa-file icon-size" aria-hidden="true"></i>
                 </div>
                 <div class="col-sm-12 col-md-10">
-                    <p class="text-primary title-service">
+                    <p class="title-service">
                         <a href="{{ path('journalSearch') }}">Journal search</a>
 
                     </p>
@@ -71,12 +71,12 @@
             </div>
             <div class="col-sm-12 col-md-4 services-list text-primary">
                 <div class="row ">
-                    <div class="col-sm-12 col-md-2 text-primary">
+                    <div class="col-sm-12 col-md-2 ">
                       <i class="fa fa-search icon-size" aria-hidden="true"></i>
                     </div>
                     <div class="col-sm-12 col-md-10">
-                        <p class="text-primary title-service">
-                            <a  href="{{ path('get_authors') }}" class="text-primary title-service">Author search</a>
+                        <p class="title-service">
+                            <a  href="{{ path('get_authors') }}" >Author search</a>
                         </p>
 
                         <p>
@@ -87,13 +87,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-4 services-list text-primary">
+            <div class="col-sm-12 col-md-4 services-list ">
                 <div class="row ">
                     <div class="col-sm-12 col-md-2 text-primary">
                         <i class="fa fa-bar-chart icon-size" aria-hidden="true"></i>
                     </div>
                     <div class="col-sm-12 col-md-10">
-                        <p><a  href="{{ path('graphic_data') }}" class="text-primary title-service">Graph Maker</a></p>
+                        <p class="title-service">
+                            <a  href="{{ path('graphic_data') }}" class=" title-service">Graph Maker</a></p>
                         <p>
                             <span style="color: #555" >Quantify the reach and impact of your published research</span>
                         </p>
@@ -137,11 +138,16 @@
             <h4 class="mb-n2 mt-5 text-primary" ><b>Recent articles</b></h4>
             <hr class="col-md-12 bg-primary" style="height:2px">
         </div>
-        <div class="row">
+
+        <section class="p-0 main-slider">
+            <div class="slide-1 home-slider">
+                <div class="row">
             {% set recentarticles= sulu_article_load_recent(6) %}
             {% for a in recentarticles %}
                 <div class="col-md-3">
+
                     <div class="card mb-4 box-shadow">
+
                         {% if a.content.content.image %}
                             {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
 {#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
@@ -150,7 +156,8 @@
                                 <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
 
                         {% endif %}
-                        <div class="card-body">
+{#                        <div class="card-body">#}
+                        <div class="">
                             <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>
                             {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}
                             <a href="{{ a.routePath }}" style="float: right">Read More →</a>
@@ -161,8 +168,22 @@
                 <p class="alert text-info"></p>
             {% endfor %}
         </div>
-
+        </div>
+        </section>
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // $(document).ready(function(){
+        //     $('.main-slider').slick({
+        //         infinite: true,
+        //         slidesToShow: 3,
+        //         slidesToScroll: 3
+        // })
+        // })
+
+    </script>
 {% endblock %}

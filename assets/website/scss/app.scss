@@ -61,6 +61,13 @@ a:hover{
   font-family: "Adobe Arabic Regular";
   src: url("../../../public/assets/font/Adobe Arabic Regular.otf");
 }
+@font-face {
+  font-family: "Playfair Display Regular";
+  src: url("../../../public/assets/font/PlayfairDisplay-Regular.ttf");
+}
+.right_nav a{
+  font-family: "Playfair Display Regular","sans-serif" !important;
+}
 .imageindex{
   height:400px;
   margin-top: -15px;
@@ -74,16 +81,18 @@ a:hover{
 .services{
   font-family: "Adobe Arabic Regular","sans-serif";
   font-size: 30px;
+  color:#13426c;
 }
 .intro-text{
   margin-top: 160px;
   padding: 20px;
+
  // margin-left: 20px;
 
 }
 .intro-text h2{
-  font-size: 45px;
-
+  font-size: 47px;
+  color:#13426c;
 
 }
 .services-list{
@@ -97,4 +106,7 @@ a:hover{
 }
 .text-intro{
   font-family: "Adobe Arabic Regular","sans-serif";
+}
+.title-service a{
+  color: black;
 }
