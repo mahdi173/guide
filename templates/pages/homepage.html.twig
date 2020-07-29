@@ -23,15 +23,39 @@
 
     {% set issn="" %}
     {#        image index#}
+<div class="slider-home ">
     <div class="container-fluid imageindex">
         <div class="row ">
-            <div class="offset-3 col-md-6 intro-text">
-                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>
+            <div class="offset-4 col-md-6 intro-text">
+{#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
+                <h2>Empowering Knowledge around the world</h2>
 
             </div>
 
         </div>
     </div>
+    <div class="container-fluid imageindex">
+        <div class="row ">
+            <div class="offset-3 col-md-6 intro-text">
+{#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
+                <h2>Find All the help to advance in your scientific researches</h2>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid imageindex">
+        <div class="row ">
+            <div class="offset-4 col-md-6 intro-text">
+{#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
+                <h2>GuideJournal provides Services For Science
+                </h2>
+
+            </div>
+
+        </div>
+    </div>
+</div>
     <div class="container">
 
 
@@ -50,53 +74,65 @@
             </script>
         </div>
         <!-- Fin pub 0001-->
-        <div class="row col-sm-12">
+        <br><div class="row col-sm-12">
             <div class="col-sm-12 col-md-12">
-                <h4 class=" services">Free Service for you</h4>
+                <h4 class=" services">Choose your service</h4>
             </div>
 
             <div class="col-sm-12 col-md-4 services-list " style="padding-left: 43px">
                 <div class="row ">
                 <div class="col-sm-12 col-md-2 text-primary">
-                    <i class="fa fa-file icon-size" aria-hidden="true"></i>
+
+                    <a href="{{ path('journalSearch') }}">   <i class="fa fa-file icon-size" aria-hidden="true"></i></a>
                 </div>
                 <div class="col-sm-12 col-md-10">
                     <p class="title-service">
                         <a href="{{ path('journalSearch') }}">Journal search</a>
 
                     </p>
-                    <p><span style="color: #e07b39;padding-right: 5px">ScienceDirect</span> <span style="color: #555" >Empowering smarter research at every step</span></p>
+
+                    <p>
+                        <span style="color: #555" >Find the most appropriate <span style="color: #e07b39;padding-right: 5px">journal</span>  according to various criteria</span>
+                    </p>
                 </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 services-list text-primary">
                 <div class="row ">
                     <div class="col-sm-12 col-md-2 ">
-                      <i class="fa fa-search icon-size" aria-hidden="true"></i>
+                        <a  href="{{ path('get_authors') }}" > <i class="fa fa-search icon-size" aria-hidden="true"></i></a>
+
                     </div>
                     <div class="col-sm-12 col-md-10">
                         <p class="title-service">
                             <a  href="{{ path('get_authors') }}" >Author search</a>
                         </p>
 
+
                         <p>
-                            <span style="color: #555" >Publishing with</span>
-                            <span style="color: #e07b39;padding-right: 5px">Elsevier</span>
-                            <span style="color: #555" >Step by step guide</span>
+                            <span style="color: #555" >All</span>
+                            <span style="color: #e07b39;padding-right: 5px">authors</span>
+                            <span style="color: #555" >with their published articles & corresponding journals</span>
                         </p>
+
                     </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 services-list ">
                 <div class="row ">
                     <div class="col-sm-12 col-md-2 text-primary">
-                        <i class="fa fa-bar-chart icon-size" aria-hidden="true"></i>
+                        <a  href="{{ path('graphic_data') }}" class=" title-service"> <i class="fa fa-bar-chart icon-size" aria-hidden="true"></i></a></p>
+
                     </div>
                     <div class="col-sm-12 col-md-10">
                         <p class="title-service">
                             <a  href="{{ path('graphic_data') }}" class=" title-service">Graph Maker</a></p>
                         <p>
-                            <span style="color: #555" >Quantify the reach and impact of your published research</span>
+
+                            <span style="color: #555" >Create your custom
+                                  <span style="color: #e07b39;padding-right: 5px">graph</span>
+                                or  <span style="color: #e07b39;padding-right: 5px">chart</span>
+                                 quickly and efficiently</span>
                         </p>
                     </div>
                 </div>
@@ -175,9 +211,11 @@
                 $('.main-slider').slick({
                     slidesToShow: 5,
                     slidesToScroll: 5
-
-
-            });
+                 });
+                $('.slider-home').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                 });
         })
 
     </script>

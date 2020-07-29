@@ -65,8 +65,17 @@ a:hover{
   font-family: "Playfair Display Regular";
   src: url("../../../public/assets/font/PlayfairDisplay-Regular.ttf");
 }
+body{
+  font-family: "Playfair Display Regular","sans-serif" !important;
+}
 .right_nav a{
   font-family: "Playfair Display Regular","sans-serif" !important;
+}
+.slider-home{
+  height:400px;
+}
+.slider-home .slick-slide{
+  height:400px !important;
 }
 .imageindex{
   height:400px;
