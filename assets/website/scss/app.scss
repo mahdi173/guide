@@ -65,18 +65,36 @@ a:hover{
   font-family: "Playfair Display Regular";
   src: url("../../../public/assets/font/PlayfairDisplay-Regular.ttf");
 }
+body{
+  font-family: "Playfair Display Regular","sans-serif" !important;
+}
 .right_nav a{
   font-family: "Playfair Display Regular","sans-serif" !important;
 }
-.imageindex{
+.slider-home{
+  height:400px;
+}
+.slider-home .slick-slide{
+  height:420px !important;
+}
+.imageindex,.imageindex2,.imageindex3{
   height:400px;
   margin-top: -15px;
   margin-bottom: 35px;
-  background-image: url("../../../public/assets/images/bg-transparent.png") ;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   font-family: "Adobe Arabic Regular","sans-serif";
 
+}
+.imageindex{
+  background-image: url("../../../public/assets/images/DNA-Testing-Research.jpg") ;
+}
+.imageindex2{
+  background-image: url("../../../public/assets/images/758475.jpg") ;
+}
+.imageindex3{
+  background-image: url("../../../public/assets/images/hans-reniers-lQGJCMY5qcM-unsplash.jpg") ;
 }
 .services{
   font-family: "Adobe Arabic Regular","sans-serif";
