@@ -572,7 +572,13 @@ class BaseController extends AbstractController
             'countFollowers'=>$countFollowers
         ]);
     }
-
+    /**
+     * @Route("/JournalSearch/", name="journalSearch", methods={"GET"})
+     */
+    public function journalSearch()
+    {
+        return $this->render("search/searchJournal.html.twig");
+    }
 
 
 }

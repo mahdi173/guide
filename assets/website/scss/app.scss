@@ -42,3 +42,90 @@ a:hover{
 .authorLink{
   color: #0e0e0e;
 }
+.text-desc{
+  color: #555;
+  font-weight: bold;
+}
+.settings{
+
+  border: 2px #E0E0E0 solid;
+  /*padding: 30px 25px;*/
+  /*background-color:	#F8F8F8;*/
+  border-radius: 10px;
+  box-shadow: 5px 5px #F8F8F8;
+}
+//#graphic_data_dataX,#graphic_data_dataY,#dataExtraText{
+//  height: 300px;
+//}
+@font-face {
+  font-family: "Adobe Arabic Regular";
+  src: url("../../../public/assets/font/Adobe Arabic Regular.otf");
+}
+@font-face {
+  font-family: "Playfair Display Regular";
+  src: url("../../../public/assets/font/PlayfairDisplay-Regular.ttf");
+}
+body{
+  font-family: "Playfair Display Regular","sans-serif" !important;
+}
+.right_nav a{
+  font-family: "Playfair Display Regular","sans-serif" !important;
+}
+.slider-home{
+  height:400px;
+}
+.slider-home .slick-slide{
+  height:460px !important;
+}
+.imageindex,.imageindex2,.imageindex3{
+  height:400px;
+  margin-top: -15px;
+  margin-bottom: 35px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Adobe Arabic Regular","sans-serif";
+
+}
+.imageindex{
+  background-image: url("../../../public/assets/images/DNA-Testing-Research.jpg") ;
+}
+.imageindex2{
+  background-image: url("../../../public/assets/images/758475.jpg") ;
+}
+.imageindex3{
+  background-image: url("../../../public/assets/images/hans-reniers-lQGJCMY5qcM-unsplash.jpg") ;
+}
+.services{
+  font-family: "Adobe Arabic Regular","sans-serif";
+  font-size: 30px;
+  color:#13426c;
+}
+.intro-text{
+  margin-top: 190px;
+  padding: 20px;
+
+ // margin-left: 20px;
+
+}
+.intro-text h1{
+  font-size: 55px;
+ color:#13426c;
+
+
+}
+.services-list{
+  padding: 20px;
+}
+.icon-size{
+  font-size: 40px !important;
+}
+.title-service{
+  font-size: 19px;
+}
+.text-intro{
+  font-family: "Adobe Arabic Regular","sans-serif";
+}
+.title-service a{
+  color: black;
+}

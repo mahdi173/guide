@@ -3,19 +3,18 @@
 {% block stylesheets %}
 <style>
     #myChart{
-
         margin-top: 20px;
         margin-left: 50px;
         /*width:800px !important;*/
         /*height:800px !important;*/
-        background-color: white !important;
+        background-color: white ;
 
     }
-    #bar,#line,#pie:hover{
+    #bar,#line,#pie,#radar,#horizontalBar,#doughnut:hover{
         cursor: pointer;
 
     }
-    #bar,#line,#pie{
+    #bar,#line,#pie,#doughnut,#radar,#horizontalBar{
        color:#0d70f2
 
     }
@@ -23,19 +22,310 @@
         /*border: 2px red solid;*/
         margin-bottom: 10px;
     }
+    .form-inline label{
+        margin-right: 10px;
+    }
+    .axe3 label{
+        margin-right: 20px;
+    }
+    .axe1 label{
+        margin-right: 40px;
+    }
+    .framData{
+        /*margin-top: 30px;*/
+        margin-bottom: 30px;
+        border: 1px solid 	#B8B8B8;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .framData .col-md-4{
+        padding-top: 20px;
+    }
 </style>
 {% endblock %}
 {% block content %}
-    <div class="row" style="margin-top: 50px">
+    {#   hearder#}
+    {% include 'graphics/includes/hearderGraph.html.twig' %}
+    {#   hearder#}
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" role="document">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="margin-top: 20px">
+                <div class="modal-header" style="background-color: white;width: 600px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <img src="{{ asset('assets/images/imageModal.png') }}" style="width: 600px;height: 600px"/>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" style="margin-top: 0px">
 {#        <div class="offset-3 col-md-9">#}
 {#           <h3 style="margin-left: 40px;font-weight: bold">{{ graphicTitle }}</h3>#}
 {#       </div>#}
     </div>
 
     <div class="row">
-        <div class=" col-md-8">
-           <canvas id="myChart"></canvas>
+    <div class=" col-md-12">
+        <div class="settings">
+            <div style="background-color:#7df3f9;width: 100%;padding-bottom: 5px; padding-top: 20px;padding-left: 20px!important;border-bottom: 2px #F0BD8F solid;">
+                <h5 class="settings-title text-primary" style="padding-left: 20px;font-weight: bold">Chart Settings</h5>
+            </div>
         </div>
+    </div>
+    </div>
+    <div class="row framData" style="margin-left: 1px;width: 100%;background-color: white">
+
+        <div class=" col-md-4">
+
+            <div class="form-group form-inline">
+                <label>Graph</label>
+                <input type="text" value="{{ graphicTitle }}"  class="form-control newTitle">
+            </div>
+            <div class="form-group form-inline">
+                <label>Axe X </label>
+                <input type="text" value="{{ titleX }}"  class="form-control newAxeX">
+            </div>
+            <div class="form-group form-inline">
+                <label>Axe Y </label>
+                <input type="text" value="{{ titleY }}" class="form-control newAxeY">
+            </div>
+            <div class="form-group form-inline">
+                <label>Width</label>
+                <input type="number" value="{{ width }}" class="form-control newWidth">
+            </div>
+        </div>
+        <div class=" col-md-4" style="margin-left: -40px">
+            <div class="form-group form-inline axe3">
+                <label>Graph Type </label>
+                {#                <input type="text" value="{{ type }}" class="form-control">#}
+                <select id="graphic_edit_type" class="form-control" style="width: 60%">
+                    <option value="bar">Bar</option>
+                    <option value="pie">Pie</option>
+                    <option value="line">Line</option>
+                    {#                    <option value="doughnut">Doughnut</option>#}
+                    <option value="radar">Radar</option>
+                    <option value="horizontalBar">Horizontal Bar</option>
+                </select>
+            </div>
+            <div class="form-group form-inline axe1">
+                <label >Grid Line</label>
+                                <select class="selectGrid form-control input-lg" id="graph_gridLine" style="width: 60%">
+                                    <option value="none">None</option>
+                                    <option value="horizental">Horizental</option>
+                                    <option value="vertical">Vertical</option>
+                                    <option value="both">Both</option>
+                                </select>
+{#                <input type="text" value="{{ showGrid }}" class="form-control">#}
+            </div>
+
+            <div class="form-group form-inline axe3">
+                <label>Height </label>
+                <input type="number" value="{{ height }}" class="form-control newHeight" style="margin-left: 35px">
+            </div>
+            <div class="form-group form-inline axe3">
+                <label>Border </label>
+                <input type="checkbox" value="{{ border }}" class=" form-check-input newBorder">
+            </div>
+        </div>
+        <div class=" col-md-4" >
+            <div class="row">
+                <div class="col-md-6">  <label>Title color </label></div>
+                <div class="col-md-6">
+                     <input type="color" value="{{ graphicTitleColor }}" class="form-control titleColor">
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px">
+                <div class="col-md-6"> <label>Graph background color </label></div>
+                <div class="col-md-6">
+                    <input type="color" value="{{ graphBackgroundColor }}" class="form-control graphBackgroundColor">
+                </div>
+            </div>
+            <div class="row" style="margin-top: 0px">
+                <div class="col-md-6"> <label>Grid color </label></div>
+                <div class="col-md-6">
+                    <input type="color" value="{{ gridColor }}" class="form-control gridColor">
+                </div>
+            </div>
+            <div class="form-group form-inline axe3" style="margin-top: 15px">
+                <label>Round corner </label>
+                <input type="checkbox" value="{{ roundCorner }}" class=" form-check-input newBorderRadius">
+            </div>
+        </div>
+
+    </div>
+    <div class="row extraSettings" style="background-color: white;border: 1px #B8B8B8 solid;width: 100%;margin-left: 5px;display: none;border-radius: 10px;">
+        <div class="settings" style="margin-top: -5px;">
+            <div style="background-color:#7df3f9;width: 100%;padding-top: 10px;padding-bottom: 5px; padding-left: 20px!important;border-bottom: 2px #F0BD8F solid">
+                <h5 class="settings-title text-primary" style="padding-left: 20px;font-weight: bold;padding: 10px">Pie Settings</h5>
+            </div>
+        </div>
+        {#        pie 1#}
+        <div class="row showPie1">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 1 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row showPie1" style="margin-left: 20px">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title </label>
+                    <input type="text" class="form-control pieTitle1" value="{{labelY}}">
+                </div>
+            </div>
+            <div class=" col-md-3 ">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Title Color</label>
+                    <input type="color" class="form-control pieTitleColor1" style="width: 45%"  value="{{ graphicTitleColor }}">
+                </div>
+            </div>
+
+            <div class=" col-md-3 ">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround</label>
+                    <input type="color" class="form-control pieColor1" value="{{ graphBackgroundColor }}" style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3 ">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Border</label>
+                    <input type="checkbox" class="form-control pieBorder1" value="{{ border }}">
+                </div>
+            </div>
+        </div><hr class="showPie2">
+        {#        pie 2#}
+        <div class="row showPie2">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 2 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row showPie2" style="margin-left: 20px;">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title </label>
+                    <input type="text" class="form-control pieTitle2" value="{{ titles[0] }}">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Title Color </label>
+                    <input type="color" class="form-control pieTitleColor2" style="width: 45%"  value="{{ graphicTitleColor }}">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround </label>
+                    <input type="color" class="form-control pieColor2" value="{{ graphBackgroundColor }}"  style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Border </label>
+                    <input type="checkbox" class="form-control pieBorder2" value="{{ border }}">
+                </div>
+            </div>
+        </div><hr class="showPie3">
+{#pie 3#}
+
+        <div class="row showPie3">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3"style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 3 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row showPie3" style="margin-left: 20px">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title  </label>
+                    <input type="text" class="form-control pieTitle3" {% if titles|length>1%} value="{{ titles[1] }}"{% endif %}>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Title Color </label>
+                    <input type="color" class="form-control pieTitleColor3" style="width: 45%"  value="{{ graphicTitleColor }}">
+                </div>
+            </div>
+
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround </label>
+                    <input type="color" class="form-control pieColor3" value="{{ graphBackgroundColor }}"  style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label>Border </label>
+                    <input type="checkbox" class="form-control pieBorder3" value="{{ border }}">
+                </div>
+            </div>
+        </div><hr class="showPie4">
+
+{#        pie 4#}
+        <div class="row showPie4">
+            <div class=" col-md-12">
+                <div class="form-group form-inline axe3"style="margin-top: 15px;padding-left: 30px;">
+                    <label><strong>Pie 4 </strong></label>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row showPie4" style="margin-left: 20px">
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
+                    <label>Title  </label>
+                    <input type="text" class="form-control pieTitle4" {%  if titles|length==3%} value="{{ titles[2] }}"{% endif %}>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>Title Color </label>
+                    <input type="color" class="form-control pieTitleColor4" style="width: 45%"  value="{{ graphicTitleColor }}">
+                </div>
+            </div>
+
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px;padding-left: 10px;">
+                    <label>BackGround </label>
+                    <input type="color" class="form-control pieColor4" value="{{ graphBackgroundColor }}"  style="width: 37%">
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group form-inline axe3" style="margin-top: 15px">
+                    <label>Border </label>
+                    <input type="checkbox" class="form-control pieBorder4" value="{{ border }}">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class=" col-md-8">
+
+           <canvas id="myChart"></canvas>
+
+        </div>
+
+
+
         <div class="offset-1 col-md-3 pub">
             <ins class="adsbygoogle"
                  style="display:block"
@@ -45,10 +335,35 @@
                  data-full-width-responsive="true"></ins>
         </div>
     </div>
-    <div class="row visualize" style="margin-left: 40px;margin-top: 40px;color:#555">
-       <p style="font-weight: bold">Visualize chart as  <a id="bar"  style="margin-left: 10px">Bar</a> <a id="pie"  style="margin-left: 10px">Pie</a> <a id="line" style="margin-left: 10px">Line</a></p>
+    {#        pie canvas#}
+
+    <div class="row " style="margin-top: 40px">
+        <div class=" col-md-6 mb-4">
+
+            <div id="chartContainer" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
+        <div class=" col-md-6 mb-4">
+            <div id="chartContainer2" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
+        <div id="pie3" class=" col-md-6 " style="margin-top: 50px">
+            <div id="chartContainer3" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
+        <div class=" col-md-6 mb-4" style="margin-top: 50px">
+            <div id="chartContainer4" style="height: 370px; width: 100%;padding: 10px"></div>
+        </div>
     </div>
-    <br><div class="row buttons" style="margin-left: 40px;">
+    {#        pie canvas#}
+{#    <div class="row visualize" style="margin-left: 40px;margin-top: 40px;color:#555">#}
+{#       <p style="font-weight: bold">Visualize chart as#}
+{#           <a id="bar"  style="margin-left: 10px">Bar</a>#}
+{#           <a id="pie"  style="margin-left: 10px">Pie</a>#}
+{#           <a id="line" style="margin-left: 10px">Line</a>#}
+{#           <a id="doughnut" style="margin-left: 10px">Doughnut</a>#}
+{#           <a id="radar" style="margin-left: 10px">Radar</a>#}
+{#           <a id="horizontalBar" style="margin-left: 10px">Horizontal Bar</a>#}
+{#       </p>#}
+{#    </div>#}
+    <br><div class="row buttons" style="margin-left: 40px;margin-top: 40px">
         <a href="#" id="downloadPdf" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download pdf</a>
         <a href="#" id="downloadJpg" class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download jpg</a>
         <a href="#" id="downloadTif"  class="btn btn-warning" style="padding: 15px;color:white;margin-right: 15px">download tif</a>
@@ -89,14 +404,430 @@
 
     <script src="/scripts/FileSaver.js"></script>
 
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 
     <script>
+        $( document ).ready(function() {
+            // setting pie chart
+            $('.pieTitle1').change(function() {
 
+                updateTitlePie(chart1,$('.pieTitle1').val())
+            })
+            $('.pieTitle2').change(function() {
+
+                updateTitlePie(chart2,$('.pieTitle2').val())
+            })
+            $('.pieTitle3').change(function() {
+
+                updateTitlePie(chart3,$('.pieTitle3').val())
+            })
+            $('.pieTitle4').change(function() {
+
+                updateTitlePie(chart4,$('.pieTitle4').val())
+            })
+            // titleCart
+            $('.pieTitleColor1').change(function() {
+
+                updateTitleColorPie(chart1,$('.pieTitleColor1').val())
+
+            })
+            $('.pieTitleColor2').change(function() {
+
+                updateTitleColorPie(chart2,$('.pieTitleColor2').val())
+            })
+            $('.pieTitleColor3').change(function() {
+
+                updateTitleColorPie(chart3,$('.pieTitleColor3').val())
+            })
+            $('.pieTitleColor4').change(function() {
+
+                updateTitleColorPie(chart4,$('.pieTitleColor4').val())
+            })
+            //backgroundColor
+            $('.pieColor1').change(function() {
+                updateBackGroundPie(chart1, $('.pieColor1').val())
+            })
+            $('.pieColor2').change(function() {
+                updateBackGroundPie(chart2, $('.pieColor2').val())
+            })
+            $('.pieColor3').change(function() {
+                updateBackGroundPie(chart3, $('.pieColor3').val())
+            })
+            $('.pieColor4').change(function() {
+                updateBackGroundPie(chart4, $('.pieColor4').val())
+            })
+            //border pies
+            $('.pieBorder1').change(function() {
+                borderPie(chart1,"#chartContainer",'.pieBorder1')
+            })
+            $('.pieBorder2').change(function () {
+                borderPie(chart2,"#chartContainer2",'.pieBorder2')
+            })
+            $('.pieBorder3').change(function () {
+                borderPie(chart3,"#chartContainer3",'.pieBorder3')
+            })
+            $('.pieBorder4').change(function () {
+                borderPie(chart4,"#chartContainer4",'.pieBorder4')
+            })
+
+           function borderPie(chart,chartId,checkboxClass) {
+               var newBorder=( $(checkboxClass).is(':checked') )
+               if(newBorder){
+                   $( chartId+" canvas:nth-child(2)" ).css( "border", "2px solid grey" );
+                   // $( chartId+" canvas:nth-child(1)" ).css( "padding-top", "12px" );
+                   // $( chartId+" canvas:nth-child(2)" ).css( "padding-top", "12px" );
+                   // $( chartId+" canvas:nth-child(2)" ).css( "padding-bottom", "12px" );
+
+               }
+               else{  $( chartId+" canvas:nth-child(2)").css('border',"none")
+                   // $( chartId+" canvas:nth-child(1)" ).css( "padding-top", "0px" );
+                   // $( chartId+" canvas:nth-child(2)" ).css( "padding-bottom", "0px" );
+               }
+               chart.render();
+           }
+
+            function updateTitlePie(chart,value) {
+                chart.options.title.text = value ;
+                chart.render();
+            }
+            function updateBackGroundPie(chart,value) {
+                chart.options.backgroundColor = value ;
+                chart.render();
+            }
+            function updateTitleColorPie(chart,value) {
+                chart.options.title.fontColor = value ;
+                chart.render();
+            }
+            // setting pie chart
+
+            const titles='{{titles|json_encode()|raw}}';
+
+            var arrayTitles = JSON.parse(titles);
+
+            var titles1=""; var titles2=""; var titles3="";
+            if(arrayTitles){
+                titles1=arrayTitles[0];
+                titles2=arrayTitles[1];
+                titles3=arrayTitles[2];
+            }
+            var labels={{axeX|json_encode()|raw}}
+            var pie1=[],pieExtra1=[],pieExtra2=[],pieExtra3=[];
+
+            const ar2='{{axeY|json_encode()|raw}}';
+            const axe1='{{axe1|json_encode()|raw}}';
+            const axe2='{{axe2|json_encode()|raw}}';
+            const axe3='{{axe3|json_encode()|raw}}';
+
+            var axey=parseArray(ar2)
+            var axeExt1=parseArray(axe1)
+            var axeExt2=parseArray(axe2)
+            var axeExt3=parseArray(axe3)
+            for (var j = 0; j < labels.length; j++) {
+
+                pie1.push({
+                    y: axey[j],
+                    label: labels[j]
+                });
+                pieExtra1.push({
+                    y: axeExt1[j],
+                    label: labels[j]
+                });
+                pieExtra2.push({
+                    y: axeExt2[j],
+                    label: labels[j]
+                });
+                pieExtra3.push({
+                    y: axeExt3[j],
+                    label: labels[j]
+                });
+
+            }
+            function hideChart(id,array,rowSetting){
+                if(array.length===0){
+                    $('#'+id).css('display','none')
+                    $('.'+rowSetting).css('display','none')
+                }
+                else{
+                    $('#'+id).css('display','block')
+                }
+            }
+            // hideChart("chartContainer2",axeExt1)
+            // hideChart("chartContainer3",axeExt2)
+            // hideChart("chartContainer4",axeExt3)
+            if(axeExt3.length===0){
+                $('#pie3').addClass("offset-3")
+            }
+            else{
+                $('#pie3').removeClass("offset-3")
+            }
+            showCanvasPie()
+            function showCanvasPie(){
+                var type='{{ type }}'
+                var editType=$('#graphic_edit_type').val()
+                console.log('ee')
+                console.log(type==="pie" || editType==="pie")
+                if(type==="pie" || editType==="pie"){
+                    $('#myChart').css('display','none')
+                    $('#chartContainer').css('display','block')
+                    $('.extraSettings').css('display','block')
+
+                    hideChart("chartContainer2",axeExt1,'showPie2')
+                    hideChart("chartContainer3",axeExt2,'showPie3')
+                    hideChart("chartContainer4",axeExt3,'showPie4')
+                }
+            else{
+                    $('#myChart').css('display','block')
+                    $('#chartContainer').css('display','none')
+                    $('#chartContainer2').css('display','none')
+                    $('#chartContainer3').css('display','none')
+                    $('#chartContainer4').css('display','none')
+                    $('#chartContainer').css('display','none')
+
+                }
+            }
+
+
+            var chart1 = new CanvasJS.Chart("chartContainer", {
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                backgroundColor:"{{ graphBackgroundColor }}",
+                title: {
+                    text: '{{labelY}}',
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                    fontColor:"{{ graphicTitleColor }}"?"{{ graphicTitleColor }}":"#111"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints:pie1
+                }]
+
+            });
+            chart1.render();
+            var chart2 = new CanvasJS.Chart("chartContainer2", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                backgroundColor:"{{ graphBackgroundColor }}",
+                title: {
+                    text: titles1,
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                    fontColor:"{{ graphicTitleColor }}"?"{{ graphicTitleColor }}":"#111"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints: pieExtra1
+
+                }]
+
+            });
+            chart2.render();
+            var chart3 = new CanvasJS.Chart("chartContainer3", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                backgroundColor:"{{ graphBackgroundColor }}",
+                title: {
+                    text: titles2,
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                    fontColor:"{{ graphicTitleColor }}"?"{{ graphicTitleColor }}":"#111"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints: pieExtra2
+                }
+                ]
+            });
+            chart3.render();
+            var chart4 = new CanvasJS.Chart("chartContainer4", {
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                backgroundColor:"{{ graphBackgroundColor }}",
+                title: {
+                    text: titles3,
+                    fontWeight: "bold",
+                    borderThickness: 1,
+                    padding: 10,
+                    margin: 20,
+                    fontColor:"{{ graphicTitleColor }}"?"{{ graphicTitleColor }}":"#111"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label}  -  {y}%",
+                    dataPoints: pieExtra3
+                }
+                ]
+            });
+            chart4.render();
+
+
+            $('.selectGrid option[value="{{ showGrid }}"]').attr("selected", true);
+            $('#graphic_edit_type option[value="{{ type }}"]').attr("selected", true);
+          if(border){
+              $(".newBorder").prop( "checked", true );
+              $(".pieBorder1").prop( "checked", true );
+              borderPie(chart1,"#chartContainer",'.pieBorder1')
+              $(".pieBorder2").prop( "checked", true );
+              borderPie(chart2,"#chartContainer2",'.pieBorder2')
+              $(".pieBorder3").prop( "checked", true );
+              borderPie(chart3,"#chartContainer3",'.pieBorder3')
+              $(".pieBorder4").prop( "checked", true );
+              borderPie(chart4,"#chartContainer4",'.pieBorder3')
+          }
+          if(roundCorner){
+              $(".newBorderRadius").prop( "checked", true );
+          }
+
+            $('.newTitle').change(function() {
+                updateConfigByMutating(myChart)
+            })
+            $('.newAxeY').change(function() {
+                updateAxeY(myChart)
+            })
+            $('.newAxeX').change(function() {
+                updateAxeX(myChart)
+            })
+            $('#graph_gridLine').change(function() {
+                updateType(myChart)
+            })
+            $('.gridColor').change(function() {
+                updateType(myChart)
+            })
+            $('#graphic_edit_type').change(function() {
+
+                var editType=$('#graphic_edit_type').val()
+                showCanvasPie()
+                if(editType==="pie"){
+
+                    $(".extraSettings").css('display','block')
+                }
+          else{
+                    $(".extraSettings").css('display','none')
+                    change(editType)
+                }
+
+
+            })
+            $('.titleColor').change(function() {
+                updateTitleColor(myChart)
+            })
+            $('.newBorder').change(function() {
+                var newBorder=( $('.newBorder').is(':checked') )
+                if(newBorder){
+                    $('#myChart').css("border", "1px solid black")
+                }
+               else{ $('#myChart').css("border", "none")}
+                myChart.update();
+            })
+            $('.newBorderRadius').change(function() {
+                var newBorder=( $('.newBorderRadius').is(':checked') )
+                if(newBorder){
+                    $('#myChart').css("border-radius", "10px")
+                }
+               else{ $('#myChart').css("border-radius", "0px")}
+                myChart.update();
+            })
+            $('.graphBackgroundColor').change(function() {
+                $('#myChart').css("backgroundColor", $('.graphBackgroundColor').val())
+                myChart.update();
+            })
+            $('.newWidth').change(function() {
+                $('#myChart').css("width", $('.newWidth').val())
+                myChart.update();
+            })
+            $('.newHeight').change(function() {
+                $('#myChart').css("height", $('.newHeight').val())
+                myChart.update();
+            })
+            function updateConfigByMutating(chart) {
+                chart.options.title.text =  $('.newTitle').val();
+                chart.update();
+            }
+            function updateAxeY(chart) {
+
+                chart.options.scales.yAxes[0].scaleLabel.labelString =  $('.newAxeY').val();
+                chart.update();
+            }
+            function updateAxeX(chart) {
+                chart.options.scales.xAxes[0].scaleLabel.labelString =  $('.newAxeX').val();
+                chart.update();
+            }
+            function updateTitleColor(chart) {
+                chart.options.title.fontColor =  $('.titleColor').val();
+                chart.update();
+            }
+            function updateType(chart) {
+                if(  $('#graph_gridLine').val()==="vertical"){
+                    chart.options.scales.xAxes[0].gridLines.display=true;
+                    chart.options.scales.yAxes[0].gridLines.display=true;
+                    chart.options.scales.yAxes[0].gridLines.color=false;
+                    chart.options.scales.xAxes[0].gridLines.color=$('.gridColor').val();
+
+                }
+                if(  $('#graph_gridLine').val()==="horizental"){
+                    chart.options.scales.yAxes[0].gridLines.display=true;
+                    chart.options.scales.xAxes[0].gridLines.display=true;
+                    chart.options.scales.xAxes[0].gridLines.color=false;
+                    chart.options.scales.yAxes[0].gridLines.color=$('.gridColor').val();
+
+                }
+                if( $('#graph_gridLine').val()==="none"){
+                    chart.options.scales.yAxes[0].gridLines.display=false;
+                    chart.options.scales.yAxes[0].gridLines.color=$('.graphBackgroundColor').val();
+                    chart.options.scales.xAxes[0].gridLines.color=$('.graphBackgroundColor').val();
+
+                }
+                if( $('#graph_gridLine').val()==="both"){
+                    chart.options.scales.xAxes[0].gridLines.display=true;
+                    chart.options.scales.xAxes[0].gridLines.color=$('.gridColor').val();
+                    chart.options.scales.yAxes[0].gridLines.display=true;
+                    chart.options.scales.yAxes[0].gridLines.color=$('.gridColor').val();
+
+                }
+                chart.update();
+            }
+
+        })
         var hasMultipleY='{{ hasMultipleY }}'
 
         var showValues='{{ showValues }}';
         var type='{{ type }}';
         var showGrid='{{ showGrid }}';
+        var gridColor='{{ gridColor }}';
         var countDataExtra='{{ dataExtra|length }}';
 
         var countColors='{{axe2|json_encode()|raw}}';
@@ -125,13 +856,18 @@
 
         var border='{{ border }}'
         var roundCorner='{{ roundCorner }}'
+        var graphBackgroundColor='{{ graphBackgroundColor }}'
 
+        if(graphBackgroundColor){
+            // $('#myChart').css('backgroundColor',graphBackgroundColor)
+            $('#myChart').css('backgroundColor',$('.graphBackgroundColor').val())
 
+        }
 
 
         if(border){
             $('#myChart').css('border','1px black solid')
-            $('#myChart').css('padding','20px 40px')
+            $('#myChart').css('padding','30px 40px 30px 5px')
         }
          else{
             $('.buttons').css('margin-left','65px')
@@ -159,7 +895,8 @@
         var canvas = document.getElementById('myChart');
         var ctx = canvas.getContext('2d');
         ctx.globalCompositeOperation = 'destination-over';
-        ctx.fillStyle = 'white';
+        {#ctx.fillStyle = '{{ graphBackgroundColor }}';#}
+        ctx.fillStyle =  $('.graphBackgroundColor').val();
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         var image = document.getElementById("myChart").toDataURL("image/png",1).replace("image/png", "image/octet-stream");
         $("#downloadPic").attr("href", image);
@@ -172,7 +909,8 @@
             var canvas = document.getElementById('myChart');
             var ctx = canvas.getContext('2d');
             ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = 'white';
+            {#ctx.fillStyle = '{{ graphBackgroundColor }}';#}
+            ctx.fillStyle =  $('.graphBackgroundColor').val();
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             var image = document.getElementById("myChart").toDataURL("image/jpeg",1).replace("image/jpeg", "image/octet-stream");
             $("#downloadJpg").attr("href", image);
@@ -185,7 +923,8 @@
             var c = document.getElementById("myChart");
             var ctx = c.getContext("2d");
             ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = 'white';
+            ctx.fillStyle =  $('.graphBackgroundColor').val();
+            {#ctx.fillStyle = '{{ graphBackgroundColor }}';#}
             ctx.fillRect(0, 0, c.width, c.height);
 
            CanvasToTIFF.toObjectURL(c, function(url) {
@@ -208,14 +947,17 @@
         var canvas = document.getElementById('myChart');
         var canvasImg = canvas.toDataURL("image/png", 1);
         var doc = new jsPDF('landscape');
+       doc.setFillColor(50, 79,122,0);
         doc.setFontSize(20);
+        canvasImg.backgroundColor = "#000";
         doc.addImage(canvasImg, 'PNG', 10, 30, 280, 150 );
         var title='{{graphicTitle}}';
         doc.save(title+'.pdf');
     });
 
         $( document ).ready(function() {
-            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',border:'{{ border }}',roundCorner:'{{ roundCorner }}',color:'{{ color }}',width:'{{ width }}',height:'{{ height }}',labelY:'{{ labelY }}'};
+
+            const data={type:'{{ type }}',titleX:'{{ titleX }}',titleY:'{{ titleY }}',graphicTitle:'{{ graphicTitle }}',showValues:'{{ showValues }}',showGrig:'{{ showGrid }}',border:'{{ border }}',roundCorner:'{{ roundCorner }}',color:'{{ color }}',width:'{{ width }}',height:'{{ height }}',labelY:'{{ labelY }}',graphicTitleColor:'{{ graphicTitleColor }}',gridColor:'{{ gridColor }}',graphBackgroundColor:'{{ graphBackgroundColor }}',showXY:'{{ showTitles }}'};
             const ar1='{{axeX|json_encode()|raw}}';
             const ar2='{{axeY|json_encode()|raw}}';
             const axe1='{{axe1|json_encode()|raw}}';
@@ -266,6 +1008,15 @@
         $("#pie").click(function() {
             change('pie');
         });
+        $("#doughnut").click(function() {
+            change('doughnut');
+        });
+        $("#radar").click(function() {
+            change('radar');
+        });
+        $("#horizontalBar").click(function() {
+            change('horizontalBar');
+        });
         function parseArray(ar2) {
             var az = []
 
@@ -296,24 +1047,22 @@
             const titles='{{titles|json_encode()|raw}}';
 
             var arrayTitles = JSON.parse(titles);
-            console.log("arrayTitles")
-            console.log(arrayTitles)
+
             var titles1=""; var titles2=""; var titles3="";
             if(arrayTitles){
-                 titles1=arrayTitles[0];
-                 titles2=arrayTitles[1];
-                 titles3=arrayTitles[2];
+                titles1=arrayTitles[0];
+                titles2=arrayTitles[1];
+                titles3=arrayTitles[2];
             }
 
 
-            console.log("arrayTitles")
-            console.log(arrayTitles)
             var data={
                 labels: ({{axeX|json_encode()|raw}}),
-                datasets:  parseInt(countDataExtra)===0?[{
+                datasets:  parseInt(countDataExtra)===0?
+                    [{
                         {#data: ({{axeY|json_encode()|raw}}),#}
                         data: parseArray(ar2),
-                        backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie" ?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                        backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie" && newChartType!=="doughnut" ?'{{color}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
                         {#borderColor: '{{color}}',#}
                         fill:  newChartType!=="line"  ?true:false,
                         borderColor: newChartType==="line"?'{{ color }}':false,
@@ -329,15 +1078,15 @@
                             label: '{{labelY}}',
                             // label: false,
                             id: "y-axis-10",
-                            {#backgroundColor: '{{color}}'!=='#000000' && newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],#}
-                            backgroundColor:  newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            backgroundColor:  newChartType!=="pie" && newChartType!=="doughnut"?'{{color}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            {#backgroundColor:  newChartType!=="pie"?'{{color}}':[ "#ff6766","#81ff81","#6665fe","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],#}
                             {#data: ({{axeY|json_encode()|raw}}),#}
                             data: parseArray(ar2),
                             fill:  newChartType!=="line"?true:false,
-                            borderColor: newChartType==="line"?'{{ color }}':false,
+                            borderColor: newChartType==="line"? '{{ color }}': newChartType==="pie" || newChartType==="doughnut"?'#000000':false,
                             lineTension: 0.4,
                             borderJoinStyle: 'miter',
-                            borderWidth:  newChartType==="line"?5:false,
+                            borderWidth:  newChartType==="line" ?5: newChartType==="pie" || newChartType==="doughnut"?1:false,
                             pointBorderWidth: 5,
                             pointBackgroundColor:'#000000'
                         }
@@ -347,14 +1096,14 @@
                             type: newChartType,
                             label: titles1,
                             id: "y-axis-20",
-                            {#backgroundColor: '{{color1}}'!=='#000000' && newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
-                            backgroundColor: newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                            backgroundColor:  newChartType!=="pie" && newChartType!=="doughnut" ?'{{color1}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                            {#backgroundColor: newChartType!=="pie" ?'{{color1}}':["#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
                             {#data: ({{ axe1|json_encode()|raw }}),#}
                             data: parseArray(axe1),
                             fill:  newChartType!=="line"?true:false,
-                            borderColor: newChartType==="line"?'{{ color1 }}':false,
+                            borderColor: newChartType==="line"? '{{ color1 }}': newChartType==="pie" || newChartType==="doughnut"?'#000000':false,
                             borderJoinStyle: 'miter',
-                            borderWidth:  newChartType==="line"?5:false,
+                            borderWidth:  newChartType==="line" ?5: newChartType==="pie" || newChartType==="doughnut"?1:false,
                             pointBorderWidth: 5,
                             pointBackgroundColor:'#000000'
                         },
@@ -363,14 +1112,14 @@
                                 type: newChartType,
                                 label: titles2,
                                 id: "y-axis-30",
-                                {#backgroundColor: '{{color2}}'!=='#000000' && newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],#}
-                                backgroundColor:  newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],
+                                backgroundColor: newChartType!=="pie" && newChartType!=="doughnut" ?'{{color2}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                                {#backgroundColor:  newChartType!=="pie" ?'{{color2}}':["#A2B4B5","#6665fe","#81ff81","#ccffff","#ff66ff","#ff66ff","#ff6766","#E8839C","#A2B4B5"],#}
                                 {#data: ({{ axe2|json_encode()|raw }}),#}
                                 data: parseArray(axe2),
                                 fill:  newChartType!=="line"?true:false,
-                                borderColor: newChartType==="line"?'{{ color2 }}':false,
+                                borderColor: newChartType==="line"? '{{ color2 }}': newChartType==="pie" || newChartType==="doughnut"?'#000000':false,
                                 borderJoinStyle: 'miter',
-                                borderWidth:  newChartType==="line"?5:false,
+                                borderWidth:  newChartType==="line" ?5: newChartType==="pie" || newChartType==="doughnut"?1:false,
                                 pointBorderWidth: 5,
                                 pointBackgroundColor:'#000000'
 
@@ -379,14 +1128,14 @@
                         type: newChartType,
                         label: titles3?titles3:null,
                         id: "y-axis-40",
-                        {#backgroundColor: '{{color3}}'!=='#000000' && newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
-                        backgroundColor: newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],
+                        backgroundColor: newChartType!=="pie" && newChartType!=="doughnut"?'{{color3}}':[ "#ff6766","#81ff81","#00BFFF","#ffff80","#ff66ff","#ccffff","#A2B4B5","#E2E47D","#E8839C"],
+                        {#backgroundColor: newChartType!=="pie"?'{{color3}}':[ "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#FF5733","#E397F2","#A2B4B5","#E2E47D","#E8839C"],#}
                         {#data: ({{axe3|json_encode()|raw}}),#}
                         data: parseArray(axe3),
                         fill:  newChartType!=="line"?true:false,
-                        borderColor: newChartType==="line"?'{{ color3 }}':false,
+                        borderColor: newChartType==="line"? '{{ color3 }}': newChartType==="pie" || newChartType==="doughnut"?'#000000':false,
                         borderJoinStyle: 'miter',
-                        borderWidth:  newChartType==="line"?5:false,
+                        borderWidth:  newChartType==="line" ?5: newChartType==="pie" || newChartType==="doughnut"?1:false,
                         pointBorderWidth: 5,
                         pointBackgroundColor:'#000000'
                     }
@@ -398,9 +1147,10 @@
         }
         function getConfigChart(newChartType) {
             var options={
+                cutoutPercentage: newChartType==="doughnut" ?50:null,
                 layout: {
                     padding: {
-                        top: 50
+                        top: 20
                     }
                 },
                 responsive: false,
@@ -430,26 +1180,34 @@
 
                         function () {
                             if (showValues) {
-                                var chartInstance = this.chart,
-                                    ctx = chartInstance.ctx;
-
-                                ctx.font = Chart.helpers.fontString(17, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                                var chartInstance = this.chart, ctx = chartInstance.ctx;
+                                ctx.font = Chart.helpers.fontString(14, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                                 ctx.fillStyle = '#777';
                                 ctx.textAlign = 'center';
                                 ctx.textBaseline = newChartType==="bar"?'ideographic':'ideographic';
-                                if (newChartType !== "pie"){
+                                if (newChartType !== "pie" && newChartType !== "doughnut" ){
 
                                     this.data.datasets.forEach(function (dataset, i) {
                                         var meta = chartInstance.controller.getDatasetMeta(i);
                                         meta.data.forEach(function (bar, index) {
                                             var data = dataset.data[index];
                                             ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                                            if(newChartType!=="radar"){
+                                                ctx.fillStyle = '#454341';
+                                            }
+                                            else{
+                                                ctx.fillStyle = '#555'
+                                            }
+                                            ctx.fontStyle="bold"
 
                                         });
                                     });
                                 }
                                 else {
-                                    this.data.datasets.forEach(function (dataset) {
+                                    var dd=this.data.datasets;
+                                    var ee=dd.reverse();
+
+                                    ee.forEach(function (dataset) {
 
                                         for (var i = 0; i < dataset['data'].length; i++) {
                                             var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
@@ -459,83 +1217,122 @@
                                                 end_angle = model.endAngle,
                                                 mid_angle = start_angle + (end_angle - start_angle)/2;
 
+
                                             var x = mid_radius * Math.cos(mid_angle);
                                             var y = mid_radius * Math.sin(mid_angle);
 
-                                            ctx.fillStyle = '#454341';
-                                            ctx.fontStyle="bold"
-                                            if (i == 3){ // Darker text color for lighter background
-                                                ctx.fillStyle = '#454341';
-                                                ctx.fontStyle="bold"
-                                            }
+                                            // if (i == 3){ // Darker text color for lighter background
+                                            //     ctx.fillStyle = '#454341';
+                                            //     ctx.fontStyle="bold"
+                                            // }
                                             var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
                                             //Don't Display If Legend is hide or value is 0
                                             if(dataset['data'][i] !== 0) {
                                                 ctx.fillText(dataset.data[i], model.x + x, model.y + y);
+                                                // ctx.fillText(dataset.label, model.x+i*10 , model.y+i*10);
+
                                                 // Display percent in another line, line break doesn't work for fillText
                                                 //   ctx.fillText(percent, model.x + x, model.y + y + 15);
 
                                             }
                                         }
+                                        console.log("ee")
+                                        console.log(ee)
+                                        for (var j = 0; j <ee.length; j++) {
+                                            var  mid_radius1 = 110, mid_angle1 = -1.18;
+                                            var x1 = mid_radius1 * Math.cos(mid_angle1);
+                                            var y1 = mid_radius1 * Math.sin(mid_angle1);
+                                            if(ee[j].label !==undefined && ee[j].label){
+
+                                                if(newChartType==="pie"){
+                                                    ctx.fillText(ee[j].label, 300+x1+j*-45 , 390+y1+j*-10);
+                                                }
+                                                else{
+                                                    ctx.fillText(ee[j].label, 190+x1+j*-5 , 360+y1+j*35);
+                                                }
+                                                ctx.fillStyle = '#111';
+                                                ctx.fontStyle="bold"
+                                            }
+                                        }
                                     });
+
                                 }
+
                             }
                         }
+
                 },
                 tooltips: {
                     callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.yLabel;
+                        label: function(item, data) {
+                            return data.datasets[item.datasetIndex].label[item.index]
+                                + ": " + data.datasets[item.datasetIndex].data[item.index];
                         }
                     }
                 },
                 scales: {
                     yAxes: [{
                         ticks: {
-                            display: newChartType!=="pie"?true:false,
+                            display: newChartType!=="pie"  && newChartType!=="doughnut" && newChartType!=="radar"? true:false,
                             beginAtZero: true,
-                            fontSize: 20,
+                            fontSize: 15,
+                            fontStyle:"bold"
                         },
                         scaleLabel: {
-                            display: newChartType!=="pie"?true:false,
+                            display: newChartType!=="pie"  && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             // display: true,
-                            labelString: '{{titleY}}',
+                            labelString: '{{ showTitles }}'? '{{titleY}}':'',
                             fontSize:20,
+                            padding:20,
                             fontStyle:"bold"
                         },
                         gridLines:{
-                            display: newChartType!=="pie"?true:false,
+                            display: newChartType!=="pie" && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             // color:"rgb(32, 35, 11)",
-                            color:showGrid?"#555":null,
+                            borderDash: [3, 5],
+                            lineHeight:2,
+                             lineWidth:1,
+                            color:showGrid==="horizental" || showGrid==="both"?gridColor:null,
+
                         }
                     }],
                     xAxes: [{
                         ticks: {
-                            display: newChartType!=="pie"?true:false,
-                            fontSize: 20
+                            display: newChartType!=="pie" && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
+                            fontSize: 15,
+                            fontStyle:"bold"
                         },
                         scaleFontSize: 40,
                         scaleLabel: {
-                            display: newChartType!=="pie"?true:false,
+                            display: newChartType!=="pie"  && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             // display: true,
-                            labelString: '{{titleX}}',
+                            labelString: '{{ showTitles }}'? '{{titleX}}':'',
                             fontSize:20,
+                            padding:20,
                             fontStyle:"bold"
                         },
                         gridLines:{
-                            display: newChartType!=="pie"?true:false,
+                            display: newChartType!=="pie" && newChartType!=="doughnut" && newChartType!=="radar"?true:false,
                             //display:false,
-
-                            color:showGrid?"#555":null,
+                            borderDash: [3, 5],
+                            lineWidth:1,
+                            lineHeight:2,
+                            color:showGrid==="vertical" || showGrid==="both"?gridColor:null,
 
                         }
                     }]
                 },
                 title: {
                     fontSize: 29,
-                    // paddingBottom: 50,
+                    marginBottom: -20,
+                    borderWidth:2,
+                    borderColor:"#111",
+                    borderStyle:"solid",
                     display: true,
-                     text: '{{graphicTitle}}'
+                     text: '{{graphicTitle}}',
+                    position: "top",
+                    padding:30,
+                    {#fontColor:'{{ graphicTitleColor }}'#}
                 }
             }
             return options

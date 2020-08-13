@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @IsGranted("ROLE_USER")
+
  * @Route("/profile")
  */
 class PublicationController extends AbstractController
@@ -79,7 +79,7 @@ class PublicationController extends AbstractController
                     $em->flush();
 
 //            return $this->redirectToRoute('publication_index');
-                    return $this->redirectToRoute('publication_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                    return $this->redirectToRoute('publication_index', ['id'=>$id,'firstname' => $firstName, "lastname" => $lastName]);
                 }
 
 
@@ -94,7 +94,7 @@ class PublicationController extends AbstractController
                     $em->flush();
 
 //            return $this->redirectToRoute('publication_index');
-                    return $this->redirectToRoute('publication_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                    return $this->redirectToRoute('publication_index', ['id'=>$id,'firstname' => $firstName, "lastname" => $lastName]);
                 }
             }
 
