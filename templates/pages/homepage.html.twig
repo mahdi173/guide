@@ -23,39 +23,45 @@
 
     {% set issn="" %}
     {#        image index#}
-<div class="slider-home ">
-    <div class="container-fluid imageindex">
-        <div class="row ">
-            <div class="offset-4 col-md-6 intro-text">
-{#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
-                <h1>Empowering Knowledge around the world</h1>
 
+    <div class="container-fluid" style="padding-right: 0;padding-left: 0;margin-top: -15px">
+        <div id="carouselExampleControls" class="carousel slide " data-ride="carousel">
+            <div class="carousel-inner ">
+                <div class="carousel-item active container-fluid imageindex">
+                    <div class="offset-4 col-md-6 intro-text">
+                        {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
+                        <h1>Empowering Knowledge around the world</h1>
+
+                    </div>
+                </div>
+                <div class="carousel-item container-fluid imageindex2">
+                    <div class="offset-3 col-md-6 intro-text">
+                        {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
+                        <h1>Find All the help to advance in your scientific researches</h1>
+
+                    </div>
+                </div>
+                <div class="carousel-item container-fluid imageindex3">
+                    <div class="offset-4 col-md-6 intro-text">
+                        {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
+                        <h1>GuideJournal provides Services For Science
+                        </h1>
+
+                    </div>
+                </div>
             </div>
 
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
+
     </div>
-    <div class="container-fluid imageindex2">
-        <div class="row ">
-            <div class="offset-3 col-md-6 intro-text">
-{#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
-                <h1>Find All the help to advance in your scientific researches</h1>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="container-fluid imageindex3">
-        <div class="row ">
-            <div class="offset-4 col-md-6 intro-text">
-{#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
-                <h1>GuideJournal provides Services For Science
-                </h1>
-
-            </div>
-
-        </div>
-    </div>
-</div>
     <div class="container">
 
 
@@ -208,14 +214,17 @@
 
 
             $(document).ready(function(){
-                $('.main-slider').slick({
-                    slidesToShow: 5,
-                    slidesToScroll: 5
-                 });
-                $('.slider-home').slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                 });
+                // $('.main-slider').slick({
+                //     slidesToShow: 5,
+                //     slidesToScroll: 5
+                //  });
+                // $('.slider-home').slick({
+                //     slidesToShow: 1,
+                //     slidesToScroll: 1
+                //  });
+                $('.carousel').carousel({
+                    interval: 2000
+                })
         })
 
     </script>
