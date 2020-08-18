@@ -71,14 +71,14 @@ body{
 .right_nav a{
   font-family: "Playfair Display Regular","sans-serif" !important;
 }
-.slider-home{
-  height:400px;
+.slider-home,.carousel-inner{
+  height:450px;
 }
 .slider-home .slick-slide{
-  height:420px !important;
+  height:460px !important;
 }
 .imageindex,.imageindex2,.imageindex3{
-  height:400px;
+  height:450px;
   margin-top: -15px;
   margin-bottom: 35px;
   background-position: center center;
@@ -88,13 +88,13 @@ body{
 
 }
 .imageindex{
-  background-image: url("../../../public/assets/images/DNA-Testing-Research.jpg") ;
+  background-image: url("../../../public/assets/images/bg-transparent.png") ;
 }
 .imageindex2{
   background-image: url("../../../public/assets/images/758475.jpg") ;
 }
 .imageindex3{
-  background-image: url("../../../public/assets/images/hans-reniers-lQGJCMY5qcM-unsplash.jpg") ;
+  background-image: url("../../../public/assets/images/dna-163710_1280.jpg") ;
 }
 .services{
   font-family: "Adobe Arabic Regular","sans-serif";
@@ -102,15 +102,16 @@ body{
   color:#13426c;
 }
 .intro-text{
-  margin-top: 160px;
+  margin-top: 190px;
   padding: 20px;
 
  // margin-left: 20px;
 
 }
-.intro-text h2{
-  font-size: 47px;
-  color:#13426c;
+.intro-text h1{
+  font-size: 55px;
+ color:#13426c;
+
 
 }
 .services-list{
