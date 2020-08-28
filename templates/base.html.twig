@@ -71,11 +71,11 @@
             <a  href="{{ path('journalSearch') }}" class="p-2 text-dark">Journal search <span class="sr-only"></span></a>
             <a  href="{{ path('get_authors') }}" class="p-2 text-dark">Author search <span class="sr-only"></span></a>
             <a  href="{{ path('graphic_data') }}" class="p-2 text-dark">Graph Maker  <span class="sr-only"></span></a>
-            <a  href="#" class="p-2 text-dark">Blog  <span class="sr-only"></span></a>
-{#            {% for item in sulu_navigation_root_tree('main') %}#}
-{#                <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="p-2 text-dark"#}
-{#                   title="{{ item.title }}">{{ item.title }}</a>#}
-{#            {% endfor %}#}
+{#            <a  href="#" class="p-2 text-dark">Blog  <span class="sr-only"></span></a>#}
+            {% for item in sulu_navigation_root_tree('main') %}
+                <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="p-2 text-dark"
+                   title="{{ item.title }}">{{ item.title }}</a>
+            {% endfor %}
 
         </div>
     </nav>
