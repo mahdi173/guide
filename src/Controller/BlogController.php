@@ -25,7 +25,7 @@ class BlogController extends BaseController
      * @param Post $post
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     *  @Route("/blog/{id}", name="blog_show")
+     *  @Route("/111111blog/{id}", name="blog_show")
      */
     public function show(Post $post)
     {
