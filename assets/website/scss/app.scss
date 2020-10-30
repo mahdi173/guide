@@ -71,14 +71,14 @@ body{
 .right_nav a{
   font-family: "Playfair Display Regular","sans-serif" !important;
 }
-.slider-home{
-  height:400px;
+.slider-home,.carousel-inner{
+  height:450px;
 }
 .slider-home .slick-slide{
   height:460px !important;
 }
 .imageindex,.imageindex2,.imageindex3{
-  height:400px;
+  height:450px;
   margin-top: -15px;
   margin-bottom: 35px;
   background-position: center center;
@@ -88,7 +88,7 @@ body{
 
 }
 .imageindex{
-  background-image: url("../../../public/assets/images/DNA-Testing-Research.jpg") ;
+  background-image: url("../../../public/assets/images/bg-transparent.png") ;
 }
 .imageindex2{
   background-image: url("../../../public/assets/images/758475.jpg") ;
