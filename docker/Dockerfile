@@ -2,10 +2,10 @@
 FROM php:7.3-apache
 
 #Install System Packages
-RUN apt update && apt install -y libzip-dev unzip zlib1g-dev libicu-dev libsqlite3-dev sqlite3 libpng-dev
+RUN apt update && apt install -y libxml2-dev libzip-dev unzip zlib1g-dev libicu-dev libsqlite3-dev sqlite3 libpng-dev
 
 #Install PHP Extensions
-RUN docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl gd
+RUN docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl gd dom
 
 RUN pecl install apcu
 RUN docker-php-ext-enable apcu
@@ -22,6 +22,8 @@ RUN apt-get install -y nodejs
 #&& echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 
 RUN a2enmod proxy_fcgi ssl rewrite proxy proxy_balancer proxy_http
+RUN docker-php-ext-install xml
+RUN docker-php-ext-enable xml
 
 USER www-data
 
