@@ -72,7 +72,7 @@ class BookController extends AbstractController
                     $em->persist($pub);
                     $em->flush();
 
-                    return $this->redirectToRoute('book_index', ['firstname' => $firstName, 'lastname' => $lastName]);
+                    return $this->redirectToRoute('book_index', ['firstname' => $firstName, 'lastname' => $lastName,'id'=>$user->getId()]);
                 }
 
                 $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
@@ -85,7 +85,7 @@ class BookController extends AbstractController
                     $em->persist($publication);
                     $em->flush();
 
-                    return $this->redirectToRoute('book_index', ['firstname' => $firstName, 'lastname' => $lastName]);
+                    return $this->redirectToRoute('book_index', ['firstname' => $firstName, 'lastname' => $lastName,'id'=>$user->getId()]);
                 }
             }
             return $this->render('book/publication_book.html.twig', [

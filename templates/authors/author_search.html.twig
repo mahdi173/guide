@@ -37,7 +37,6 @@
 {#        <div class="col-lg-3"><button class="btn btn-primary saveButton">Save</button></div>#}
 {#    </div><hr>#}
 {#    {% endfor %}#}
-
     <table id="profiles" class="table table-striped">
     <thead class="hide">
     <th></th>
@@ -45,7 +44,7 @@
     <th></th>
     </thead>
         <tbody>
-        {% if data.result.hits.hi is defined  %}
+        {% if data.result.hits.hit is defined  %}
         {% for res in data.result.hits.hit  %}
             <tr >
 
