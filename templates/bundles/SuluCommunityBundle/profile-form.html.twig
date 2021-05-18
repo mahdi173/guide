@@ -291,6 +291,7 @@
          <div class="col-3" style="border: solid 2px #e6e6e6;">
 
              {% block left_sidebar %}
+                 {% if user %}
                  <table class="table">
                      <tr>
                          <th class="header">Top co-authors
@@ -409,6 +410,7 @@
                          </td>
                      </tr>
                  </table>
+                 {% endif %}
              {% endblock  %}
 
          </div>

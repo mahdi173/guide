@@ -15,7 +15,7 @@
       </h1>
 
       <!-- Blog Post -->
-
+      {% if content is defined and  content.articles %}
       {% for c in content.articles %}
         <div class="card mb-4">
           {% if c.content.content.image %}
@@ -40,6 +40,7 @@
         </div>
 
       {% endfor %}
+      {% endif %}
 
 
     </div>
@@ -66,6 +67,7 @@
         <h5 class="card-header">Categories</h5>
         <div class="card-body">
           <div class="row">
+            {% if content is defined and  content.articles %}
             {% for categorie in content.articles %}
               {% for c in categorie.content.content.categories %}
                   <div class="col-lg-6">
@@ -84,6 +86,7 @@
                   </div>
               {% endfor %}
             {% endfor %}
+            {% endif %}
           </div>
         </div>
       </div>

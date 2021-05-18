@@ -17,7 +17,7 @@
         margin-top: -8px;
     }
 </style>
-{% if count %}
+{% if count is defined and count > 0 %}
 {% for i in 1..count %}
 <div class="ligne">
 <div class="row data-area">

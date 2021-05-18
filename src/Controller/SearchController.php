@@ -569,7 +569,7 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
     /**
      * Lists all data_t_scopus entities.
      *
-     * @Route("/advanced_search", name="advanced_search_scopus_web_ofs")
+     * @Route("/advanced-search", name="advanced_search_scopus_web_ofs")
      */
     public function advanced_search_params(){
 

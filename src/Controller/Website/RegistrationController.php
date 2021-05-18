@@ -19,7 +19,7 @@ class RegistrationController extends AbstractController
     /**
      * @return Response
      *
-     * @Route("/a/registration")
+     * @Route("/a/registration" , name="registration_user")
      */
     public function register(Request $request)
     {

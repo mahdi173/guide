@@ -215,7 +215,7 @@
             <div class=" col-md-3">
                 <div class="form-group form-inline axe3" style="margin-top: -10px;padding-left: 10px;">
                     <label>Title </label>
-                    <input type="text" class="form-control pieTitle2" value="{{ titles[0] }}">
+                    <input type="text" class="form-control pieTitle2" value="{{ titles and titles[0] ? titles[0]:'' }}">
                 </div>
             </div>
             <div class=" col-md-3">

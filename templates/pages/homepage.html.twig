@@ -26,7 +26,7 @@
 
     <div class="container-fluid" style="padding-right: 0;padding-left: 0;margin-top: -15px">
         <div id="carouselExampleControls" class="carousel slide " data-ride="carousel">
-            <div class="carousel-inner ">
+            <div class="carousel-inner-homepage">
                 <div class="carousel-item active container-fluid imageindex">
                     <div class="offset-4 col-md-6 intro-text">
                         {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
@@ -208,25 +208,25 @@
 
 
         <div class="main-slider" >
-            {% set recentarticles= sulu_article_load_recent(6) %}
-            {% for a in recentarticles %}
-                <div class="card mb-4 box-shadow" style="margin-right: 5px">
+{#            {% set recentarticles= sulu_article_load_recent(6) %}#}
+{#            {% for a in recentarticles %}#}
+{#                <div class="card mb-4 box-shadow" style="margin-right: 5px">#}
 
-                    {% if a.content.content.image %}
-                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
-                        {#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
-                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
-                    {% else %}
-                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
+{#                    {% if a.content.content.image %}#}
+{#                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}#}
+{#                        #}{#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
+{#                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>#}
+{#                    {% else %}#}
+{#                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>#}
 
-                    {% endif %}
-                         <div class="card-body">
-                            <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>
-                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}
-                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>
-                         </div>
-                </div>
-            {% endfor %}
+{#                    {% endif %}#}
+{#                         <div class="card-body">#}
+{#                            <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>#}
+{#                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}#}
+{#                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>#}
+{#                         </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
         </div>
 
 </div>

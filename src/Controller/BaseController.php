@@ -59,13 +59,18 @@ class BaseController extends AbstractController
     {
         $emS = $this->getDoctrine()->getManager();
         $exist = $emS->getRepository(Allpublications::class)->findBy(['user' => $this->getUser()]);
-       $firstname=$this->getUser()->getContact()->getFirstName();
-       $lastname=$this->getUser()->getContact()->getLastName();
+        $firstname='';$lastname="";$userFirstName="";
+        if($this->getUser()){
+            $firstname=$this->getUser()->getContact()->getFirstName();
+            $lastname=$this->getUser()->getContact()->getLastName();
+            $userFirstName=$this->getUser()->getFirstName();
+        }
+
 
         if ($exist && $this->getUser()->getFullName()) {
             return $this->redirectToRoute('publication_index',['firstname'=>$firstname,"lastname"=>$lastname,'id'=>$this->getUser()->getId()]);
         } else {
-            $auteur = $this->getUser()->getFirstName();
+            $auteur = $userFirstName;
 
 
             $test = false;
