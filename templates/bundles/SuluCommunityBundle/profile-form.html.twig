@@ -39,7 +39,7 @@
 
 
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
-{#    {% set user= app.user%}#}
+    {% set user= app.user%}
     {% if success is defined and success %}
         <p class="text-center border pt-3 pb-3">
 {#            {{ 'save_profile_finished'|trans }}#}
@@ -217,30 +217,29 @@
 {#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>#}
                     <div class = "list-group list-group-flush list-sidebar" >
 {#                        <a href = "{{ path('sulu_community.profile')}}" class = "list-group-item list-group-item-action bg-light" > Infos </a>#}
-                     {% if user %}
-                        <a  href="{{ path('publication_index',{'id':user.id,'firstname':user.contact.firstname,'lastname':user.contact.lastName,'id':user.id}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        <a  href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Publications
                         </a> <span role="presentation" class="divider"></span>
-                        <a href="{{ path('book_index',{'id':user.id,'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Books
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('chapter_index',{'id':user.id,'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Chapters
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('conference_index',{'id':user.id,'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Conferences
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('favorite_list',{'id':user.id,'firstname':user.contact.firstname,'lastname':user.contact.lastName}) }}" class="list-group-item list-group-item-action ">Saved Journals</a>
+                        <a href="{{ path('favorite_list') }}" class="list-group-item list-group-item-action ">Saved Journals</a>
                         {% for item in sulu_navigation_root_tree('member') %}
                             <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
                         {% endfor %}
-{% endif %}
+
                     </div>
                 </div>
             </div>
             {#end#}
 
-            <div style="margin-left: 0px" class="col-7 " >
+            <div style="margin-left: 0px" class="col-9 " >
 
                 {% block profile_content %}
                 <h2 class="text-center">Edit Profile</h2><br/>
@@ -263,11 +262,11 @@
                         {{ form_widget(form.avatar, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group">
-                        <label for="registration_username">Address </label>
+                        <label for="registration_username">Adress :</label>
                         {{ form_widget(form.street, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <div class="form-group ">
-                        <label for="registration_username">Country </label>
+                        <label for="registration_username">Country :</label>
                         {{ form_widget(form.countryCode, { 'attr': {'class': 'form-control'} }) }}
                     </div>
 

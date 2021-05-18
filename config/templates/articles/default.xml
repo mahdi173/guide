@@ -64,7 +64,7 @@
             </meta>
         </property>
 
-       <property mandatory="true" name="image" type="single_media_selection">
+       <property name="image" type="single_media_selection">
             <meta>
                 <title lang="en">Image</title>
                 <title lang="fr">Image</title>
