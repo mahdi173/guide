@@ -175,13 +175,13 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class="badge-info rounded" >Publisher : </span>
+                                                <span class="badge-info rounded" >Publisher : </span>&nbsp;
                                                 <span >{{ t.publisher }}</span>
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class=" badge-warning rounded" >Quartile : </span>
+                                                <span class=" badge-warning rounded" >Quartile : </span>&nbsp;
                                                 <span >{{ t.quartile }}</span>
                                             </h6>
                                         </div>
@@ -190,13 +190,13 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class=" badge-dark rounded" >Open Access : </span>
+                                                <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
                                                 <span >{{ t.openAccess }}</span>
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>
+                                                <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>&nbsp;
                                                 <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
                                             </h6>
                                         </div>
@@ -406,6 +406,7 @@
                         <div class="col-md-8" >
                             <div class="card-body" >
                                 {%  if data_t_scopus | length ==1 %}
+                                    {% for data_t_scopus in data_t_scopus %}
                                 {% set tests=0 %}
 
                                 {% for message in app.flashes('info') %}
@@ -413,18 +414,17 @@
                                         {{ message }}
                                     </div>
                                 {% endfor %}
-
-                                <h4><b><a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </b></h4>
+{#                                <h4><b><a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </b></h4>#}
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class="badge-info rounded" >SJR : </span>
+                                            <span class="badge-info rounded" >SJR : </span>&nbsp;
                                             <span> {{ data_t_scopus.sJR }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class=" badge-warning rounded" >Rank : </span>
+                                            <span class=" badge-warning rounded" >Rank : </span>&nbsp;
                                             <span > {{ data_t_scopus.rANK }}</span>
                                         </h6>
                                     </div>
@@ -433,13 +433,13 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class=" badge-dark rounded" >Publisher : </span>
+                                            <span class=" badge-dark rounded" >Publisher : </span>&nbsp;
                                             <span > {{ data_t_scopus.publisher }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class="badge-info rounded" >Open Access : </span>
+                                            <span class="badge-info rounded" >Open Access : </span>&nbsp;
                                             <span > {{ data_t_scopus.openAccess }}</span>
                                         </h6>
                                     </div>
@@ -448,13 +448,13 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class=" badge-dark rounded" >Quartile : </span>
+                                            <span class=" badge-dark rounded" >Quartile : </span>&nbsp;
                                             <span >{{ data_t_scopus.quartile }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class="badge-info rounded" >Citation Count : </span>
+                                            <span class="badge-info rounded" >Citation Count : </span>&nbsp;
                                             <span > {{ data_t_scopus.citationCount }}</span>
                                         </h6>
                                     </div>
@@ -463,18 +463,20 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class=" badge-dark rounded" >P-ISSN : </span>
+                                            <span class=" badge-dark rounded" >P-ISSN : </span>&nbsp;
                                             <span > {{ data_t_scopus.printISSN }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class="badge-info rounded" >E-ISSN : </span>
+                                            <span class="badge-info rounded" >E-ISSN : </span>&nbsp;
                                             <span > {{ data_t_scopus.eISSN }}</span>
                                         </h6>
                                     </div>
 
                                 </div>
+                                    {% endfor %}
+
                                 {% elseif data_t_scopus | length >1 %}
                                     {% set tests=0 %}
                                 {% else  %}
@@ -669,6 +671,7 @@
                             </div>
                             </div>
                             {% if data_t_scopus is defined and data_t_scopus| length ==1  %}
+                                {% for data_t_scopus in data_t_scopus  %}
                             <div class="row" style="width: 100%">
 
                                     <div class="col-md-3 text-center">
@@ -679,7 +682,7 @@
                                         <a href={{ path('search_journals_for_scopus', {'publisher': data_t_scopus.publisher})}}>
                                             <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
 
-                                                <h6 class="text-primary"><b>Publisher : </b></h6>
+                                                <h6 class="text-primary"><b>Publisher : </b></h6>&nbsp;
                                                 <span class=" badge-info rounded" >{{ data_t_scopus.publisher }}</span>
                                                 </div>
 
@@ -708,6 +711,7 @@
                                     </div>
 
                                 </div>
+                            {% endfor %}
                             {% endif %}
                             <div class="row" style="width: 100%;">
                                 <div class="col-md-12 text-center">
@@ -742,23 +746,23 @@
                 {%  if tpjlistScopus is defined %}
                 <h4 class="text-primary"><b>Top journals list in Scopus</b></h4>
                 <div id="carouselExampleIndicators" class="carousel" data-ride="carousel" style="height: 100%">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 
-                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-
-                        <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
-
-                        <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
-                    </ol>
                     <div class="carousel-inner">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 
+                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+
+                            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+
+                            <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+                        </ol>
 
                             {% for t in tpjlistScopus %}
                                 {% set issn="/journal/" %}
@@ -769,6 +773,7 @@
                                     {% set issn=issn~t.eISSN %}
                                 {% endif %}
                                     {% if compteurRS==1 %}
+
                                              <div class="carousel-item active">
                                     <!-- multiple results-->
                                     <div class="card mb-3" style="margin-right: 5px;">
@@ -776,8 +781,7 @@
                                             <div class="col-md-2" style="padding: 10px">
                                                 <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
 
-                                                    <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">
-
+{#                                                    <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
 
                                             </div>
                                             <div class="col-md-10" >
@@ -786,13 +790,13 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class="badge-info rounded" >Publisher : </span>
+                                                                <span class="badge-info rounded" >Publisher : </span>&nbsp;
                                                                 <span >{{ t.publisher }}</span>
                                                             </h6>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class=" badge-warning rounded" >Quartile : </span>
+                                                                <span class=" badge-warning rounded" >Quartile : </span>&nbsp;
                                                                 <span >{{ t.quartile }}</span>
                                                             </h6>
                                                         </div>
@@ -801,13 +805,13 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class=" badge-dark rounded" >Open Access : </span>
+                                                                <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
                                                                 <span >{{ t.openAccess }}</span>
                                                             </h6>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>
+                                                                <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>&nbsp;
                                                                 <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
                                                             </h6>
                                                         </div>
@@ -832,7 +836,7 @@
                                         <div class="row no-gutters">
                                             <div class="col-md-2" style="padding: 10px">
                                                 <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
-                                                <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">
+{#                                                <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
                                             </div>
                                             <div class="col-md-10" >
                                                 <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
@@ -840,13 +844,13 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class="badge-info rounded" >Publisher : </span>
+                                                                <span class="badge-info rounded" >Publisher : </span>&nbsp;
                                                                 <span >{{ t.publisher }}</span>
                                                             </h6>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class=" badge-warning rounded" >Quartile : </span>
+                                                                <span class=" badge-warning rounded" >Quartile : </span>&nbsp;
                                                                 <span >{{ t.quartile }}</span>
                                                             </h6>
                                                         </div>
@@ -855,13 +859,13 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class=" badge-dark rounded" >Open Access : </span>
+                                                                <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
                                                                 <span >{{ t.openAccess }}</span>
                                                             </h6>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <h6 >
-                                                                <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>
+                                                                <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>&nbsp;
                                                                 <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
                                                             </h6>
                                                         </div>
@@ -879,6 +883,7 @@
 
                                     {% endif %}
                                 <!-- fin mutiple results-->
+
                             {% endfor %}
                     </div>
 
@@ -948,7 +953,7 @@
                                                         <div class="col-md-2" style="padding: 10px">
                                                             <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
 
-                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">
+{#                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
 
 
                                                         </div>
@@ -958,13 +963,13 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class="badge-info rounded" >Impact Factor : </span>
+                                                                            <span class="badge-info rounded" >Impact Factor : </span>&nbsp;
                                                                             <span > {{ wb.journalImpactFactor }}</span>
                                                                         </h6>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class=" badge-warning rounded" >Rank : </span>
+                                                                            <span class=" badge-warning rounded" >Rank : </span>&nbsp;
                                                                             <span > {{ wb.rank }}</span>
                                                                         </h6>
                                                                     </div>
@@ -973,13 +978,13 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class=" badge-dark rounded" >P-ISSN : </span>
+                                                                            <span class=" badge-dark rounded" >P-ISSN : </span>&nbsp;
                                                                             <span > {{ wb.iSSN }}</span>
                                                                         </h6>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class="badge-info rounded" >E-ISSN : </span>
+                                                                            <span class="badge-info rounded" >E-ISSN : </span>&nbsp;
                                                                             <span > {{ wb.eISSN }}</span>
                                                                         </h6>
                                                                     </div>
@@ -1004,7 +1009,7 @@
                                                     <div class="row no-gutters">
                                                         <div class="col-md-2" style="padding: 10px">
                                                             <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
-                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">
+{#                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
                                                         </div>
                                                         <div class="col-md-10" >
                                                             <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
@@ -1012,13 +1017,13 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class="badge-info rounded" >Impact Factor : </span>
+                                                                            <span class="badge-info rounded" >Impact Factor : </span>&nbsp;
                                                                             <span > {{ wb.journalImpactFactor }}</span>
                                                                         </h6>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class=" badge-warning rounded" >Rank : </span>
+                                                                            <span class=" badge-warning rounded" >Rank : </span>&nbsp;
                                                                             <span > {{ wb.rank }}</span>
                                                                         </h6>
                                                                     </div>
@@ -1027,13 +1032,13 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class=" badge-dark rounded" >P-ISSN : </span>
+                                                                            <span class=" badge-dark rounded" >P-ISSN : </span>&nbsp;
                                                                             <span > {{ wb.iSSN }}</span>
                                                                         </h6>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <h6 >
-                                                                            <span class="badge-info rounded" >E-ISSN : </span>
+                                                                            <span class="badge-info rounded" >E-ISSN : </span>&nbsp;
                                                                             <span > {{ wb.eISSN }}</span>
                                                                         </h6>
                                                                     </div>
@@ -1124,13 +1129,13 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class="badge-info rounded" >Publisher : </span>
+                                            <span class="badge-info rounded" >Publisher : </span>&nbsp;
                                             <span >{{ r.publisher }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class=" badge-warning rounded" >Quartile : </span>
+                                            <span class=" badge-warning rounded" >Quartile : </span>&nbsp;
                                             <span >{{ r.quartile }}</span>
                                         </h6>
                                     </div>
@@ -1139,13 +1144,13 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class=" badge-dark rounded" >Open Access : </span>
+                                            <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
                                             <span >{{ r.openAccess }}</span>
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <h6 >
-                                            <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>
+                                            <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>&nbsp;
                                             <span >{{ r.printISSN }}, {{ r.eISSN }}</span>
                                         </h6>
                                     </div>

@@ -71,7 +71,7 @@
             <a  href="{{ path('journalSearch') }}" class="p-2 text-dark">Journal search <span class="sr-only"></span></a>
             <a  href="{{ path('get_authors') }}" class="p-2 text-dark">Author search <span class="sr-only"></span></a>
             <a  href="{{ path('graphic_data') }}" class="p-2 text-dark">Graph Maker  <span class="sr-only"></span></a>
-            <a  href="#" class="p-2 text-dark">Blog  <span class="sr-only"></span></a>
+            <a  href="{{ path('blog_index') }}" class="p-2 text-dark">Blog  <span class="sr-only"></span></a>
 {#            {% for item in sulu_navigation_root_tree('main') %}#}
 {#                <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="p-2 text-dark"#}
 {#                   title="{{ item.title }}">{{ item.title }}</a>#}
@@ -108,10 +108,10 @@
 
 
                 <ul  class="dropdown-menu dropdown-menu-right" style="margin-top: 36px;">
-                        <li ><a class="dropdown-item" href="{{ path('author_search')}}">Your profile</a></li>
+                        <li ><a class="dropdown-item" href="{{ path('author_search')}}">My profile</a></li>
 {#                        <li ><a class="dropdown-item" href="{{ path('sulu_community.profile')}}">Your profile</a></li>#}
                         <div class="dropdown-divider"></div>
-                        <li><a  class="dropdown-item" href="{{ path('settings') }}">Settings</a></li>
+                        <li><a  class="dropdown-item" href="{{ path('settings') }}">Account settings</a></li>
 {#                        <div class="dropdown-divider"></div>#}
 {#                        <li><a  class="dropdown-item" href="#">Help center</a></li>#}
                         <div class="dropdown-divider"></div>
@@ -148,7 +148,7 @@
                     <ul>
                         <h4>About Guidejournal</h4>
                         <li class="list-unstyled">
-                            <a href="/">Home</a>
+                            <a href="{{ path('homepage') }}">Home</a>
                         </li>
                         <li class="list-unstyled">
                             <a href="{{ path('about_guidejournal') }}">About</a>
@@ -209,7 +209,7 @@
                     <div class="col-md-9">
                         <div class="media-body">
                               <span class="small mb-4 mb-lg-0">
-                              <a class="text-info" href="https://www.mit-agency.com/" target="_blank"> © MIT 2019.
+                              <a class="text-info" href="https://www.mit-agency.com/" target="_blank"> © MIT {{ "now"|date('Y')}}.
                                 All Rights Reserved.</a> We use cookies to help provide and enhance our service and tailor content. By continuing, you agree to the
                               <a class="text-info" to="/guidejournal/privacy"> use of cookies</a>
                               </span>.

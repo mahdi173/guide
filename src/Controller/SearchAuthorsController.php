@@ -242,14 +242,15 @@ class SearchAuthorsController extends AbstractController
         $authors2=[];
 
         /*get Authors list*/
-        foreach ($result->hit as $r){
-            foreach ($r->info->authors as $author){
-                if(!is_array($author)){
-                     array_push($authors1,$author->text);
-                }
-                else{
-                    foreach ($author as $at){
-                        array_push($authors1,$at->text);
+        if(isset($result->hit)) {
+            foreach ($result->hit as $r) {
+                foreach ($r->info->authors as $author) {
+                    if (!is_array($author)) {
+                        array_push($authors1, $author->text);
+                    } else {
+                        foreach ($author as $at) {
+                            array_push($authors1, $at->text);
+                        }
                     }
                 }
             }
@@ -269,15 +270,17 @@ class SearchAuthorsController extends AbstractController
         /*get Authors list*/
         $inc = false;
         $array = [];
-        foreach ($result->hit as $r){
-            $inc = false;
-            foreach ($result2 as $r2){
-                if (rtrim($r->info->title,'. ') == rtrim($r2->bibjson->title,'. ')){
-                    $inc = true;
+        if(isset($result->hit)) {
+            foreach ($result->hit as $r) {
+                $inc = false;
+                foreach ($result2 as $r2) {
+                    if (rtrim($r->info->title, '. ') == rtrim($r2->bibjson->title, '. ')) {
+                        $inc = true;
+                    }
                 }
-            }
-            if($inc == false ){
-                $array[] = $r;
+                if ($inc == false) {
+                    $array[] = $r;
+                }
             }
         }
         /*debut search issn in scopus or router*/
