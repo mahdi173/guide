@@ -53,6 +53,7 @@ class RegistrationFormType extends AbstractType
             [
                 'mapped' => false,
                 'required' => true,
+                'label' => "Terms and Conditions",
             ]
         );
     }

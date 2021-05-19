@@ -4,7 +4,10 @@
 namespace App\Controller;
 
 
+use App\DTO\ContactDT0;
+use App\Form\ContactFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,14 +16,27 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/{_locale}")
  */
+
 class PageController extends AbstractController
 {
+    /** @var \Swift_Mailer */
+    private $mailer;
+
+    /**
+     * PageController constructor.
+     * @param \Swift_Mailer $mailer
+     */
+    public function __construct(\Swift_Mailer $mailer)
+    {
+        $this->mailer = $mailer;
+    }
 
     /**
      * Lists all data_t_scopus entities.
      *
      * @Route("/aboutguidejournal", name="about_guidejournal")
      */
+
     public function about(){
         return $this->render('about/about.html.twig');
     }
@@ -30,8 +46,26 @@ class PageController extends AbstractController
      *
      * @Route("/contactguidejournal", name="contact_guidejournal")
      */
-    public function contact(){
-        return $this->render('contact/contact.html.twig');
+    public function contact(Request $request){
+        $contact= new ContactDT0();
+        $form = $this->createForm(ContactFormType::class, $contact);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $firstName=$form->get('firstName')->getData();
+            $lastName=$form->get('lastName')->getData();
+            $pays=$form->get('pays')->getData();
+            $email=$form->get('email')->getData();
+            $subject=$form->get('subject')->getData();
+            $message=$form->get('message')->getData();
+            $body = $this->renderView('mails/contact.html.twig',
+                array('subject' => $subject,'firstName'=>$firstName,'lastName'=>$lastName,'pays'=>$pays,'message'=>$message));
+
+            $msg = (new \Swift_Message())->setSubject("Contact")->setFrom($email)->setTo("contact@guidejournal.net")
+                ->setBody($body);
+            $this->mailer->send($msg);
+            $this->addFlash("success", "Your message has been sent. Our team will contact you as soon as possible");
+        }
+        return $this->render('contact/contact.html.twig' ,["form" => $form->createView()]);
     }
 
     /**
@@ -61,5 +95,15 @@ class PageController extends AbstractController
     {
         return $this->render('addpages/best.html.twig');
 
+    }
+
+    /**
+     * Lists all data_t_scopus entities.
+     *
+     * @Route("/help-guidejournal", name="help_guidejournal")
+     */
+    public function help(Request $request){
+
+        return $this->render('help.html.twig');
     }
 }

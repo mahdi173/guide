@@ -216,6 +216,8 @@
 {#                    </div>#}
 {#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>#}
                     <div class = "list-group list-group-flush list-sidebar" >
+
+                        {% if app.user %}
 {#                        <a href = "{{ path('sulu_community.profile')}}" class = "list-group-item list-group-item-action bg-light" > Infos </a>#}
                         <a  href="{{ path('publication_index',{'firstname':firstname,'lastname':lastname,'id':user.id}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Publications
@@ -233,6 +235,7 @@
                         {% for item in sulu_navigation_root_tree('member') %}
                             <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
                         {% endfor %}
+                        {% endif %}
 
                     </div>
                 </div>
