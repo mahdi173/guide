@@ -25,21 +25,26 @@
 
 </style>
 {% endblock %}
-{% block content %}
+{% block body %}
 
 
-    <div class="row">
+    <div class="row  {% if data.result.hits.hit is not defined %}cart-form{% else%}cart-with-res{% endif%} row-form" >
         <div class="col-md-2 col-sm-1"></div>
         <div class="col-md-8 mt-5 mb-5">
-            <p class="text-justify font-italic text-secondary">Search more than 10 million from all countries, and follow, share, and discuss their researches. We're guided by our mission to help and connect authors and make research open to all.</p><br>
+            <h1 class="text-primary text-center mb-5" style="font-size: 2.3rem;"><b>Find Authors </b></h1>
+
+            <p class="text-authors text-justify font-italic text-secondary">Search more than 10 million from all countries, and follow, share, and discuss their researches. We're guided by our mission to help and connect authors and make research open to all.</p><br>
 
             <form method="get" action="{{ url('get_authors') }}">
 
-                <div class="input-group mb-3">
-                    <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
-                    </div>
+                <div class="input-group mb-3  input-search">
+                    <span class="icon-search" >
+                        <i class="fa fa-search"></i>
+                     </span>
+                    <input type="text" id="searchValue" name="authorValue"  class="form-control searchValue" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+{#                    <div class="input-group-append">#}
+{#                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>#}
+{#                    </div>#}
                 </div>
             </form>
         </div>
@@ -128,7 +133,9 @@
             // $(document).ready(function() {
             //     $('#auteurs').dataTable();
             // } );
-
+            $('.icon-search').on("click", function () {
+                $('#searchValue').focus();
+            })
         </script>
     {% endblock %}
 

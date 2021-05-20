@@ -5,6 +5,7 @@ namespace App\Form;
 
 use App\DTO\ContactDT0;
 
+use Proxies\__CG__\Sulu\Bundle\ContactBundle\Entity\EmailType;
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,32 +34,40 @@ class ContactFormType extends AbstractType
                     ],
 
                 ])
-            ->add('email',TextType::class,[
+            ->add('email',\Symfony\Component\Form\Extension\Core\Type\EmailType::class,[
                 'required'=>true,
                 'attr'=>[
-                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninvalid'=>"setCustomValidity('Please enter a valid Email')",
                     'oninput'=>"setCustomValidity('')",
                 ],
             ])
             ->add('pays',TextType::class,[
                 'required'=>'required',
+                'label'=>'Country',
                 'attr'=>[
                     'oninvalid'=>"setCustomValidity('Please fill this field')",
                     'oninput'=>"setCustomValidity('')",
                 ],
             ])
             ->add('subject',TextType::class, [
-                'required'=>'false',
-                'attr'=>['value'=>"Title"]
+                'required'=>'true',
+                'attr'=>[
+                    'oninvalid'=>"setCustomValidity('Please fill this field')",
+                    'oninput'=>"setCustomValidity('')",
+                ],
 
             ])
             ->add('message',TextareaType::class, [
-                'required'=>'false',
-                'attr'=>['value'=>"Title"]
+                'required'=>'true',
+                'attr'=>[
+                    'oninvalid'=>"setCustomValidity('Please enter your Message')",
+                    'oninput'=>"setCustomValidity('')",
+                ],
+
 
             ])
             ->add('send', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Send',
                 'attr'  => array('class'=> 'form-control btn btn-primary btn-sm  col-md-12 btn btn-sm submitSearchForm')
             ])
         ;
