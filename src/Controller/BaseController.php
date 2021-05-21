@@ -582,7 +582,7 @@ class BaseController extends AbstractController
         ]);
     }
     /**
-     * @Route("/JournalSearch/", name="journalSearch", methods={"GET"})
+     * @Route("/journal-search", name="journalSearch", methods={"GET"})
      */
     public function journalSearch()
     {
