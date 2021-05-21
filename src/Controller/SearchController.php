@@ -67,6 +67,7 @@ class SearchController extends BaseController
 
 
         if ($request->get("searchValue")) {
+
             if ($request->get("searchOption")) {
                 if ($request->get("searchOption") == "journal")
                 {
@@ -426,6 +427,9 @@ class SearchController extends BaseController
            }
 
             }
+
+       return $this->redirectToRoute('homepage');
+
         }
 
     /**
