@@ -4,6 +4,8 @@
 {#    {% set url = url('sulu_community.confirmation', { token: user.confirmationKey }) %}#}
     {% set url = url('sulu_community.confirmation', { token: user.confirmationKey }) %}
     <div class="text-center border pt-3 pb-3" role="alert">
+        Hello {{ user.username }}, <br><br>
+        To confirm your email address, click on the link below:<br><br>
         <a href="{{ url }}" class="alert-link">
             {{ url }}
         </a>

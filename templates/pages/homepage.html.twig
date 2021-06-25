@@ -180,6 +180,7 @@
 
                 <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3 float-right ">Submit Your Article</a>
 
+                {%  if  sulu_navigation_root_tree is defined %}
                 {% for item in sulu_navigation_root_tree('member') %}
 
                     {% if (item.title== 'Conference')%}
@@ -188,7 +189,8 @@
                     {% endif %}
 
                 {% endfor %}
-
+{% endif %}
+                {%  if  sulu_navigation_root_tree is defined %}
                 {% for item in sulu_navigation_root_tree('member') %}
 
                     {% if (item.title== 'Journal')%}
@@ -196,7 +198,7 @@
                     {% endif %}
 
                 {% endfor %}
-
+{% endif %}
             </div>
         </div>
 
@@ -207,25 +209,55 @@
 
 
         <div class="main-slider" >
-{#            {% set recentarticles= sulu_article_load_recent(6) %}#}
-{#            {% for a in recentarticles %}#}
-{#                <div class="card mb-4 box-shadow" style="margin-right: 5px">#}
+            {% set recentarticles= sulu_article_load_recent(6) %}
+            <div class="row">
+            {% for a in recentarticles %}
 
-{#                    {% if a.content.content.image %}#}
-{#                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}#}
-{#                        #}{#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
-{#                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>#}
-{#                    {% else %}#}
-{#                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>#}
+            <div class="col-md-4 mt-5 mb-2 posts-last">
+                <div class="card mb-4 box-shadow" style="margin-right: 5px">
 
-{#                    {% endif %}#}
-{#                         <div class="card-body">#}
-{#                            <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>#}
-{#                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}#}
-{#                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>#}
-{#                         </div>#}
-{#                </div>#}
-{#            {% endfor %}#}
+                    {% if a.content.content.image is defined %}
+                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
+
+ {% if media is defined and media is not null  and media.thumbnails['sulu-400x400'] %}
+                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.url? media.url:media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
+ {% else %}
+     <a href="{{ a.routePath }}"><img class="card-img-top img-responsive" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
+
+ {% endif %}
+
+                    {% else %}
+                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
+
+                    {% endif %}
+                         <div class="card-body">
+                            <h5 class="card-title"><a href="{{ a.routePath }}">{{ a.content.content.title }}</a></h5>
+                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}
+                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>
+                         </div>
+                </div>
+            </div>
+
+            {% endfor %}
+            </div>
+{#            {% set recentarticles=posts|slice(0,6) %}#}
+{#            {{ dump(recentarticles) }}#}
+{#            <div class="card mb-4 box-shadow" style="margin-right: 5px">#}
+
+{#                                    {% if a.content.content.image is defined %}#}
+{#                                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}#}
+
+{#                                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>#}
+{#                                    {% else %}#}
+{#                                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>#}
+
+{#                                    {% endif %}#}
+{#                                         <div class="card-body">#}
+{#                                            <h5 class="card-title"><a href="">{{ a.title }}</a></h5>#}
+{#                                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}#}
+{#                                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>#}
+{#                                         </div>#}
+{#                                </div>#}
         </div>
 
 </div>

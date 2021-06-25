@@ -5,7 +5,9 @@ namespace App\Controller;
 
 
 use App\DTO\GraphicDataDTO;
+use App\Entity\Journal;
 use App\Form\GraphicDataType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,14 +28,14 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function homepage()
+    public function homepage(EntityManagerInterface $entityManager)
     {
-
+     $posts=$entityManager->getRepository(Journal::class)->findAll();
 
 
         return $this->render(
             'pages/homepage.html.twig', [
-
+              'posts'=>$posts
             ]
         );
     }

@@ -278,3 +278,38 @@ body{
   height: auto;
   margin-top: -1% !important;
 }
+.posts-last{
+  float: right;
+  height: 500px;
+  .card{
+    height: 100%;
+    img{
+      padding: 3rem;
+    }
+  }
+}
+.text-exp{
+  line-height: 1.9rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 90%;
+  margin-left: 2%;
+  font-size: 1rem;
+  text-align: center !important;
+}
+.tz-send{
+  padding: 9rem;
+  height: 500px;
+}
+.tz-register{
+  //padding: 9rem;
+  //height: 500px;
+  h1{
+    margin-bottom: 3rem;
+  }
+  .alert-register{
+    background-color: #d4edda;
+    color: #155724;
+    padding: 2rem !important;
+  }
+}

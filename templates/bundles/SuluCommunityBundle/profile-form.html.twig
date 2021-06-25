@@ -41,10 +41,10 @@
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
     {% set user= app.user%}
     {% if success is defined and success %}
-        <p class="text-center border pt-3 pb-3">
-{#            {{ 'save_profile_finished'|trans }}#}
-            operation was successfully completed
-        </p>
+        <div class="text-center border pt-4 pb-3 alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <p> Operation was successfully complete</p>
+        </div>
     {% endif %}
 
 {#    {{ form(form) }}#}

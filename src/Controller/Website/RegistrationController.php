@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $username = $form->get('username')->getData();
-
+dd($request);
             $this->initializeWebspace($username);
         }
 
