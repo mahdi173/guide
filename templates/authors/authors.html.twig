@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-
+{% block title %}Authors | {{ parent() }}{% endblock %}
 {% block meta %}
     {% include "SuluWebsiteBundle:Extension:seo.html.twig" with {
         "seo": extension.seo|default([]),

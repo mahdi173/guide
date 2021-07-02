@@ -12,7 +12,7 @@ body {
 }
 
 a:hover{
-  text-decoration: none;
+  text-decoration: underline !important;
 }
 
 .list-sidebar a{
@@ -312,4 +312,15 @@ body{
     color: #155724;
     padding: 2rem !important;
   }
+}
+.header-top-journal{
+  color: #FF851B;
+  font-size: 1.4rem !important;
+  padding: 12px 0;
+  text-decoration: underline;
+}
+.container-top-journal{
+  background-color: #f8f8ff;
+  border: 1px solid #B0B0B0;
+  border-radius: 7px;
 }
