@@ -220,9 +220,9 @@
                         {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
 
  {% if media is defined and media is not null  and media.thumbnails['sulu-400x400'] %}
-                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.url? media.url:media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
+                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.url? media.url:media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true" alt="{{ a.content.content.title }}"></a>
  {% else %}
-     <a href="{{ a.routePath }}"><img class="card-img-top img-responsive" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
+     <a href="{{ a.routePath }}"><img class="card-img-top img-responsive" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true" alt="{{ a.content.content.title }}"></a>
 
  {% endif %}
 
