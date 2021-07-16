@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\DTO\GraphicDataDTO;
 use App\Form\Type\IconChoiceType;
