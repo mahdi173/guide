@@ -52,4 +52,5 @@ return [
     ONGR\ElasticsearchBundle\ONGRElasticsearchBundle::class => ['all' => true],
     Sulu\Bundle\CommunityBundle\SuluCommunityBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+//    HandcraftedInTheAlps\RestRoutingBundle\RestRoutingBundle::class => ['all' => true],
 ];

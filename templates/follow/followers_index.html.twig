@@ -4,17 +4,17 @@
 
 {% block profile_content %}
 
-    <table id="followers" class="table">
+    <table id="followers" class="table" style="background-color: transparent">
         <thead>
         <tr class="border-0">
-            <th >Title</th>
+            <th >Followers</th>
             <th></th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         {% for res in myFollowers  %}
-            <tr>
+            <tr style="background-color: transparent">
                 <td style="padding: 20px" width="10%">
                     <img class="rounded-circle" src="{{ asset('assets/images/Profil.jpg') }}" width="80" height="80"/>
                 </td>

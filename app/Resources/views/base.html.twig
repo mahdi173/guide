@@ -15,7 +15,11 @@
 
 
         <meta name="keywords" content="Scopus, Science, Thomson Reuters, Google Scholar, Find journal,guide journal,journal,journals">
-        <meta name="description" content="Guidejournal is created in order to improve, to facilitate, and to help researchers to find the best journals for their publications. Our goal for GuideJournal is to bring all sources of data together in one place to give authors a simple way to choose the best journal for their research using Machine learning techniques">
+{#        <meta name="description" content="Guidejournal is created in order to improve, to facilitate, and to help researchers to find the best journals for#}
+{#         their publications. Our goal for GuideJournal is to bring all sources of data together in one place to give authors a simple way to choose #}
+{#         the best journal for their research using Machine learning techniques"> #}
+        <meta name="description" content="Guidejournal is created in order to improve, to facilitate, and to help researchers to find the best journals
+         for their publications">
         <link rel="shortcut icon" href="{{ asset('assets/images/Logo.png') }}" type="image/x-icon"/>
         <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet"/>
         <link rel="stylesheet" href="{{ asset('assets/bootstrap/dist/css/bootstrap.css') }}" />
@@ -132,11 +136,11 @@
 
 
                                 <li class="list-unstyled">
-                                    <a href="/contactguidejournal">Contact</a>
+                                    <a href="{{ path('contact_guidejournal') }}">Contact</a>
                                 </li>
 
                                 <li class="list-unstyled">
-                                    <a href="/contactguidejournal">Help</a>
+                                    <a href="{{ path('help_guidejournal') }}">Help</a>
                                 </li>
                                 <li class="list-unstyled">
                                     <a href="https://www.facebook.com/Guidejournalnet-2212190822429890" target="_blank">Facebook page</a>
@@ -151,7 +155,7 @@
                             </div>
 
                             <div class="col-lg-10" style="padding-top: 20px">
-                                <a class="text-muted small mb-4 mb-lg-0"  href="https://www.mit-agency.com/" target="_blank"> &copy; MIT 2019. All Rights Reserved.</a>
+                                <a class="text-muted small mb-4 mb-lg-0"  href="https://www.mit-agency.com/" target="_blank"> &copy; MIT {{ "now"|date('Y')}}. All Rights Reserved.</a>
                                 We use cookies to help provide and enhance our service and tailor content. By continuing, you agree to the
                                 <a href="/guidejournal/privacy">use of cookies</a>.
                             </div>

@@ -88,7 +88,7 @@ class ConferenceController extends AbstractController
                     $em->persist($publication);
                     $em->flush();
 
-                    return $this->redirectToRoute('conference_index', ['firstname' => $firstName, "lastname" => $lastName]);
+                    return $this->redirectToRoute('conference_index', ['firstname' => $firstName, "lastname" => $lastName,'id'=>$user->getId()]);
                 }
             }
             return $this->render('conference/publication_conference.html.twig', [

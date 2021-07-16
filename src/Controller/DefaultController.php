@@ -5,7 +5,9 @@ namespace App\Controller;
 
 
 use App\DTO\GraphicDataDTO;
+use App\Entity\Journal;
 use App\Form\GraphicDataType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +26,21 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/graphic_data", name="graphic_data")
+     * @Route("/", name="homepage")
+     */
+    public function homepage(EntityManagerInterface $entityManager)
+    {
+     $posts=$entityManager->getRepository(Journal::class)->findAll();
+
+
+        return $this->render(
+            'pages/homepage.html.twig', [
+              'posts'=>$posts
+            ]
+        );
+    }
+    /**
+     * @Route("/graphic-data", name="graphic_data")
      */
     public function graphic_data(Request $request)
     {
@@ -181,7 +197,6 @@ class DefaultController extends AbstractController
      */
     public function calcul_data(Request $request)
     {
-dump($request);
         $html =  $this->renderView("graphics/graphics_extra_data.html.twig");
 
 

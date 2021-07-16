@@ -37,7 +37,6 @@
 {#        <div class="col-lg-3"><button class="btn btn-primary saveButton">Save</button></div>#}
 {#    </div><hr>#}
 {#    {% endfor %}#}
-
     <table id="profiles" class="table table-striped">
     <thead class="hide">
     <th></th>
@@ -45,6 +44,7 @@
     <th></th>
     </thead>
         <tbody>
+        {% if data.result.hits.hit is defined  %}
         {% for res in data.result.hits.hit  %}
             <tr >
 
@@ -67,12 +67,15 @@
 
             </tr>
         {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 
+    {% if app.user  %}
 <div class="row">
     <div class="offset-9 col-lg-3" style="margin-top: 40px"><a class="btn btn-warning"  href="{{ path('publication_index',{"id":app.user.id,'firstname':app.user.firstName,'lastname':app.user.lastName}) }}" style="color: white">No Thanks</a></div>
 </div>
+    {% endif %}
 
 {% endblock %}
 

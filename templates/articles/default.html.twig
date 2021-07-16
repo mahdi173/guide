@@ -24,7 +24,7 @@
             <!-- Preview Image -->
             {% if content.video %}
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="{{ content.video }}?rel=0" allowfullscreen></iframe>
+                    <iframe class="embed-responsive-item" src="{{ content.video }}?rel=0" allowfullscreen title="content"></iframe>
                 </div>
             {% elseif content.image %}
                 <img class="img-fluid rounded" src="{{ sulu_get_media_url(content.image) }}" alt="">

@@ -2,11 +2,10 @@
 
 {% block content %}
     <h1>{{ 'Confirmation'|trans }}</h1>
-
     {% if success %}
         <p class="text-center border pt-3 pb-3">
 {#            {{ 'confirmation_finished'|trans }}#}
-            confirmation finished
+            Registration was done successfully
         </p>
     {% else %}
         <p class="alert alert-danger">

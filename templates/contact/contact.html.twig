@@ -1,22 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-
+    <div class="container container-contact">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="row">
 
             <div class="col-lg-9">
-                <h1 style="color: #5eb5e0">Contact us</h1>
-                <p style="text-align: justify; padding-top: 10px">
-
-                    Guidejournal is created in order to improve, to facilitate, and to help researchers to fin the best  journals
-                    for their publications.
-                    If you are scientists, researchers, publishers, language experts, we need your collaboration to enhance our tool,
-
-                    and working together to find new ways to help researchers succeed.<br>
-
-                    Contact us directly with your feedback or questions : <a href="mailto:contactguidejournal@gmail.com">contactguidejournal@gmail.com</a>
-                </p>
+                <h1 style="color: #5eb5e0;text-align: center;margin-top: 6rem;">Contact us</h1>
             </div>
             <div class="col-lg-3">
 
@@ -25,7 +19,30 @@
 
         </div>
 
+{{ form_start(form) }}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                   <div class=""> {{ form_row(form.firstName) }}</div>
+                   <div class=""> {{ form_row(form.email) }}</div>
 
+                </div>
+                <div class="col-md-6">
+                    <div class=""> {{ form_row(form.lastName) }}</div>
+                    <div class=""> {{ form_row(form.pays) }}</div>
+                </div>
+                <div class="col-md-12">
+                    <div class=""> {{ form_row(form.subject) }}</div>
+                </div>
+                <div class="col-md-12">
+                    {{ form_row(form.message) }}
+                </div>
+                <div class="offset-md-10 col-md-2 btn btn-sm">
+                    {{ form_row(form.send) }}
+                </div>
+            </div>
+        </div>
+{{ form_end(form) }}
     </div>
 
 

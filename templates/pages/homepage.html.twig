@@ -23,10 +23,9 @@
 
     {% set issn="" %}
     {#        image index#}
-
     <div class="container-fluid" style="padding-right: 0;padding-left: 0;margin-top: -15px">
         <div id="carouselExampleControls" class="carousel slide " data-ride="carousel">
-            <div class="carousel-inner ">
+            <div class="carousel-inner-homepage" style="overflow-x: hidden;overflow-y: hidden">
                 <div class="carousel-item active container-fluid imageindex">
                     <div class="offset-4 col-md-6 intro-text">
                         {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
@@ -82,7 +81,7 @@
         <!-- Fin pub 0001-->
         <br><div class="row col-sm-12" style="margin-top: 60px">
             <div class="col-sm-12 col-md-12">
-                <h4 class=" services">Choose your service</h4>
+                <h4 class="text-warning services">Choose your Service</h4>
             </div>
 
             <div class="col-sm-12 col-md-4 services-list " style="padding-left: 43px">
@@ -93,7 +92,7 @@
                 </div>
                 <div class="col-sm-12 col-md-10">
                     <p class="title-service">
-                        <a href="{{ path('journalSearch') }}">Journal search</a>
+                        <a href="{{ path('journalSearch') }}">Journal Search</a>
 
                     </p>
 
@@ -111,14 +110,14 @@
                     </div>
                     <div class="col-sm-12 col-md-10">
                         <p class="title-service">
-                            <a  href="{{ path('get_authors') }}" >Author search</a>
+                            <a  href="{{ path('get_authors') }}" >Author Search</a>
                         </p>
 
 
                         <p>
                             <span style="color: #555" >All</span>
                             <span style="color: #e07b39;padding-right: 5px">authors</span>
-                            <span style="color: #555" >with their published articles & corresponding journals</span>
+                            <span style="color: #555" >with their published articles and corresponding journals</span>
                         </p>
 
                     </div>
@@ -181,6 +180,7 @@
 
                 <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3 float-right ">Submit Your Article</a>
 
+                {%  if  sulu_navigation_root_tree is defined %}
                 {% for item in sulu_navigation_root_tree('member') %}
 
                     {% if (item.title== 'Conference')%}
@@ -189,7 +189,8 @@
                     {% endif %}
 
                 {% endfor %}
-
+{% endif %}
+                {%  if  sulu_navigation_root_tree is defined %}
                 {% for item in sulu_navigation_root_tree('member') %}
 
                     {% if (item.title== 'Journal')%}
@@ -197,7 +198,7 @@
                     {% endif %}
 
                 {% endfor %}
-
+{% endif %}
             </div>
         </div>
 
@@ -208,14 +209,23 @@
 
 
         <div class="main-slider" >
-            {% set recentarticles= sulu_article_load_recent(6) %}
+                {% set recentarticles= sulu_article_load_recent(6) %}
+            <div class="row">
             {% for a in recentarticles %}
+
+            <div class="col-md-4 mt-5 mb-2 posts-last">
                 <div class="card mb-4 box-shadow" style="margin-right: 5px">
 
-                    {% if a.content.content.image %}
+                    {% if a.content.content.image is defined %}
                         {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}
-                        {#                            {{ dump(media.thumbnails['sulu-400x400']) }}#}
-                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>
+
+ {% if media is defined and media is not null  and media.thumbnails['sulu-400x400'] %}
+                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.url? media.url:media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true" alt="{{ a.content.content.title }}"></a>
+ {% else %}
+     <a href="{{ a.routePath }}"><img class="card-img-top img-responsive" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true" alt="{{ a.content.content.title }}"></a>
+
+ {% endif %}
+
                     {% else %}
                         <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
 
@@ -226,7 +236,28 @@
                             <a href="{{ a.routePath }}" style="float: right">Read More →</a>
                          </div>
                 </div>
+            </div>
+
             {% endfor %}
+            </div>
+{#            {% set recentarticles=posts|slice(0,6) %}#}
+{#            {{ dump(recentarticles) }}#}
+{#            <div class="card mb-4 box-shadow" style="margin-right: 5px">#}
+
+{#                                    {% if a.content.content.image is defined %}#}
+{#                                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}#}
+
+{#                                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>#}
+{#                                    {% else %}#}
+{#                                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>#}
+
+{#                                    {% endif %}#}
+{#                                         <div class="card-body">#}
+{#                                            <h5 class="card-title"><a href="">{{ a.title }}</a></h5>#}
+{#                                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}#}
+{#                                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>#}
+{#                                         </div>#}
+{#                                </div>#}
         </div>
 
 </div>

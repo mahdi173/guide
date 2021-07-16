@@ -41,10 +41,10 @@
 {#    <h1>{{ 'Profile'|trans }}</h1>#}
     {% set user= app.user%}
     {% if success is defined and success %}
-        <p class="text-center border pt-3 pb-3">
-{#            {{ 'save_profile_finished'|trans }}#}
-            operation was successfully completed
-        </p>
+        <div class="text-center border pt-4 pb-3 alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <p> Operation was successfully complete</p>
+        </div>
     {% endif %}
 
 {#    {{ form(form) }}#}
@@ -95,13 +95,13 @@
                                      <h6  style="color: #2f2f2f;font-size: 16px">
                                          <strong>{{   user.allpublications|length }}</strong> publications&nbsp;&nbsp;
                                          <strong>0</strong> posts&nbsp;&nbsp;
-                                         {% if followers_count>0  %}
+                                         {% if followers_count is defined and followers_count>0  %}
                                            <a href="{{ path('followers_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="followers_index" ><strong>{{ followers_count }}</strong>&nbsp;followers&nbsp;&nbsp;</a>
-                                        {% else %}
-                                            <strong>{{ followers_count }}</strong>&nbsp;followers&nbsp;&nbsp;
+{#                                        {% else %}#}
+{#                                            <strong>{{ followers_count }}</strong>&nbsp;followers&nbsp;&nbsp;#}
                                          {% endif %}
                                          {% if user.follows|length>0  %}
-                                            <a href="{{ path('following_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong>{{ user.follows|length }}</strong> following</a>
+                                            <a href="{{ path('following_index',{"id":user.id,"firstname":firstname,'lastname':lastname}) }}" class="following_index"> <strong>{{ user.follows|length }}</strong> following</a>
                                               {% else %}
                                              <strong>{{ user.follows|length }}</strong> following
                                          {% endif %}
@@ -129,7 +129,7 @@
 
                     {% endif %}
                     <br>
-                        <a {% if user.facebook %} href="{{user.facebook  }}" target="_blank"{%else%} href="#" {%endif%}">
+                        <a {% if user.facebook %} href="{{user.facebook }}" target="_blank"{%else%} href="#" {%endif%}">
                           <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="H"/>
                         </a>
 
@@ -203,7 +203,7 @@
 
             {#sidebar#}
             <div class = "d-flex col-md-2"  id = "wrapper">
-                <div class = "bg-light border-right" id = "sidebar-wrapper">
+                <div class = "border-right" id = "sidebar-wrapper">
 {#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Blog</div>#}
 {#                    <div class = "list-group list-group-flush" >#}
 
@@ -216,30 +216,33 @@
 {#                    </div>#}
 {#                    <div class="sidebar-heading list-group-item list-group-item-action bg-light" style="fontWeight: bold">Guide Journal</div>#}
                     <div class = "list-group list-group-flush list-sidebar" >
+
+                        {% if app.user %}
 {#                        <a href = "{{ path('sulu_community.profile')}}" class = "list-group-item list-group-item-action bg-light" > Infos </a>#}
-                        <a  href="{{ path('publication_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        <a  href="{{ path('publication_index',{'firstname':firstname,'lastname':lastname,'id':user.id}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Publications
                         </a> <span role="presentation" class="divider"></span>
-                        <a href="{{ path('book_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
+                        <a href="{{ path('book_index',{'firstname':firstname,'lastname':lastname,'id':user.id}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action">
                         Books
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('chapter_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        <a href="{{ path('chapter_index',{'firstname':firstname,'lastname':lastname,'id':user.id}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Chapters
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('conference_index') }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
+                        <a href="{{ path('conference_index',{'firstname':firstname,'lastname':lastname,'id':user.id}) }}" active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action ">
                         Conferences
                         </a><span role="presentation" class="divider"></span>
-                        <a href="{{ path('favorite_list') }}" class="list-group-item list-group-item-action ">Saved Journals</a>
+                        <a href="{{ path('favorite_list',{'firstname':firstname,'lastname':lastname,'id':user.id,'_locale':app.request.locale}) }}" class="list-group-item list-group-item-action ">Saved Journals</a>
                         {% for item in sulu_navigation_root_tree('member') %}
                             <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
                         {% endfor %}
+                        {% endif %}
 
                     </div>
                 </div>
             </div>
             {#end#}
 
-            <div style="margin-left: 0px" class="col-9 " >
+            <div style="margin-left: 0px" class="col-8 " >
 
                 {% block profile_content %}
                 <h2 class="text-center">Edit Profile</h2><br/>
@@ -288,9 +291,10 @@
 
                {% endblock  %}
         </div>
-         <div class="col-3" style="border: solid 2px #e6e6e6;">
+         <div class="col-2 table-infos" style="border: solid 2px #e6e6e6;">
 
              {% block left_sidebar %}
+                 {% if user %}
                  <table class="table">
                      <tr>
                          <th class="header">Top co-authors
@@ -304,9 +308,9 @@
                                      <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
                                          <div class="row">
                                              <div  class="col-md-3">
-                                                <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> <br>
+                                                <img class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px"> <br>
                                              </div>
-                                             <div style="padding-top: 10px" class="col-md-9">{{ author}}</div>
+                                             <div style="padding-top: 10px" class="col-md-9 name-follow">{{ author}}</div>
                                          </div>
                                      </a>
                                  {% endfor %}
@@ -337,19 +341,18 @@
                                      {% if stock and stock.contact.avatar is not null %}
                                          {% set media = sulu_resolve_media(stock.contact.avatar,'fr') %}
                                      {% endif %}
-
-                                     {% if media is not null %}
+                                     {% if media is not null and stock.firstName ~' '~ stock.lastName==follow.following %}
                                          {% set src= media.url %}
 
                                      {% else %}
-                                         {% set src_stocked=  asset('assets/images/profil_new.jpg') %}
+                                         {% set src=  asset('assets/images/profil_new.jpg') %}
 
                                      {% endif %}
                                      <div class="row">
                                          <div  class="col-md-3">
-                                             <img src="{{  src_stocked }}" class="img-rounded img-responsive rounded-circle" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                             <img src="{{  src }}" class="img-rounded img-responsive rounded-circle" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
                                          </div>
-                                         <div style="padding-top: 10px" class="col-md-9"> {{ follow.following }}</div>
+                                         <div style="padding-top: 10px" class="col-md-9 name-follow"> {{ follow.following }}</div>
                                      </div>
                                  </a>
 
@@ -363,7 +366,7 @@
                      <tr>
                          {% set followers=followers_profile.followers(user.fullName) %}
 
-                         <th class="header">Followers ({{ followers_count }})
+                         <th class="header">Followers ({{ followers_count is defined ? followers_count : "" }})
                              <a href="{{ path('followers_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
                          </th>
                      </tr>
@@ -372,7 +375,7 @@
                              {% if followers|length >0 %}
                                  {% for follower in followers %}
                                      {% if follower.fullName is null or follower.fullName=="" %}
-                                         <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                         <img class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
                                          {{ follower.username }}<br>
                                      {% else %}
 
@@ -387,16 +390,16 @@
                                                  {% endif %}
 
                                                  {% if media is not null %}
-                                                     {% set src_stocked= media.url %}
+                                                     {% set src= media.url %}
 
                                                  {% else %}
-                                                     {% set src_stocked=  asset('assets/images/profil_new.jpg') %}
+                                                     {% set src=  asset('assets/images/profil_new.jpg') %}
 
                                                  {% endif %}
 
                                              <div class="row">
                                                  <div  class="col-md-3">
-                                                    <img src="{{  src_stocked }}"  class="img-rounded img-responsive rounded-circle" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                                    <img src="{{  src }}"  class="img-rounded img-responsive rounded-circle" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
                                                  </div>
                                                  <div style="padding-top: 10px" class="col-md-9"> {{ follower.fullName }}</div>
                                              </div>
@@ -409,6 +412,7 @@
                          </td>
                      </tr>
                  </table>
+                 {% endif %}
              {% endblock  %}
 
          </div>

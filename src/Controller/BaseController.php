@@ -59,13 +59,18 @@ class BaseController extends AbstractController
     {
         $emS = $this->getDoctrine()->getManager();
         $exist = $emS->getRepository(Allpublications::class)->findBy(['user' => $this->getUser()]);
-       $firstname=$this->getUser()->getContact()->getFirstName();
-       $lastname=$this->getUser()->getContact()->getLastName();
+        $firstname='';$lastname="";$userFirstName="";
+        if($this->getUser()){
+            $firstname=$this->getUser()->getContact()->getFirstName();
+            $lastname=$this->getUser()->getContact()->getLastName();
+            $userFirstName=$this->getUser()->getFirstName();
+        }
+
 
         if ($exist && $this->getUser()->getFullName()) {
             return $this->redirectToRoute('publication_index',['firstname'=>$firstname,"lastname"=>$lastname,'id'=>$this->getUser()->getId()]);
         } else {
-            $auteur = $this->getUser()->getFirstName();
+            $auteur = $userFirstName;
 
 
             $test = false;
@@ -222,7 +227,10 @@ class BaseController extends AbstractController
                     }
                     $pub->setYear($item->info->year);
                     $pub->setUrl($item->info->url);
-                    $pub->setPages($item->info->pages);
+                    if(isset($item->info->pages)){
+                        $pub->setPages($item->info->pages);
+                    }
+
 
                     foreach ($item->info->authors as $a) {
                         if(!is_array($a)){
@@ -310,6 +318,7 @@ class BaseController extends AbstractController
      */
     public function delete(Request $request, Allpublications $publication): Response
     {
+        $user=$this->getUser();
 
 //        if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
 
@@ -318,7 +327,7 @@ class BaseController extends AbstractController
             $entityManager->flush();
 //        }
 
-        return $this->redirectToRoute('publication_index');
+        return $this->redirectToRoute('publication_index',['firstname'=>$user->getFirstName(),'lastname'=>$user->getLastName(),'id'=>$user->getId()]);
     }
 
     /**
@@ -573,7 +582,7 @@ class BaseController extends AbstractController
         ]);
     }
     /**
-     * @Route("/JournalSearch/", name="journalSearch", methods={"GET"})
+     * @Route("/journal-search", name="journalSearch", methods={"GET"})
      */
     public function journalSearch()
     {
