@@ -30,7 +30,7 @@
 
     <div class="row ">
 
-        <div class="col-md-1  mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" /></div>
+        <div class="col-md-1  mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" alt="{{ auteur }}"/></div>
         <div class="col-md-6  mb-2" style="margin-left: 70px;padding-top: 20px;">
             <h5 class="text-primary">{{ auteur }}</h5>
            {% set followers_count= followers_profile.followers(auteur)|length %}
@@ -202,7 +202,7 @@
                             <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
                                 <div class="row">
                                     <div  class="col-md-3">
-                                      <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                      <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt="{{ author}}">
                                     </div>
                                     <div  style="padding-top: 10px" class="col-md-9"> {{ author}}</div>
                                 </div>
@@ -248,7 +248,7 @@
                                 {% endif %}
                                 <div class="row">
                                     <div  class="col-md-3">
-                                       <img  class="img-rounded img-responsive rounded-circle" src="{{  src_stocked }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                       <img  class="img-rounded img-responsive rounded-circle" src="{{  src_stocked }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt=" {{ follow.following }}">
                                     </div>
                                     <div style="padding-top: 10px" class="col-md-9">
 
@@ -295,7 +295,7 @@
                                {% endif %}
                                <div class="row">
                                <div  class="col-md-3">
-                                   <img  class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">
+                                   <img  class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt="{{ follower.fullName  }}">
                                 </div>
                                 <div style="padding-top: 10px" class="col-md-9">
                                   {{ follower.fullName  }}
@@ -305,7 +305,7 @@
                            </a>
 
                            {% else %}
-                               <img  class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px">  {{ follower.username  }}<br>
+                               <img  class="img-rounded img-responsive rounded-circle" src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt="{{ follower.username  }}">  {{ follower.username  }}<br>
 
                        {% endif %}
                        {% endfor %}

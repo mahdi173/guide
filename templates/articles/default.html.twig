@@ -9,7 +9,7 @@
         "defaultLocale": request.defaultLocale|default('de')
     } %}
 {% endblock %}
-
+{% block title %}{{ content.title }} | {{ parent() }}{% endblock %}
 {% block content %}
 
     <div class="row">

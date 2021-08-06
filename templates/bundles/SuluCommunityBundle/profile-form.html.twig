@@ -79,7 +79,7 @@
                                     {% set src=  asset('assets/images/profil_new.jpg') %}
 
                                 {% endif %}
-                                <img style="height: 160px;width: 160px;margin-top: 20px;" src={{ src}} alt="H" class="img-rounded img-responsive rounded-circle"/>
+                                <img style="height: 160px;width: 160px;margin-top: 20px;" src={{ src}} alt="{{firstname }} {{ lastname }}" class="img-rounded img-responsive rounded-circle"/>
                             </div>
 
                             <div class="col-sm-12 col-md-9 mt-5">
@@ -130,16 +130,16 @@
                     {% endif %}
                     <br>
                         <a {% if user.facebook %} href="{{user.facebook }}" target="_blank"{%else%} href="#" {%endif%}">
-                          <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="H"/>
+                          <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/facebook.png')}} alt="facebook"/>
                         </a>
 
                         <a{% if user.twitter %}  href="{{user.twitter  }}"  target="_blank"{%else%} href="#"{%endif%}>
-                          <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/twitter.png')}} alt="H"/>
+                          <img style="margin-top:10px;height: 40px;width: 40px;" src={{ asset('assets/images/twitter.png')}} alt="twitter"/>
                         </a>
 
 
                         <a {% if user.linkedIn %} href="{{user.linkedIn  }}"  target="_blank"{%else%} href="#"{%endif%}">
-                           <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="H"/>
+                           <img style="margin-top:10px;height: 45px;width: 45px;" src={{ asset('assets/images/linkedin.png')}} alt="linkedIn"/>
                         </a>
 
                        {% if app.user %}
@@ -242,7 +242,7 @@
             </div>
             {#end#}
 
-            <div style="margin-left: 0px" class="col-8 " >
+            <div style="margin-left: 0px;padding-bottom: 3%" class="col-8 " >
 
                 {% block profile_content %}
                 <h2 class="text-center">Edit Profile</h2><br/>
