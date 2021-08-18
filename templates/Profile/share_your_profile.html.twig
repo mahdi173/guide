@@ -52,15 +52,15 @@
                <br>
 
                 <a {% if user.facebook %} href="{{user.facebook  }}" target="_blank"{%else%} href="#" {%endif%}">
-                    <img style="margin-top:10px;height: 50px;width: 50px;" src={{ asset('assets/images/facebook.png')}} alt="facebook"/>
+                    <img alt="facebook" style="margin-top:10px;height: 50px;width: 50px;" src={{ asset('assets/images/facebook.png')}}  />
 
                 </a>
                 <a{% if user.twitter %}  href="{{user.twitter  }}"  target="_blank"{%else%} href="#"{%endif%}>
-                    <img style="margin-top:10px;height: 50px;width: 50px;" src={{ asset('assets/images/twitter.png')}} alt="twitter"/>
+                    <img alt="twitter" style="margin-top:10px;height: 50px;width: 50px;" src={{ asset('assets/images/twitter.png')}}  />
                 </a>
 
                 <a {% if user.linkedIn %} href="{{user.linkedIn  }}"  target="_blank"{%else%} href="#"{%endif%}">
-                   <img style="margin-top:10px;height: 55px;width: 55px;" src={{ asset('assets/images/linkedin.png')}} alt="linkedIn"/>
+                   <img alt="linkedIn" style="margin-top:10px;height: 55px;width: 55px;" src={{ asset('assets/images/linkedin.png')}}  />
                 </a>
             </div>
 
