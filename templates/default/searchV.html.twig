@@ -349,369 +349,374 @@
 
             </div>
         </div>
+{% elseif data_t_scopus | length == 0 or data_reuter  | length == 0 %}
+        <div class="container" >
+    <p class="text-center border pt-3 pb-3 alertNoRes">
+        Your search  <b>{{ app.request.get('searchValue') }}</b> did not match any Journal.  <br>
+        Try different keywords
+    </p>
+    </p>
 {% endif %}
 
         {% if data_t_scopus_advanced is not defined   %}
-
-
-        {% if  data_reuter | length ==1 or data_t_scopus | length==1 or data_t_scopus | length==0 and data_t_scopus is not null %}
-            <div class="row" >
-                <div class="col-md-2 col-sm-2"></div>
-                <div class="col-md-7">
-                    <h3 align="center" class="text-primary"><b>The following title(s) matched your request</b></h3>
-                </div>
-                <div class="col-md-2 col-sm-2"></div>
-            </div>
-        <div class="row" >
-            <div class="col-md-2 col-sm-2">
-                    <div id="id_publicite_SorW_1">
-
-
-                        <!-- One_result_slide_gauche -->
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-9897811061542650"
-                             data-ad-slot="7064116234"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                        <!-- gauche_one_result_SWOS -->
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-9897811061542650"
-                             data-ad-slot="7367296155"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
+            {% if  data_reuter | length ==1 or data_t_scopus | length==1 or data_t_scopus | length==0 and data_t_scopus is not null %}
+                <div class="row" >
+                    <div class="col-md-2 col-sm-2"></div>
+                    <div class="col-md-7">
+                        <h3 align="center" class="text-primary"><b>The following title(s) matched your request</b></h3>
                     </div>
-
-            </div>
-            <div class="col-md-6 col-sm-7">
-
-
-                    <div class="card mb-3" >
-
+                    <div class="col-md-2 col-sm-2"></div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-2 col-sm-2">
+                        <div id="id_publicite_SorW_1">
 
 
-                    <div class="row no-gutters">
-                        <div class="col-md-2" style="padding-top: 30px; text-align: center">
-                            <img src="{{ asset('assets/images/scopus3.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">
-                            <h6><b>Scopus</b></h6>
-
+                            <!-- One_result_slide_gauche -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-9897811061542650"
+                                 data-ad-slot="7064116234"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                            <!-- gauche_one_result_SWOS -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-9897811061542650"
+                                 data-ad-slot="7367296155"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
                         </div>
-                        <div class="col-md-8" >
-                            <div class="card-body" >
-                                {%  if data_t_scopus | length ==1 %}
-                                    {% for data_t_scopus in data_t_scopus %}
-                                {% set tests=0 %}
 
-                                {% for message in app.flashes('info') %}
-                                    <div class="flash-info">
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-{#                                <h4><b><a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </b></h4>#}
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class="badge-info rounded" >SJR : </span>&nbsp;
-                                            <span> {{ data_t_scopus.sJR }}</span>
-                                        </h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class=" badge-warning rounded" >Rank : </span>&nbsp;
-                                            <span > {{ data_t_scopus.rANK }}</span>
-                                        </h6>
-                                    </div>
+                    </div>
+                    <div class="col-md-6 col-sm-7">
+
+
+                        <div class="card mb-3" >
+
+
+
+                            <div class="row no-gutters">
+                                <div class="col-md-2" style="padding-top: 30px; text-align: center">
+                                    <img src="{{ asset('assets/images/scopus3.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">
+                                    <h6><b>Scopus</b></h6>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class=" badge-dark rounded" >Publisher : </span>&nbsp;
-                                            <span > {{ data_t_scopus.publisher }}</span>
-                                        </h6>
+                                <div class="col-md-8" >
+                                    <div class="card-body" >
+                                        {%  if data_t_scopus | length ==1 %}
+                                            {% for data_t_scopus in data_t_scopus %}
+                                                {% set tests=0 %}
+
+                                                {% for message in app.flashes('info') %}
+                                                    <div class="flash-info">
+                                                        {{ message }}
+                                                    </div>
+                                                {% endfor %}
+                                                {#                                <h4><b><a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </b></h4>#}
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class="badge-info rounded" >SJR : </span>&nbsp;
+                                                            <span> {{ data_t_scopus.sJR }}</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class=" badge-warning rounded" >Rank : </span>&nbsp;
+                                                            <span > {{ data_t_scopus.rANK }}</span>
+                                                        </h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class=" badge-dark rounded" >Publisher : </span>&nbsp;
+                                                            <span > {{ data_t_scopus.publisher }}</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >Open Access : </span>&nbsp;
+                                                            <span > {{ data_t_scopus.openAccess }}</span>
+                                                        </h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class=" badge-dark rounded p-1 mb-1" style="display: inline-block" >Quartile : </span>&nbsp;
+                                                            <span >{{ data_t_scopus.quartile }}</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class="badge-info rounded" >Citation Count : </span>&nbsp;
+                                                            <span > {{ data_t_scopus.citationCount }}</span>
+                                                        </h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>&nbsp;
+                                                            <span > {{ data_t_scopus.printISSN }}</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class="badge-info rounded" >E-ISSN : </span>&nbsp;
+                                                            <span > {{ data_t_scopus.eISSN }}</span>
+                                                        </h6>
+                                                    </div>
+
+                                                </div>
+                                            {% endfor %}
+
+                                        {% elseif data_t_scopus | length >1 %}
+                                            {% set tests=0 %}
+                                        {% else  %}
+
+                                            {% set tests=1 %}
+                                        {% endif %}
+                                        {% if data_t_scopus | length ==0 %}
+
+
+                                            <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
+                                        {% endif %}
                                     </div>
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >Open Access : </span>&nbsp;
-                                            <span > {{ data_t_scopus.openAccess }}</span>
-                                        </h6>
-                                    </div>
+                                </div>
+                                <div class="col-md-1" align="center" style="margin-top: 50px; color: white">
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                        {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}
+                                            <div data-toggle="tooltip" data-placement="right" title="Save">
+                                                <span class="badge badge-warning"><i class="fa fa-star" aria-hidden="true"></i></span>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class=" badge-dark rounded p-1 mb-1" style="display: inline-block" >Quartile : </span>&nbsp;
-                                            <span >{{ data_t_scopus.quartile }}</span>
-                                        </h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class="badge-info rounded" >Citation Count : </span>&nbsp;
-                                            <span > {{ data_t_scopus.citationCount }}</span>
-                                        </h6>
-                                    </div>
+                            </div>
+
+                            <div class="row no-gutters">
+                                <div class="col-md-2" style="padding-top: 30px; text-align: center">
+                                    <img src="{{ asset('assets/images/thomson1.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">
+                                    <br><h6><b>Web of Science</b></h6>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>&nbsp;
-                                            <span > {{ data_t_scopus.printISSN }}</span>
-                                        </h6>
+                                <div class="col-md-8" >
+
+                                    <div class="card-body" >
+                                        {%  if data_reuter | length ==1 %}
+                                            {% set test=0 %}
+
+                                            {% set url="http://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?PC=MASTER&ISSN=*" %}
+                                            {% if data_reuter.iSSN !=null %}
+                                                {% set url=url~data_reuter.iSSN %}
+                                            {% else  %}
+                                                {% set url=url~data_reuter.eISSN %}
+                                            {% endif %}
+                                            <h4><b><a href={{ url }} target="_blank">{{ data_reuter.title }} </a> </b></h4>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <h6 >
+                                                        <span class="badge-info rounded" >Impact Factor : </span>
+                                                        <span > {{ data_reuter.journalImpactFactor }}</span>
+                                                    </h6>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h6 >
+                                                        <span class=" badge-warning rounded" >Rank : </span>
+                                                        <span > {{ data_reuter.rank }}</span>
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <h6 >
+                                                        <span class=" badge-dark rounded" >Total Cites : </span>
+                                                        <span > {{ data_reuter.totalCites }}</span>
+                                                    </h6>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h6 >
+                                                        <span class="badge-info rounded" >Category name : </span>
+                                                        <span > {{ data_reuter.categoryname }}</span>
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <h6 >
+                                                        <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>
+                                                        <span > {{ data_reuter.iSSN }}</span>
+                                                    </h6>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h6 >
+                                                        <span class="badge-info rounded" >E-ISSN : </span>
+                                                        <span > {{ data_reuter.eISSN }}</span>
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+
+                                        {% elseif data_t_scopus | length >1 %}
+                                            {% set test=0 %}
+                                        {% else  %}
+                                            {% set test=1 %}
+                                        {% endif %}
+                                        {% if test ==1 and data_reuter | length ==0 %}
+
+
+                                            <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
+
+                                        {% endif %}
                                     </div>
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class="badge-info rounded" >E-ISSN : </span>&nbsp;
-                                            <span > {{ data_t_scopus.eISSN }}</span>
-                                        </h6>
-                                    </div>
+
+
 
                                 </div>
-                                    {% endfor %}
+                                <div class="col-md-1" align="center" style="margin-top: 50px; color: white">
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                        {% if app.user.favoriteScopusJournals.contains(data_reuter) %}
+                                            <div data-toggle="tooltip" data-placement="right" title="Save this journal">
+                                                <span class="badge badge-warning"><i class="fa fa-star" aria-hidden="true"></i></span>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
 
-                                {% elseif data_t_scopus | length >1 %}
-                                    {% set tests=0 %}
-                                {% else  %}
-                                    {% set tests=1 %}
-                                {% endif %}
-                                {% if data_t_scopus | length ==0 %}
+                                    {#end table#}
 
+                                </div>
 
-                                    <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
-                                {% endif %}
 
                             </div>
+
+
                         </div>
-                        <div class="col-md-1" align="center" style="margin-top: 50px; color: white">
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                {% if app.user.favoriteScopusJournals.contains(data_t_scopus) %}
-                                    <div data-toggle="tooltip" data-placement="right" title="Save">
-                                        <span class="badge badge-warning"><i class="fa fa-star" aria-hidden="true"></i></span>
+
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            {% if data_t_scopus.eIssn is defined and data_t_scopus| length ==1 %}
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12 text-center">
+                                        {% if app.user.favoriteScopusJournals.contains(data_t_scopus)==false %}
+                                            <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
+                                                <i class="fa fa-star"></i> Save this journal
+                                            </a>
+                                        {% endif %}
                                     </div>
-                                {% endif %}
+
+                                </div>
+                                {#            {% endif %}#}
+                            {% elseif data_reuter is defined and data_reuter| length ==1 %}
+                                <div class="row mb-3">
+                                    <div class="col-md-12 text-center">
+                                        {% if app.user.favoriteScopusJournals.contains(data_reuter)==false %}
+                                            <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
+                                                <i class="fa fa-star"></i> Save this journal
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             {% endif %}
 
+                        {% endif %}
+                        <!-- end favorite button -->
 
-                        </div>
-                    </div>
+                        <!-- user dosen't logged in -->
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED')==false %}
 
-                        <div class="row no-gutters">
-                            <div class="col-md-2" style="padding-top: 30px; text-align: center">
-                                <img src="{{ asset('assets/images/thomson1.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">
-                                <br><h6><b>Web of Science</b></h6>
+                            {% if data_t_scopus is defined and data_t_scopus| length ==1  %}
 
-                            </div>
-                            <div class="col-md-8" >
+                                <div class="row mb-3">
+                                    <div class="col-md-12 text-center">
+                                        <a href="{{ path('sulu_community.login') }}" class="btn btn-outline-primary">
+                                            <i class="fa fa-star"></i> Save this journal
+                                        </a>
+                                    </div>
 
-                                <div class="card-body" >
-                                    {%  if data_reuter | length ==1 %}
-                                        {% set test=0 %}
-
-                                        {% set url="http://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?PC=MASTER&ISSN=*" %}
-                                        {% if data_reuter.iSSN !=null %}
-                                            {% set url=url~data_reuter.iSSN %}
-                                        {% else  %}
-                                            {% set url=url~data_reuter.eISSN %}
-                                        {% endif %}
-                                        <h4><b><a href={{ url }} target="_blank">{{ data_reuter.title }} </a> </b></h4>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <h6 >
-                                                    <span class="badge-info rounded" >Impact Factor : </span>
-                                                    <span > {{ data_reuter.journalImpactFactor }}</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <h6 >
-                                                    <span class=" badge-warning rounded" >Rank : </span>
-                                                    <span > {{ data_reuter.rank }}</span>
-                                                </h6>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <h6 >
-                                                    <span class=" badge-dark rounded" >Total Cites : </span>
-                                                    <span > {{ data_reuter.totalCites }}</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <h6 >
-                                                    <span class="badge-info rounded" >Category name : </span>
-                                                    <span > {{ data_reuter.categoryname }}</span>
-                                                </h6>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <h6 >
-                                                    <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>
-                                                    <span > {{ data_reuter.iSSN }}</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <h6 >
-                                                    <span class="badge-info rounded" >E-ISSN : </span>
-                                                    <span > {{ data_reuter.eISSN }}</span>
-                                                </h6>
-                                            </div>
-
-                                        </div>
-
-                                    {% elseif data_t_scopus | length >1 %}
-                                        {% set test=0 %}
-                                    {% else  %}
-                                        {% set test=1 %}
-                                    {% endif %}
-                                    {% if test ==1 and data_reuter | length ==0 %}
-
-
-                                        <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
-
-                                    {% endif %}
                                 </div>
-
-
-
-                            </div>
-                            <div class="col-md-1" align="center" style="margin-top: 50px; color: white">
-                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                    {% if app.user.favoriteScopusJournals.contains(data_reuter) %}
-                                        <div data-toggle="tooltip" data-placement="right" title="Save this journal">
-                                            <span class="badge badge-warning"><i class="fa fa-star" aria-hidden="true"></i></span>
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
-
-                                {#end table#}
-
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                            {% if data_t_scopus.eIssn is defined and data_t_scopus| length ==1 %}
-
-                                                <div class="row mb-3">
-                                                    <div class="col-md-12 text-center">
-                                                        {% if app.user.favoriteScopusJournals.contains(data_t_scopus)==false %}
-                                                            <a href="{{ path('switch_favorite', {id: data_t_scopus.id, 'source': 'scopus'}) }}" class="btn btn-outline-primary">
-                                                                <i class="fa fa-star"></i> Save this journal
-                                                            </a>
-                                                        {% endif %}
-                                                    </div>
-
-                                                </div>
-                                                {#            {% endif %}#}
-                                            {% elseif data_reuter is defined and data_reuter| length ==1 %}
-                                                <div class="row mb-3">
-                                                    <div class="col-md-12 text-center">
-                                                        {% if app.user.favoriteScopusJournals.contains(data_reuter)==false %}
-                                                            <a href="{{ path('switch_favorite', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
-                                                                <i class="fa fa-star"></i> Save this journal
-                                                            </a>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-
-                                        {% endif %}
-                                        <!-- end favorite button -->
-
-                                <!-- user dosen't logged in -->
-                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED')==false %}
-
-                                    {% if data_t_scopus is defined and data_t_scopus| length ==1  %}
-
-                                        <div class="row mb-3">
-                                            <div class="col-md-12 text-center">
-                                                <a href="{{ path('sulu_community.login') }}" class="btn btn-outline-primary">
-                                                    <i class="fa fa-star"></i> Save this journal
-                                                </a>
-                                            </div>
-
-                                        </div>
-                                        {#            {% endif %}#}
-                                    {% elseif data_reuter is defined and data_reuter| length ==1 %}
-                                        <div class="row mb-3">
-                                            <div class="col-md-12 text-center">
-                                                <a href="{{ path('sulu_community.login', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
-                                                    <i class="fa fa-star"></i> Save this journal
-                                                </a>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
-                                <!-- end user dosen't logged in -->
+                                {#            {% endif %}#}
+                            {% elseif data_reuter is defined and data_reuter| length ==1 %}
+                                <div class="row mb-3">
+                                    <div class="col-md-12 text-center">
+                                        <a href="{{ path('sulu_community.login', {id: data_reuter.id, 'source': 'reuters'}) }}" class="btn btn-outline-primary">
+                                            <i class="fa fa-star"></i> Save this journal
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <!-- end user dosen't logged in -->
 
                         <div class="row text-center">
                             <div class="row" style="width: 100%">
-                            <div class="col-md-12 text-center">
-                                {% if eISSN is defined  %}
+                                <div class="col-md-12 text-center">
+                                    {% if eISSN is defined  %}
 
-                                    <div class="sharethis-inline-share-buttons"></div>
+                                        <div class="sharethis-inline-share-buttons"></div>
 
-                                {% endif %}
-                                <hr class="col-md-12 bg-secondary" style="height:1px; width: 100%">
+                                    {% endif %}
+                                    <hr class="col-md-12 bg-secondary" style="height:1px; width: 100%">
 
-                            </div>
+                                </div>
                             </div>
                             {% if data_t_scopus is defined and data_t_scopus| length ==1  %}
                                 {% for data_t_scopus in data_t_scopus  %}
-                            <div class="row" style="width: 100%">
+                                    <div class="row" style="width: 100%">
 
-                                    <div class="col-md-3 text-center">
-                                    <h5 class="text-primary"><b>Search journals for : </b></h5>
-                                    </div>
+                                        <div class="col-md-3 text-center">
+                                            <h5 class="text-primary"><b>Search journals for : </b></h5>
+                                        </div>
 
-                                    <div class="col-md-3 text-center">
-                                        <a href={{ path('search_journals_for_scopus', {'publisher': data_t_scopus.publisher})}}>
-                                            <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
+                                        <div class="col-md-3 text-center">
+                                            <a href={{ path('search_journals_for_scopus', {'publisher': data_t_scopus.publisher})}}>
+                                                <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
 
-                                                <h6 class="text-primary"><b>Publisher : </b></h6>&nbsp;
-                                                <span class=" badge-info rounded" >{{ data_t_scopus.publisher }}</span>
+                                                    <h6 class="text-primary"><b>Publisher : </b></h6>&nbsp;
+                                                    <span class=" badge-info rounded" >{{ data_t_scopus.publisher }}</span>
                                                 </div>
 
                                             </a>
 
-                                    </div>
-                                    <div class="col-md-3 text-center">
-                                        <a href={{ path('search_journals_for_scopus', {'subject_area': data_t_scopus.scopussubsubjectarea})}}>
-                                            <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
-                                            <div class="card-body">
-                                                <h6 class="text-primary"><b>Subject area : </b></h6>
-                                                <span class=" badge-dark rounded" >{{ data_t_scopus.scopussubsubjectarea }}</span>
-                                            </div>
                                         </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3 text-center">
-                                        <a href={{ path('search_journals_for_scopus', {'quartile': data_t_scopus.quartile})}}>
-                                        <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
-                                            <div class="card-body">
-                                                <h6 class="text-primary"><b>Quartile  : </b></h6>
-                                                <span class=" badge-warning rounded btn-outline-primary" >{{ data_t_scopus.quartile }}</span>
-                                            </div>
+                                        <div class="col-md-3 text-center">
+                                            <a href={{ path('search_journals_for_scopus', {'subject_area': data_t_scopus.scopussubsubjectarea})}}>
+                                                <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
+                                                    <div class="card-body">
+                                                        <h6 class="text-primary"><b>Subject area : </b></h6>
+                                                        <span class=" badge-dark rounded" >{{ data_t_scopus.scopussubsubjectarea }}</span>
+                                                    </div>
+                                                </div>
+                                            </a>
                                         </div>
-                                        </a>
-                                    </div>
+                                        <div class="col-md-3 text-center">
+                                            <a href={{ path('search_journals_for_scopus', {'quartile': data_t_scopus.quartile})}}>
+                                                <div class="card btn-outline-warning" style="width: 100%; height: 100%;">
+                                                    <div class="card-body">
+                                                        <h6 class="text-primary"><b>Quartile  : </b></h6>
+                                                        <span class=" badge-warning rounded btn-outline-primary" >{{ data_t_scopus.quartile }}</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
 
-                                </div>
-                            {% endfor %}
+                                    </div>
+                                {% endfor %}
                             {% endif %}
                             <div class="row" style="width: 100%;">
                                 <div class="col-md-12 text-center">
@@ -741,451 +746,452 @@
 
 
 
-        <div class="row">
-                <div class="col-sm-12">
-                {%  if tpjlistScopus is defined %}
-                <h4 class="text-primary"><b>Top journals list in Scopus</b></h4>
-                <div id="carouselExampleIndicators" class="carousel" data-ride="carousel" style="height: 100%">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {%  if tpjlistScopus is defined %}
+                                    <h4 class="text-primary"><b>Top journals list in Scopus</b></h4>
+                                    <div id="carouselExampleIndicators" class="carousel" data-ride="carousel" style="height: 100%">
 
-                    <div class="carousel-inner">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                        <div class="carousel-inner">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 
-                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
 
-                            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
 
-                            <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
-                        </ol>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+                                            </ol>
 
-                            {% for t in tpjlistScopus %}
-                                {% set issn="/journal/" %}
-                                {% set compteurRS=compteurRS+1 %}
-                                {% if (t.eISSN) =="" %}
-                                    {% set issn=issn~t.printISSN %}
-                                {% elseif(t.eISSN) !="" %}
-                                    {% set issn=issn~t.eISSN %}
+                                            {% for t in tpjlistScopus %}
+                                                {% set issn="/journal/" %}
+                                                {% set compteurRS=compteurRS+1 %}
+                                                {% if (t.eISSN) =="" %}
+                                                    {% set issn=issn~t.printISSN %}
+                                                {% elseif(t.eISSN) !="" %}
+                                                    {% set issn=issn~t.eISSN %}
+                                                {% endif %}
+                                                {% if compteurRS==1 %}
+
+                                                    <div class="carousel-item active">
+                                                        <!-- multiple results-->
+                                                        <div class="card mb-3" style="margin-right: 5px;">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-md-2" style="padding: 10px">
+                                                                    <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
+
+                                                                    {#                                                    <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
+
+                                                                </div>
+                                                                <div class="col-md-10" >
+                                                                    <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
+                                                                        <h6><b><a href={{issn}}>{{ t.title }}</a> </b></h6>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded p-1 mb-1" style="display: inline-block">Publisher : </span>&nbsp;
+                                                                                    <span >{{ t.publisher }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
+                                                                                    <span >{{ t.quartile }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-dark rounded p-1 mb-1" >Open Access : </span>&nbsp;
+                                                                                    <span >{{ t.openAccess }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded p-1 mb-1" >P-ISSN & E-ISSN : </span>&nbsp;
+                                                                                    <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                {% else %}
+
+                                                    <div class="carousel-item">
+
+
+
+                                                        <div class="card mb-3" style="margin-right: 5px;">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-md-2" style="padding: 10px">
+                                                                    <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
+                                                                    {#                                                <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
+                                                                </div>
+                                                                <div class="col-md-10" >
+                                                                    <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
+                                                                        <h6><b><a href={{issn}}>{{ t.title }}</a> </b></h6>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded" >Publisher : </span>&nbsp;
+                                                                                    <span >{{ t.publisher }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block" >Quartile : </span>&nbsp;
+                                                                                    <span >{{ t.quartile }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-dark rounded p-1 mb-1" >Open Access : </span>&nbsp;
+                                                                                    <span >{{ t.openAccess }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded p-1 mb-1" >P-ISSN & E-ISSN : </span>&nbsp;
+                                                                                    <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                {% endif %}
+                                                <!-- fin mutiple results-->
+
+                                            {% endfor %}
+                                        </div>
+
+                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next text-primary" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
                                 {% endif %}
-                                    {% if compteurRS==1 %}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px; text-align: center">
+                            <div class="col-sm-12">
 
-                                             <div class="carousel-item active">
-                                    <!-- multiple results-->
-                                    <div class="card mb-3" style="margin-right: 5px;">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-2" style="padding: 10px">
-                                                <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
+                                <!-- Apres_top_g_list -->
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="ca-pub-9897811061542650"
+                                     data-ad-slot="9307136195"
+                                     data-ad-format="auto"
+                                     data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" style="margin-bottom: 5%">
+                                {%  if tpjlistWebof is defined %}
+                                    <h4 class="text-primary"><b>Top journals list in Web of Science</b></h4>
+                                    <div id="carouselWEBIndicators" class="carousel" data-ride="carousel" style="height: 100%">
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="0" class="active">1</li>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="1">2</li>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="2">3</li>
 
-{#                                                    <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="3">4</li>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="4">5</li>
 
-                                            </div>
-                                            <div class="col-md-10" >
-                                                <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
-                                                    <h6><b><a href={{issn}}>{{ t.title }}</a> </b></h6>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class="badge-info rounded p-1 mb-1" style="display: inline-block">Publisher : </span>&nbsp;
-                                                                <span >{{ t.publisher }}</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
-                                                                <span >{{ t.quartile }}</span>
-                                                            </h6>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="5">6</li>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="6">7</li>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="7">8</li>
+
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="8">9</li>
+                                            <li data-target="#carouselWEBIndicators" data-slide-to="9">10</li>
+                                        </ol>
+                                        <div class="carousel-inner">
+
+
+                                            {% for wb in tpjlistWebof %}
+                                                {% set issn="/journal/" %}
+                                                {% set compteurRSWEB=compteurRSWEB+1 %}
+                                                {% if (wb.eISSN) =="" %}
+                                                    {% set issn=issn~wb.iSSN %}
+                                                {% elseif(wb.eISSN) !="" %}
+                                                    {% set issn=issn~wb.eISSN %}
+                                                {% endif %}
+                                                {% if compteurRSWEB==1 %}
+                                                    <div class="carousel-item active">
+                                                        <!-- multiple results-->
+                                                        <div class="card mb-3" style="margin-right: 5px;">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-md-2" style="padding: 10px">
+                                                                    <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
+
+                                                                    {#                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
+
+
+                                                                </div>
+                                                                <div class="col-md-10" >
+                                                                    <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
+                                                                        <h6><b><a href={{issn}}>{{ wb.title }}</a> </b></h6>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded p-1 mb-1" style="display: inline-block">Impact Factor : </span>&nbsp;
+                                                                                    <span > {{ wb.journalImpactFactor }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-warning rounded p-1 mb-1" style="display: inline-block" >Rank : </span>&nbsp;
+                                                                                    <span > {{ wb.rank }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>&nbsp;
+                                                                                    <span > {{ wb.iSSN }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded p-1 mb-1" >E-ISSN : </span>&nbsp;
+                                                                                    <span > {{ wb.eISSN }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class=" badge-dark rounded p-1 mb-1" >Open Access : </span>&nbsp;
-                                                                <span >{{ t.openAccess }}</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class="badge-info rounded p-1 mb-1" >P-ISSN & E-ISSN : </span>&nbsp;
-                                                                <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
-                                                            </h6>
+                                                {% else %}
+
+                                                    <div class="carousel-item">
+
+
+
+                                                        <div class="card mb-3" style="margin-right: 5px;">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-md-2" style="padding: 10px">
+                                                                    <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
+                                                                    {#                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
+                                                                </div>
+                                                                <div class="col-md-10" >
+                                                                    <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
+                                                                        <h6><b><a href={{issn}}>{{ wb.title }}</a> </b></h6>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded  mb-1 p-1" style="display: inline-block" >Impact Factor : </span>&nbsp;
+                                                                                    <span > {{ wb.journalImpactFactor }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-warning rounded mb-1 p-1" style="display: inline-block" >Rank : </span>&nbsp;
+                                                                                    <span > {{ wb.rank }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class=" badge-dark rounded p-1 mb-1" style="display: inline-block" >P-ISSN : </span>&nbsp;
+                                                                                    <span > {{ wb.iSSN }}</span>
+                                                                                </h6>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h6 >
+                                                                                    <span class="badge-info rounded p-1 mb-1" style="display: inline-block">E-ISSN : </span>&nbsp;
+                                                                                    <span > {{ wb.eISSN }}</span>
+                                                                                </h6>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
                                                         </div>
 
                                                     </div>
 
-
-                                                </div>
-                                            </div>
-
+                                                {% endif %}
+                                                <!-- fin mutiple results-->
+                                            {% endfor %}
                                         </div>
+
+                                        <a class="carousel-control-prev" href="#carouselWEBIndicators" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next text-primary" href="#carouselWEBIndicators" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
                                     </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div id="amzn-assoc-ad-d7fc7cc9-7c76-4dbd-9526-1f5269bccca8"></div>
+                        <script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=d7fc7cc9-7c76-4dbd-9526-1f5269bccca8"></script>
+
+
+                    </div>
+
+                    <!-- fin rooooww content-->
+
+
+
+                    <div class="col-md-3 col-sm-3">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!--publicite slide d_OneS_OR_W-->
+                                <div>
+
+
+                                    <!-- slide_droit_recommender -->
+                                    <ins class="adsbygoogle"
+                                         style="display:inline-block;width:320px;height:100px"
+                                         data-ad-client="ca-pub-9897811061542650"
+                                         data-ad-slot="9035124716"></ins>
+                                    <script>
+                                        (adsbygoogle = window.adsbygoogle || []).push({});
+                                    </script>
 
                                 </div>
-                                     {% else %}
 
-                                     <div class="carousel-item">
+                            </div>
+
+                        </div>
 
 
+                        {%  if paginationR is defined and paginationR | length >0 %}
+                            <h4 class="text-primary"><b>Recommended for you</b></h4>
+                            {% for r in paginationR %}
+                                {% set issn="/journal/" %}
+                                {% set compteurR=compteurR+1 %}
+                                {% if (r.eISSN) =="" %}
+                                    {% set issn=issn~r.printISSN %}
+                                {% elseif(r.eISSN) !="" %}
+                                    {% set issn=issn~r.eISSN %}
+                                {% endif %}
 
-                                    <div class="card mb-3" style="margin-right: 5px;">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-2" style="padding: 10px">
-                                                <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
-{#                                                <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
-                                            </div>
-                                            <div class="col-md-10" >
-                                                <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
-                                                    <h6><b><a href={{issn}}>{{ t.title }}</a> </b></h6>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class="badge-info rounded" >Publisher : </span>&nbsp;
-                                                                <span >{{ t.publisher }}</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block" >Quartile : </span>&nbsp;
-                                                                <span >{{ t.quartile }}</span>
-                                                            </h6>
-                                                        </div>
 
+                                <!-- multiple results-->
+                                <div class="card mb-3" style="margin-right: 5px">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-2" style="padding: 10px">
+                                            <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
+                                        </div>
+                                        <div class="col-md-10" >
+                                            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
+                                                <h6><b><a href={{issn}}>{{ r.title }}</a> </b></h6>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class="badge-info rounded" >Publisher : </span>&nbsp;
+                                                            <span >{{ r.publisher }}</span>
+                                                        </h6>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class=" badge-dark rounded p-1 mb-1" >Open Access : </span>&nbsp;
-                                                                <span >{{ t.openAccess }}</span>
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <h6 >
-                                                                <span class="badge-info rounded p-1 mb-1" >P-ISSN & E-ISSN : </span>&nbsp;
-                                                                <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
-                                                            </h6>
-                                                        </div>
-
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
+                                                            <span >{{ r.quartile }}</span>
+                                                        </h6>
                                                     </div>
-
 
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
+                                                            <span >{{ r.openAccess }}</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h6 >
+                                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >P-ISSN & E-ISSN : </span>&nbsp;
+                                                            <span >{{ r.printISSN }}, {{ r.eISSN }}</span>
+                                                        </h6>
+                                                    </div>
+
+                                                </div>
+
+
                                             </div>
-
                                         </div>
+
                                     </div>
-
                                 </div>
-
-                                    {% endif %}
                                 <!-- fin mutiple results-->
-
                             {% endfor %}
-                    </div>
-
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next text-primary" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-            </div>
                         {% endif %}
-            </div>
-        </div>
-         <div class="row" style="margin-top: 20px; text-align: center">
-         <div class="col-sm-12">
-
-             <!-- Apres_top_g_list -->
-             <ins class="adsbygoogle"
-                  style="display:block"
-                  data-ad-client="ca-pub-9897811061542650"
-                  data-ad-slot="9307136195"
-                  data-ad-format="auto"
-                  data-full-width-responsive="true"></ins>
-             <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-             </script>
-           </div>
-          </div>
-         <div class="row">
-                    <div class="col-sm-12" style="margin-bottom: 5%">
-                        {%  if tpjlistWebof is defined %}
-                            <h4 class="text-primary"><b>Top journals list in Web of Science</b></h4>
-                            <div id="carouselWEBIndicators" class="carousel" data-ride="carousel" style="height: 100%">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="0" class="active">1</li>
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="1">2</li>
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="2">3</li>
-
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="3">4</li>
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="4">5</li>
-
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="5">6</li>
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="6">7</li>
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="7">8</li>
-
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="8">9</li>
-                                    <li data-target="#carouselWEBIndicators" data-slide-to="9">10</li>
-                                </ol>
-                                <div class="carousel-inner">
-
-
-                                    {% for wb in tpjlistWebof %}
-                                        {% set issn="/journal/" %}
-                                        {% set compteurRSWEB=compteurRSWEB+1 %}
-                                        {% if (wb.eISSN) =="" %}
-                                            {% set issn=issn~wb.iSSN %}
-                                        {% elseif(wb.eISSN) !="" %}
-                                            {% set issn=issn~wb.eISSN %}
-                                        {% endif %}
-                                        {% if compteurRSWEB==1 %}
-                                            <div class="carousel-item active">
-                                                <!-- multiple results-->
-                                                <div class="card mb-3" style="margin-right: 5px;">
-                                                    <div class="row no-gutters">
-                                                        <div class="col-md-2" style="padding: 10px">
-                                                            <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
-
-{#                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
-
-
-                                                        </div>
-                                                        <div class="col-md-10" >
-                                                            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
-                                                                <h6><b><a href={{issn}}>{{ wb.title }}</a> </b></h6>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block">Impact Factor : </span>&nbsp;
-                                                                            <span > {{ wb.journalImpactFactor }}</span>
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class="badge-warning rounded p-1 mb-1" style="display: inline-block" >Rank : </span>&nbsp;
-                                                                            <span > {{ wb.rank }}</span>
-                                                                        </h6>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>&nbsp;
-                                                                            <span > {{ wb.iSSN }}</span>
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class="badge-info rounded p-1 mb-1" >E-ISSN : </span>&nbsp;
-                                                                            <span > {{ wb.eISSN }}</span>
-                                                                        </h6>
-                                                                    </div>
-
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        {% else %}
-
-                                            <div class="carousel-item">
-
-
-
-                                                <div class="card mb-3" style="margin-right: 5px;">
-                                                    <div class="row no-gutters">
-                                                        <div class="col-md-2" style="padding: 10px">
-                                                            <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
-{#                                                            <img src=" {{ asset('assets/images/badge.jpg') }}" width="60px" height="60px">#}
-                                                        </div>
-                                                        <div class="col-md-10" >
-                                                            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
-                                                                <h6><b><a href={{issn}}>{{ wb.title }}</a> </b></h6>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class="badge-info rounded  mb-1 p-1" style="display: inline-block" >Impact Factor : </span>&nbsp;
-                                                                            <span > {{ wb.journalImpactFactor }}</span>
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class=" badge-warning rounded mb-1 p-1" style="display: inline-block" >Rank : </span>&nbsp;
-                                                                            <span > {{ wb.rank }}</span>
-                                                                        </h6>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class=" badge-dark rounded p-1 mb-1" style="display: inline-block" >P-ISSN : </span>&nbsp;
-                                                                            <span > {{ wb.iSSN }}</span>
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <h6 >
-                                                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block">E-ISSN : </span>&nbsp;
-                                                                            <span > {{ wb.eISSN }}</span>
-                                                                        </h6>
-                                                                    </div>
-
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                        {% endif %}
-                                        <!-- fin mutiple results-->
-                                    {% endfor %}
-                                </div>
-
-                                <a class="carousel-control-prev" href="#carouselWEBIndicators" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next text-primary" href="#carouselWEBIndicators" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-
-            <div id="amzn-assoc-ad-d7fc7cc9-7c76-4dbd-9526-1f5269bccca8"></div>
-            <script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=d7fc7cc9-7c76-4dbd-9526-1f5269bccca8"></script>
-
-
-        </div>
-
-<!-- fin rooooww content-->
-
-
-
-        <div class="col-md-3 col-sm-3">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <!--publicite slide d_OneS_OR_W-->
-                        <div>
-
-
-                            <!-- slide_droit_recommender -->
-                            <ins class="adsbygoogle"
-                                 style="display:inline-block;width:320px;height:100px"
-                                 data-ad-client="ca-pub-9897811061542650"
-                                 data-ad-slot="9035124716"></ins>
-                            <script>
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                            </script>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            {%  if paginationR is defined and paginationR | length >0 %}
-                <h4 class="text-primary"><b>Recommended for you</b></h4>
-            {% for r in paginationR %}
-                {% set issn="/journal/" %}
-                {% set compteurR=compteurR+1 %}
-                {% if (r.eISSN) =="" %}
-                    {% set issn=issn~r.printISSN %}
-                {% elseif(r.eISSN) !="" %}
-                    {% set issn=issn~r.eISSN %}
-                {% endif %}
-
-
-                <!-- multiple results-->
-                <div class="card mb-3" style="margin-right: 5px">
-                    <div class="row no-gutters">
-                        <div class="col-md-2" style="padding: 10px">
-                            <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">
-                        </div>
-                        <div class="col-md-10" >
-                            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
-                                <h6><b><a href={{issn}}>{{ r.title }}</a> </b></h6>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class="badge-info rounded" >Publisher : </span>&nbsp;
-                                            <span >{{ r.publisher }}</span>
-                                        </h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
-                                            <span >{{ r.quartile }}</span>
-                                        </h6>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
-                                            <span >{{ r.openAccess }}</span>
-                                        </h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h6 >
-                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >P-ISSN & E-ISSN : </span>&nbsp;
-                                            <span >{{ r.printISSN }}, {{ r.eISSN }}</span>
-                                        </h6>
-                                    </div>
-
-                                </div>
-
-
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- apres_recommendation_liste -->
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="ca-pub-9897811061542650"
+                                     data-ad-slot="7259484949"
+                                     data-ad-format="auto"
+                                     data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
                             </div>
                         </div>
-
                     </div>
-                </div>
-                <!-- fin mutiple results-->
-            {% endfor %}
-{% endif %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- apres_recommendation_liste -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-9897811061542650"
-                         data-ad-slot="7259484949"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
-            </div>
-        </div>
 
 
-            <!--fin row-->
-        </div>
-        {% endif %}
+                    <!--fin row-->
+                </div>
+            {% endif %}
+
         {% endif %}
 
     </div>

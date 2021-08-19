@@ -30,7 +30,7 @@ security:
         check_path: sulu_community.login
       logout:
         path: sulu_community.logout
-        target: /
+        target: sulu_community.login
       remember_me:
         secret:   "%kernel.secret%"
         lifetime: 604800 # 1 week in seconds

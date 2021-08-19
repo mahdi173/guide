@@ -28,7 +28,8 @@
 {% block body %}
 
 
-    <div class="row  {% if data.result.hits.hit is not defined %}cart-form{% else%}cart-with-res{% endif%} row-form" >
+{#    <div class="row  {% if data.result.hits.hit is not defined %}cart-form{% else%}cart-with-res{% endif%} row-form" >#}
+    <div class="row cart-with-res row-form" >
         <div class="col-md-2 col-sm-1"></div>
         <div class="col-md-8 mt-5 mb-5">
             <h1 class="text-primary text-center mb-5" style="font-size: 2.3rem;"><b>Find Authors </b></h1>
@@ -114,11 +115,13 @@
                   {% endfor %}
 
                     </tbody>
-                </table>
+                </table> {{ dump(app.request.get('authorValue')) }}
             {% elseif parametre==true  %}
-                <p class="text-center border pt-3 pb-3">
-                    No data found !
+                <p class="text-center border pt-3 pb-3 alertNoRes">
+                   Your search  <b>{{ app.request.get('authorValue') }}</b> did not match any Author.  <br>
+                    Try different keywords
                 </p>
+
             {% elseif parametre==false  %}
 
                     <p> </p>
