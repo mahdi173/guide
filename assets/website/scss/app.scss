@@ -348,3 +348,13 @@ body{
   padding: 2rem;
   background-color: white;
 }
+.alertNoRes{
+  border: 1px solid #158CBA !important;
+  color:#158CBA !important
+
+}
+.card-img-top{
+  max-height: 320px !important;
+  //object-fit: cover !important;
+  min-height: 300px !important;
+}

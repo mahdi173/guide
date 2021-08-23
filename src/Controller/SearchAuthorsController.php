@@ -93,68 +93,69 @@ class SearchAuthorsController extends AbstractController
         $total=array();
         if($data && $data->result->query!==""){
 
-        foreach ($data->result->hits->hit as $a)
-        {
-            // debut
-            $aut= $a->info->author;
-            $par  = urlencode($aut); // str_replace(' ','+',$auteur);
-            $data_doaj = null;
+            if(isset($data->result->hits->hit)){
+                foreach ($data->result->hits->hit as $a)
+                {
+                    // debut
+                    $aut= $a->info->author;
+                    $par  = urlencode($aut); // str_replace(' ','+',$auteur);
+                    $data_doaj = null;
 
-            $data_dblp=null;
-            $count_data_dblp=0;
-            $count_data_dblp=0;
-            try {
-                $rawData = HttpClient::create()
-                    ->request('GET', "https://doaj.org/api/v1/search/articles/$par")
-                    ->getContent()
-                ;
-                $data_doaj = \json_decode($rawData);
-             $az=str_replace('+',' ',$data_doaj->query);
-             $az=str_replace('.','',$az);
-             $az=str_replace('-',' ',$az);
+                    $data_dblp=null;
+                    $count_data_dblp=0;
+                    $count_data_dblp=0;
+                    try {
+                        $rawData = HttpClient::create()
+                            ->request('GET', "https://doaj.org/api/v1/search/articles/$par")
+                            ->getContent()
+                        ;
+                        $data_doaj = \json_decode($rawData);
+                        $az=str_replace('+',' ',$data_doaj->query);
+                        $az=str_replace('.','',$az);
+                        $az=str_replace('-',' ',$az);
 
-                if(count($data_doaj->results)>0){
+                        if(count($data_doaj->results)>0){
 //                    array_push($array_doaj,count($data_doaj->results));
-                    $array_doaj[$az]=count($data_doaj->results);
-                }else{
+                            $array_doaj[$az]=count($data_doaj->results);
+                        }else{
 //                    array_push($array_doaj,0);
-                    $array_doaj[$az]=0;
-                }
+                            $array_doaj[$az]=0;
+                        }
 
-            }catch (TransportExceptionInterface $exception){
-                $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
-                $this->logger->critical($exception->getTraceAsString());
-            }
+                    }catch (TransportExceptionInterface $exception){
+                        $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
+                        $this->logger->critical($exception->getTraceAsString());
+                    }
 
-            // fin
+                    // fin
 
-            // debut
-            try {
-                $rawData2 = HttpClient::create()
-                    ->request('GET', "https://dblp.org/search/publ/api?q=.$par.&format=json")
-                    ->getContent()
-                ;
-                $data_dblp = \json_decode($rawData2);
-                $res=str_replace('*','',$data_dblp->result->query);
+                    // debut
+                    try {
+                        $rawData2 = HttpClient::create()
+                            ->request('GET', "https://dblp.org/search/publ/api?q=.$par.&format=json")
+                            ->getContent()
+                        ;
+                        $data_dblp = \json_decode($rawData2);
+                        $res=str_replace('*','',$data_dblp->result->query);
 
-                if(count($data_dblp->result->hits->hit)>0){
+                        if(count($data_dblp->result->hits->hit)>0){
 //               array_push($array_dblp,count($data_dblp->result->hits->hit));
-                    $array_dblp[$res]=count($data_dblp->result->hits->hit);
-                }
-                else{
+                            $array_dblp[$res]=count($data_dblp->result->hits->hit);
+                        }
+                        else{
 //                    array_push($data_dblp,0);
-                    $array_dblp[$res]=0;
+                            $array_dblp[$res]=0;
+                        }
+
+                    }catch (TransportExceptionInterface $exception){
+                        $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
+                        $this->logger->critical($exception->getTraceAsString());
+                    }
+
+                    // fin
+
                 }
-
-            }catch (TransportExceptionInterface $exception){
-                $this->addFlash('error', 'Ooops ! Something wrong happened. Please retry again or contact the support');
-                $this->logger->critical($exception->getTraceAsString());
             }
-
-            // fin
-
-        }
-
 //            dd($array_doaj,$array_dblp);
             foreach ($array_dblp as $key => $value) {
                 foreach ($array_doaj as $key1 => $value1){
