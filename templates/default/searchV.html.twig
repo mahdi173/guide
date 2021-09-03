@@ -175,13 +175,13 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >Publisher : </span>&nbsp;
+                                                <span class="badge-info rounded p-1 mb-1 etiq-span" style="display: inline-block" >Publisher  </span>&nbsp;
                                                 <span >{{ t.publisher }}</span>
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
+                                                <span class=" badge-warning rounded p-1 mb-1 etiq-span" style="display: inline-block">Quartile  </span>&nbsp;
                                                 <span >{{ t.quartile }}</span>
                                             </h6>
                                         </div>
@@ -190,13 +190,13 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class=" badge-dark rounded p-1 mb-1" style="display: inline-block" >Open Access : </span>&nbsp;
+                                                <span class=" badge-dark rounded p-1 mb-1 etiq-span" style="display: inline-block" >Open Access  </span>&nbsp;
                                                 <span >{{ t.openAccess }}</span>
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <h6 >
-                                                <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >P-ISSN & E-ISSN : </span>&nbsp;
+                                                <span class="badge-info rounded p-1 mb-1 etiq-span" style="display: inline-block" >P-ISSN & E-ISSN  </span>&nbsp;
                                                 <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
                                             </h6>
                                         </div>
@@ -350,7 +350,7 @@
             </div>
         </div>
 {% elseif data_t_scopus | length == 0 or data_reuter  | length == 0 %}
-        <div class="container" >
+        <div class="container-fluid" >
     <p class="text-center border pt-3 pb-3 alertNoRes">
         Your search  <b>{{ app.request.get('searchValue') }}</b> did not match any Journal.  <br>
         Try different keywords
@@ -795,13 +795,13 @@
                                                                         <div class="row">
                                                                             <div class="col-sm-6">
                                                                                 <h6 >
-                                                                                    <span class="badge-info rounded p-1 mb-1" style="display: inline-block">Publisher : </span>&nbsp;
+                                                                                    <span class="badge-info rounded p-1 mb-1 " style="display: inline-block">Publisher  </span>&nbsp;
                                                                                     <span >{{ t.publisher }}</span>
                                                                                 </h6>
                                                                             </div>
                                                                             <div class="col-sm-6">
                                                                                 <h6 >
-                                                                                    <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
+                                                                                    <span class=" badge-warning rounded p-1 mb-1 " style="display: inline-block">Quartile  </span>&nbsp;
                                                                                     <span >{{ t.quartile }}</span>
                                                                                 </h6>
                                                                             </div>
@@ -810,13 +810,13 @@
                                                                         <div class="row">
                                                                             <div class="col-sm-6">
                                                                                 <h6 >
-                                                                                    <span class=" badge-dark rounded p-1 mb-1" >Open Access : </span>&nbsp;
+                                                                                    <span class=" badge-dark rounded p-1 mb-1 " >Open Access  </span>&nbsp;
                                                                                     <span >{{ t.openAccess }}</span>
                                                                                 </h6>
                                                                             </div>
                                                                             <div class="col-sm-6">
                                                                                 <h6 >
-                                                                                    <span class="badge-info rounded p-1 mb-1" >P-ISSN & E-ISSN : </span>&nbsp;
+                                                                                    <span class="badge-info rounded p-1 mb-1" >P-ISSN & E-ISSN  </span>&nbsp;
                                                                                     <span >{{ t.printISSN }}, {{ t.eISSN }}</span>
                                                                                 </h6>
                                                                             </div>
@@ -1112,7 +1112,7 @@
 
                         {%  if paginationR is defined and paginationR | length >0 %}
                             <h4 class="text-primary"><b>Recommended for you</b></h4>
-                            {% for r in paginationR %}
+                            {% for r in paginationR|slice(0, 3) %}
                                 {% set issn="/journal/" %}
                                 {% set compteurR=compteurR+1 %}
                                 {% if (r.eISSN) =="" %}
@@ -1130,17 +1130,17 @@
                                         </div>
                                         <div class="col-md-10" >
                                             <div class="card-body" style="margin-top: -15px; margin-bottom: -15px;">
-                                                <h6><b><a href={{issn}}>{{ r.title }}</a> </b></h6>
+                                                <h6 class="mt-2"><b><a href={{issn}}>{{ r.title }}</a> </b></h6>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class="badge-info rounded" >Publisher : </span>&nbsp;
-                                                            <span >{{ r.publisher }}</span>
+                                                            <span class="badge-info rounded  etiq-span"  >Publisher  </span>&nbsp;
+                                                            <span class="d-block" >{{ r.publisher }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class=" badge-warning rounded p-1 mb-1" style="display: inline-block">Quartile : </span>&nbsp;
+                                                            <span class=" badge-warning rounded p-1 mb-1 etiq-span" style="display: inline-block">Quartile  </span>&nbsp;
                                                             <span >{{ r.quartile }}</span>
                                                         </h6>
                                                     </div>
@@ -1149,13 +1149,13 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class=" badge-dark rounded" >Open Access : </span>&nbsp;
+                                                            <span class=" badge-dark rounded etiq-span" >Open Access  </span>&nbsp;
                                                             <span >{{ r.openAccess }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >P-ISSN & E-ISSN : </span>&nbsp;
+                                                            <span class="badge-info rounded p-1 mb-1 etiq-span" style="display: inline-block" >P-ISSN & E-ISSN  </span>&nbsp;
                                                             <span >{{ r.printISSN }}, {{ r.eISSN }}</span>
                                                         </h6>
                                                     </div>
