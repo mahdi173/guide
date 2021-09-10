@@ -21,19 +21,19 @@
         <span class="icon-search" >
             <i class="fa fa-search"></i>
         </span>
-        <input type="text" id="searchValue" name="searchValue" style="height: 40px; font-size: large" class="form-control searchValue" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+        <input type="text" id="searchValue" name="searchValue" style="height: 39px; font-size: large" class="form-control searchValue" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
 
 {#            <button class="btn btn-outline-info" type="submit" id="texte-bouton" style="width: 130px;height: 40px"><i class="fa fa-search"></i> Search</button>#}
         </div>
 
-    <div class="row">
+    <div class="row btn-journal">
 
-        <div class="col-md-5 col-sm-6" style="text-align: right;">
+        <div class="col-md-5 col-sm-6 searchBtn" style="text-align: right;">
             <button class="btn text-capitalize btn-search" type="submit" id="texte-bouton" style="width: 77px;height: 40px;color: #158CBA;font-weight: bolder;font-size: 1rem">
 {#                <i class="fa fa-search"></i> #}
                 Search</button>
         </div>
-        <div class="offset-md-1 col-md-6 col-sm-6" style="text-align: left; margin-top: 7px;">
+        <div class="offset-md-1 col-md-6 col-sm-6 advBtn" style="text-align: left; margin-top: 7px;">
         <a href="{{ path('advanced_search_scopus_web_ofs') }}" > <b>Advanced search ?</b></a>
         </div>
     </div>

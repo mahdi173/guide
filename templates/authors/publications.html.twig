@@ -28,10 +28,10 @@
         <div class="col-md-3 col-sm-1"></div>
     </div>
 
-    <div class="row ">
+    <div class="row header-author">
 
-        <div class="col-md-1  mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" alt="{{ auteur }}"/></div>
-        <div class="col-md-6  mb-2" style="margin-left: 70px;padding-top: 20px;">
+        <div class="col-md-1 img-author-search mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" alt="{{ auteur }}"/></div>
+        <div class="col-md-6 title-author-search mb-2" style="margin-left: 70px;padding-top: 20px;">
             <h5 class="text-primary">{{ auteur }}</h5>
            {% set followers_count= followers_profile.followers(auteur)|length %}
 
@@ -41,7 +41,7 @@
             <span class="stat_info">  {% if author_db %}{{author_db.follows|length }} {% else%} 0 {% endif %}following</span></p>
         </div>
 
-        <div class="offset-1 col-md-2  mb-2" style="padding-left: 70px;padding-top: 20px;">
+        <div class="offset-1 col-md-2 btn-author-search mb-2" style="padding-left: 70px;padding-top: 20px;">
             {% if app.user %}
             {% set  follows=app.user.follows.values%}
 
@@ -186,7 +186,7 @@
     </div>
     <div class="offset-0 col-md-3 mt-3" style="border: solid 2px #e6e6e6;">
 
-        <table class="table">
+        <table class="table table-info-authors">
             <tr style="border: none">
                 <th class="header">Top co-authors
 {#                    <a href="{{ path('co_authors_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> #}

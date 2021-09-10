@@ -13,6 +13,7 @@
 
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
     <meta name="keywords" content="Scopus, Science, Thomson Reuters, Google Scholar, Find journal,guide journal,journal,journals">
@@ -55,7 +56,7 @@
 
 <body style="background-color: #f6f6f6;">
 <amp-auto-ads type="adsense" data-ad-client="ca-pub-9897811061542650"></amp-auto-ads>
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm nav-top">
     <h2 class="my-0 mr-md-auto text-info">
         <a class="navbar-brand" href="/">
             <img class="img-fluid logo-gj" src="{{ asset('assets/images/logo1.png') }}" alt="GuideJournal"  />
@@ -124,12 +125,16 @@
             </li>
 
     {% else %}
-        <a class="btn btn-outline-info" href="{{ path('sulu_community.login')}}">Sign in</a>
-        <a class="btn btn-outline-warning ml-2 " href="{{ path('sulu_community.registration')}}">Sign up</a>
+        <div class="sign">
+            <a class="btn btn-outline-info" href="{{ path('sulu_community.login')}}">Sign in</a>
+            <a class="btn btn-outline-warning ml-2 " href="{{ path('sulu_community.registration')}}">Sign up</a>
+        </div>
+
+
     {% endif %}
 </div>
 {% block body %}
-<div class="container">
+<div class="container mb-4">
 
     {% block content %}
     {% endblock %}
@@ -151,7 +156,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-4">
-                    <ul>
+                    <ul class="footer-ul">
                         <h4>About Guidejournal</h4>
                         <li class="list-unstyled">
                             <a href="{{ path('homepage') }}">Home</a>
@@ -173,7 +178,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <ul>
+                    <ul class="footer-ul">
                         <h4>Indexing Services</h4>
                         <li class="list-unstyled">
                             <a href="{{ path('services_page') }}">Services</a>
@@ -195,7 +200,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <ul>
+                    <ul class="footer-ul">
                         <h4>Customer Service</h4>
                         <li class="list-unstyled">
                             <a href="{{ path('help_guidejournal') }}">Help</a>
@@ -214,12 +219,12 @@
             <hr/>
             <div class="row" >
                 <div class="media w-100" style="padding-bottom: 1rem;">
-                    <div class="col-md-3">
+                    <div class=" col-sm-1 col-lg-3">
                         <a class="navbar-brand align-self-start mr-3 ml-lg-5" href="/">
                             <img  class="img-fluid logo-gj"  src="/assets/images/logo1.png" alt="GuideJournal"/>
                         </a>
                     </div>
-                    <div class="col-md-9" style="padding-top: 1rem;">
+                    <div class="col-sm-11 col-lg-9 " style="padding-top: 1rem;">
                         <div class="media-body">
                               <span class=" mb-4 mb-lg-0" style="font-size: 14px">
                               <a class="text-info" href="https://www.mit-agency.com/" target="_blank"> © MIT {{ "now"|date('Y')}}.

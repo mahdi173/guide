@@ -100,11 +100,17 @@ body{
   font-family: "Adobe Arabic Regular","sans-serif";
   font-size: 30px;
   color:#13426c;
+  @media screen and (max-width: 480px) {
+    text-align: center;
+  }
 }
 .intro-text{
   margin-top: 190px;
   padding: 20px;
-
+  @media screen and (max-width: 480px) {
+    margin-top: 34%;
+    text-align: center;
+  }
  // margin-left: 20px;
 
 }
@@ -112,10 +118,16 @@ body{
   font-size: 55px;
   color:#13426c;
   text-shadow: 2px 1px #dddddd;
+  @media screen and (max-width: 480px) {
+    font-size: 33px;
+  }
 
 }
 .services-list{
   padding: 20px;
+  @media screen and (max-width: 480px) {
+    text-align: center;
+  }
 }
 .icon-size{
   font-size: 40px !important;
@@ -147,6 +159,9 @@ body{
   border: solid 2px #e6e6e6;
   .list-group-item{
     background-color: transparent;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
   }
 }
 .name-follow{
@@ -220,7 +235,9 @@ body{
     flex: none;
     margin-left: 4%;
     width: 60%;
-
+    @media screen and (max-width: 480px) {
+      width: 54%;
+    }
   }
   .fa-search{
     display: block;
@@ -239,6 +256,10 @@ body{
     &:hover {
       cursor: pointer;
     }
+    @media screen and (max-width: 480px) {
+      margin-top: 4px;
+      padding: 2% 2%;
+    }
   }
 .btn-search:hover{
   box-shadow: 0 1px 1px rgba(0,0,0,.1);
@@ -249,10 +270,16 @@ body{
 .card-form-search{
   margin-top: -1%;
   height: 726px;
+  @media screen and (max-width: 480px) {
+    height: 426px;
+  }
 }
 .card-form{
   //margin-top: 8%;
   height: 326px;
+  @media screen and (max-width: 480px) {
+    height: 426px;
+  }
 }
 .row-form{
   background-color: #fff;
@@ -273,6 +300,10 @@ body{
   width: 40%;
   margin-left: 29%;
   text-align: center !important;
+  @media screen and (max-width: 480px) {
+    width: 92%;
+    margin-left: 5%;
+  }
 }
 .cart-with-res{
   height: auto;
@@ -287,7 +318,13 @@ body{
       padding: 3rem;
     }
   }
-}
+  @media screen and (max-width: 480px) {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 424px;
+  }
+
+  }
 .text-exp{
   line-height: 1.9rem;
   margin-top: 2rem;
@@ -296,6 +333,9 @@ body{
   margin-left: 2%;
   font-size: 1rem;
   text-align: center !important;
+  @media screen and (max-width: 480px) {
+    font-style: normal !important;
+  }
 }
 .tz-send{
   padding: 9rem;
@@ -374,6 +414,14 @@ body{
   h4 a{
     font-size: 1.1rem !important;
   }
+  @media screen and (max-width: 480px) {
+    .img_indexed {
+        text-align: center;
+    }
+    .card-titles{
+      padding-bottom: 5%;
+    }
+  }
 
 }
 .one-res{
@@ -382,3 +430,109 @@ body{
     display: inline-block;
   }
 }
+#valeselect {
+  border-radius: 24px;
+  width: 30%;
+  height: 42px;
+  @media screen and (max-width: 480px) {
+    width: 40%;
+    border-top-left-radius: 24px;
+    border-top-right-radius:0;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 0;
+  }
+}
+.submitArticle{
+  float: right;
+  @media screen and (max-width: 480px) {
+    float: none;
+    margin-left: 5rem !important;
+  }
+  }
+.navigationV{
+  margin: 3% 0 3% 34%;
+  @media screen and (max-width: 480px) {
+    margin: 3% 0 3% 8%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .sign{
+    margin-top: 2%;
+  }
+  .carousel-inner-homepage{
+    height: 300px;
+  }
+  .recent_articles{
+    margin-left: 4%;
+  }
+  .footer-ul{
+    text-align: center;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .media{
+    display: block !important;
+  }
+  .nav-top{
+    margin-bottom: 0 !important;
+  }
+  .btn-journal{
+    .searchBtn{
+      text-align: center;
+      width: 35%;
+    }
+    .advBtn{
+      width: 65%;
+      text-align: center;
+    }
+  }
+  .form-authors{
+    width: 90%;
+    margin-left: 6%;
+
+  }
+  body{
+    overflow-x: hidden;
+  }
+  .img-authors{
+    width: 73px;
+    height: 73px;
+  }
+  .header-author{
+    .img-author-search{
+      text-align: center;
+    }
+    .title-author-search{
+      text-align: center;
+      margin-left: 0 !important;
+    }
+    .btn-author-search{
+      padding-left: 0 !important;
+      text-align: center;
+      margin-left: 0 !important;
+    }
+  }
+  .table-info-authors .table{
+    tbody td,span{
+      text-align: center;
+    }
+  }
+  .img-profile,.info-profile,.follow-profile,#sidebar-wrapper,.img-help{
+    text-align: center;
+  }
+  .info-profile{
+    margin-left: 0 !important;
+  }
+  .table-settings{
+    margin-left: 27%;
+  }
+  .container-top-journal,.container-contact{
+    margin-top: 0 !important;
+    border-radius: 0 !important;
+  }
+  .container-contact{
+    margin-bottom: 0;
+    padding: 2% 5% 22% 2%
+  }
+}
+

@@ -27,21 +27,21 @@
         <div id="carouselExampleControls" class="carousel slide " data-ride="carousel">
             <div class="carousel-inner-homepage" style="overflow-x: hidden;overflow-y: hidden">
                 <div class="carousel-item active container-fluid imageindex">
-                    <div class="offset-4 col-md-6 intro-text">
+                    <div class="offset-lg-4 offset-sm-0 col-md-6 intro-text">
                         {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
                         <h1>Empowering Knowledge around the world</h1>
 
                     </div>
                 </div>
                 <div class="carousel-item container-fluid imageindex2">
-                    <div class="offset-3 col-md-6 intro-text">
+                    <div class="offset-lg-3 offset-sm-0 col-md-6 intro-text">
                         {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
                         <h1>Find All the help to advance in your scientific researches</h1>
 
                     </div>
                 </div>
                 <div class="carousel-item container-fluid imageindex3">
-                    <div class="offset-4 col-md-6 intro-text">
+                    <div class="offset-lg-4 offset-sm-0 col-md-6 intro-text">
                         {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
                         <h1>GuideJournal provides Services For Science
                         </h1>
@@ -176,9 +176,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 mt-5 mb-2">
+            <div class="col-md-12 mt-5 mb-2 offset-sm-2 col-sm-10">
 
-                <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3 float-right ">Submit Your Article</a>
+                <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3  submitArticle">Submit Your Article</a>
 
                 {%  if  sulu_navigation_root_tree is defined %}
                 {% for item in sulu_navigation_root_tree('member') %}
@@ -203,7 +203,7 @@
         </div>
 
         <div class="row">
-            <h4 class="mb-n2 mt-5 text-primary" ><b>Recent articles</b></h4>
+            <h4 class="mb-n2 mt-5 text-primary recent_articles" ><b>Recent articles</b></h4>
             <hr class="col-md-12 bg-primary" style="height:2px">
         </div>
 
@@ -213,7 +213,7 @@
             <div class="row" style="padding-bottom: 3%;">
             {% for a in recentarticles %}
 
-            <div class="col-md-4 mt-5 mb-2 posts-last">
+            <div class="col-md-4 col-sm-12 mt-5 mb-2 posts-last">
                 <div class="card mb-4 box-shadow" style="margin-right: 5px">
 
                     {% if a.content.content.image is defined %}
