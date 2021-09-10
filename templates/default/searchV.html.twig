@@ -92,7 +92,6 @@
 
     </div>
     <div class="container-fluid" >
-
         {% if data_t_scopus_advanced is defined  %}
             {% if data_t_scopus_advanced | length >0 and pagination is defined  %}
 
@@ -102,7 +101,8 @@
                 {% include '_includes/error.html.twig' %}
             {% endif %}
         {% endif %}
-        {%  if  data_t_scopus is defined and data_t_scopus | length >1 %}
+{#        {%  if  data_t_scopus is defined and data_t_scopus | length >1 and data_t_scopus is iterable %}#}
+        {%  if  data_t_scopus is defined and data_t_scopus | length >1  %}
         {% set test=0 %}
         {% set tests=0 %}
         <div class="row" >
@@ -126,7 +126,7 @@
             </div>
             <div class="col-md-2 col-sm-2"></div>
         </div>
-        <div class="row">
+        <div class="row res-cart">
             <div class="col-md-2">
 
                 <!-- horizontal_several_results1 -->
@@ -214,7 +214,7 @@
                     <!-- fin mutiple results-->
                 {% endfor %}
 
-                <div class="navigation">
+                <div class="navigation text-center" style="margin: 3% 0 3% 34%">
                     {{ knp_pagination_render(pagination) }}
                 </div>
 
@@ -309,6 +309,7 @@
                     <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
 
                         <h5 class="text-info"><b>Search journals by Subject Area </b></h5>
+
                         {% for t in pagination %}
 
                             {% if t.scopussubsubjectarea | length>= 51 %}
@@ -326,11 +327,13 @@
                                 </a>
 
                             {% else %}
-                                <a class="badge badge-secondary text-info"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+                                {%  if  t.scopussubsubjectarea is not empty%}
+                                    <a class="badge badge-secondary text-info"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
 <span style="width: 70%">
                                    {{t.scopussubsubjectarea}}</span>
 
-                                </a>
+                                    </a>
+                                {% endif %}
                             {% endif %}
 
                         {% endfor %}
@@ -349,7 +352,8 @@
 
             </div>
         </div>
-{% elseif data_t_scopus | length == 0 or data_reuter  | length == 0 %}
+
+{% elseif data_t_scopus and data_t_scopus | length == 0 and data_reuter and data_reuter  | length == 0 or( app.request.query.get('searchValue') and data_reuter is null and data_t_scopus is null ) %}
         <div class="container-fluid" >
     <p class="text-center border pt-3 pb-3 alertNoRes">
         Your search  <b>{{ app.request.get('searchValue') }}</b> did not match any Journal.  <br>
@@ -357,13 +361,15 @@
     </p>
     </p>
 {% endif %}
-
         {% if data_t_scopus_advanced is not defined   %}
-            {% if  data_reuter | length ==1 or data_t_scopus | length==1 or data_t_scopus | length==0 and data_t_scopus is not null %}
+            {% if  (data_reuter and data_reuter is not null and data_reuter is not empty and data_reuter | length ==1 )or (data_t_scopus is not null and data_t_scopus is not empty and (data_t_scopus | length==1 or data_t_scopus | length==0 ) ) %}
+
                 <div class="row" >
                     <div class="col-md-2 col-sm-2"></div>
                     <div class="col-md-7">
-                        <h3 align="center" class="text-primary"><b>The following title(s) matched your request</b></h3>
+{#                        {% if  (data_reuter is not null and data_reuter|length > 0  and data_reuter is iterable)  or( data_t_scopus | length> 0 and data_t_scopus is not null and data_t_scopus is iterable) %}#}
+                            <h3 class="text-primary text-center"><b>The following title(s) matched your request</b></h3>
+{#                        {% endif %}#}
                     </div>
                     <div class="col-md-2 col-sm-2"></div>
                 </div>
@@ -404,32 +410,31 @@
 
                             <div class="row no-gutters">
                                 <div class="col-md-2" style="padding-top: 30px; text-align: center">
-                                    <img src="{{ asset('assets/images/scopus3.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">
-                                    <h6><b>Scopus</b></h6>
+{#                                    <img src="{{ asset('assets/images/scopus3.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">#}
+{#                                    <h6><b>Scopus</b></h6>#}
 
                                 </div>
                                 <div class="col-md-8" >
-                                    <div class="card-body" >
+                                    <div class="card-body one-res" >
                                         {%  if data_t_scopus | length ==1 %}
-                                            {% for data_t_scopus in data_t_scopus %}
+                                            {% for data_t_scopus in [data_t_scopus] %}
                                                 {% set tests=0 %}
-
                                                 {% for message in app.flashes('info') %}
                                                     <div class="flash-info">
                                                         {{ message }}
                                                     </div>
                                                 {% endfor %}
                                                 {#                                <h4><b><a href={{ data_t_scopus.scopusSourceID }} target="_blank"> {{ data_t_scopus.title }}</a> </b></h4>#}
-                                                <div class="row">
+                                                <div class="row ">
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class="badge-info rounded" >SJR : </span>&nbsp;
+                                                            <span class="badge-info rounded o-res" >SJR : </span>&nbsp;
                                                             <span> {{ data_t_scopus.sJR }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class=" badge-warning rounded" >Rank : </span>&nbsp;
+                                                            <span class=" badge-warning rounded o-res" >Rank : </span>&nbsp;
                                                             <span > {{ data_t_scopus.rANK }}</span>
                                                         </h6>
                                                     </div>
@@ -438,13 +443,13 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class=" badge-dark rounded" >Publisher : </span>&nbsp;
+                                                            <span class=" badge-dark rounded o-res" >Publisher : </span>&nbsp;
                                                             <span > {{ data_t_scopus.publisher }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class="badge-info rounded p-1 mb-1" style="display: inline-block" >Open Access : </span>&nbsp;
+                                                            <span class="badge-info rounded p-1 mb-1 o-res" style="display: inline-block" >Open Access : </span>&nbsp;
                                                             <span > {{ data_t_scopus.openAccess }}</span>
                                                         </h6>
                                                     </div>
@@ -453,13 +458,13 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class=" badge-dark rounded p-1 mb-1" style="display: inline-block" >Quartile : </span>&nbsp;
+                                                            <span class=" badge-dark rounded p-1 mb-1 o-res" style="display: inline-block" >Quartile : </span>&nbsp;
                                                             <span >{{ data_t_scopus.quartile }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class="badge-info rounded" >Citation Count : </span>&nbsp;
+                                                            <span class="badge-info rounded o-res" >Citation Count : </span>&nbsp;
                                                             <span > {{ data_t_scopus.citationCount }}</span>
                                                         </h6>
                                                     </div>
@@ -468,13 +473,13 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class=" badge-dark rounded p-1 mb-1" >P-ISSN : </span>&nbsp;
+                                                            <span class=" badge-dark rounded p-1 mb-1 o-res" >P-ISSN : </span>&nbsp;
                                                             <span > {{ data_t_scopus.printISSN }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
-                                                            <span class="badge-info rounded" >E-ISSN : </span>&nbsp;
+                                                            <span class="badge-info rounded o-res" >E-ISSN : </span>&nbsp;
                                                             <span > {{ data_t_scopus.eISSN }}</span>
                                                         </h6>
                                                     </div>
@@ -510,8 +515,8 @@
 
                             <div class="row no-gutters">
                                 <div class="col-md-2" style="padding-top: 30px; text-align: center">
-                                    <img src="{{ asset('assets/images/thomson1.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">
-                                    <br><h6><b>Web of Science</b></h6>
+{#                                    <img src="{{ asset('assets/images/thomson1.png') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">#}
+{#                                    <br><h6><b>Web of Science</b></h6>#}
 
                                 </div>
                                 <div class="col-md-8" >
@@ -581,7 +586,7 @@
                                         {% if test ==1 and data_reuter | length ==0 %}
 
 
-                                            <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
+{#                                            <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>#}
 
                                         {% endif %}
                                     </div>
@@ -1123,7 +1128,7 @@
 
 
                                 <!-- multiple results-->
-                                <div class="card mb-3" style="margin-right: 5px">
+                                <div class="card mb-3 card-recommendation" style="margin-right: 5px">
                                     <div class="row no-gutters">
                                         <div class="col-md-2" style="padding: 10px">
                                             <img src="{{ asset('assets/images/jprofile.jpg') }}" width="60px" height="60px" class="rounded btn-outline-primary" alt="Journal Profile">

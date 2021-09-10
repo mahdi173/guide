@@ -350,7 +350,10 @@ body{
 }
 .alertNoRes{
   border: 1px solid #158CBA !important;
-  color:#158CBA !important
+  color:#158CBA !important;
+  width: 50%;
+  margin-left: 24%;
+  line-height: 32px;
 
 }
 .card-img-top{
@@ -358,10 +361,24 @@ body{
   //object-fit: cover !important;
   min-height: 300px !important;
 }
-.etiq-span{
-  margin-top: 5% !important;
-  display: block;
-  width: 100%;
-  padding: 5% !important;
-  text-align: center;
+.card-recommendation{
+  .etiq-span{
+    margin-top: 5% !important;
+    display: block;
+    width: 100%;
+    padding: 5% !important;
+    text-align: center;
+  }
+}
+.res-cart{
+  h4 a{
+    font-size: 1.1rem !important;
+  }
+
+}
+.one-res{
+  .o-res{
+    padding: 2% 3% !important;
+    display: inline-block;
+  }
 }
