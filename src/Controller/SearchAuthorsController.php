@@ -62,9 +62,10 @@ class SearchAuthorsController extends AbstractController
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
             foreach ($followers as $follower){
-                if($follower==$this->getUser()){
-                    $exist=1;
-                }
+                    if ($follower->getId() == $this->getUser()->getId()) {
+                        $exist = 1;
+                    }
+
             }
 
         }
@@ -189,7 +190,7 @@ class SearchAuthorsController extends AbstractController
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
             foreach ($followers as $follower){
-                if($follower==$this->getUser()){
+                    if ($follower->getId() == $this->getUser()->getId()) {
                     $exist=1;
                 }
             }

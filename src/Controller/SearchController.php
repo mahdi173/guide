@@ -225,7 +225,7 @@ class SearchController extends BaseController
                         $pagination = $this->paginator->paginate(
                             $data_t_scopus, /* query NOT result */
                             $request->query->getInt('page', 1), /*page number*/
-                            20 /*limit per page*/
+                            5 /*limit per page*/
                         );
                     }
                 }
@@ -356,6 +356,7 @@ class SearchController extends BaseController
                                $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
                            }
                        }
+
                        if ($data_t_scopus != null && $data_reuters == null) {
                            if ($data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
                            $eISSNT = substr_replace($eISSNT, "-", 4, 0);
@@ -405,13 +406,12 @@ class SearchController extends BaseController
                    $pagination = $this->paginator->paginate(
                        $data_t_scopus, /* query NOT result */
                        $request->query->getInt('page', 1), /*page number*/
-                       20 /*limit per page*/
+                       5 /*limit per page*/
                    );
                }
                //journal
                $topjournallistScopus = $em->selectTopListScopus($emS);
                $topjournallistWebofs = $em2->selectTopListWeb($emS);
-
                //echo sizeof($publishers);
                return $this->render('default/searchV.html.twig', [
                    'form' => $form->createView(),
@@ -773,7 +773,7 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
             $pagination = $this->paginator->paginate(
                 $data_t_advanced_scopus, /* query NOT result */
                 $request->query->getInt('page', 1), /*page number*/
-                20 /*limit per page*/
+                5 /*limit per page*/
             );
         }
 return $this->render('default/searchV.html.twig', [
@@ -826,7 +826,7 @@ return $this->render('default/searchV.html.twig', [
                 $pagination = $this->paginator->paginate(
                     $data_t_scopus, /* query NOT result */
                     $request->query->getInt('page', 1), /*page number*/
-                    20 /*limit per page*/
+                    5 /*limit per page*/
                 );
             }
 

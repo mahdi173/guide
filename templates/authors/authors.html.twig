@@ -34,7 +34,7 @@
 
             <h6 class="text-authors text-justify font-italic text-secondary" style="font-size: 1rem;line-height: 1.5rem;">Search more than 10 million from all countries, and follow, share, and discuss their researches. We're guided by our mission to help and connect authors and make research open to all.</h6><br>
 
-            <form method="get" action="{{ url('get_authors') }}">
+            <form method="get" action="{{ url('get_authors') }}" class="form-authors">
 
                 <div class="input-group mb-3  input-search">
                     <span class="icon-search" >
@@ -55,7 +55,7 @@
         <div class="col-md-8 mt-5 mb-5">
             {% if data.result.hits.hit is defined %}
 
-                <table id="auteurs"  class="table table-hover table-publication borderless" data-toggle="table" data-striped="true" style="border: 1px #DCDCDC solid">
+                <table id="auteurs"  class="table table-hover table-publication borderless " data-toggle="table" data-striped="true" style="border: 1px #DCDCDC solid">
                     <thead class="table-light">
                          <tr  class="table-light">
                              <th>Title</th>
