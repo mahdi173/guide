@@ -236,7 +236,7 @@ body{
     margin-left: 4%;
     width: 60%;
     @media screen and (max-width: 480px) {
-      width: 54%;
+      width: 52%;
     }
   }
   .fa-search{
@@ -381,7 +381,7 @@ body{
   border: 1px solid gray;
   padding: 2rem;
   margin: 22px 0;
-  background-color: white;
+  background-color: #F8F8FF;
 }
 .form-register{
   border: 1px solid gray;
@@ -457,7 +457,7 @@ body{
 }
 @media screen and (max-width: 480px) {
   .sign{
-    margin-top: 2%;
+    margin-top: -2%;
   }
   .carousel-inner-homepage{
     height: 300px;
@@ -532,7 +532,27 @@ body{
   }
   .container-contact{
     margin-bottom: 0;
-    padding: 2% 5% 22% 2%
+    padding: 2% 5% 22% 2%;
+    .logoImg{
+      text-align: center;
+    }
+    h1{
+      margin-top: 3rem !important;
+    }
+  }
+  .indexing-services{
+    text-align: left !important;
+    font-size: 2rem;
+  }
+  .container-top-journal{
+    padding: 1.7rem !important;
+    margin-top: 6% !important;
+  }
+  .form-login{
+    margin: 4%;
+  }
+  .submitBtn{
+    font-size: 12px;
   }
 }
 
