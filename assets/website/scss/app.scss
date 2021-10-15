@@ -705,4 +705,22 @@ body{
     .cart-with-res{
       margin: 0;
     }
+    .container-base{
+      text-align:center;
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+      padding: 5%;
+      width: 100%;
+
+      h1{
+        margin-top: 6%;
+        font-size: 1.9rem;
+      }
+      p{
+        margin-top: 10%;
+      }
+    }
+    .loginRow{
+      width: 100%;
+    }
 }
