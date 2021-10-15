@@ -693,4 +693,16 @@ body{
     .table-settings{
       margin-left: 0;
     }
+    #auteurs{
+      display: block;
+      width: 100% !important;
+      overflow-x: auto;
+    }
+    .row-table{
+      margin: 0;
+      padding: 0;
+    }
+    .cart-with-res{
+      margin: 0;
+    }
 }

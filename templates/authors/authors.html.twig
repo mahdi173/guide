@@ -49,8 +49,8 @@
         </div>
         <div class="col-md-2 col-sm-1"></div>
     </div>
-
-    <div class="row">
+    {% if app.request.get('authorValue') is  defined and  app.request.get('authorValue') is not null  %}
+    <div class="row row-table">
         <div class="col-md-2 col-sm-12"></div>
         <div class="col-md-8 mt-5 mb-5">
             {% if data.result.hits.hit is defined %}
@@ -127,7 +127,7 @@
         </div>
         <div class="col-md-2 col-sm-12"></div>
     </div>
-
+{% endif %}
     {% block javascripts %}
         <script type="text/javascript">
 
