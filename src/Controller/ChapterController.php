@@ -57,7 +57,7 @@ class ChapterController extends AbstractController
 
                 $form = $this->createForm(AllPublicationType::class, $publication);
                 $form->handleRequest($request);
-
+                $form_view = $form->createView();
                 if ($form->isSubmitted() && $form->isValid()) {
 
                     $pub = $em->getRepository(Allpublications::class)->find($form['idPublication']->getData());
@@ -77,7 +77,7 @@ class ChapterController extends AbstractController
 
                 $form_create = $this->createForm(AllPublicationCreateType::class, $publication);
                 $form_create->handleRequest($request);
-
+                $form_create_view = $form_create->createView();
                 if ($form_create->isSubmitted() && $form_create->isValid()) {
 
                     $publication->setUser($this->getUser());

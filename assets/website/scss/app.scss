@@ -303,6 +303,7 @@ body{
   @media screen and (max-width: 480px) {
     width: 92%;
     margin-left: 5%;
+    font-size: 0.9rem !important;
   }
 }
 .cart-with-res{
@@ -446,7 +447,8 @@ body{
   float: right;
   @media screen and (max-width: 480px) {
     float: none;
-    margin-left: 5rem !important;
+    //margin-left: 5rem !important;
+    margin-left: 30% !important;
   }
   }
 .navigationV{
@@ -457,7 +459,9 @@ body{
 }
 @media screen and (max-width: 480px) {
   .sign{
-    margin-top: -2%;
+    //margin-top: -2%;
+    margin-top: 0;
+    margin-bottom: 6px;
   }
   .carousel-inner-homepage{
     height: 300px;
@@ -556,3 +560,137 @@ body{
   }
 }
 
+  @media screen and (max-width: 480px) {
+    .privacy-page{
+      margin-top: 0 !important;
+  }
+    .indexing-services{
+      margin-top: 0 !important;
+      font-size: 1.1rem;
+      margin-bottom: 0 !important;
+      h1{
+        font-size: 1.8rem;
+        margin-bottom: 2.5rem !important;
+      }
+    }
+    .container-top-journal{
+      margin-bottom: 0 !important;
+      margin-top: 0 !important;
+    }
+    .container-base{
+      padding: 0;
+      margin: 0 !important;
+
+    }
+    .card-advanced{
+      margin-top: 5% !important;
+      .input-group-append{
+        margin-left: 35%;
+        margin-top: 4%;
+      }
+      h3{
+        text-align: center;
+        margin-top: 1%;
+      }
+    }
+    .advanced-search b{
+      font-size: 0.8rem;
+    }
+    .tz-register{
+      margin: 0;
+      .form-register{
+        border: none;
+        .btn{
+          display: block !important;
+          width: 100% !important;
+          font-size: 0.85rem;
+        }
+      }
+      .log-in-pop{
+        background-color: #F8F8FF;
+        h4{
+          padding-top: 7%;
+        }
+        .form-login{
+          border: none;
+          .btn{
+            display: block !important;
+            width: 100% !important;
+            font-size: 0.85rem;
+          .text-muted{
+            font-size: 0.85rem !important;
+          }
+          }
+        }
+      }
+      .alert-register{
+        font-size: 0.98rem;
+      }
+    }
+    .tz-send{
+      padding: 0;
+      height: auto;
+}
+    .confirmation_message{
+      height: auto !important;
+      padding: 0 7% !important;
+      margin-top: 10%;
+      margin-bottom: 7%;
+      h1{
+        font-size: 1.5rem;
+        margin-bottom: 4%;
+      }
+      .alert{
+        text-align: center !important;
+      }
+    }
+    #profiles_wrapper{
+      .dataTables_length label,#profiles_filter label{
+        width: 100%;
+        padding-bottom: 3%;
+      }
+      .dataTables_paginate .paginate_button{
+        min-width: 1.5em;
+       padding: 0;
+      }
+
+}
+    .no_thx{
+      margin-top: 0 !important;
+       a{
+         display: block !important;
+         width: 100% !important;
+         font-size: 0.84rem;
+         margin-bottom: 2% !important;
+         margin-top: 2% !important;
+       }
+    }
+    .modal-header{
+      width: 100% !important;
+    }
+    .modal-content{
+      width: 100% !important;
+    }
+    #modal_follow{
+      .form-group{
+        width: 60%;
+      }
+    }
+    .add_entity{
+      display: block !important;
+      width: 100% !important;
+      font-size: 0.85rem;
+    }
+    .title-pub{
+      margin: 6% 0;
+      text-align: center;
+    }
+    .table-infos{
+      table td{
+        text-align: center;
+      }
+    }
+    .table-settings{
+      margin-left: 0;
+    }
+}

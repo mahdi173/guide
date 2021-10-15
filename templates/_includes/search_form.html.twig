@@ -37,7 +37,7 @@
     <div class="row">
 
         <div class=" {% if (tpjlistScopus is defined and tpjlistScopus|length>0) or (data_t_scopus  is defined  and data_t_scopus|length>0) or (tpjlistWebof is defined and tpjlistWebof|length>0) %}col-sm-9{% else %}col-sm-11{% endif %}" style="text-align: right; margin-top: -15px;">
-        <a href="{{ path('advanced_search_scopus_web_ofs') }}" > <b>Advanced search ?</b></a>
+        <a href="{{ path('advanced_search_scopus_web_ofs') }}" class="advanced-search"> <b>Advanced search ?</b></a>
         </div>
     </div>
 
