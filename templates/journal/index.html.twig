@@ -1,0 +1,44 @@
+{% extends '@SuluCommunity/profile-form.html.twig' %}
+
+{% block title %}GuideJournal: Journals{% endblock %}
+
+{% block profile_content %}
+
+
+            <h1>Journals index</h1>
+
+            <table class="table">
+                <thead>
+                    <tr class="table-active">
+                        <th >Title</th>
+                        <th>Ejr</th>
+                       <th>Publisher</th>
+                        <th>Openaccess</th>
+                        <th>Printissn</th>
+                        <th>Eissn</th>
+                        <th>Rank</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for journal in journals %}
+                       <td>{{ journal.title }}</td>
+                        <td>{{ journal.ejr }}</td>
+                        <td>{{ journal.publisher }}</td>
+                        <td class="border-0">{{ journal.openaccess }}</td>
+                        <td>{{ journal.printissn }}</td>
+                        <td>{{ journal.eissn }}</td>
+                        <td>{{ journal.rank }}</td>
+                        <td>{{ journal.link }}</td>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class="btn btn-primary offset-lg-5 mt-3 add_entity" href="{{ path('add_journals',{'firstname':firstname,'lastname':lastname,'id':user.id,'_locale':app.request.locale}) }}">Add Journal</a>
+
+
+{% endblock %}

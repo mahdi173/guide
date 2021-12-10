@@ -1,0 +1,42 @@
+{% extends '@SuluCommunity/profile-form.html.twig' %}
+
+{% block title %}GuideJournal: Books{% endblock %}
+
+{% block profile_content %}
+
+
+            <h1>Book</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ book.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Publisher</th>
+                        <td>{{ book.publisher }}</td>
+                    </tr>
+                    <tr>
+                        <th>Url</th>
+                        <td>{{ book.url }}</td>
+                    </tr>
+                    <tr>
+                        <th>Authors</th>
+                        <td>{{ book.authors }}</td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>{{ book.year }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{{ path('book_index') }}">back to list</a>
+
+            <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
+
+            {{ include('book/_delete_form.html.twig') }}
+
+
+{% endblock %}
