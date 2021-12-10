@@ -1,7 +1,7 @@
 # Installation
 
 ```bash
-git clone git@github.com:multiinfo/guidejournal.git --branch=sulu
+git clone git@github.com:monark-it/guidejournal.git --branch=sulu
 cd guidejournal
 cp .env .env.local
 docker-compose build
