@@ -14,7 +14,7 @@ class Journal
 {
 
     const RESOURCE_KEY = 'journals';
-    
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -57,6 +57,33 @@ class Journal
      * @ORM\Column(type="string", nullable=true)
      */
     protected $rank;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $link;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
 
     /**
      * @return mixed
@@ -177,4 +204,21 @@ class Journal
     {
         $this->eissn = $eissn;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link): void
+    {
+        $this->link = $link;
+    }
+
 }

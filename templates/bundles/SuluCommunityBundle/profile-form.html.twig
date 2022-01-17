@@ -232,7 +232,9 @@
                         Conferences
                         </a><span role="presentation" class="divider"></span>
                         <a href="{{ path('favorite_list',{'firstname':firstname,'lastname':lastname,'id':user.id,'_locale':app.request.locale}) }}" class="list-group-item list-group-item-action ">Saved Journals</a>
-                        {% for item in sulu_navigation_root_tree('member') %}
+                        <a href="{{ path('index_journals',{'firstname':firstname,'lastname':lastname,'id':user.id,'_locale':app.request.locale}) }}" class="list-group-item list-group-item-action "> Journals</a>
+
+                            {% for item in sulu_navigation_root_tree('member') %}
                             <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"  active="list-group-item list-group-item-action bg-light" class="list-group-item list-group-item-action" title="{{ item.title }}">{{ item.title }}</a>
                         {% endfor %}
                         {% endif %}
