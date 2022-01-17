@@ -210,7 +210,7 @@ class SearchAuthorsController extends AbstractController
         $param  = urlencode($auteur); // str_replace(' ','+',$auteur);
         try {
             $rawData = HttpClient::create()
-                ->request('GET', "https://doaj.org/api/v1/search/articles/$param.?pageSize=100&sort=year:desc")
+                ->request('GET', "https://doaj.org/api/v1/search/articles/$param.?pageSize=100")
                 ->getContent()
             ;
             $data_doaj = \json_decode($rawData);
