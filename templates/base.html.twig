@@ -159,44 +159,32 @@
                     <ul class="footer-ul">
                         <h4>About Guidejournal</h4>
                         <li class="list-unstyled">
-                            <a href="{{ path('homepage') }}">Home</a>
+                            <a href="{{ sulu_content_root_path() }}">Home</a>
                         </li>
-                        <li class="list-unstyled">
-                            <a href="{{ path('about_guidejournal') }}">About</a>
-                        </li>
-
-                        <li class="list-unstyled">
-                            <a href="{{ path('contact_guidejournal') }}">Contact</a>
-                        </li>
-
-                        <li class="list-unstyled">
-                            <a href="{{ path('top_journal_page') }}">Top journals list</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="{{ path('privacy_page') }}">Privacy Policy</a>
-                        </li>
+                        {% for item in sulu_navigation_root_tree('footer') %}
+                            <li class="list-unstyled">
+                                <a href="{{ item.url }}">{{ item.title }}</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="col-lg-4">
                     <ul class="footer-ul">
                         <h4>Indexing Services</h4>
-                        <li class="list-unstyled">
-                            <a href="{{ path('services_page') }}">Services</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="https://scholar.google.com/" target="_blank">Google Scholar</a>
-                        </li>
 
-                        <li class="list-unstyled">
-                            <a href="https://doaj.org/about" target="_blank">DOAJ </a>
-                        </li>
+                        {% for service in sulu_navigation_root_flat('services') %}
 
-                        <li class="list-unstyled">
-                            <a href="https://journals.indexcopernicus.com/" target="_blank">Index Copernicus</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="https://search.crossref.org/" target="_blank">Crossref</a>
-                        </li>
+                            <li class="list-unstyled">
+                                <a href="{{ service.url }}">{{ service.title }}</a>
+                            </li>
+
+                            {% for item in sulu_navigation_tree(service.uuid, 'services') %}
+
+                                <li class="list-unstyled">
+                                    <a target="_blank" href="{{ item.url }}">{{ item.title }}</a>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="col-lg-4">

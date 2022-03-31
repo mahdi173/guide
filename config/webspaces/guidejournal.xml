@@ -14,6 +14,7 @@
     <localizations>
         <!-- See: http://docs.sulu.io/en/latest/book/localization.html how to add new localizations -->
         <localization language="en" default="true"/>
+        <localization language="fr"/>
     </localizations>
 
     <default-templates>
@@ -34,9 +35,19 @@
                     <title lang="en">Main Navigation</title>
                 </meta>
             </context>
+            <context key="footer">
+                <meta>
+                    <title lang="en">Footer Navigation</title>
+                </meta>
+            </context>
             <context key="member">
                 <meta>
                     <title lang="en">Member Navigation</title>
+                </meta>
+            </context>
+            <context key="services">
+                <meta>
+                    <title lang="en">Services Navigation</title>
                 </meta>
             </context>
         </contexts>

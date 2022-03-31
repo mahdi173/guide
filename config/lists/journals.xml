@@ -17,16 +17,13 @@
             <field-name>publisher</field-name>
             <entity-name>App\Entity\Journal</entity-name>
         </property>
+
         <property name="ejr" visibility="yes" translation="app.ejr" >
             <field-name>ejr</field-name>
             <entity-name>App\Entity\Journal</entity-name>
         </property>
-        <property name="openaccess" visibility="yes" translation="app.openaccess" >
-            <field-name>openaccess</field-name>
-            <entity-name>App\Entity\Journal</entity-name>
-        </property>
-        <property name="printissn" visibility="yes" translation="app.printissn" >
-            <field-name>printissn</field-name>
+        <property name="printISSN" visibility="yes" translation="app.printissn" >
+            <field-name>printISSN</field-name>
             <entity-name>App\Entity\Journal</entity-name>
         </property>
         <property name="eissn" visibility="yes" translation="app.eissn" >

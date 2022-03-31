@@ -48,5 +48,11 @@
             </params>
         </property>
 
+        <property name="snippets" type="snippet_selection">
+            <meta>
+                <title lang="en">Snippets</title>
+            </meta>
+        </property>
+
     </properties>
 </template>

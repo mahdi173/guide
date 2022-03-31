@@ -167,7 +167,7 @@
                                     <params>
                                         <param name="defaults" type="collection">
                                             <param name="scheme" value="https://"/>
-                                            <param name="specific_part" value="ioplume.com"/>
+                                            <param name="specific_part" value=""/>
                                         </param>
                                         <param name="schemes" type="collection">
                                             <param name="https://"/>

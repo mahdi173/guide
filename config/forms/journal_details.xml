@@ -11,39 +11,42 @@
             </meta>
         </property>
 
-        <property name="publisher" type="text_line" mandatory="true" colspan="12">
-            <meta>
-                <title>app.publisher</title>
-            </meta>
-        </property>
-
-        <property name="ejr" type="text_line" mandatory="true" colspan="12">
+        <property name="ejr" type="text_line" colspan="12">
             <meta>
                 <title>app.ejr</title>
             </meta>
         </property>
 
-        <property name="openaccess" type="text_line" mandatory="true" colspan="12">
-            <meta>
-                <title>app.openaccess</title>
-            </meta>
-        </property>
-
-        <property name="printissn" type="text_line" mandatory="true" colspan="12">
+        <property name="printISSN" type="text_line" colspan="12">
             <meta>
                 <title>app.printissn</title>
             </meta>
         </property>
 
-        <property name="eissn" type="text_line" mandatory="true" colspan="12">
+        <property name="eissn" type="text_line" colspan="12">
             <meta>
                 <title>app.eissn</title>
             </meta>
         </property>
 
-        <property name="rank" type="text_line" mandatory="true" colspan="12">
+        <property name="rank" type="text_line" colspan="12">
             <meta>
                 <title>app.rank</title>
+            </meta>
+        </property>
+
+        <property name="contributor" type="single_contact_selection">
+            <meta>
+                <title lang="en">Contributor</title>
+            </meta>
+            <params>
+                <param name="type" value="auto_complete" />
+            </params>
+        </property>
+
+        <property name="publisherOrg" type="single_account_selection" colspan="12">
+            <meta>
+                <title>app.publisher_org</title>
             </meta>
         </property>
     </properties>

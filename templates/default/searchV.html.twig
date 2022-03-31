@@ -417,7 +417,7 @@
                                 <div class="col-md-8" >
                                     <div class="card-body one-res" >
                                         {%  if data_t_scopus | length ==1 %}
-                                            {% for data_t_scopus in [data_t_scopus] %}
+                                            {% for dts in data_t_scopus %}
                                                 {% set tests=0 %}
                                                 {% for message in app.flashes('info') %}
                                                     <div class="flash-info">
@@ -429,13 +429,13 @@
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class="badge-info rounded o-res" >SJR : </span>&nbsp;
-                                                            <span> {{ data_t_scopus.sJR }}</span>
+                                                            <span> {{ dts.sJR }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class=" badge-warning rounded o-res" >Rank : </span>&nbsp;
-                                                            <span > {{ data_t_scopus.rANK }}</span>
+                                                            <span > {{ dts.rANK }}</span>
                                                         </h6>
                                                     </div>
 
@@ -444,13 +444,13 @@
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class=" badge-dark rounded o-res" >Publisher : </span>&nbsp;
-                                                            <span > {{ data_t_scopus.publisher }}</span>
+                                                            <span > {{ dts.publisher }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class="badge-info rounded p-1 mb-1 o-res" style="display: inline-block" >Open Access : </span>&nbsp;
-                                                            <span > {{ data_t_scopus.openAccess }}</span>
+                                                            <span > {{ dts.openAccess }}</span>
                                                         </h6>
                                                     </div>
 
@@ -459,13 +459,13 @@
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class=" badge-dark rounded p-1 mb-1 o-res" style="display: inline-block" >Quartile : </span>&nbsp;
-                                                            <span >{{ data_t_scopus.quartile }}</span>
+                                                            <span >{{ dts.quartile }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class="badge-info rounded o-res" >Citation Count : </span>&nbsp;
-                                                            <span > {{ data_t_scopus.citationCount }}</span>
+                                                            <span > {{ dts.citationCount }}</span>
                                                         </h6>
                                                     </div>
 
@@ -474,13 +474,13 @@
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class=" badge-dark rounded p-1 mb-1 o-res" >P-ISSN : </span>&nbsp;
-                                                            <span > {{ data_t_scopus.printISSN }}</span>
+                                                            <span > {{ dts.printISSN }}</span>
                                                         </h6>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <h6 >
                                                             <span class="badge-info rounded o-res" >E-ISSN : </span>&nbsp;
-                                                            <span > {{ data_t_scopus.eISSN }}</span>
+                                                            <span > {{ dts.eISSN }}</span>
                                                         </h6>
                                                     </div>
 
@@ -576,6 +576,20 @@
                                                     </h6>
                                                 </div>
 
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h6 >
+                                                        <span class="p-1 mb-1"> Added by: </span>
+                                                        <span >
+                                                            <img src="https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg" class="img img-responsive" width="45">
+                                                            {{ data_reuter.contributor.firstName  }}  {{ data_reuter.contributor.lastName  }}
+                                                        </span>
+                                                    </h6>
+                                                </div>
                                             </div>
 
                                         {% elseif data_t_scopus | length >1 %}
