@@ -16,246 +16,192 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    {% set test=-1 %}
-    {% set compteur=0 %}
-    {% set compteur1=0 %}
-    {% set tests=-1 %}
+       <div class="container container-home">
+           <div class="slider-home">
+              <h1>Research guide provides Services For Science</h1>
+               <p>Find the most appropriate journal according to various criteria, or authors with their published articles and corresponding journals</p>
+               <form>
+                   <div class="container choices">
+                       <div class="row">
+                           <div  class="col-4 form-control choices-btn" id="search-journal">Journal</div>
+                           <div  class="col-4 form-control choices-btn" id="search-author">Author</div>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <input type="text" class="form-control" id="search" placeholder="Full tite, words, ISSN">
+                       <input type="submit" class="form-control submit" id="submit" value="Browse Home">
 
-    {% set issn="" %}
-    {#        image index#}
-    <div class="container-fluid" style="padding-right: 0;padding-left: 0;margin-top: -15px">
-        <div id="carouselExampleControls" class="carousel slide " data-ride="carousel">
-            <div class="carousel-inner-homepage" style="overflow-x: hidden;overflow-y: hidden">
-                <div class="carousel-item active container-fluid imageindex">
-                    <div class="offset-lg-4 offset-sm-0 col-md-6 intro-text">
-                        {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
-                        <h1>Empowering Knowledge around the world</h1>
+                   </div>
+               </form>
+           </div>
+           <div class="page-content">
+               <div class="page-title">
+                   <h2>Find Journals or Authors</h2>
+                   <p>Lconsectetuer adipiscing elit,Lconsectetuer adipiscing elit,</p>
+               </div>
+               <div class="row icons-homepage">
+                   <div class="col-md-3">
+                       <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/search.svg') }}" alt="GuideJournal"  />
+                       <h5>Lorem ipsum</h5>
+                       <p>Lconsectetuer adipiscing elit,</p>
+                   </div>
+                   <div class="col-md-3">
+                       <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/lamp.svg') }}" alt="GuideJournal"  />
+                       <h5>Lorem ipsum</h5>
+                       <p>Lconsectetuer adipiscing elit,</p>
+                   </div>
+                   <div class="col-md-3">
+                       <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/one.svg') }}" alt="GuideJournal"  />
+                       <h5>Lorem ipsum</h5>
+                       <p>Lconsectetuer adipiscing elit,</p>
+                   </div>
+                   <div class="col-md-3">
+                       <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/home.svg') }}" alt="GuideJournal"  />
+                       <h5>Lorem ipsum</h5>
+                       <p>Lconsectetuer adipiscing elit,</p>
+                   </div>
+               </div>
+               <div class="row description-block">
+                   <div class="col-md-6 right-content">
+                       <h5>Lorem ipsum dolor, consectetuer adip</h5>
+                       <p class="paragraphe">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, adip lorem</p>
+                       <div class="row check-bloc">
+                           <div class="col-md-2 img-check">
+                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/check.svg') }}" alt="GuideJournal"  />
+                           </div>
+                           <div class="col-md-10">
+                               <p class="check-bloc-title">Lorem ipsum dolor, consectetuer adip</p>
+                               <p class="check-bloc-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, adip lorem</p>
+                           </div>
+                       </div>
+                       <div class="row check-bloc">
+                           <div class="col-md-2 img-check">
+                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/check.svg') }}" alt="GuideJournal"  />
+                           </div>
+                           <div class="col-md-10">
+                               <p class="check-bloc-title"></p>
+                               <p class="check-bloc-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, adip lorem</p>
+                           </div>
+                       </div>
+                       <div class="row block-connexion">
+                           <div class="col-md-3 p-0">
+                               <button class="btn btn-connexion btn-block">Sign in</button>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-6 left-content">
+                       <div class="row">
+                           <div class="col-md-6 img-sample">
+                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/sample.svg') }}" alt="GuideJournal"  />
+                           </div>
+                           <div class="col-md-6 img-sample">
+                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/sample.svg') }}" alt="GuideJournal"  />
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="row recent-articles">
+                   <div class="col-md-12 ">
+                       <h5 class="title">Recent articles</h5>
+                   </div>
+                   <div class="col-md-6 left-content"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, adip lorem</p></div>
+                   <div class="col-md-6 right-content">
+                       <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/previous.svg') }}" alt="GuideJournal"  />
+                       <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/next.svg') }}" alt="GuideJournal"  />
+                   </div>
+                   <div class="row ">
+                       <div class="col-md-4 article-infos">
+                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />
+                           <div class="btns">
+                               <button class="btn favoris rounded-pill">Favoris</button>
+                               <button class="btn share rounded-pill">Share</button>
+                           </div>
+                           <div class="fav-img">
+                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/favoris.svg') }}" alt="GuideJournal"  />
+                           </div>
+                           <div class="content">
+                               <h6>How to create a professional</h6>
+                               <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                           </div>
+                       </div>
+                       <div class="col-md-4 article-infos">
+                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />
+                           <div class="btns">
+                               <button class="btn favoris rounded-pill">Favoris</button>
+                               <button class="btn share rounded-pill">Share</button>
+                           </div>
+                           <div class="content">
+                               <h6>How to create a professional</h6>
+                               <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                           </div>
+                       </div>
+                       <div class="col-md-4 article-infos">
+                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />
+                           <div class="btns">
+                               <button class="btn favoris rounded-pill">Favoris</button>
+                               <button class="btn share rounded-pill">Share</button>
+                           </div>
+                           <div class="fav-img">
+                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/favoris.svg') }}" alt="GuideJournal"  />
+                           </div>
+                           <div class="content">
+                               <h6>How to create a professional</h6>
+                               <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-12 text-center">
+                       <button class="btn btn-connexion-articles">Sign in</button>
+                   </div>
 
-                    </div>
+               </div>
+           </div>
+       </div>
+    <div class="container-fluid container-banner">
+        <div class="banner">
+            <h6>Trusted by great companies</h6>
+            <div class="container">
+            <div class="row partenaires">
+                <div class="col-lg-4">
+                    <a href="#"><img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/monark.svg') }}" alt="monark"  /></a>
                 </div>
-                <div class="carousel-item container-fluid imageindex2">
-                    <div class="offset-lg-3 offset-sm-0 col-md-6 intro-text">
-                        {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
-                        <h1>Find All the help to advance in your scientific researches</h1>
-
-                    </div>
+                <div class="col-lg-4">
+                    <a href="#"><img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/aion.svg') }}" alt="aion"  /></a>
                 </div>
-                <div class="carousel-item container-fluid imageindex3">
-                    <div class="offset-lg-4 offset-sm-0 col-md-6 intro-text">
-                        {#                <h2>Empowering Knowledge we help you manage work more efficiently so you can spend more time making</h2>#}
-                        <h1>GuideJournal provides Services For Science
-                        </h1>
-
-                    </div>
+                <div class="col-lg-4">
+                    <a href="#"><img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/estimator.svg') }}" alt="estimator"  /></a>
                 </div>
             </div>
-
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            </div>
         </div>
-
     </div>
-    <div class="container">
-
-        {#        <div class="row col-sm-12" align="center">#}
-
-        {#            <!-- home_page -->#}
-        {#            <ins class="adsbygoogle"#}
-        {#                 style="display:block"#}
-        {#                 data-ad-client="ca-pub-9897811061542650"#}
-        {#                 data-ad-slot="9578484962"#}
-        {#                 data-ad-format="auto"#}
-        {#                 data-full-width-responsive="true"></ins>#}
-        {#            <script>#}
-        {#                (adsbygoogle = window.adsbygoogle || []).push({});#}
-        {#            </script>#}
-        {#        </div>#}
-        <!-- Fin pub 0001-->
-        <br><div class="row col-sm-12" style="margin-top: 60px">
-            <div class="col-sm-12 col-md-12">
-                <h4 class="text-warning services">Choose your Service</h4>
-            </div>
-
-            <div class="col-sm-12 col-md-6 services-list " style="padding-left: 43px">
-                <div class="row ">
-                    <div class="col-sm-12 col-md-2 text-primary">
-
-                        <a href="{{ path('journalSearch') }}">   <i class="fa fa-file icon-size" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="col-sm-12 col-md-10">
-                        <p class="title-service">
-                            <a href="{{ path('journalSearch') }}">Journal Search</a>
-
-                        </p>
-
-                        <p>
-                            <span style="color: #555" >Find the most appropriate <span style="color: #e07b39;padding-right: 5px">journal</span>  according to various criteria</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6 services-list text-primary">
-                <div class="row ">
-                    <div class="col-sm-12 col-md-2 ">
-                        <a  href="{{ path('get_authors') }}" > <i class="fa fa-search icon-size" aria-hidden="true"></i></a>
-
-                    </div>
-                    <div class="col-sm-12 col-md-10">
-                        <p class="title-service">
-                            <a  href="{{ path('get_authors') }}" >Author Search</a>
-                        </p>
-
-
-                        <p>
-                            <span style="color: #555" >All</span>
-                            <span style="color: #e07b39;padding-right: 5px">authors</span>
-                            <span style="color: #555" >with their published articles and corresponding journals</span>
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-            {#            <div class="col-sm-12 col-md-4 services-list ">#}
-            {#                <div class="row ">#}
-            {#                    <div class="col-sm-12 col-md-2 text-primary">#}
-            {#                        <a  href="{{ path('graphic_data') }}" class=" title-service"> <i class="fa fa-bar-chart icon-size" aria-hidden="true"></i></a></p>#}
-
-            {#                    </div>#}
-            {#                    <div class="col-sm-12 col-md-10">#}
-            {#                        <p class="title-service">#}
-            {#                            <a  href="{{ path('graphic_data') }}" class=" title-service">Graph Maker</a></p>#}
-            {#                        <p>#}
-
-            {#                            <span style="color: #555" >Create your custom#}
-            {#                                  <span style="color: #e07b39;padding-right: 5px">graph</span>#}
-            {#                                or  <span style="color: #e07b39;padding-right: 5px">chart</span>#}
-            {#                                 quickly and efficiently</span>#}
-            {#                        </p>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#            </div>#}
-
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12"> </div>
-                    <div class="col-md-2 col-sm-1"></div>
-                    <div class="col-md-8 mt-5">
-                        {% include '_includes/search_form.html.twig' %}
-
-                    </div>
-                    <div class="col-md-2 col-sm-1"></div>
-                </div>
-            </div>
-        </div>
-
-
-
-        {#        <div class="row col-sm-12" align="center" style="height: 60px">#}
-        {#            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>#}
-        {#            <!-- pub_adsence_horizontal_pageH -->#}
-        {#            <ins class="adsbygoogle"#}
-        {#                 style="display:block"#}
-        {#                 data-ad-client="ca-pub-9897811061542650"#}
-        {#                 data-ad-slot="7418984239"#}
-        {#                 data-ad-format="auto"#}
-        {#                 data-full-width-responsive="true"></ins>#}
-        {#            <script>#}
-        {#                (adsbygoogle = window.adsbygoogle || []).push({});#}
-        {#            </script>#}
-        {#        </div>#}
-
+    <div class="suggest-articles container">
         <div class="row">
-            <div class="col-md-12 mt-5 mb-2 offset-sm-2 col-sm-10">
-
-                <a href="{{ path('submit-articles') }}" type="button" class="btn btn-outline-info ml-3  submitArticle">Submit Your Article</a>
-
-                {%  if  sulu_navigation_root_tree is defined %}
-                    {% for item in sulu_navigation_root_tree('member') %}
-
-                        {% if (item.title== 'Conference')%}
-                            {% set page='conference' %}
-                            <a href="{{ sulu_content_path(item.url, item.webspaceKey, page) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add conference</a>
-                        {% endif %}
-
-                    {% endfor %}
-                {% endif %}
-                {%  if  sulu_navigation_root_tree is defined %}
-                    {% for item in sulu_navigation_root_tree('member') %}
-
-                        {% if (item.title== 'Journal')%}
-                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="btn btn-outline-info ml-3 float-right" title="{{ item.title }}">Add journal</a>
-                        {% endif %}
-
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="row">
-            <h4 class="mb-n2 mt-5 text-primary recent_articles" ><b>Recent articles</b></h4>
-            <hr class="col-md-12 bg-primary" style="height:2px">
-        </div>
-
-        <div class="main-slider" >
-            {% set featured_articles = content.featured_articles %}
-            <div class="row" style="padding-bottom: 3%;">
-                {% for a in featured_articles %}
-                    <div class="col-md-4 col-sm-12 mt-5 mb-2 posts-last">
-                        <div class="card mb-4 box-shadow" style="margin-right: 5px">
-
-                            {% if a.cover_image %}
-                                {% set media = a.cover_image %}
-
-                                {% if media is defined and media is not null  and media.thumbnails['sulu-400x400'] %}
-                                    <a href="{{ a.path }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.url? media.url:media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true" alt="{{ a.title }}"></a>
-                                {% else %}
-                                    <a href="{{ a.path }}"><img class="card-img-top img-responsive" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true" alt="{{ a.title }}"></a>
-                                {% endif %}
-
-                            {% else %}
-                                <a href="{{ a.path }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="{{ a.path }}">{{ a.title }}</a></h5>
-                                {% if a.excerptDescription %}<small>{{ a.excerptDescription|slice(0,60)|raw  }}...</small>{% endif %}
-                                <a href="{{ a.path }}" style="float: right">Read More →</a>
-                            </div>
-                        </div>
+            <div class="col-md-6 left-content">
+                <div class="row line-1">
+                    <div class="col-md-6">
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/suggest-article.svg') }}" alt="suggest-article"  />
                     </div>
-
-                {% endfor %}
+                    <div class="col-md-6 s-img">
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/suggest-article.svg') }}" alt="suggest-article"  />
+                    </div>
+                </div>
+                <div class="row line-2 mt-3">
+                    <div class="col-md-6">
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/suggest-article.svg') }}" alt="suggest-article"  />
+                    </div>
+                    <div class="col-md-6 f-img">
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/suggest-article.svg') }}" alt="suggest-article"  />
+                    </div>
+                </div>
             </div>
-            {#            {% set recentarticles=posts|slice(0,6) %}#}
-            {#            {{ dump(recentarticles) }}#}
-            {#            <div class="card mb-4 box-shadow" style="margin-right: 5px">#}
-
-            {#                                    {% if a.content.content.image is defined %}#}
-            {#                                        {% set media = sulu_resolve_media(a.content.content.image, app.request.locale) %}#}
-
-            {#                                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true"></a>#}
-            {#                                    {% else %}#}
-            {#                                        <a href="{{ a.routePath }}"><img class="card-img-top" data-src="{{ asset('assets/images/Guidejournal.png') }}" src="{{ asset('assets/images/Guidejournal.png') }}" data-holder-rendered="true"></a>#}
-
-            {#                                    {% endif %}#}
-            {#                                         <div class="card-body">#}
-            {#                                            <h5 class="card-title"><a href="">{{ a.title }}</a></h5>#}
-            {#                                            {% if a.content.content.teaser %}<small>{{ a.content.content.teaser|slice(0,60)|raw  }}...</small>{% endif %}#}
-            {#                                            <a href="{{ a.routePath }}" style="float: right">Read More →</a>#}
-            {#                                         </div>#}
-            {#                                </div>#}
+            <div class="col-md-6 right-content">
+                <h6>Other articles selected for you</h6>
+                <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla<br><br>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                <button class="btn">Explore more</button>
+            </div>
         </div>
-
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
