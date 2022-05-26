@@ -5,8 +5,10 @@ $sfMinWidth: 350px;
 body {
   font-size: 1rem;
   border-top: 7px solid;
+  overflow-x: hidden;
   border-image: linear-gradient(to right, #F15A24 25%,#802549 50%) 5;
   font-family: -apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
+
 }
 
 .search-form {
@@ -1020,6 +1022,11 @@ a{
         .block-connexion {
           margin-left: 1%;
           margin-top: 9%;
+          a{
+            &:hover{
+              text-decoration: none !important;
+            }
+          }
           .btn-connexion {
             color: #FFFFFF;
             background: #F15A24;
