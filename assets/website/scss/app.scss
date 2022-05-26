@@ -798,7 +798,7 @@ a{
     h4{
       font-style: normal;
       font-weight: 800;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 16px;
       color: #F15A24;
     }
@@ -806,7 +806,7 @@ a{
 
         font-style: normal;
         font-weight: 400;
-        font-size: 13px;
+        font-size: 11.5px;
         line-height: 16px;
         color: #FFF !important;
         text-transform: capitalize;
@@ -815,15 +815,23 @@ a{
   .right-ul{
     max-width: 20% !important;
     padding-top: 5%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-left: 2%;
     h4{
       font-style: normal;
       font-weight: 800;
-      font-size: 15.76px;
+      font-size: 13px;
       line-height: 19px;
       color: #FFFFFF;
+      margin-bottom: 10%;
     }
     #Subscribe{
       font-weight: 800;
+      background: #F15A24;
+      color: #fff;
+      font-size: 13px;
+      border-color: #F15A24 ;
     }
   }
 }
@@ -1106,20 +1114,25 @@ a{
           margin-top: 12%;
         }
       }
-      .btn-connexion-articles{
-        font-style: normal;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 27px;
-        background: #F15A24;
-        color: #FFFFFF;
-        width: 19%;
-        text-transform: none;
-        padding: 1%;
-        margin-top: 6%;
-        margin-bottom: 10%;
-        &:hover{
-          border-bottom-width:0 !important;
+      .bloc-btn {
+        margin-bottom: 6%;
+        height: 8vw;
+        .btn-connexion-articles {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 27px;
+          background: #F15A24;
+          color: #FFFFFF;
+          width: 19%;
+          text-transform: none;
+          padding: 1%;
+          margin-top: 6%;
+          margin-bottom: 10%;
+
+          &:hover {
+            border-bottom-width: 0 !important;
+          }
         }
       }
     }
@@ -1166,6 +1179,7 @@ a{
       line-height: 23px;
       color: #58595B;
       width: 67%;
+      margin-bottom: 6%;
     }
     button{
       background: #F15A24;
@@ -1175,9 +1189,9 @@ a{
       line-height: 27px;
       color: #FFFFFF;
       text-transform: none;
-      margin-top: 4%;
       &:hover{
         border-bottom-width:0 !important;
+        margin-top: 0 !important;
       }
     }
   }
