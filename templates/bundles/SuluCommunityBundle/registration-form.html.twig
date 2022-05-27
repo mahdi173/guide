@@ -1,58 +1,71 @@
-{% extends '@SuluCommunity/base.html.twig' %}
 
-{% block security %}
-    <div class="container">
-        <div class="row">
-        <div class="offset-md-2 col-md-8 form-register">
-            <h1 class="text-center">{{ 'Registration'|trans }}</h1>
-            {% if (app.request.get('send') == 'true')  %}
-                <p class="alert alert-register text-center border pt-3 pb-3 ">
-                    Operation was successfully completed, Please confirm from your email acount !
-                </p>
-            {% else %}
-                {{ form_start(form, { 'attr': {'class': 'form'} }) }}
-                <div class="col">{{ form_errors(form) }}</div>
-                <div class="form-label-group ">
-                    <label for="registration_username">First name :</label>
-                    {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
-                    {{ form_errors(form.firstName) }}
-                </div>
-                <div class="form-label-group ">
-                    <label for="registration_lastName">Last name :</label>
-                    {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
-                    {{ form_errors(form.lastName) }}
-                </div>
-                <div class="form-label-group ">
-                    <label for="registration_username">Username :</label>
-                    {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
-                    {{ form_errors(form.username) }}
-                </div>
-                <div class="form-label-group ">
-                    <label for="registration_email">Email :</label>
-                    {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
-                    {{ form_errors(form.email) }}
-                </div>
-                <div class="form-label-group ">
-                    <label for="registration_plainPassword">Password:</label>
-                    {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
-                    {{ form_errors(form.plainPassword.first) }}
-                </div>
-                <div class="form-label-group ">
-                    <label for="registration_plainPassword">Repeat password:</label>
-                    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
-                    {{ form_errors(form.plainPassword.second) }}
-                </div>
-                <div class="checkbox mb-3">
-                    <label class="mr-lg-2 mt-4">
-                        {{ form_widget(form.terms) }} <a href="{{ path('privacy_page') }}" target="_blank">Accept terms and conditions</a>
-                    </label>
-                </div>
-                {{ form_widget(form._token) }}
-                <button type="submit" id="registration_submit" name="registration[submit]" class="btn btn-lg btn-info mr-2 mr-lg-2">Register</button>
-                {{ form_end(form, {'render_rest': false}) }}
+{% block body %}
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-            {% endif %}
-        </div>
-        </div>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+<link href="{{ asset('build/website/register.css') }}" rel="stylesheet"/>
+</head>
+
+<style>
+
+ body{
+   overflow: hidden;
+ }
+
+</style>
+<div class="row">
+    <div class="col-sm-6  text-red"><img class="imgg img-fluid" src="{{ asset('/assets/images/svg/background.svg') }}" alt="" />
+      <img class="logo-left" style=" " src="{{ asset('/assets/images/svg/logo-left.svg') }}" alt="" />
+
+    
+         
+         <a href='#'> <img class="fb" src="{{ asset('/assets/images/svg/fb.svg') }}" alt="" /> </a>
+       
+       <div class="instagram">
+         <a href='#'> <img class="instagram" src="{{ asset('/assets/images/svg/instagram.svg') }}" alt="" /> </a>
+       </div>
+       <div class="linkedIn">
+         <a href='#'> <img class="linkedIn" src="{{ asset('/assets/images/svg/linkedIn.svg') }}" alt="" /> </a>
+       </div>
+       <div class="youtube">
+         <a href='#'> <img class="youtube" src="{{ asset('/assets/images/svg/youtube.svg') }}" alt="" /> </a>
+       </div>
+       <div class="whattsap">
+         <a href='#'> <img  class="whattsap" src="{{ asset('/assets/images/svg/whattsap.svg') }}" alt="" /> </a>
+       </div>
+        
     </div>
+    <div class="col-sm-6 bg-white text-white"><div class="paragraphe">
+          Rejoignez Research guide dès aujourd'hui.
+        </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="background: #007BB6; font-weight: 200;"><img class='image_style' src="{{ asset('/assets/images/svg/fb2.svg') }}" >S’inscrire avec facebook</button>
+        <button type="button" class="btn btn-default btn-lg btn-block" style="font-weight: 200; border-color: #DBDFFD;"><img class='image_style' src="{{ asset('/assets/images/svg/google.svg') }}" >S’inscrire avec google</button>
+        <button type="button" class="btn btn-default btn-lg btn-block" style="background: #0A66C2; font-weight: 200; color: white;"><img class='image_style' src="{{ asset('/assets/images/svg/linkedIn.svg') }}" >S’inscrire avec linkedIn</button>
+
+        
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="background: #802549; font-weight: bold; border-color: #802549;">Créer votre compte</button>
+        <div class='cond'>
+         En vous inscrivant, vous acceptez les Conditions d'Utilisationt la <a href='#'>Politique de Confidentialité</a>, incluant <a href='#'>l'Utilisation de Cookies</a>.
+        </div>
+        <div class='dejaInscrit'>
+         Vous avez déjà un compte ? 
+        </div>
+         <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary btn-lg btn-block" style="background: #C14334; font-weight: bold; border-color: #C14334;">Se connecter</button>
+
+</div>
+        </div>
+  </div>
+
+
+
+
 {% endblock %}
