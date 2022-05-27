@@ -55,7 +55,6 @@ class SearchController extends BaseController
     public function searchByValue(Request $request, JournalRepository $journalRepository, PaginatorInterface $paginator)
     {
 
-
         $objet = new Search();
         $data_t_scopus = null;
         $data_reuters = null;

@@ -38,7 +38,7 @@
 
     <!--style="background-color: #f6f6f6"-->
     <div class="container-fluid mr-0 ml-0 pr-0 pl-0" style="margin-top: -1%">
-        <div class="card">
+        <div class="card card-results">
             <div class="card-body">
 
                 <div class="row mt-5">
@@ -58,105 +58,138 @@
         <div class="col-sm-12"></div>
 
     </div>
-    <div class="container-fluid" >
+    <div class="container-fluid search-journals-result" >
 
         <div class="row" >
             <div class="col-md-2 col-sm-2"></div>
             <div class="col-md-8">
-                <h3 align="center" class="text-primary"><b>The following title(s) matched your request</b></h3>
+                <h3 class="text-center text-uppercase">
+                    <b>{{ journals|length }} journal(s) matched your search</b></h3>
 
                 <br>
+                {% if journals|length %}
+                <table class="table mb-5">
 
+                    <thead>
+                    <tr>
+                        <th scope="col" class="th-journal">JOURNAL NAME</th>
+                        <th scope="col">PUBLISHER</th>
+                        <th scope="col">OPEN ACCESS </th>
+                        <th scope="col">E-ISSN</th>
+                    </tr>
+                    <tbody>
                     {% for journal in journals %}
-                    <div class="card">
-                        <div class="card-header">
-                            <h4><a href="{{ path('journal_show', {'id': journal.id}) }}">
-                                    <strong>{{ journal.title }}</strong>
-                                </a></h4>
-                        </div>
-                        <div class="card-body" >
-                            <div class="row ">
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class="badge-info rounded o-res" >SJR : </span>&nbsp;
-                                        <span> </span>
-                                    </h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class=" badge-warning rounded o-res" >Rank : </span>&nbsp;
-                                        <span > {{ journal.rank|default('') }}</span>
-                                    </h6>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class=" badge-dark rounded o-res" >Publisher : </span>&nbsp;
-                                        <span > {{ journal.publisherOrg.name|default('') }}</span>
-                                    </h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class="badge-info rounded p-1 mb-1 o-res" style="display: inline-block" >Open Access : </span>&nbsp;
-                                        <span > {{ journal.isOpenAccess ? 'YES' : 'NO' }}</span>
-                                    </h6>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class=" badge-dark rounded p-1 mb-1 o-res" style="display: inline-block" >Quartile : </span>&nbsp;
-                                        <span >{{ journal.quartile|default('') }}</span>
-                                    </h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class="badge-info rounded o-res" >Citation Count : </span>&nbsp;
-                                        <span > {{ journal.citationCount }}</span>
-                                    </h6>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class=" badge-dark rounded p-1 mb-1 o-res" >P-ISSN : </span>&nbsp;
-                                        <span > {% if journal.originalPrintISSN %}{{ journal.printISSN }}{% endif %}</span>
-                                    </h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h6 >
-                                        <span class="badge-info rounded o-res" >E-ISSN : </span>&nbsp;
-                                        <span > {% if journal.originalEISSN %}{{ journal.eissn }}{% endif %}</span>
-                                    </h6>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            {% if journal.contributor %}
-                            <h6 >
-                                <span class="p-1 mb-1"> Added by: </span>
-                                <span >
-                                                <img src="https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg" class="img img-responsive" width="45" />
-                                                {{ journal.contributor.firstName  }}  {{ journal.contributor.lastName  }}
-                                            </span>
-                            </h6>
-                            {% endif %}
-                        </div>
-                    </div>
-                        <br>
-                    {% else %}
-                        <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>
+                    <tr class="table-data">
+                        <th scope="row" class="jounal-title">
+                            <a href="{{ path('journal_show', {'id': journal.id}) }}" target="_blank">{{ journal.title }}</a>
+                        </th>
+                        <td>   {% if journal.contributor %}{{ journal.contributor.firstName  }}  {{ journal.contributor.lastName  }}{% endif %}</td>
+                        <td> {{ journal.isOpenAccess ? 'YES' : 'NO' }}</td>
+                        <td>{% if journal.originalEISSN %}{{ journal.eissn }}{% endif %}</td>
+                    </tr>
                     {% endfor %}
-                {{ knp_pagination_render(journals, null, {}, {
-                    'align': 'center',
-                    'size': 'large',
-                    'rounded': true,
-                }) }}
+                    </tbody>
+                </table>
+            {% else %}
+                <table class="table mb-5">
+                    <thead>
+                    <tr>
+                        <th scope="col">No results found for {{ app.request.get('searchValue')|upper}} !</th>
+                    </tr>
+                    </thead>
+                </table>
+                {% endif %}
+
+{#                    {% for journal in journals %}#}
+{#                    <div class="card">#}
+{#                        <div class="card-header">#}
+{#                            <h4><a href="{{ path('journal_show', {'id': journal.id}) }}">#}
+{#                                    <strong>{{ journal.title }}</strong>#}
+{#                                </a></h4>#}
+{#                        </div>#}
+{#                        <div class="card-body" >#}
+{#                            <div class="row ">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded o-res" >SJR : </span>&nbsp;#}
+{#                                        <span> </span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-warning rounded o-res" >Rank : </span>&nbsp;#}
+{#                                        <span > {{ journal.rank|default('') }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded o-res" >Publisher : </span>&nbsp;#}
+{#                                        <span > {{ journal.publisherOrg.name|default('') }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded p-1 mb-1 o-res" style="display: inline-block" >Open Access : </span>&nbsp;#}
+{#                                        <span > {{ journal.isOpenAccess ? 'YES' : 'NO' }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded p-1 mb-1 o-res" style="display: inline-block" >Quartile : </span>&nbsp;#}
+{#                                        <span >{{ journal.quartile|default('') }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded o-res" >Citation Count : </span>&nbsp;#}
+{#                                        <span > {{ journal.citationCount }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded p-1 mb-1 o-res" >P-ISSN : </span>&nbsp;#}
+{#                                        <span > {% if journal.originalPrintISSN %}{{ journal.printISSN }}{% endif %}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded o-res" >E-ISSN : </span>&nbsp;#}
+{#                                        <span > {% if journal.originalEISSN %}{{ journal.eissn }}{% endif %}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="card-footer">#}
+{#                            {% if journal.contributor %}#}
+{#                            <h6 >#}
+{#                                <span class="p-1 mb-1"> Added by: </span>#}
+{#                                <span >#}
+{#                                                <img src="https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg" class="img img-responsive" width="45" />#}
+{#                                                {{ journal.contributor.firstName  }}  {{ journal.contributor.lastName  }}#}
+{#                                            </span>#}
+{#                            </h6>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                        <br>#}
+{#                    {% else %}#}
+{#                        <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>#}
+{#                    {% endfor %}#}
+{#                {{ knp_pagination_render(journals, null, {}, {#}
+{#                    'align': 'center',#}
+{#                    'size': 'large',#}
+{#                    'rounded': true,#}
+{#                }) }}#}
             </div>
             <div class="col-md-2 col-sm-2"></div>
         </div>

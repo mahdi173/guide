@@ -17,23 +17,7 @@
     </script>
 
        <div class="container container-home">
-           <div class="slider-home">
-              <h1>Research guide provides Services For Science</h1>
-               <p>Find the most appropriate journal according to various criteria, or authors with their published articles and corresponding journals</p>
-               <form>
-                   <div class="container choices">
-                       <div class="row">
-                           <div  class="col-4 form-control choices-btn" id="search-journal">Journal</div>
-                           <div  class="col-4 form-control choices-btn" id="search-author">Author</div>
-                       </div>
-                   </div>
-                   <div class="form-group">
-                       <input type="text" class="form-control" id="search" placeholder="Full tite, words, ISSN">
-                       <input type="submit" class="form-control submit" id="submit" value="Browse Home">
-
-                   </div>
-               </form>
-           </div>
+           {% include 'pages/parts/form-search.html.twig' %}
            <div class="page-content">
                <div class="page-title">
                    <h2>Find Journals or Authors</h2>

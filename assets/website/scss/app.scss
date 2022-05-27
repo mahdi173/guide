@@ -299,9 +299,9 @@ a{
   }
 }
 .row-form{
-  background-color: #fff;
+  //background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  //border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
   margin-top: 8%;
 }
@@ -892,6 +892,9 @@ a{
           line-height: 22px;
           color: #fff;
           padding-top: 2%;
+          &:hover{
+            cursor: pointer;
+          }
         }
 
         #search-journal {
@@ -1220,6 +1223,58 @@ a{
     }
     .line-1{
       position: relative;
+
+    }
+  }
+}
+.card-results{
+border: none;
+  background-color: transparent;
+}
+// page search-journals-result
+.search-journals-result{
+  font-family: 'Montserrat',sans-serif;
+   h3{
+     font-style: normal;
+     font-weight: 600;
+     font-size: 28px;
+     line-height: 47px;
+     color: #F15A24;
+   }
+  table{
+    background-color:#F1F2F2;
+    text-align: center;
+    .jounal-title{
+      text-align: left !important;
+    }
+    thead{
+      background: #802549;
+      border-top-left-radius: 3%;
+      border-top-right-radius: 3%;
+      border-bottom: none;
+      color: #fff;
+      th{
+        border-bottom: none;
+      }
+      .th-journal{
+        width: 43%;
+      }
+    }
+    td,.jounal-title{
+      color: #58595B;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 29px;
+      text-transform: capitalize;
+      a{
+        color: #58595B;
+      }
+    }
+    .table-data{
+      &:hover,&:active,&:visited{
+        background-color: #EFDDDE;
+      }
     }
   }
 }

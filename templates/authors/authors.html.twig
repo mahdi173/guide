@@ -34,18 +34,21 @@
 
             <h6 class="text-authors text-justify font-italic text-secondary" style="font-size: 1rem;line-height: 1.5rem;">Search more than 10 million from all countries, and follow, share, and discuss their researches. We're guided by our mission to help and connect authors and make research open to all.</h6><br>
 
-            <form method="get" action="{{ url('get_authors') }}" class="form-authors">
+{#            <form method="get" action="{{ url('get_authors') }}" class="form-authors">#}
 
-                <div class="input-group mb-3  input-search">
-                    <button type="submit" class="icon-search" style="border: none; border-radius: 50% 0 0 50%  ">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <input type="text" id="searchValue" name="authorValue"  class="form-control searchValue" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
+{#                <div class="input-group mb-3  input-search">#}
+{#                    <button type="submit" class="icon-search" style="border: none; border-radius: 50% 0 0 50%  ">#}
+{#                        <i class="fa fa-search"></i>#}
+{#                    </button>#}
+{#                    <input type="text" id="searchValue" name="authorValue"  class="form-control searchValue" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">#}
 {#                    <div class="input-group-append">#}
 {#                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>#}
 {#                    </div>#}
-                </div>
-            </form>
+{#                </div>#}
+{#            </form>#}
+            <div class="container container-home">
+                {% include 'pages/parts/form-search.html.twig' %}
+            </div>
         </div>
         <div class="col-md-2 col-sm-1"></div>
     </div>
