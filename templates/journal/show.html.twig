@@ -37,7 +37,7 @@
     </script>
 
     <!--style="background-color: #f6f6f6"-->
-    <div class="container-fluid mr-0 ml-0 pr-0 pl-0" style="margin-top: -1%">
+    <div class="container-fluid container-journal mr-0 ml-0 pr-0 pl-0" style="margin-top: -1%">
         <div class="card">
             <div class="card-body">
 
@@ -58,16 +58,12 @@
         <div class="col-sm-12"></div>
 
     </div>
-    <div class="container-fluid" >
-
+    <div class="container j-infos" >
+        <h3 class="j-title">{{ journal.title }}</h3>
         <div class="row" >
-            <div class="col-md-2 col-sm-2"></div>
-            <div class="col-md-8">
+            {#  <div class="col-md-10">
                 <br>
                 <div class="card">
-                    <div class="card-header">
-                        <h4><strong>{{ journal.title }}</strong></h4>
-                    </div>
                     <div class="card-body" >
                         <div class="row ">
                             <div class="col-sm-6">
@@ -142,10 +138,139 @@
                         {% endif %}
                     </div>
                 </div>
+            </div> #}
+            <div class="col-md-10 j-body">
+                <div class="col-md-10 text">
+                    <h6 >VERIFIED JOURNAL</h6>
+                    <p>This journal is included in the JournalGuide whitelist of reputable titles. Learn more here.</p>
+                </div>
+                <div class="col-md-10 text j-table">
+                    <h6 >GENERAL INFORMATION</h6>
+                    <table class="table">
+                        <tbody>
+                        <tr class="col-title">
+                            <td >SJR</td>
+                            <td>{{ journal.sjr|default('') }}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td >Rank</td>
+                            <td>{{ journal.rank|default('') }}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td>Publisher</td>
+                            <td>{{ journal.publisherOrg.name|default('') }}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td>Open Access</td>
+                            <td> {{ journal.isOpenAccess ? 'YES' : 'NO' }}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td>Quartile</td>
+                            <td>{{ journal.quartile|default('') }}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td> Citation Count</td>
+                            <td> {{ journal.citationCount }}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td>  P-ISSN</td>
+                            <td> {% if journal.originalPrintISSN %}{{ journal.printISSN }}{% endif %}</td>
+                        </tr>
+                        <tr class="col-title">
+                            <td> E-ISSN</td>
+                            <td>{% if journal.originalEISSN %}{{ journal.eissn }}{% endif %}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row btns-share">
+                    <div class="col-md-5 offset-md-3 save-btn"><button class="btn">
+                            <img class="img-fluid" src="{{ asset('assets/images/refonte/search/save.svg') }}" alt="GuideJournal"  />
+                            Save this journal
+                        </button>
+                    </div>
+                    <div class="col-md-2 share-btn share-1"><a href="">Share <img class="img-fluid" src="{{ asset('assets/images/refonte/search/fb.svg') }}" alt="GuideJournal"  /></a></div>
+                    <div class="col-md-2 share-btn share-2"><a href="">Share <img class="img-fluid" src="{{ asset('assets/images/refonte/search/twitter.svg') }}" alt="GuideJournal"  /></a></div>
+                    <div class="col-md-2 share-btn"><a href="">Share <img class="img-fluid" src="{{ asset('assets/images/refonte/search/linkedin.svg') }}" alt="GuideJournal"  /></a></div>
+                </div>
             </div>
-            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-2 col-sm-1 j-banner">
+                <img class="img-fluid" src="{{ asset('assets/images/refonte/search/banner.svg') }}" alt="ResearchGuide"  />
+
+            </div>
         </div>
         <br>
+        <div class="container-home">
+            <div class="page-content">
+                <div class="sjr-jcr">
+                    <p>
+                        <span class="title-1"> SJR (SCImago Journal & Country Rank)</span> is a publicly available portal that includes the journals and country scientific
+                        indicators developed from the information contained in the Scopus database (Elsevier B.V.). These indicators can
+                        be used to assess and analyze scientific domains. The SJCR allows you also to embed significative journal metrics
+                        into your web as a clickable image widget This platform takes its name from the SCImago Journal Rank (SJR)
+                        indicator, developed by SCImago from the widely known algorithm Google PageRank™.
+                        This indicator shows the visibility of the journals contained in the Scopus® database from 1996.
+                        <br><br>
+                       <span class="title-1"> JCR (impact factor)</span> is a unique database of web of science, which is used to determine the relative importance
+                        of journals within their subject categories. An impact factor is one measure of the quality of a journal.
+                        This is calculated by the number of citations received by the journal, from other journals within the Web of Science
+                        database.
+
+                    </p>
+                </div>
+                <div class="row recent-articles show-recent-articles">
+                    <div class="col-md-12 ">
+                        <h5 class="title">Recommended for you</h5>
+                    </div>
+                    <div class="col-md-6 left-content"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, adip lorem</p></div>
+                    <div class="col-md-6 right-content">
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/previous.svg') }}" alt="GuideJournal"  />
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/next.svg') }}" alt="GuideJournal"  />
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-4 article-infos">
+                            <img class="img-fluid" src="{{ asset('assets/images/refonte/search/image.svg') }}" alt="GuideJournal"  />
+                            <div class="btns">
+                                <button class="btn favoris rounded-pill">Favoris</button>
+                                <button class="btn share rounded-pill">Share</button>
+                            </div>
+                            <div class="content">
+                                <h6>How to create a professional</h6>
+                                <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 article-infos">
+                            <img class="img-fluid" src="{{ asset('assets/images/refonte/search/image.svg') }}" alt="GuideJournal"  />
+                            <div class="btns">
+                                <button class="btn favoris rounded-pill">Favoris</button>
+                                <button class="btn share rounded-pill">Share</button>
+                            </div>
+                            <div class="content">
+                                <h6>How to create a professional</h6>
+                                <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 article-infos">
+                            <img class="img-fluid" src="{{ asset('assets/images/refonte/search/image.svg') }}" alt="GuideJournal"  />
+                            <div class="btns">
+                                <button class="btn favoris rounded-pill">Favoris</button>
+                                <button class="btn share rounded-pill">Share</button>
+                            </div>
+                            <div class="content">
+                                <h6>How to create a professional</h6>
+                                <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row pub-banner" >
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <img class="img-fluid" src="{{ asset('assets/images/refonte/search/pub.svg') }}" alt="ResearchGuide"  />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

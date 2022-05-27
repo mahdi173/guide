@@ -923,10 +923,16 @@ a{
         position: absolute;
         color: #fff;
         width: 24%;
-        top: 39%;
+        top: 32%;
         right: 2%;
-        height: 37%;
+        height: 32%;
         font-weight: 600;
+      }
+      .advanced_search{
+        float: right;
+        a{
+          color: #fff;
+        }
       }
     }
   }
@@ -1276,5 +1282,132 @@ border: none;
         background-color: #EFDDDE;
       }
     }
+  }
+}
+//search
+.pub-banner{
+  margin-top: 16%;
+  margin-bottom: 5%;
+  border: 2px solid #F15A24;
+}
+// one journal
+.container-journal{
+  font-family: 'Montserrat',sans-serif;
+  .card{
+    background-color: transparent;
+    border: none;
+  }
+
+}
+.j-infos {
+  font-family: 'Montserrat',sans-serif;
+  .j-title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 19px;
+    line-height: 47px;
+    text-transform: capitalize;
+    text-align: center;
+    color: #F15A24;
+  }
+  .j-body {
+    .text {
+      h6 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 30px;
+        color: #414042;
+      }
+
+      p {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 14.44px;
+        line-height: 29px;
+        color: #58595B;
+      }
+    }
+
+    .col-title {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 15.44px;
+      line-height: 13px;
+      color: #58595B;
+    }
+
+    .j-table {
+      margin-top: 4%;
+    }
+
+    .btns-share {
+      .save-btn {
+        .btn {
+          float: right;
+          background: #F15A24;
+          color: #fff;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 22px;
+          text-transform: none;
+          padding: 2% 6%;
+          border-radius: 4%;
+        }
+        img{
+          width: 17px;
+          margin-right: 11px;
+        }
+      }
+    }
+
+    .share-btn{
+      max-width: 11% !important;
+      text-align: center;
+      a {
+        color: #802549;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        text-align: center;
+        &:hover{
+          cursor: pointer;
+          text-decoration: none !important;
+        }
+      }
+      img{
+        width: 17px;
+        margin-left: 7px;
+      }
+    }
+    .share-1,.share-2{
+      border-right: 1px solid #F15A24;
+      text-align: center;
+    }
+  }
+  .j-banner{
+    padding: 0;
+    img{
+      height: 28vw;
+    }
+  }
+  .sjr-jcr{
+    width: 82%;
+    .title-1 {
+      font-weight: 600 !important;
+    }
+    p{
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: #58595B;
+      text-align: left;
+  }
+  }
+  .show-recent-articles{
+    margin-left: 4%;
+    padding-top: 9% !important;
   }
 }

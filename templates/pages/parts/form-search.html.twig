@@ -1,5 +1,6 @@
 {% set type=app.request.get('searchOption',"journal") %}
 {% set search=app.request.get('searchValue',"") %}
+{% set route=app.request.get('_route') %}
 <div class="slider-home">
     <h1>Research guide provides Services For Science</h1>
     <p>Find the most appropriate journal according to various criteria, or authors with their published articles and corresponding journals</p>
@@ -7,14 +8,19 @@
         <div class="container choices">
             <div class="row">
                 <input type="hidden" name="searchOption" id="searchType" value="{{ type }}">
-                <div  class="col-4 form-control choices-btn " id="search-journal">Journal</div>
-                <div  class="col-4 form-control choices-btn" id="search-author">Author</div>
+                <div  class="col-4 form-control choices-btn " id="search-journal" {% if route == 'get_authors' %} style="display: none"{% endif %}>
+                    Journal</div>
+                <div  class="col-4 form-control choices-btn" id="search-author" {% if route == 'journalSearch' %} style="display: none"{% endif %}>
+                    Author</div>
             </div>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="search" name="searchValue" placeholder="Full tite, words, ISSN" value="{{ search }}">
+        <div class="form-group mb-0">
+            <input type="text" class="form-control" id="search" name="searchValue" placeholder="{% if route == 'get_authors' %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{{ search }}">
             <input type="submit" class="form-control submit" id="submit" value="Browse Home">
 
+        </div>
+        <div class="form-group advanced_search">
+           <a href="{{ path('advanced_search_scopus_web_ofs') }}" >Advanced search ?</a>
         </div>
     </form>
 </div>

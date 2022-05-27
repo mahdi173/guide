@@ -26,8 +26,8 @@
 </style>
 {% endblock %}
 {% block body %}
-    <div class="row  {% if data.result.hits.hit is not defined and app.request.get('authorValue') is null %}cart-form{% else%}cart-with-res{% endif%} row-form" >
-{#    <div class="row cart-with-res row-form" >#}
+    {#   <div class="row  {% if data.result.hits.hit is not defined and app.request.get('authorValue') is null %}cart-form{% else%}cart-with-res{% endif%} row-form" >
+{#    <div class="row cart-with-res row-form" >
         <div class="col-md-2 col-sm-1"></div>
         <div class="col-md-8 mt-5 mb-5">
             <h1 class="text-primary text-center mb-5" style="font-size: 2.3rem;"><b>Find Authors </b></h1>
@@ -46,12 +46,13 @@
 {#                    </div>#}
 {#                </div>#}
 {#            </form>#}
-            <div class="container container-home">
+            <div class="container container-home mb-5">
                 {% include 'pages/parts/form-search.html.twig' %}
             </div>
         </div>
-        <div class="col-md-2 col-sm-1"></div>
+    {#  <div class="col-md-2 col-sm-1"></div>
     </div>
+    #}
     {% if app.request.get('authorValue') is  defined and  app.request.get('authorValue') is not null  %}
     <div class="row row-table">
         <div class="col-md-2 col-sm-12"></div>
