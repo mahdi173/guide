@@ -41,7 +41,6 @@ services:
       - 9200:9200
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-
   mariadb:
     image: mysql:5.7
     environment:
