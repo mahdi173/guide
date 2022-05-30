@@ -446,7 +446,7 @@ class SearchController extends BaseController
     /**
      * Lists all data_t_scopus entities.
      *
-     * @Route("/journal/{eISSN}", name="data_t_scopus_results")
+     * @Route("/show-journal/{eISSN}", name="data_t_scopus_results")
      */
     public function findValue($eISSN, Request $request)
     {
@@ -458,6 +458,7 @@ class SearchController extends BaseController
         $var_title="";
         $form = $this->createForm(SearchType::class, $objet);
         $form->handleRequest($request);
+        dd($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $eISSN = $form->get("searchValue")->getData();
         }

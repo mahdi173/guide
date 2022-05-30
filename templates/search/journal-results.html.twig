@@ -81,7 +81,9 @@
                     {% for journal in journals %}
                     <tr class="table-data">
                         <th scope="row" class="jounal-title">
-                            <a href="{{ path('journal_show', {'id': journal.id}) }}" target="_blank">{{ journal.title }}</a>
+                            <a href="{{ path('journal_show', {'id': journal.id}) }}" target="_blank">
+{#                            <a href="{{ path('data_t_scopus_results', {'eISSN': journal.eissn}) }}" target="_blank">#}
+                                {{ journal.title }}</a>
                         </th>
                         <td>   {% if journal.contributor %}{{ journal.contributor.firstName  }}  {{ journal.contributor.lastName  }}{% endif %}</td>
                         <td> {{ journal.isOpenAccess ? 'YES' : 'NO' }}</td>
