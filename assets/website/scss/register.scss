@@ -106,9 +106,10 @@
   .logo-left{
   margin-top: -796px; margin-left: 180px; width: 450px;
   }
-// login 2
-/* Full-width input fields */
-input[type=text], input[type=password] {
+
+  //Login
+   /* Full-width input fields */
+ input[type=text], input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -218,11 +219,11 @@ span.psw {
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
   span.psw {
-    display: block;
-    float: none;
+     display: block;
+     float: none;
   }
   .cancelbtn {
-    width: 100%;
+     width: 100%;
   }
 }
 
@@ -236,4 +237,43 @@ span{
 input{
   padding-left: 25px;
   height: 50px;
+}
+
+.modal-content.animate{
+ width: 700px;
+ height: 700px;
+}
+.close{
+ margin-right: 600px;
+}
+.x-solid{
+ width:100px;
+ margin-left: -20px;
+ height: 30px;
+}
+.Connection{
+ text-align: center;
+ font-size: 50px;
+ font-weight: bold;
+ margin-top: 47px;
+ font-family:Montserrat;
+}
+.container{
+ margin-top: 30px; position:relative;
+}
+.valid{
+ font-family:Montserrat;
+ margin-left:35px;
+ text-align: center;
+ width: 600px;
+ height: 45px;
+ background-color:  #C14334;
+ font-size: 20px;
+ font-weight: bold;
+}
+.mdp{
+ font-family: Montserrat; text-align: center; margin-top: 20px;  text-decoration: none; text-decoration: none; color: #58595B; font-size: 17px;
+}
+.inscrit{
+ font-family:Montserrat; text-align: center; margin-top: 250px; text-decoration: none;font-size: 12px;
 }
