@@ -67,7 +67,6 @@ class SearchController extends BaseController
 
         $searchTerm = $request->get("searchValue", null);
         $searchOption = $request->get("searchOption", "journal");
-
         if ($searchTerm && 'journal' === $searchOption) {
             $page = $request->get("page", 1);
 
@@ -240,6 +239,7 @@ class SearchController extends BaseController
                     }
                 }
                 if ($request->get('searchOption') == "author") {
+
                     return $this->redirectToRoute('get_authors', ['authorValue' => $request->get("searchValue")]);
                 }
 

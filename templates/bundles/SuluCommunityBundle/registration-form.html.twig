@@ -1,11 +1,15 @@
 
 {% block body %}
 <head>
-  <title>Bootstrap Example</title>
+  <title>Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/refonte/homepage/icon.svg') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;500;700;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -22,14 +26,14 @@
  }
 
 </style>
-<div class="row">
+<div class="row registration-form">
     <div class="col-sm-6  text-red"><img class="imgg img-fluid" src="{{ asset('/assets/images/svg/background.svg') }}" alt="" />
       <img class="logo-left" style=" " src="{{ asset('/assets/images/svg/logo-left.svg') }}" alt="" />
 
-    
-         
+
+
          <a href='#'> <img class="fb" src="{{ asset('/assets/images/svg/fb.svg') }}" alt="" /> </a>
-       
+
        <div class="instagram">
          <a href='#'> <img class="instagram" src="{{ asset('/assets/images/svg/instagram.svg') }}" alt="" /> </a>
        </div>
@@ -42,7 +46,7 @@
        <div class="whattsap">
          <a href='#'> <img  class="whattsap" src="{{ asset('/assets/images/svg/whattsap.svg') }}" alt="" /> </a>
        </div>
-        
+
     </div>
     <div class="col-sm-6 bg-white text-white"><div class="paragraphe">
           Rejoignez Research guide dès aujourd'hui.
@@ -51,13 +55,13 @@
         <button type="button" class="btn btn-default btn-lg btn-block" style="font-weight: 200; border-color: #DBDFFD;"><img class='image_style' src="{{ asset('/assets/images/svg/google.svg') }}" >S’inscrire avec google</button>
         <button type="button" class="btn btn-default btn-lg btn-block" style="background: #0A66C2; font-weight: 200; color: white;"><img class='image_style' src="{{ asset('/assets/images/svg/linkedIn.svg') }}" >S’inscrire avec linkedIn</button>
 
-        
+
         <button type="button" class="btn btn-primary btn-lg btn-block" style="background: #802549; font-weight: bold; border-color: #802549;">Créer votre compte</button>
         <div class='cond'>
          En vous inscrivant, vous acceptez les Conditions d'Utilisationt la <a href='#'>Politique de Confidentialité</a>, incluant <a href='#'>l'Utilisation de Cookies</a>.
         </div>
         <div class='dejaInscrit'>
-         Vous avez déjà un compte ? 
+         Vous avez déjà un compte ?
         </div>
          <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary btn-lg btn-block" style="background: #C14334; font-weight: bold; border-color: #C14334;">Se connecter</button>
 

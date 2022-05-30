@@ -26,7 +26,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/j", name="homepage")
+     * @Route("/", name="homepage")
      */
     public function homepage(EntityManagerInterface $entityManager)
     {

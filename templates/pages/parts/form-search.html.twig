@@ -1,6 +1,7 @@
 {% set type=app.request.get('searchOption',"journal") %}
 {% set search=app.request.get('searchValue',"") %}
 {% set authorValue=app.request.get('authorValue',"") %}
+{% set auteur=app.request.get('auteur',"") %}
 {% set route=app.request.get('_route') %}
 <div class="slider-home">
     <h1>Research guide provides Services For Science</h1>
@@ -8,15 +9,16 @@
     <form method="get" action="{{ url('data_search_by_several_values') }}">
         <div class="container choices">
             <div class="row">
-                <input type="hidden" name="searchOption" id="searchType" value="{{ type }}">
-                <div  class="col-4 form-control choices-btn " id="search-journal" {% if route == 'get_authors' %} style="display: none"{% endif %}>
+                <input type="hidden" name="searchOption" id="searchType" value="{% if route in ['get_authors','get_authors_publication'] %}author{% else %}{{ type }}{% endif %}">
+                <div  class="col-4 form-control choices-btn " id="search-journal" {% if route in ['get_authors','get_authors_publication'] %} style="display: none"{% endif %}>
                     Journal</div>
                 <div  class="col-4 form-control choices-btn" id="search-author" {% if route == 'journalSearch' %} style="display: none"{% endif %}>
                     Author</div>
             </div>
         </div>
         <div class="form-group mb-0">
-            <input type="text" class="form-control" id="search" name="{% if route == 'get_authors' %}authorValue{% else %}searchValue{% endif %}" placeholder="{% if route == 'get_authors' %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% else %}{{ search }}{% endif %}">
+{#            <input type="text" class="form-control" id="search" name="{% if route in ['get_authors','get_authors_publication'] %}authorValue{% else %}searchValue{% endif %}" placeholder="{% if route in ['get_authors','get_authors_publication'] %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% elseif auteur %}{{ auteur }}{% else %}{{ search }}{% endif %}">#}
+            <input type="text" class="form-control" id="search" name="searchValue" placeholder="{% if route in ['get_authors','get_authors_publication'] %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% elseif auteur %}{{ auteur }}{% else %}{{ search }}{% endif %}">
             <input type="submit" class="form-control submit" id="submit" value="Browse Home">
 
         </div>

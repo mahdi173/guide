@@ -63,7 +63,7 @@ class SearchAuthorsController extends AbstractController
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
             foreach ($followers as $follower){
-                    if ($follower->getId() == $this->getUser()->getId()) {
+                    if ($follower && $follower->getId() == $this->getUser()->getId()) {
                         $exist = 1;
                     }
 
@@ -190,9 +190,12 @@ class SearchAuthorsController extends AbstractController
         if($checkFollowing){
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
+
             foreach ($followers as $follower){
-                    if ($follower->getId() == $this->getUser()->getId()) {
-                    $exist=1;
+                if ($follower && $this->getUser() ){
+                    if($follower->getId() == $this->getUser()->getId()) {
+                        $exist=1;
+                    }
                 }
             }
         }
@@ -211,7 +214,8 @@ class SearchAuthorsController extends AbstractController
         $param  = urlencode($auteur); // str_replace(' ','+',$auteur);
         try {
             $rawData = HttpClient::create()
-                ->request('GET', "https://doaj.org/api/v1/search/articles/$param.?pageSize=100&sort=year:desc")
+//                ->request('GET', "https://doaj.org/api/v1/search/articles/$param.?pageSize=100&sort=year:desc")
+                ->request('GET', "https://doaj.org/api/v1/search/articles/$auteur")
                 ->getContent()
             ;
             $data_doaj = \json_decode($rawData);

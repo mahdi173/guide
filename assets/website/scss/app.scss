@@ -1459,6 +1459,84 @@ border: none;
     padding-top: 9% !important;
   }
 }
-
-
+.container-author {
+  font-family: 'Montserrat',sans-serif;
+  .text-author {
+    color: #802549;
+    font-weight: 700;
+  }
+  .follow{
+    background: #802549;
+    color: #fff;
+    border-bottom-color: #802549;
+    font-weight: 700;
+    &:hover{
+      text-decoration: none !important;
+    }
+  }
+  .stat_info {
+    padding-left: 3px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 300;
+  }
+  table{
+    background-color:#F1F2F2;
+    margin: 0;
+    .jounal-title{
+      text-align: left !important;
+    }
+    thead{
+      background: #802549;
+      border-top-left-radius: 3%;
+      border-top-right-radius: 3%;
+      border-bottom: none;
+      color: #fff;
+      th{
+        border-bottom: none;
+      }
+      .th-journal{
+        width: 43%;
+      }
+    }
+    .header{
+      background: #802549;
+      color: #fff;
+    }
+    .following_index {
+      color: #fff !important;
+      span{
+        float: right;
+        font-size: 11px;
+        font-weight: 400;
+        padding-top: 1%;
+      }
+    }
+    td,.jounal-title{
+      color: #000;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 29px;
+      text-transform: capitalize;
+      border-bottom: 1px solid #e5e4e2 !important;
+      padding-bottom: 1.7%;
+      a{
+        color: #58595B;
+        font-weight: 400;
+      }
+    }
+    .authors{
+      color: #999 !important;
+    }
+    .table-data{
+      &:hover,&:active,&:visited{
+        background-color: #EFDDDE;
+      }
+    }
+  }
+  .row-content{
+    margin: 3% 9%;
+  }
+}
 
