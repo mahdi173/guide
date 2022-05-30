@@ -204,7 +204,7 @@
                 <td>
                     {% if co_authors|length>0  %}
                         {% for author in co_authors|slice(0,3) %}
-                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
+                            <a  class="table-data authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
                                 <div class="row">
                                     <div  class="col-md-3">
                                       <img src="{{  asset('assets/images/refonte/search/sample.png') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt="{{ author}}">
@@ -220,7 +220,7 @@
 
             <tr>
 
-            <tr>
+            <tr class="table-data">
                 <th class="header">  {% if author_db %}
                     Following ({{author_db.follows|length  }})
                     <a href="{{ path('following_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index">
@@ -236,7 +236,7 @@
                 <td>
                     {% if author_db and author_db.follows.values|length >0 %}
                         {% for follow in author_db.follows.values|slice(0,3) %}
-                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
+                            <a  class="table-data authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
 
                                 {% set stocked=publicationManager.isAuthorStocked( follow.following)  %}
 
@@ -286,7 +286,7 @@
                    {% if followers|length>0  %}
                        {% for follower in followers|slice(0,3) %}
                            {% if follower.fullName and follower.fullName !=""  %}
-                           <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
+                           <a  class="table-data authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
                                {% set stocked=publicationManager.isAuthorStocked(follower.fullName)  %}
 
                                {% set media = null %}
