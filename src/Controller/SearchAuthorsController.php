@@ -54,6 +54,7 @@ class SearchAuthorsController extends AbstractController
         $checkFollowing=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
 
         $author_db=$entityManager->getRepository(User::class)->findBy(['fullName'=>$auteur]);
+
         if($author_db){
             $author_db=$author_db[0];
         }

@@ -1,5 +1,6 @@
 {% set type=app.request.get('searchOption',"journal") %}
 {% set search=app.request.get('searchValue',"") %}
+{% set authorValue=app.request.get('authorValue',"") %}
 {% set route=app.request.get('_route') %}
 <div class="slider-home">
     <h1>Research guide provides Services For Science</h1>
@@ -15,7 +16,7 @@
             </div>
         </div>
         <div class="form-group mb-0">
-            <input type="text" class="form-control" id="search" name="searchValue" placeholder="{% if route == 'get_authors' %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{{ search }}">
+            <input type="text" class="form-control" id="search" name="{% if route == 'get_authors' %}authorValue{% else %}searchValue{% endif %}" placeholder="{% if route == 'get_authors' %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% else %}{{ search }}{% endif %}">
             <input type="submit" class="form-control submit" id="submit" value="Browse Home">
 
         </div>
