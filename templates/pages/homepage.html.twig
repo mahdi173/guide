@@ -15,25 +15,34 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-
        <div class="container container-home">
            {% include 'pages/parts/form-search.html.twig' %}
            <div class="page-content">
                <div class="page-title">
                    <h2>Find Journals or Authors</h2>
-                   <p>Lconsectetuer adipiscing elit,Lconsectetuer adipiscing elit,</p>
+                   <p>
+                       Find the most appropriate journal according to various criteria , or authors with their published articles and corresponding journals
+                   </p>
                </div>
                <div class="row icons-homepage">
+
                    <div class="col-md-3">
-                       <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/search.svg') }}" alt="GuideJournal"  />
-                       <h5>Lorem ipsum</h5>
-                       <p>Lconsectetuer adipiscing elit,</p>
+                       <a href="{{ path('journalSearch') }}" >
+                           <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/search.svg') }}" alt="GuideJournal"  />
+                           <h5>Journal Search</h5>
+                           <p>Lconsectetuer adipiscing elit,</p>
+                       </a>
                    </div>
+
+
                    <div class="col-md-3">
-                       <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/lamp.svg') }}" alt="GuideJournal"  />
-                       <h5>Lorem ipsum</h5>
-                       <p>Lconsectetuer adipiscing elit,</p>
+                       <a href="{{ path('get_authors') }}">
+                           <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/lamp.svg') }}" alt="GuideJournal"  />
+                           <h5>Author Search</h5>
+                           <p>Lconsectetuer adipiscing elit,</p>
+                       </a>
                    </div>
+
                    <div class="col-md-3">
                        <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/homepage/one.svg') }}" alt="GuideJournal"  />
                        <h5>Lorem ipsum</h5>
@@ -87,52 +96,54 @@
                    </div>
                </div>
                <div class="row recent-articles">
-                   <div class="col-md-12 ">
+                   <div class="col-md-12 last-articles">
                        <h5 class="title">Recent articles</h5>
                    </div>
                    <div class="col-md-6 left-content"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, adip lorem</p></div>
-                   <div class="col-md-6 right-content">
-                       <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/previous.svg') }}" alt="GuideJournal"  />
-                       <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/next.svg') }}" alt="GuideJournal"  />
-                   </div>
-                   <div class="row ">
-                       <div class="col-md-4 article-infos">
-                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />
-                           <div class="btns">
-                               <button class="btn favoris rounded-pill">Favoris</button>
-                               <button class="btn share rounded-pill">Share</button>
+                   <div class="container c-carousel">
+                       <div class="row row-carousel">
+                           <div class="col-md-12 col-carousel">
+                           <div class="carousel-articles">
+                               {% set articles= content.featured_articles %}
+                               {% for a in articles %}
+                                   <div class="col-md-4 article-infos">
+                                       {% if a.cover_image %}
+                                           {% set media = a.cover_image %}
+
+                                           {% if media is defined and media is not null  and media.thumbnails['sulu-400x400'] %}
+                                               <a href="{{ a.path }}">
+                                                   <img class="card-img-top" data-src="{{ media.thumbnails['sulu-400x400'] }}" src="{{ media.url? media.url:media.thumbnails['sulu-400x400'] }}" data-holder-rendered="true" alt="{{ a.title }}">
+                                               </a>
+                                           {% else %}
+                                               <a href="{{ a.path }}">
+                                                   <img class="card-img-top img-responsive" data-src="{{ asset('assets/images/refonte/homepage/article.svg') }}" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" data-holder-rendered="true" alt="{{ a.title }}">
+                                               </a>
+                                           {% endif %}
+                                       {% else %}
+                                           <a href="{{ a.path }}">
+                                               <img class="card-img-top" data-src="{{ asset('assets/images/refonte/homepage/article.svg') }}" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" data-holder-rendered="true">
+                                           </a>
+                                       {% endif %}
+
+                                       {#                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />#}
+                                       <div class="btns">
+                                           <button class="btn favoris rounded-pill">Favoris</button>
+                                           <button class="btn share rounded-pill">Share</button>
+                                       </div>
+                                       <div class="fav-img">
+                                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/favoris.svg') }}" alt="GuideJournal"  />
+                                       </div>
+                                       <div class="content">
+                                           <h6>{{ a.title }}</h6>
+                                           {% if a.excerptDescription %}
+                                               <p>
+                                                   {{ a.excerptDescription|slice(0,60)|raw  }}...   <br><a href="{{ a.path }}" style="float: right;font-weight: 400" class="text-warning">Read More →</a>
+                                               </p>
+                                           {% endif %}
+                                       </div>
+                                   </div>
+                               {% endfor %}
                            </div>
-                           <div class="fav-img">
-                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/favoris.svg') }}" alt="GuideJournal"  />
-                           </div>
-                           <div class="content">
-                               <h6>How to create a professional</h6>
-                               <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
-                           </div>
-                       </div>
-                       <div class="col-md-4 article-infos">
-                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />
-                           <div class="btns">
-                               <button class="btn favoris rounded-pill">Favoris</button>
-                               <button class="btn share rounded-pill">Share</button>
-                           </div>
-                           <div class="content">
-                               <h6>How to create a professional</h6>
-                               <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
-                           </div>
-                       </div>
-                       <div class="col-md-4 article-infos">
-                           <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/article.svg') }}" alt="GuideJournal"  />
-                           <div class="btns">
-                               <button class="btn favoris rounded-pill">Favoris</button>
-                               <button class="btn share rounded-pill">Share</button>
-                           </div>
-                           <div class="fav-img">
-                               <img class="img-fluid" src="{{ asset('assets/images/refonte/homepage/favoris.svg') }}" alt="GuideJournal"  />
-                           </div>
-                           <div class="content">
-                               <h6>How to create a professional</h6>
-                               <p>Lorem ipsum dolor sit amet, consec adipiscing elit, sed diam nonummy tincidunt ut laoreet dolore magna volutpat. Ut wisi enim ad minim quis nostrud exerci tation ulla</p>
                            </div>
                        </div>
                    </div>

@@ -419,9 +419,12 @@ a{
 
 }
 .card-img-top{
-  max-height: 320px !important;
+  //max-height: 320px !important;
+  height: 320px !important;
   //object-fit: cover !important;
-  min-height: 300px !important;
+  //min-height: 300px !important;
+  object-fit: cover;
+  border-radius: 3%;
 }
 .card-recommendation{
   .etiq-span{
@@ -956,8 +959,12 @@ a{
         font-style: normal;
         font-weight: 300;
         font-size: 16px;
-        line-height: 20px;
         color: #58595B;
+        width: 46%;
+        text-align: center;
+        margin-left: 26%;
+        margin-top: 2%;
+        line-height: 26px;
       }
     }
     .icons-homepage{
@@ -982,6 +989,12 @@ a{
         font-size: 16px;
         line-height: 20px;
         padding-top: 2%;
+      }
+      a{
+        color: #000 !important;
+        &:hover{
+          text-decoration: none !important;
+        }
       }
     }
     .description-block{
@@ -1058,6 +1071,9 @@ a{
       }
     }
     .recent-articles{
+      .last-articles{
+        padding-left: 5%;
+      }
       padding-top: 12%;
       .title{
         font-style: normal;
@@ -1074,6 +1090,7 @@ a{
         line-height: 23px;
         text-align: left;
         color: #58595B;
+        margin-left: 4%;
         p{
           width: 80%;
         }
@@ -1082,12 +1099,13 @@ a{
         text-align: right;
       }
       .article-infos{
+        max-width: 100% !important;
         margin-top: 2%;
         position: relative;
         text-align: left;
         .btns{
           position: absolute;
-          bottom: 52%;
+          bottom: 38%;
           left: 10%;
           width: 60%;
           .btn{
@@ -1359,11 +1377,12 @@ border: none;
   .j-title {
     font-style: normal;
     font-weight: 800;
-    font-size: 19px;
+    font-size: 28px;
     line-height: 47px;
     text-transform: capitalize;
     text-align: center;
     color: #F15A24;
+    margin-bottom: 4%;
   }
   .j-body {
     .text {
@@ -1440,7 +1459,7 @@ border: none;
       border-right: 1px solid #F15A24;
       text-align: center;
     }
-    .learnMore{
+    .learnMore a{
       color: #F15A24;
       font-weight: 400;
     }
@@ -1468,6 +1487,12 @@ border: none;
   .show-recent-articles{
     margin-left: 4%;
     padding-top: 9% !important;
+    .btns{
+      bottom: 51% !important;
+    }
+    .left-content{
+      margin-left: 0 !important;
+    }
   }
 }
 .container-author {
@@ -1552,3 +1577,44 @@ border: none;
   }
 }
 
+// homepage articles
+.c-carousel {
+  .row-carousel {
+    .col-carousel{
+      position: relative;
+    .carousel-articles {
+      overflow: hidden;
+      .owl-stage {
+        display: flex;
+
+        .owl-item {
+          width: 378px !important;
+        }
+      }
+    }
+    .owl-nav {
+      position: absolute;
+      top: -16%;
+      right: 18px;
+
+      button {
+        border: none;
+        background: transparent;
+      }
+    }
+    .owl-dots{
+      display: none;
+    }
+  }
+}
+}
+//show article blog
+.c-show-article{
+  font-family: 'Montserrat',sans-serif;
+
+}
+.search-articles{
+  font-family: 'Montserrat',sans-serif;
+  height: 18.8vw;
+  padding-top: 3%;
+}

@@ -25,3 +25,16 @@ $( "#search-journal" ).click(function() {
     $("#searchType").val('author')
 
 });
+
+$('.carousel-articles').owlCarousel({
+    // loop: true,
+    margin: 0,
+    nav: true,
+    autoplay: false,
+    // autoplayHoverPause: true,
+    // responsiveClass:true,
+    navText: [
+           "<img src='/assets/images/refonte/homepage/previous.svg'>",
+           "<img src='/assets/images/refonte/homepage/next.svg'>"
+         ],
+})

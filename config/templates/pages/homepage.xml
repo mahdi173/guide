@@ -41,23 +41,6 @@
             <tag name="sulu.rlp"/>
         </property>
 
-        <property name="articles" type="page_selection">
-            <meta>
-                <title lang="fr">Articles</title>
-                <title lang="en">Articles</title>
-            </meta>
-
-            <params>
-                <param name="properties" type="collection">
-                    <param name="title" value="title"/>
-                    <param name="article" value="article"/>
-                    <param name="video_url" value="video_url"/>
-                    <param name="cover_image" value="cover_image"/>
-                    <param name="excerptTitle" value="excerpt.title"/>
-                    <param name="excerptDescription" value="excerpt.description"/>
-                </param>
-            </params>
-        </property>
 
         <property name="featured_articles" type="smart_content">
             <meta>
