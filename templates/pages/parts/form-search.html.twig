@@ -3,27 +3,131 @@
 {% set authorValue=app.request.get('authorValue',"") %}
 {% set auteur=app.request.get('auteur',"") %}
 {% set route=app.request.get('_route') %}
-<div class="slider-home">
-    <h1>Research guide provides Services For Science</h1>
-    <p>Find the most appropriate journal according to various criteria, or authors with their published articles and corresponding journals</p>
-    <form method="get" action="{{ url('data_search_by_several_values') }}">
-        <div class="container choices">
-            <div class="row">
-                <input type="hidden" name="searchOption" id="searchType" value="{% if route in ['get_authors','get_authors_publication'] %}author{% else %}{{ type }}{% endif %}">
-                <div  class="col-4 form-control choices-btn " id="search-journal" {% if route in ['get_authors','get_authors_publication'] %} style="display: none"{% endif %}>
-                    Journal</div>
-                <div  class="col-4 form-control choices-btn" id="search-author" {% if route == 'journalSearch' %} style="display: none"{% endif %}>
-                    Author</div>
+{% set listpublishers=publicationManager.advancedData['publishers'] %}
+{% set listcategories=publicationManager.advancedData['categories'] %}
+<div class="search-form">
+    <div class="slider-home">
+        <h1 class="h1-form">Research guide provides Services For Science</h1>
+        <p class="p-form">Find the most appropriate journal according to various criteria, or authors with their published articles and corresponding journals</p>
+        <form method="get" action="{{ url('data_search_by_several_values') }}">
+            <div class="container choices">
+                <div class="row">
+                    <input type="hidden" name="searchOption" id="searchType" value="{% if route in ['get_authors','get_authors_publication'] %}author{% else %}{{ type }}{% endif %}">
+                    <div  class="col-4 form-control choices-btn " id="search-journal" {% if route in ['get_authors','get_authors_publication'] %} style="display: none"{% endif %}>
+                        Journal</div>
+                    <div  class="col-4 form-control choices-btn" id="search-author" {% if route == 'journalSearch' %} style="display: none"{% endif %}>
+                        Author</div>
+                </div>
             </div>
-        </div>
-        <div class="form-group mb-0">
-{#            <input type="text" class="form-control" id="search" name="{% if route in ['get_authors','get_authors_publication'] %}authorValue{% else %}searchValue{% endif %}" placeholder="{% if route in ['get_authors','get_authors_publication'] %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% elseif auteur %}{{ auteur }}{% else %}{{ search }}{% endif %}">#}
-            <input type="text" class="form-control" id="search" name="searchValue" placeholder="{% if route in ['get_authors','get_authors_publication'] %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% elseif auteur %}{{ auteur }}{% else %}{{ search }}{% endif %}">
-            <input type="submit" class="form-control submit" id="submit" value="Browse Home">
+            <div class="form-group mb-0">
+                {#            <input type="text" class="form-control" id="search" name="{% if route in ['get_authors','get_authors_publication'] %}authorValue{% else %}searchValue{% endif %}" placeholder="{% if route in ['get_authors','get_authors_publication'] %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% elseif auteur %}{{ auteur }}{% else %}{{ search }}{% endif %}">#}
+                <input type="text" class="form-control" id="search" name="searchValue" placeholder="{% if route in ['get_authors','get_authors_publication'] %}Author name{% else %}Full title, words, ISSN{% endif %}" value="{% if authorValue %}{{ authorValue }}{% elseif auteur %}{{ auteur }}{% else %}{{ search }}{% endif %}">
+                <input type="submit" class="form-control submit" id="submit" value="Browse Home">
+                <a href="{{ path('advanced_search_scopus_web_ofs') }}" data-toggle="collapse" data-target="#search-form-advanced" class="accordion-toggle collapsed advanced-link"  aria-controls="collapseOne"  aria-expanded="false">
+                    Advanced search ?
+                </a>
 
+            </div>
+        </form>
+    </div>
+    <div id="search-form-advanced" class="collapse">
+        <div  class="search-form-advanced">
+            <form method="get" action="{{ url('data__advanced_search_by_several_params') }}">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>Advanced search ?</h3>
+                        <p class="text-advanced">Find the most appropriate journal according to various criteria,
+                            or authors with their published articles and corresponding journals</p>
+                    </div>
+                </div>
+                <div class="row filter-1">
+                    <div class="col-md-6 select-1">
+                        <p class="title-advanced">Publisher</p>
+                        <select class="form-control" id="publisher" name="name_of_publisher">
+                            <option>All</option>
+                            {% for lp in listpublishers %}
+                                <option>{{ lp.publisher }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6 select-1">
+                        <p class="title-advanced">Subject Area</p>
+                        <select class="form-control" id="subjectarea" name="subjectarea">
+                            <option>All</option>
+                            {% for lc in listcategories %}
+                                <option>{{ lc.scopussubsubjectarea }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                </div><hr>
+                <div class="row filter-2">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="title-advanced">Open Acess</p>
+                            </div>
+                            <div class="col-md-3">
+                                <span>Yes</span><input type="checkbox" id="yes" value="yes" name="yes">
+                            </div>
+                            <div class="col-md-3">
+                                <span>No</span><input type="checkbox" id="no" value="no" name="no">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="title-advanced">Quartille</p>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="q1">Q1</span><input type="checkbox" id="q1" value="Quartile 1" name="q1"><br>
+                                <span>Q3</span> <input type="checkbox" id="q3" value="Quartile 3" name="q3">
+                            </div>
+                            <div class="col-md-3">
+                                <span>Q2</span>  <input  type="checkbox" id="q2" value="Quartile 2" name="q2"><br>
+                                <span>Q4</span> <input type="checkbox" id="q4" value="Quartile 4" name="q4">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div><hr>
+                <div class="row filter-3">
+                    <div class="col-md-6">
+                        <p class="title-advanced">SJR</p>
+                        <div class="row">
+                            <div class="col-md-1 radio"> <input type="radio" name="sjr_r" id="sjr_r" value="option1"></div><span class="signal">></span>
+                            <div class="col-md-10"><input type="text" class="form-control" placeholder="ALL" id="formGroupExampleInput_sjr_sup" name="sjr_sup"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="title-advanced">JCR</p>
+                        <div class="row">
+                            <div class="col-md-1 radio"> <input type="radio" name="jcr_r" id="jcr_r1" value="option1"></div><span class="signal">></span>
+                            <div class="col-md-10"><input type="text" class="form-control" placeholder="ALL"  id="formGroupExampleInput_jcr_sup" name="jcr_sup"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-1 radio"> <input type="radio" name="sjr_r" id="sjr_r1" value="option2"></div><span class="signal"><</span>
+                            <div class="col-md-10"><input type="text" class="form-control" placeholder="ALL" id="formGroupExampleInput_sjr_inf" name="sjr_inf"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-1 radio"> <input type="radio" name="jcr_r" id="jcr_r1" value="option2"></div><span class="signal"><</span>
+                            <div class="col-md-10"><input type="text" class="form-control" placeholder="ALL" id="formGroupExampleInput_jcr_inf" name="jcr_inf"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4  offset-4 mt-5 text-center ">
+                        <input type="submit" value="Search" class="btn btn-block">
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group advanced_search">
-           <a href="{{ path('advanced_search_scopus_web_ofs') }}" >Advanced search ?</a>
-        </div>
-    </form>
+    </div>
 </div>

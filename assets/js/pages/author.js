@@ -9,6 +9,24 @@ $( document ).ready(function() {
         $("#search-journal").css('backgroundColor','#A0A0A0')
         $("#search-journal").css('opacity','0.9')
     }
+    $('#publisher').selectpicker();
+    $('#subjectarea').selectpicker();
+
+    $( ".advanced-link" ).click(function() {
+    var form=$("#search-form-advanced")
+    if(!form.hasClass( "show" )){
+      $('.h1-form').css('display','none')
+      $('.p-form').css('display','none')
+      $('.slider-home form').css('top','34%')
+        $(".slider-home").animate({height:"12vw"}, 1500);
+    }else{
+        $('.h1-form').css('display','block')
+        $('.p-form').css('display','block')
+        $('.slider-home form').css('top','59%')
+        $(".slider-home").animate({height:"30vw"}, 1750);
+
+    }
+    });
 });
 $( "#search-journal" ).click(function() {
     $('#search').attr('placeholder','Full Title, word, ISSN');

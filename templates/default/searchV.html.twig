@@ -69,15 +69,14 @@
 
         <div class="card {% if show_ad is defined and listcategories is defined and listpublishers is defined  %}vard-advanced{% else %}card-form{% endif %}">
             <div class="card-body">
-
         <div class="row mt-5">
             <div class="col-sm-12"> </div>
             <div class="col-md-2 col-sm-1"></div>
             <div class="col-md-8">
                 {% include '_includes/search_form.html.twig' %}
-                {% if show_ad is defined and listcategories is defined and listpublishers is defined  %}
-                {% include '_includes/advanced_search_form.html.twig' %}
-                {% endif %}
+{#                {% if show_ad is defined and listcategories is defined and listpublishers is defined  %}#}
+{#                {% include '_includes/advanced_search_form.html.twig' %}#}
+{#                {% endif %}#}
 
             </div>
             <div class="col-md-2 col-sm-1"></div>
@@ -93,9 +92,10 @@
     </div>
     <div class="container-fluid" >
         {% if data_t_scopus_advanced is defined  %}
+
             {% if data_t_scopus_advanced | length >0 and pagination is defined  %}
 
-            {% include '_includes/result_for_adanced_research' %}
+            {% include '_includes/result_for_adanced_research.html.twig' %}
                 {% endif %}
             {% if data_t_scopus_advanced | length == 0   %}
                 {% include '_includes/error.html.twig' %}
@@ -586,7 +586,7 @@
                                                         <span class="p-1 mb-1"> Added by: </span>
                                                         <span >
                                                             <img src="https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg" class="img img-responsive" width="45">
-                                                            {{ data_reuter.contributor.firstName  }}  {{ data_reuter.contributor.lastName  }}
+                                                           {%  if data_reuter.contributor%} {{ data_reuter.contributor.firstName  }}  {{ data_reuter.contributor.lastName  }} {% endif %}
                                                         </span>
                                                     </h6>
                                                 </div>

@@ -458,7 +458,6 @@ class SearchController extends BaseController
         $var_title="";
         $form = $this->createForm(SearchType::class, $objet);
         $form->handleRequest($request);
-        dd($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $eISSN = $form->get("searchValue")->getData();
         }

@@ -3,6 +3,7 @@
 
 namespace App\Controller\Website;
 
+use App\Entity\DataTScopus;
 use Sulu\Bundle\WebsiteBundle\Controller\DefaultController as SuluController;
 use Sulu\Component\Content\Compat\StructureInterface;
 use Symfony\Component\HttpFoundation\Response;
