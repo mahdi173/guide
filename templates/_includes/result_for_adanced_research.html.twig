@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-2 col-sm-2"></div>
 </div>
-<div class="row search-journals-result">
+<div class="row search-journals-result advanced-table">
     <div class="col-md-2">
 
         <!-- horizontal_several_results1 -->
@@ -45,11 +45,7 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
     </div>
-    <div class="col-md-7">
-
-
-
-
+    <div class="col-md-8">
         <table class="table mb-5">
             <thead>
             <tr>
@@ -132,138 +128,149 @@
         {% endfor %}
             </tbody>
         </table>
-        <div class="navigation" style="margin-left: 30%;">
-            {{ knp_pagination_render(pagination) }}
-        </div>
+
 
     </div>
-    <div class="col-md-3">
+</div>
+<div class="row search-journals-result card-search">
+<div class="offset-md-2 col-md-8 " >
 
-        <!-- annonce_after_quartile -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-9897811061542650"
-             data-ad-slot="9664234542"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <div class="card mb-3" >
-            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
-                <h5 class="text-info"><b>Search journals by Quartile</b> </h5>
-                <div class="row" style="text-align: center;">
-                    <div class="col-md-6">
-                        <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 1'})}}>
-                            <div class="badge btn-outline-warning" style="height: 100%; ">
-                                <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 1</span>
-                            </div>
-                        </a>
+    <!-- annonce_after_quartile -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9897811061542650"
+         data-ad-slot="9664234542"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <div class="row plus-search" >
+        <div class="col-md-6" >
+    <div class="card mb-3" >
+        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
+            <h5 class="text-info"><b>Search journals by Quartile</b> </h5>
+            <div class="row" style="text-align: center;">
+                <div class="col-md-6">
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 1'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 1</span>
+                        </div>
+                    </a>
 
-                    </div>
-                    <div class="col-md-6">
-
-                        <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 2'})}}>
-                            <div class="badge btn-outline-warning" style="height: 100%; ">
-                                <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 2</span>
-                            </div>
-                        </a>
-                    </div>
                 </div>
+                <div class="col-md-6">
 
-                <div class="row" style="text-align: center; margin-top: 5px">
-                    <div class="col-md-6">
-                        <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 3'})}}>
-                            <div class="badge btn-outline-warning" style="height: 100%; ">
-                                <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 3</span>
-                            </div>
-                        </a>
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 2'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 2</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-                    </div>
-                    <div class="col-md-6" style="text-align: center">
+            <div class="row" style="text-align: center; margin-top: 5px">
+                <div class="col-md-6">
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 3'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 3</span>
+                        </div>
+                    </a>
 
-                        <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 4'})}}>
-                            <div class="badge btn-outline-warning" style="height: 100%; ">
-                                <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 4</span>
-                            </div>
-                        </a>
-                    </div>
+                </div>
+                <div class="col-md-6" style="text-align: center">
+
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 4'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 4</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-        <hr>
+    </div>
+        </div>
+    <hr>
+        <div class="col-md-6 " >
+    <div class="card mb-3 card-publisher" >
+        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px; width: 100%">
+            <h5 class="text-info"><b>Search journals by Publisher </b></h5>
+            {% for t in pagination %}
 
-        <div class="card mb-3" >
-            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px; width: 100%">
-                <h5 class="text-info"><b>Search journals by Publisher </b></h5>
-                {% for t in pagination %}
-
-                    {% if t.publisher | length>= 51 %}
+                {% if t.publisher | length>= 51 %}
                     <a class="badge badge-secondary text-warning"  style="font-size: 10px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
 <span style="width: 70%">
                                    {{t.publisher}}</span>
 
                     </a>
 
-                    {% elseif t.publisher | length>= 45 %}
-                        <a class="badge badge-secondary text-warning"  style="font-size: 11px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
+                {% elseif t.publisher | length>= 45 %}
+                    <a class="badge badge-secondary text-warning"  style="font-size: 11px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
 <span style="width: 70%">
                                    {{t.publisher}}</span>
 
-                        </a>
+                    </a>
 
-                    {% else %}
-                        <a class="badge badge-secondary text-warning"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
+                {% else %}
+                    <a class="badge badge-secondary text-warning"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
 <span style="width: 70%">
                                    {{t.publisher}}</span>
 
-                        </a>
-                    {% endif %}
+                    </a>
+                {% endif %}
 
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-        <div class="card mb-3" >
-            <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
-
-                <h5 class="text-info"><b>Search journals by Subject Area </b></h5>
-                {% for t in pagination %}
-
-                    {% if t.scopussubsubjectarea | length>= 51 %}
-                        <a class="badge badge-secondary text-info"  style="font-size: 10px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
-<span style="width: 70%">
-                                   {{t.scopussubsubjectarea}}</span>
-
-                        </a>
-
-                    {% elseif t.scopussubsubjectarea | length> 45 %}
-                        <a class="badge badge-secondary text-info"  style="font-size: 11px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
-<span style="width: 70%">
-                                   {{t.scopussubsubjectarea}}</span>
-
-                        </a>
-
-                    {% else %}
-                        <a class="badge badge-secondary text-info"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
-<span style="width: 70%">
-                                   {{t.scopussubsubjectarea}}</span>
-
-                        </a>
-                    {% endif %}
-
-                {% endfor %}
-            </div>
-        </div>
-        <!-- annonce_after_subject_area -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-9897811061542650"
-             data-ad-slot="1022848266"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-
     </div>
+        </div>
+        <div class="col-md-12" >
+
+    <div class="card mb-3" >
+        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
+
+            <h5 class="text-info"><b>Search journals by Subject Area </b></h5>
+            {% for t in pagination %}
+
+                {% if t.scopussubsubjectarea | length>= 51 %}
+                    <a class="badge badge-secondary text-info"  style="font-size: 10px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+<span style="width: 70%">
+                                   {{t.scopussubsubjectarea}}</span>
+
+                    </a>
+
+                {% elseif t.scopussubsubjectarea | length> 45 %}
+                    <a class="badge badge-secondary text-info"  style="font-size: 11px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+<span style="width: 70%">
+                                   {{t.scopussubsubjectarea}}</span>
+
+                    </a>
+
+                {% else %}
+                    <a class="badge badge-secondary text-info"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+<span style="width: 70%">
+                                   {{t.scopussubsubjectarea}}</span>
+
+                    </a>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+        </div>
+        <div class="navigation" style="margin-left: 35%;">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    <!-- annonce_after_subject_area -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9897811061542650"
+         data-ad-slot="1022848266"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+</div>
 </div>

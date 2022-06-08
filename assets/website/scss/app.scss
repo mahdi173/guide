@@ -894,6 +894,7 @@ a{
         .choices-btn {
           border: none;
           text-align: center;
+          height: 2.5vw;
           border-radius: 0;
           font-style: normal;
           font-weight: 600;
@@ -932,7 +933,7 @@ a{
         position: absolute;
         color: #fff;
         width: 21%;
-        top: 45%;
+        top: 49%;
         right: 24%;
         height: 47%;
         font-weight: 600;
@@ -940,7 +941,7 @@ a{
       .advanced-link{
         position: absolute;
         color: #F15A24;
-        top: 55%;
+        top: 61%;
         font-weight: 500;
         right: 4%;
       }
@@ -1720,4 +1721,23 @@ border: none;
     padding: 3% 2%;
   }
 }
+.card-search{
+  .card{
+    background: #F0F0F0;
+    padding: 2% 1%;
+  }
+  .card-publisher .badge{
+    line-height: 24px;
+  }
+  .page-item.active .page-link{
+    background-color: #F15A24;
+    border-color: #F15A24;
+  }
+  .pagination{
+    margin-top: 5%;
+  }
+}
 
+.plus-search{
+  margin-bottom: 4%;
+}
