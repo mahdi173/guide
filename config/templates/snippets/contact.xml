@@ -26,5 +26,12 @@
                 <title lang="fr">Beschreibung</title>
             </meta>
         </property>
+
+
+        <property name="form" type="single_form_selection">
+            <meta>
+                <title lang="en">Form</title>
+            </meta>
+        </property>
     </properties>
 </template>

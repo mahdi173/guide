@@ -112,6 +112,29 @@ class DataScopus
      */
     private $eissn;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $contributor;
+
+    /**
+     * @return User
+     */
+    public function getContributor(): ?User
+    {
+        return $this->contributor;
+    }
+
+    /**
+     * @param User $contributor
+     */
+    public function setContributor(User $contributor): void
+    {
+        $this->contributor = $contributor;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

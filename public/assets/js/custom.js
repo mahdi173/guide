@@ -12,10 +12,10 @@
 // const Routing = require('../../../assets/js/router');
 $(document).ready(function() {
     "use strict";
-	
+
 	//COPYRIGHR YEAR UPDATE
 	$("#cryear").text("2019");
-	
+
     //LEFT MOBILE MENU OPEN
     $(".ts-menu-5").on('click', function() {
         $(".mob-right-nav").css('right', '0px');
@@ -82,12 +82,12 @@ $(document).ready(function() {
     $(".ts-menu").mouseleave(function() {
         $(".cat-menu").fadeOut(50);
     });
-	
+
     //review replay
     $(".edit-replay").on('click', function() {
         $(".hide-box").show();
     });
-	
+
 	//What you looking for checkbox
 	$('.req-pop-sec-1 input:checkbox').on('change', function(){
 		if($(this).is(":checked")) {
@@ -104,24 +104,24 @@ $(document).ready(function() {
         $(".req-pop-sec-1").hide();
 		$(".req-pop-sec-2").show();
     });
-	
+
 	//SET TIME FOR SHOWING "What you looking for" POPUP
 	setTimeout(function(){
       $(".req-pop").fadeIn();
 	},5000);
-	
+
 	//POPUP CLOSED EVENT
     $(".req-pop-clo").on('click', function() {
 		$(".req-pop").fadeOut();
     });
-	
+
 	//POPUP SUBMIT BUTTON EVENT
     $(".rer-sub-btn").on('click', function() {
 		$(".req-pop-sec-1, .req-pop-sec-2").hide();
 		$(".req-pop-sec-3").show();
     });
-	
-	
+
+
 
     //PRE LOADING
     $('#status').fadeOut();
@@ -155,7 +155,7 @@ $(document).ready(function() {
 
     //material select
     $('select').material_select();
-	
+
     //AUTO COMPLETE CATEGORY SELECT
     $('#select-category.autocomplete, #select-category1.autocomplete').autocomplete({
         data: {
@@ -176,7 +176,7 @@ $(document).ready(function() {
         },
         minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
     });
-	
+
 //AUTO COMPLETE CITY SELECT
     $('#select-city.autocomplete, #top-select-city.autocomplete').autocomplete({
         data: {
@@ -211,7 +211,7 @@ $(document).ready(function() {
             // Callback function when value is autcompleted.
         },
         minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-    });	
+    });
 
 	//AUTO COMPLETE SEARCH SELECT
     $('#select-search.autocomplete, #top-select-search.autocomplete').autocomplete({
@@ -251,7 +251,7 @@ $(document).ready(function() {
             // Callback function when value is autcompleted.
         },
         minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-    });		
+    });
 
     //HOME PAGE FIXED MENU
     $(window).scroll(function() {
@@ -263,7 +263,7 @@ $(document).ready(function() {
             $('.hom-top-menu').fadeOut();
         }
     });
-	
+
     //HOME PAGE FIXED MENU
     $(window).scroll(function() {
 
@@ -272,7 +272,7 @@ $(document).ready(function() {
         } else {
             $('.hom3-top-menu').removeClass("top-menu-down");
         }
-    });	
+    });
 });
 
 function scrollNav() {

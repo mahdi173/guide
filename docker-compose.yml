@@ -36,9 +36,11 @@ services:
       context: docker/elk/elasticsearch
     volumes:
       - ./var/data/elasticsearch:/usr/share/elasticsearch/data:cached
+    ports:
+      - 9300:9300
+      - 9200:9200
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-
   mariadb:
     image: mysql:5.7
     environment:

@@ -52,6 +52,7 @@ services:
         # Symfony has already a container parameter to the kernel root directory.
         tags:
             - { name: form.type,extended_type: Symfony\Component\Form\Extension\Core\Type\ChoiceType }
+
     App\Service\ServiceForJournalFinder:
         autowire: true
         class: App\Service\ServiceForJournalFinder

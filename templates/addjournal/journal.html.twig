@@ -7,7 +7,7 @@
     </style>
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container form-contact">
     <h1 class="my-4">
 {#        <h2 class="text-primary text-center mt-5 mb-5">Add informtations about your journal</h2>#}
     </h1>
@@ -17,7 +17,7 @@
 
         {% if content.form %}
             {% if app.request.get('send') != 'true' %}
-                <h2 class="text-primary text-center mt-5 mb-5">Add informtations about your {% block title %}{{ content.title }}{% endblock %}</h2>
+                <h2 class="text-primary text-center mt-5 mb-5">{% block title %}{{ content.title }}{% endblock %}</h2>
                 {# FORM THEME #}
                 {% form_theme content.form 'Form/addJournal.html.twig' %}
                 {{ form(content.form) }}

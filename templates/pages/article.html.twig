@@ -9,11 +9,10 @@
         "defaultLocale": request.defaultLocale|default('de')
     } %}
 {% endblock %}
-{% block title %}{{ content.title }} | {{ parent() }}{% endblock %}
+
 {% block content %}
-
+<div class="container c-show-article">
     <div class="row">
-
         <!-- Post Content Column -->
         <div class="col-lg-8">
             <!-- Title -->
@@ -22,12 +21,12 @@
             <hr>
 
             <!-- Preview Image -->
-            {% if content.video %}
+            {% if content.video_url %}
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="{{ content.video }}?rel=0" allowfullscreen title="content"></iframe>
+                    <iframe class="embed-responsive-item" src="{{ content.video_url }}?rel=0" allowfullscreen></iframe>
                 </div>
-            {% elseif content.image %}
-                <img class="img-fluid rounded" src="{{ sulu_get_media_url(content.image) }}" alt="">
+            {% elseif content.cover_image %}
+                <img class="img-fluid rounded" src="{{ sulu_get_media_url(content.cover_image) }}" alt="">
             {% else %}
                 <img class="img-fluid rounded" src="{{ asset('assets/images/Guidejournal.png') }}" alt="">
             {% endif %}
@@ -39,13 +38,17 @@
             {% endfor %}
 
             <!-- Post Content -->
-            {% if content.article %}
+            {% if content.blocks|length %}
+                {% for block in content.blocks %}
+                    {{ block.content|default()|raw }}
+                {% endfor %}
+            {% elseif content.article %}
                 <p> {{ content.article|default()|raw }} </p>
             {% else %}
                 <p></p>
             {% endif %}
             {# les blocks ajouter pendant la création de l'article #}
-{#            {% include '_includes/blocks.html.twig' with { blocks: content.blocks } %}#}
+            {#            {% include '_includes/blocks.html.twig' with { blocks: content.blocks } %}#}
 
             <div class="sharethis-inline-share-buttons"></div>
 
@@ -78,13 +81,9 @@
                         {% for categorie in content.categories %}
                             <div class="col-lg-6">
                                 <ul class="list-unstyled mb-0">
-
-
                                     <li>
                                         <a href="#"> {% if categorie.name %} {{ categorie.name }} {% endif %}</a>
                                     </li>
-
-
                                 </ul>
                             </div>
                         {% endfor %}
@@ -103,6 +102,7 @@
         </div>
 
     </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}

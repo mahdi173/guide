@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
     <script data-ad-client="ca-pub-9897811061542650" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-
     <script>var ezoicId = 123336;</script>
     <!--<script type="text/javascript" src="https://go.ezoic.net/ezoic/ezoic.js"></script> -->
-
-
 <!-- Ad Manager-->
 
-
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;500;700;900&display=swap" rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,55 +19,50 @@
     <meta name="description" content="Guidejournal is created in order to improve, to facilitate, and to help researchers to find the best journals for their publications
     for their publications">
 
-    <link rel="shortcut icon" href="{{ asset('assets/images/Logo.png') }}" type="image/x-icon"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/css/bootstrap-select.min.css" integrity="sha512-g2SduJKxa4Lbn3GW+Q7rNz+pKP9AWMR++Ta8fgwsZRCUsawjPvF/BxSMkGS61VsR9yinGoEgrHPGPn2mrj8+4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="shortcut icon" href="{{ asset('assets/images/refonte/homepage/icon.svg') }}" type="image/x-icon"/>
     <link href="{{ asset('build/website/app.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
 {#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
 
+
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
+{#    {{ encore_entry_link_tags('register') }}#}
+
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Language" content="en">
-    <title>{% block title %}GuideJournal{% endblock %} | Find journal, with simply query</title>
-    {% block stylesheets %}
-    {% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/logo1.png') }}" />
-    <style type='text/css'>
-        /* Animation */
-        @keyframes fadeInDown{0%{opacity:0;transform:translateY(-20px)}100%{opacity:1;transform:translateY(0)}}
-        @keyframes rubberBand{from{transform:scale3d(1,1,1)}30%{transform:scale3d(1.25,0.75,1)}40%{transform:scale3d(0.75,1.25,1)}50%{transform:scale3d(1.15,0.85,1)}65%{transform:scale3d(.95,1.05,1)}75%{transform:scale3d(1.05,.95,1)}to{transform:scale3d(1,1,1)}}
-
-        /* Say Hi to Adblock */
-        #arlinablock{background:rgba(0,0,0,0.65);position:fixed;margin:auto;left:0;right:0;top:0;bottom:0;overflow:auto;z-index:999999;animation:fadeInDown 1s}
-        #arlinablock .header{margin:0 0 15px 0}
-        #arlinablock .inner{background:#05cdf5;color:#fff;box-shadow:0 5px 20px rgba(0,0,0,0.1);text-align:center;width:600px;padding:40px;border-radius:5px;margin:7% auto 2% auto;animation:rubberBand 1s}
-        #arlinablock button{padding:10px 20px;border:0;background:rgba(0,0,0,0.15);color:#fff;margin:20px 5px;cursor:pointer;transition:all .3s}
-        #arlinablock button:hover{background:rgba(0,0,0,0.35);color:#fff;outline:none}
-        #arlinablock button.active,#arlinablock button:hover.active{background:#fff;color:#222;outline:none}
-        #arlinablock .fixblock{background:#fff;text-align:left;color:#000;padding:20px;height:250px;overflow:auto;line-height:30px}
-        #arlinablock .fixblock div{display:none}
-        #arlinablock .fixblock div.active{display:block}
-        #arlinablock ol{margin-left:20px}
-
-        @media(max-width:768px){#arlinablock .inner{width:calc(100% - 20px);margin:10px auto;padding:15px}}#}
-</style>
+    <title>{% block title %}ResearchGuide{% endblock %} | The guide for science</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/refonte/homepage/icon.svg') }}" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136620103-1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-{#
-    <script >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" ></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'UA-136620103-1');
-    </script>#}
+    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tarteaucitronjs@1.9.3/css/tarteaucitron.min.css"/>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/AmauriC/tarteaucitron.js@V1.2/tarteaucitron.min.js"></script>
     <script type="text/javascript">
@@ -144,85 +137,93 @@
     //]]>
 </script>
 <amp-auto-ads type="adsense" data-ad-client="ca-pub-9897811061542650"></amp-auto-ads>
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm nav-top">
-    <h2 class="my-0 mr-md-auto text-info">
-        <a class="navbar-brand" href="/">
-            <img class="img-fluid logo-gj" src="{{ asset('assets/images/logo1.png') }}" alt="GuideJournal"  />
-            <span class="pl-2">GuideJournal</span>
-        </a>
-    </h2>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <div class="container right_nav">
-{#            <a  href="/" class="p-2 text-dark">Home <span class="sr-only">(current)</span></a>#}
-{#            <a href="/aboutguidejournal" class="p-2 text-dark">About</a>#}
-{#            <a href="/contactguidejournal" class="p-2 text-dark">Contact</a>#}
-{#            <a href="/blog" class="p-2 text-dark">Blog</a>#}
-{#            <a href="/scopus/topjournallist" class="p-2 text-dark">Top journals list</a>#}
-            <a  href="/" class="p-2 text-dark">Home <span class="sr-only">(current)</span></a>
-            <a  href="{{ path('journalSearch') }}" class="p-2 text-dark">Journal search <span class="sr-only"></span></a>
-            <a  href="{{ path('get_authors') }}" class="p-2 text-dark">Author search <span class="sr-only"></span></a>
-{#            <a  href="{{ path('graphic_data') }}" class="p-2 text-dark">Graph Maker  <span class="sr-only"></span></a>#}
-{#            <a  href="#" class="p-2 text-dark">Blog  <span class="sr-only"></span></a>#}
-            {%  if  sulu_navigation_root_tree is defined %}
-            {% for item in sulu_navigation_root_tree('main') %}
-                <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="p-2 text-dark"
-                   title="{{ item.title }}">{{ item.title }}</a>
-            {% endfor %}
-            {% endif %}
-
-        </div>
-    </nav>
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-
-
-            <li class="dropdown" style=" list-style-type: none;color:black ">
-{#                    <a class="dropdown-toggle" href="{{ path('favorite_list')}}" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
-
-                {% set media = null %}
-                {% set src = null %}
-                {% if app.user.contact.avatar is not null %}
-                    {% set media = sulu_resolve_media(app.user.contact.avatar,'fr') %}
-                {% endif %}
-
-                {% if media is not null %}
-                    {% set src= media.url %}
-                {% else %}
-                    {% set src=  asset('assets/images/profil_new.jpg') %}
-                {% endif %}
-
-
-                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-
-                        <img class="rounded-circle" src="{{ src }}" width="50" height="50" alt="{{ app.user.firstName}} {{ app.user.lastName}}"/>
-
-                    <span class="caret"></span>
+<div class="container container-base">
+    <div class="row">
+        <div class="col-lg-4">
+            <h2 class="my-0 mr-md-auto text-info">
+                <a class="navbar-brand" href="/">
+                    <img class="img-fluid logo-gj" src="{{ asset('assets/images/refonte/logo.svg') }}" alt="ResearchGuide"  />
                 </a>
-{#                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
-
-
-                <ul  class="dropdown-menu dropdown-menu-right" style="margin-top: 36px;">
-                        <li ><a class="dropdown-item" href="{{ path('author_search')}}">My profile</a></li>
-{#                        <li ><a class="dropdown-item" href="{{ path('sulu_community.profile')}}">Your profile</a></li>#}
-                        <div class="dropdown-divider"></div>
-                        <li><a  class="dropdown-item" href="{{ path('settings') }}">Account settings</a></li>
-{#                        <div class="dropdown-divider"></div>#}
-{#                        <li><a  class="dropdown-item" href="#">Help center</a></li>#}
-                        <div class="dropdown-divider"></div>
-                        <li><a  class="dropdown-item" href="{{ path('sulu_community.logout') }}">Log out</a></li>
-                    </ul>
-            </li>
-
-    {% else %}
-        <div class="sign">
-            <a class="btn btn-outline-info" href="{{ path('sulu_community.login')}}">Sign in</a>
-            <a class="btn btn-outline-warning ml-2 " href="{{ path('sulu_community.registration')}}">Sign up</a>
+            </h2>
         </div>
+        <div class="col-lg-8">
+            <div class="row row-nav">
+                <div class="col-lg-8 text-right">
+                    <nav class="my-2 my-md-0 mr-md-3">
+                        <div class="container right_nav">
+                            {#            <a  href="/" class="p-2 text-dark">Home <span class="sr-only">(current)</span></a>#}
+                            {#            <a href="/aboutguidejournal" class="p-2 text-dark">About</a>#}
+                            {#            <a href="/contactguidejournal" class="p-2 text-dark">Contact</a>#}
+                            {#            <a href="/blog" class="p-2 text-dark">Blog</a>#}
+                            {#            <a href="/scopus/topjournallist" class="p-2 text-dark">Top journals list</a>#}
+                            <a  href="/" class="p-2 text-dark">Home <span class="sr-only">(current)</span></a>
+                            <a  href="{{ path('journalSearch') }}" class="p-2 text-dark">Journal search <span class="sr-only"></span></a>
+                            <a  href="{{ path('get_authors') }}" class="p-2 text-dark">Author search <span class="sr-only"></span></a>
+                            {#            <a  href="{{ path('graphic_data') }}" class="p-2 text-dark">Graph Maker  <span class="sr-only"></span></a>#}
+                            {#            <a  href="#" class="p-2 text-dark">Blog  <span class="sr-only"></span></a>#}
+                            {%  if  sulu_navigation_root_tree is defined %}
+                                {% for item in sulu_navigation_root_tree('main') %}
+                                    <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}" class="p-2 text-dark"
+                                       title="{{ item.title }}">{{ item.title }}</a>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-lg-4 ">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li class="dropdown" style=" list-style-type: none;color:black ">
+                            {#                    <a class="dropdown-toggle" href="{{ path('favorite_list')}}" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
+                            {% set media = null %}
+                            {% set src = null %}
+                            {% if app.user.contact.avatar is not null %}
+                                {% set media = sulu_resolve_media(app.user.contact.avatar,'fr') %}
+                            {% endif %}
+
+                            {% if media is not null %}
+                                {% set src= media.url %}
+                            {% else %}
+                                {% set src=  asset('assets/images/profil_new.jpg') %}
+                            {% endif %}
 
 
-    {% endif %}
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+
+                                <img class="rounded-circle" src="{{ src }}" width="50" height="50" alt="{{ app.user.firstName}} {{ app.user.lastName}}"/>
+
+                                <span class="caret"></span>
+                            </a>
+                            {#                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{app.user.firstName}} <span class="caret"></span></a>#}
+
+
+                            <ul  class="dropdown-menu dropdown-menu-right" style="margin-top: 36px;">
+                                <li ><a class="dropdown-item" href="{{ path('author_search')}}">My profile</a></li>
+                                {#                        <li ><a class="dropdown-item" href="{{ path('sulu_community.profile')}}">Your profile</a></li>#}
+                                <div class="dropdown-divider"></div>
+                                <li><a  class="dropdown-item" href="{{ path('settings') }}">Account settings</a></li>
+                                {#                        <div class="dropdown-divider"></div>#}
+                                {#                        <li><a  class="dropdown-item" href="#">Help center</a></li>#}
+                                <div class="dropdown-divider"></div>
+                                <li><a  class="dropdown-item" href="{{ path('sulu_community.logout') }}">Log out</a></li>
+                            </ul>
+                        </li>
+
+                    {% else %}
+                        <div class="sign float-right">
+                            <a class="btn btn-outline-warning sign-in" href="{{ path('sulu_community.login')}}">Sign in</a>
+                            <a class="btn btn-warning ml-2 sign-up" href="{{ path('sulu_community.registration')}}">Sign up</a>
+                        </div>
+
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% block body %}
-<div class="container container-base mb-4">
+<div class="container-fluid container-base ">
 
     {% block content %}
     {% endblock %}
@@ -235,112 +236,128 @@
 
     </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="padding: 0">
 
     <!-- footer -->
 
 {#    <footer class="pt-4 my-md-5 pt-md-5 border-top">#}
-    <footer class="pt-4 pt-md-5 border-top">
-        <div class="container-fluid">
+    <footer class="pt-4 pt-md-5 border-top footer-homepage" >
+        <div class="container">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-2 logo-ul">
+                    <a href="/" >
+                       <img  src="{{ asset('assets/images/refonte/logo-footer.svg')}}" alt="researchGuide"/>
+                    </a>
+                    <p class="text">
+                        Lorem ipsum dolor sit amet, consec
+                        adipiscing elit, sed diam nonummy
+                        tincidunt ut laoreet dolore magna
+                        volutpat. Ut wisi enim ad minim
+                        quis nostrud exerci tation ulla
+                    </p>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <a href="#"> <img  src="{{ asset('assets/images/refonte/fb.svg')}}" alt="facebook"/></a>
+                        </div>
+                        <div class="col-lg-2">
+                            <a href="#"><img  src="{{ asset('assets/images/refonte/twitter.svg')}}" alt="twitter"/></a>
+                        </div>
+                        <div class="col-lg-2">
+                            <a href="#"> <img  src="{{ asset('assets/images/refonte/instagram.svg')}}" alt="instagram"/></a>
+                        </div>
+                        <div class="col-lg-2">
+                            <a href="#">  <img  src="{{ asset('assets/images/refonte/youtube.svg')}}" alt="youtube"/></a>
+                        </div>
+                        <div class="col-lg-2">
+                            <a href="#">  <img  src="{{ asset('assets/images/refonte/github.svg')}}" alt="github"/></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 left-ul">
                     <ul class="footer-ul">
-                        <h4>About Guidejournal</h4>
-                        <li class="list-unstyled">
-                            <a href="{{ path('homepage') }}">Home</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="{{ path('about_guidejournal') }}">About</a>
-                        </li>
+                        <h4>Home</h4>
+{#                        <li class="list-unstyled"><a href="#">About</a></li>#}
+{#                        <li class="list-unstyled"><a href="#">Contact</a></li>#}
 
-                        <li class="list-unstyled">
-                            <a href="{{ path('contact_guidejournal') }}">Contact</a>
-                        </li>
+                       {% for item in sulu_navigation_root_tree('footer') %}
+                            {% if item.title|lower in ['about us','contact us','top journals list','privacy policy'] %}
+                            <li class="list-unstyled">
+                                <a href="{{ item.url }}">
+                                    {%  if item.title|lower =="about us" %}
+                                        about
+                                        {% elseif item.title|lower =="contact us" %}
+                                            contact
+                                            {% else %}
+                                    {{ item.title }}
+                                    {% endif %}
+                                </a>
+                            </li>
 
-                        <li class="list-unstyled">
-                            <a href="{{ path('top_journal_page') }}">Top journals list</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="{{ path('privacy_page') }}">Privacy Policy</a>
-                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    
                     </ul>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2 left-ul">
                     <ul class="footer-ul">
                         <h4>Indexing Services</h4>
-                        <li class="list-unstyled">
-                            <a href="{{ path('services_page') }}">Services</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="https://scholar.google.com/" target="_blank">Google Scholar</a>
-                        </li>
 
-                        <li class="list-unstyled">
-                            <a href="https://doaj.org/about" target="_blank">DOAJ </a>
-                        </li>
+                        {% for service in sulu_navigation_root_flat('services') %}
 
-                        <li class="list-unstyled">
-                            <a href="https://journals.indexcopernicus.com/" target="_blank">Index Copernicus</a>
-                        </li>
-                        <li class="list-unstyled">
-                            <a href="https://search.crossref.org/" target="_blank">Crossref</a>
-                        </li>
+                            <li class="list-unstyled">
+                                <a href="{{ service.url }}">{{ service.title }}</a>
+                            </li>
+
+                            {% for item in sulu_navigation_tree(service.uuid, 'services') %}
+
+                                <li class="list-unstyled">
+                                    <a target="_blank" href="{{ item.url }}">{{ item.title }}</a>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                        
                     </ul>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2 left-ul">
                     <ul class="footer-ul">
                         <h4>Customer Service</h4>
                         <li class="list-unstyled">
                             <a href="{{ path('help_guidejournal') }}">Help</a>
                         </li>
-                        <li class="list-unstyled" style="margin-top: 2rem;">
-                            <a href="https://www.facebook.com/Guidejournalnet-2212190822429890" target="_blank">
-                                <img style="margin-top:10px;height: 40px;width: 40px;" src="{{ asset('assets/images/facebook.png')}}" alt="facebook"/>
-                            </a>
-                            <a href="https://www.youtube.com/channel/UCgouL9eAodmPKXckGsTPRWw" target="_blank">
-                                <img style="margin-top:10px;height: 40px;width: 40px;" src="{{ asset('assets/images/youtube_icon.png')}}" alt="youtube"/>
-                            </a>
-                        </li>
                     </ul>
                 </div>
-            </div>
-            <hr/>
-            <div class="row" >
-                <div class="media w-100" style="padding-bottom: 1rem;">
-                    <div class=" col-sm-1 col-lg-3">
-                        <a class="navbar-brand align-self-start mr-3 ml-lg-5" href="/">
-                            <img  class="img-fluid logo-gj"  src="/assets/images/logo1.png" alt="GuideJournal"/>
-                        </a>
-                    </div>
-                    <div class="col-sm-11 col-lg-9 " style="padding-top: 1rem;">
-                        <div class="media-body">
-                              <span class=" mb-4 mb-lg-0" style="font-size: 14px">
-                              <a class="text-info" href="https://www.mit-agency.com/" target="_blank"> © MIT {{ "now"|date('Y')}}.
-                                All Rights Reserved.</a> We use cookies to help provide and enhance our service and tailor content. By continuing, you agree to the
-                              <a class="text-info" href="{{ path('privacy_page') }}"> use of cookies</a>
-                              </span>.
+                <div class="col-lg-2 right-ul">
+                    <h4>Subscribe Us</h4>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="subscribeEmail" placeholder="Your email here...">
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <input type="submit" class="form-control" id="Subscribe" value="Subscribe">
+                        </div>
+                    </form>
                 </div>
             </div>
-
         </div>
-            <script type="text/javascript">
+{#            <script type="text/javascript">#}
 
-                $(document).ready(function() {
-                    $('#auteurs').DataTable({
-                        "oLanguage": {
-                            "sSearch": "Filter"
-                        }
-                    });
+{#                $(document).ready(function() {#}
+{#                    $('#auteurs').DataTable({#}
+{#                        "oLanguage": {#}
+{#                            "sSearch": "Filter"#}
+{#                        }#}
+{#                    });#}
 
-                } );
+{#                } );#}
 
-            </script>
+{#            </script>#}
     </footer>
 
     <!-- footer -->
 </div>
+{{ encore_entry_script_tags('app') }}
+{{ encore_entry_script_tags('pages-author') }}
 
 </body>
+
 </html>

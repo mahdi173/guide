@@ -80,6 +80,29 @@ class DataReuters extends AbstractJournal
     private $categoryname;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $contributor;
+
+    /**
+     * @return User
+     */
+    public function getContributor(): ?User
+    {
+        return $this->contributor;
+    }
+
+    /**
+     * @param User $contributor
+     */
+    public function setContributor(User $contributor): void
+    {
+        $this->contributor = $contributor;
+    }
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="favoriteReutersJournals")
      */
     private $users;

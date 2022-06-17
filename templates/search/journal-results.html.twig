@@ -1,0 +1,237 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .IN-widget{
+            position: relative;
+            bottom: 2px;
+        }
+        .IN-widget button{
+            height: 21px !important;
+        }
+        .fb-share-button{
+            height: 21px;
+            width: 55px;
+            display: inline-block;
+            margin: 5px;
+        }
+        ol.carousel-indicators li {
+            background: rgba(225, 227, 221, 0.54);
+
+        }
+
+        ol.carousel-indicators li.active {
+            background: #2ebae6;
+        }
+    </style>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!--style="background-color: #f6f6f6"-->
+    <div class="container-fluid mr-0 ml-0 pr-0 pl-0" style="margin-top: -1%">
+        <div class="card card-results">
+            <div class="card-body">
+
+                <div class="row mt-5">
+                    <div class="col-sm-12"> </div>
+                    <div class="col-md-2 col-sm-1"></div>
+                    <div class="col-md-8">
+                        {% include '_includes/search_form.html.twig' %}
+                    </div>
+                    <div class="col-md-2 col-sm-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 1.8rem;">
+
+        <div class="col-sm-12"></div>
+
+    </div>
+    <div class="container-fluid search-journals-result" >
+
+        <div class="row" >
+            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-8">
+                <h3 class="text-center text-uppercase">
+                    <b>{{ journals|length }} journal(s) matched your search</b></h3>
+
+                <br>
+                {% if journals|length %}
+                <table class="table mb-5">
+
+                    <thead>
+                    <tr>
+                        <th scope="col" class="th-journal">JOURNAL NAME</th>
+                        <th scope="col">PUBLISHER</th>
+                        <th scope="col">OPEN ACCESS </th>
+                        <th scope="col">E-ISSN</th>
+                    </tr>
+                    <tbody>
+                    {% for journal in journals %}
+                    <tr class="table-data">
+                        <th scope="row" class="jounal-title">
+                            <a href="{{ path('journal_show', {'id': journal.id}) }}" target="_blank">
+{#                            <a href="{{ path('data_t_scopus_results', {'eISSN': journal.eissn}) }}" target="_blank">#}
+                                {{ journal.title }}</a>
+                        </th>
+                        <td>   {% if journal.contributor %}{{ journal.contributor.firstName  }}  {{ journal.contributor.lastName  }}{% endif %}</td>
+                        <td> {{ journal.isOpenAccess ? 'YES' : 'NO' }}</td>
+                        <td>{% if journal.originalEISSN %}{{ journal.eissn }}{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <table class="table mb-5">
+                    <thead>
+                    <tr>
+                        <th scope="col">No results found for {{ app.request.get('searchValue')|upper}} !</th>
+                    </tr>
+                    </thead>
+                </table>
+                {% endif %}
+
+{#                    {% for journal in journals %}#}
+{#                    <div class="card">#}
+{#                        <div class="card-header">#}
+{#                            <h4><a href="{{ path('journal_show', {'id': journal.id}) }}">#}
+{#                                    <strong>{{ journal.title }}</strong>#}
+{#                                </a></h4>#}
+{#                        </div>#}
+{#                        <div class="card-body" >#}
+{#                            <div class="row ">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded o-res" >SJR : </span>&nbsp;#}
+{#                                        <span> </span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-warning rounded o-res" >Rank : </span>&nbsp;#}
+{#                                        <span > {{ journal.rank|default('') }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded o-res" >Publisher : </span>&nbsp;#}
+{#                                        <span > {{ journal.publisherOrg.name|default('') }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded p-1 mb-1 o-res" style="display: inline-block" >Open Access : </span>&nbsp;#}
+{#                                        <span > {{ journal.isOpenAccess ? 'YES' : 'NO' }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded p-1 mb-1 o-res" style="display: inline-block" >Quartile : </span>&nbsp;#}
+{#                                        <span >{{ journal.quartile|default('') }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded o-res" >Citation Count : </span>&nbsp;#}
+{#                                        <span > {{ journal.citationCount }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded p-1 mb-1 o-res" >P-ISSN : </span>&nbsp;#}
+{#                                        <span > {% if journal.originalPrintISSN %}{{ journal.printISSN }}{% endif %}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded o-res" >E-ISSN : </span>&nbsp;#}
+{#                                        <span > {% if journal.originalEISSN %}{{ journal.eissn }}{% endif %}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="card-footer">#}
+{#                            {% if journal.contributor %}#}
+{#                            <h6 >#}
+{#                                <span class="p-1 mb-1"> Added by: </span>#}
+{#                                <span >#}
+{#                                                <img src="https://as1.ftcdn.net/v2/jpg/02/59/39/46/1000_F_259394679_GGA8JJAEkukYJL9XXFH2JoC3nMguBPNH.jpg" class="img img-responsive" width="45" />#}
+{#                                                {{ journal.contributor.firstName  }}  {{ journal.contributor.lastName  }}#}
+{#                                            </span>#}
+{#                            </h6>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                        <br>#}
+{#                    {% else %}#}
+{#                        <h4 style="padding-top: 30px"><b><a href="#">Not Found </a></b></h4>#}
+{#                    {% endfor %}#}
+{#                {{ knp_pagination_render(journals, null, {}, {#}
+{#                    'align': 'center',#}
+{#                    'size': 'large',#}
+{#                    'rounded': true,#}
+{#                }) }}#}
+            </div>
+            <div class="col-md-2 col-sm-2"></div>
+        </div>
+        <div class="container" >
+            <div class="row pub-banner" >
+                <div class="col-md-12 col-sm-12 text-center">
+                    <img class="img-fluid" src="{{ asset('assets/images/refonte/search/pub.svg') }}" alt="ResearchGuide"  />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- fin div container-->
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://guidejournal.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e1ef322734b56001269b6b7&product=inline-share-buttons' async='async'></script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+{% endblock %}

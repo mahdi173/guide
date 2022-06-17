@@ -4,6 +4,7 @@
 namespace App\Manager;
 
 
+use App\Entity\DataTScopus;
 use App\Entity\User;
 use App\Repository\AllPublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -82,6 +83,15 @@ class PublicationManager
             }
         }
         return $user;
+    }
+    public function getAdvancedData(){
+        $publishers = $this->em->getRepository(DataTScopus::class)->selectALLPublishers($this->em);
+        $categories=$this->em->getRepository(DataTScopus::class)->selectALLCategories($this->em);
+        return [
+            'publishers'=>$publishers,
+            'categories'=>$categories
+        ];
+
     }
 
 }

@@ -54,6 +54,7 @@ class SearchAuthorsController extends AbstractController
         $checkFollowing=$entityManager->getRepository(Follow::class)->findBy(['following'=>trim($auteur)]);
 
         $author_db=$entityManager->getRepository(User::class)->findBy(['fullName'=>$auteur]);
+
         if($author_db){
             $author_db=$author_db[0];
         }
@@ -62,7 +63,7 @@ class SearchAuthorsController extends AbstractController
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
             foreach ($followers as $follower){
-                    if ($follower->getId() == $this->getUser()->getId()) {
+                    if ($follower && $follower->getId() == $this->getUser()->getId()) {
                         $exist = 1;
                     }
 
@@ -189,9 +190,12 @@ class SearchAuthorsController extends AbstractController
         if($checkFollowing){
             $checkFollowing=$checkFollowing[0];
             $followers=$checkFollowing->getFollowers()->getValues();
+
             foreach ($followers as $follower){
-                    if ($follower->getId() == $this->getUser()->getId()) {
-                    $exist=1;
+                if ($follower && $this->getUser() ){
+                    if($follower->getId() == $this->getUser()->getId()) {
+                        $exist=1;
+                    }
                 }
             }
         }

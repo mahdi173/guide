@@ -1,44 +1,20 @@
-{% extends '@SuluCommunity/profile-form.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}GuideJournal: Journals{% endblock %}
+{% block title %}Hello JournalController!{% endblock %}
 
-{% block profile_content %}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
 
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
 
-            <h1>Journals index</h1>
-
-            <table class="table">
-                <thead>
-                    <tr class="table-active">
-                        <th >Title</th>
-                        <th>Ejr</th>
-                       <th>Publisher</th>
-                        <th>Openaccess</th>
-                        <th>Printissn</th>
-                        <th>Eissn</th>
-                        <th>Rank</th>
-                        <th>Link</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for journal in journals %}
-                       <td>{{ journal.title }}</td>
-                        <td>{{ journal.ejr }}</td>
-                        <td>{{ journal.publisher }}</td>
-                        <td class="border-0">{{ journal.openaccess }}</td>
-                        <td>{{ journal.printissn }}</td>
-                        <td>{{ journal.eissn }}</td>
-                        <td>{{ journal.rank }}</td>
-                        <td>{{ journal.link }}</td>
-                {% else %}
-                    <tr>
-                        <td colspan="7">no records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
-            <a class="btn btn-primary offset-lg-5 mt-3 add_entity" href="{{ path('add_journals',{'firstname':firstname,'lastname':lastname,'id':user.id,'_locale':app.request.locale}) }}">Add Journal</a>
-
-
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/home/mohammed/workspace/MULTIINFO/Guidejournal/src/guidejournal/src/Controller/JournalController.php'|file_link(0) }}">src/Controller/JournalController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/home/mohammed/workspace/MULTIINFO/Guidejournal/src/guidejournal/templates/journal/index.html.twig'|file_link(0) }}">templates/journal/index.html.twig</a></code></li>
+    </ul>
+</div>
 {% endblock %}

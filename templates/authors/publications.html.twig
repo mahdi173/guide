@@ -11,60 +11,63 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid container-author">
+{#    <div class="row  mb-3">#}
+{#        <div class="col-md-2 col-sm-1"></div>#}
+{#        <div class="col-md-7 mt-5 mb-5">#}
+{#            <form method="get" action="{{ url('get_authors') }}">#}
 
-    <div class="row  mb-3">
-        <div class="col-md-2 col-sm-1"></div>
-        <div class="col-md-7 mt-5 mb-5">
-            <form method="get" action="{{ url('get_authors') }}">
-
-                <div class="input-group mb-3">
-                    <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-3 col-sm-1"></div>
+{#                <div class="input-group mb-3">#}
+{#                    <input type="text" name="authorValue"  class="form-control" placeholder="Author name" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">#}
+{#                    <div class="input-group-append">#}
+{#                        <button class="btn btn-outline-info" type="submit" id="texte-bouton"><i class="fa fa-search"></i> Search</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#        <div class="col-md-3 col-sm-1"></div>#}
+{#    </div>#}
+    <div class="container container-home mb-5">
+        {% include 'pages/parts/form-search.html.twig' %}
     </div>
+    <div class="container">
+        <div class="row header-author">
 
-    <div class="row header-author">
+            <div class="col-md-1 img-author-search mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/refonte/search/sample.png') }}" width="130" height="130" alt="{{ auteur }}"/></div>
+            <div class="col-md-6 title-author-search mb-2 text-center" style="margin-left: 70px;padding-top: 20px;">
+                <h5 class="text-author">{{ auteur }}</h5>
+                {% set followers_count= followers_profile.followers(auteur)|length %}
 
-        <div class="col-md-1 img-author-search mb-2" style="margin-top: -10px">  <img class="rounded-circle" src="{{ asset('assets/images/profil_new.jpg') }}" width="130" height="130" alt="{{ auteur }}"/></div>
-        <div class="col-md-6 title-author-search mb-2" style="margin-left: 70px;padding-top: 20px;">
-            <h5 class="text-primary">{{ auteur }}</h5>
-           {% set followers_count= followers_profile.followers(auteur)|length %}
-
-           <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ followers_count }}  followers</span>
+                <span class="stat_info">   {{  data_dblp| length +  data_doaj.results| length}} publications</span><span class="stat_info"> 0  posts</span><span class="stat_info"> {{ followers_count }}  followers</span>
 
 
-            <span class="stat_info">  {% if author_db %}{{author_db.follows|length }} {% else%} 0 {% endif %}following</span></p>
-        </div>
+                <span class="stat_info">  {% if author_db %}{{author_db.follows|length }} {% else%} 0 {% endif %}following</span></p>
+            </div>
 
-        <div class="offset-1 col-md-2 btn-author-search mb-2" style="padding-left: 70px;padding-top: 20px;">
-            {% if app.user %}
-            {% set  follows=app.user.follows.values%}
+            <div class="offset-1 col-md-2 btn-author-search mb-2" style="padding-left: 70px;padding-top: 20px;">
+                {% if app.user %}
+                    {% set  follows=app.user.follows.values%}
 
-            {% set  count=0%}
+                    {% set  count=0%}
 
-            {% for follow in follows %}
-                {% if follow.following == auteur %}
-                    {% set count=count+1%}
+                    {% for follow in follows %}
+                        {% if follow.following == auteur %}
+                            {% set count=count+1%}
+                        {% endif %}
+                    {% endfor %}
+
+                    <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn  follow follow-btn" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
+                {% else %}
+                    <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname': " ",'lastname':" ",'id': 0}) }}" class="btn  follow follow-btn" data-author="{{ auteur }}" >Follow</a>
                 {% endif %}
-            {% endfor %}
-
-            <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname':app.user.firstName,'lastname':app.user.lastName,'id':app.user.id}) }}" class="btn btn-primary follow follow-btn" data-author="{{ auteur }}" >{% if count>0 %} UnFollow{% else %}Follow{% endif %}</a>
-            {% else %}
-                <a href="{{ path('add_follower', {'author': auteur,'exist':exist|length,'redirect':app.request.attributes.get('_route'),'firstname': " ",'lastname':" ",'id': 0}) }}" class="btn btn-primary follow follow-btn" data-author="{{ auteur }}" >Follow</a>
-            {% endif %}
+            </div>
         </div>
     </div>
-
-<div class="row" style="margin-top: 30px">
+    <div class="row row-content">
     <div class="col-md-9 mt-3 mb-5">
-        <table class="table table-hover table-bordered table-publication" data-toggle="table" data-striped="true">
-            <thead class="table-light">
-            <tr  class="table-light">
+        <table class="table" data-toggle="table" data-striped="true">
+            <thead >
+            <tr class="table-data">
 
                 <th colspan="8">Title</th>
                 <th>Year</th>
@@ -73,7 +76,7 @@
             <tbody>
             {% if data_doaj| length >0 %}
                 {% for result in data_doaj.results %}
-                    <tr>
+                    <tr class="table-data">
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary">
                                 {% for l in result.bibjson.link %}
@@ -91,10 +94,11 @@
                                    {% if l is defined %} <a href="{{ l.url }}" target="_blank"> {{ result.bibjson.title }} </a>{% endif %}
                                 {% endfor %}
                             </p>
-                            <p class="font-weight-light text-muted mt-n3">
+                            <p class="font-weight-light mt-n3">
                                 <small>Authors :
+
                                     {% for a in result.bibjson.author[:30] %}
-                                        <a href="{{ path('get_authors_publication', {auteur: a.name}) }}"> {{ a.name }} </a>
+                                        <a class="authors" href="{{ path('get_authors_publication', {auteur: a.name}) }}"> {{ a.name }} </a>
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>
@@ -145,23 +149,24 @@
             {% endif %}
             {% if data_dblp| length >0 %}
                 {% for res in data_dblp  %}
-                    <tr>
+                    <tr class="table-data">
                         <td colspan="8" class="w-70 border-0 mb-n5">
                             <p class="font-weight-bold text-primary"><a href="{{ res.info.url }}" target="_blank"> {{ res.info.title }} </a></p>
-                            <p class="font-weight-light text-muted mt-n3">
+                            <p class="font-weight-light mt-n3">
                                 <small>Authors :
                                     {% for a in res.info.authors.author %}
-                                        <a href="{{ path('get_authors_publication', {auteur: a.text}) }}"> {{ a.text }} </a>
+                                        <a class="authors" href="{{ path('get_authors_publication', {auteur: a.text}) }}"> {{ a.text }} </a>
                                         {% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </small></p>
-                            <p class="font-weight-light text-muted mt-n4 mb-n3">
+                            <p class="font-weight-light  mt-n4 mb-n3">
                                 <small>
-                                    {% if res.info.venue is defined %}
+                                    {% if res.info.venue is defined and res.info.venue is iterable %}
                                         {% for v in res.info.venue %}
                                             {{ v }}
-                                        {% endfor %}
-                                    {% endif %},
+                                        {% endfor  %},
+                                    {% elseif res.info.venue is defined  %}  {{res.info.venue}},
+                                    {% endif %}
                                     {% if res.info.number is defined %}{{ res.info.number }}{% endif %}
                                     {% if res.info.volume is defined %}({{ res.info.volume }}),
                                         {% if res.info.pages is defined %}Pages :{{ res.info.pages }}{% endif %}{% endif %}
@@ -184,9 +189,9 @@
             </tbody>
         </table>
     </div>
-    <div class="offset-0 col-md-3 mt-3" style="border: solid 2px #e6e6e6;">
+    <div class="offset-0 col-md-3 mt-3" style="border: solid 2px #E8E8E8;padding: 0;height: fit-content;">
 
-        <table class="table table-info-authors">
+        <table class="table">
             <tr style="border: none">
                 <th class="header">Top co-authors
 {#                    <a href="{{ path('co_authors_index',{"id":user.id,"firstname":user.firstName,'lastname':user.lastName}) }}" class="following_index"> #}
@@ -199,10 +204,10 @@
                 <td>
                     {% if co_authors|length>0  %}
                         {% for author in co_authors|slice(0,3) %}
-                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
+                            <a  class="table-data authorLink" href="{{ path('get_authors_publication', {auteur:author}) }}">
                                 <div class="row">
                                     <div  class="col-md-3">
-                                      <img src="{{  asset('assets/images/profil_new.jpg') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt="{{ author}}">
+                                      <img src="{{  asset('assets/images/refonte/search/sample.png') }}" width="50px" height="50px" style="margin-right: 10px;margin-bottom: 10px" alt="{{ author}}">
                                     </div>
                                     <div  style="padding-top: 10px" class="col-md-9"> {{ author}}</div>
                                 </div>
@@ -215,10 +220,12 @@
 
             <tr>
 
-            <tr>
+            <tr class="table-data">
                 <th class="header">  {% if author_db %}
                     Following ({{author_db.follows|length  }})
-                    <a href="{{ path('following_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
+                    <a href="{{ path('following_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index">
+                        <span style="float: right">View all</span>
+                    </a>
 
                 {% else %}
                     Following (0){% endif %}
@@ -229,7 +236,7 @@
                 <td>
                     {% if author_db and author_db.follows.values|length >0 %}
                         {% for follow in author_db.follows.values|slice(0,3) %}
-                            <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
+                            <a  class="table-data authorLink" href="{{ path('get_authors_publication', {auteur:follow.following}) }}">
 
                                 {% set stocked=publicationManager.isAuthorStocked( follow.following)  %}
 
@@ -268,7 +275,9 @@
                 {% set followers=followers_profile.followers(auteur) %}
                 <th class="header">Followers ({{ followers|length }})
                     {% if author_db %}
-                         <a href="{{ path('followers_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index"> <strong style="float: right">View all</strong></a>
+                         <a href="{{ path('followers_index',{"id":author_db.id,"firstname":author_db.firstName,'lastname':author_db.lastName}) }}" class="following_index">
+                             <span style="float: right">View all</span>
+                         </a>
                     {% endif %}
                 </th>
             </tr>
@@ -277,7 +286,7 @@
                    {% if followers|length>0  %}
                        {% for follower in followers|slice(0,3) %}
                            {% if follower.fullName and follower.fullName !=""  %}
-                           <a  class="authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
+                           <a  class="table-data authorLink" href="{{ path('get_authors_publication', {auteur:follower.fullName}) }}">
                                {% set stocked=publicationManager.isAuthorStocked(follower.fullName)  %}
 
                                {% set media = null %}
@@ -317,7 +326,6 @@
         </table>
     </div>
 </div>
-
-
+</div>
 
 {% endblock %}

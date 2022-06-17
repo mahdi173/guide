@@ -9,6 +9,7 @@ use App\Entity\DataScopus;
 use App\Entity\DataTScopus;
 use App\Entity\Search;
 use App\Form\SearchType;
+use App\Repository\JournalRepository;
 use App\Service\ServiceForJournalFinder;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -51,9 +52,8 @@ class SearchController extends BaseController
      *
      * @Route("/query", name="data_search_by_several_values")
      */
-    public function searchByValue(Request $request)
+    public function searchByValue(Request $request, JournalRepository $journalRepository, PaginatorInterface $paginator)
     {
-
 
         $objet = new Search();
         $data_t_scopus = null;
@@ -65,6 +65,15 @@ class SearchController extends BaseController
         $form = $this->createForm(SearchType::class, $objet);
         //$form->handleRequest($request);
 
+        $searchTerm = $request->get("searchValue", null);
+        $searchOption = $request->get("searchOption", "journal");
+        if ($searchTerm && 'journal' === $searchOption) {
+            $page = $request->get("page", 1);
+
+            $journals = $paginator->paginate($journalRepository->search($request->get("searchValue"), [], $page), $page, 10);
+
+            return $this->render('search/journal-results.html.twig', ['journals' => $journals]);
+        }
 
         if ($request->get("searchValue")) {
 
@@ -230,6 +239,7 @@ class SearchController extends BaseController
                     }
                 }
                 if ($request->get('searchOption') == "author") {
+
                     return $this->redirectToRoute('get_authors', ['authorValue' => $request->get("searchValue")]);
                 }
 
@@ -249,193 +259,194 @@ class SearchController extends BaseController
                     'paginationR' => $pagination_slide
                 ]);
             }
-           else{
-               //journal
+            else{
+                //journal
 
-               // modification par outmane le 11/05/2020 à 10h00
-               $val = $request->get("searchValue");
-               $array = explode(" ", $val);
+                // modification par outmane le 11/05/2020 à 10h00
+                $val = $request->get("searchValue");
+                $array = explode(" ", $val);
 
-               $new_value = "";
+                $new_value = "";
 
-               for ($i = 0; $i < (count($array)); $i++) {
-                   if ($array[$i] != " ") {
-                       if ($i == 0) {
-                           $new_value = $array[$i];
-                       } else $new_value = $new_value . " " . $array[$i];
+                for ($i = 0; $i < (count($array)); $i++) {
+                    if ($array[$i] != " ") {
+                        if ($i == 0) {
+                            $new_value = $array[$i];
+                        } else $new_value = $new_value . " " . $array[$i];
 
-                   }
-
-
-               }
-
-               $eISSN = $new_value;
+                    }
 
 
-               // fin de la modification
+                }
 
-               $emS = $this->entityManager;
-
-               $em = $emS->getRepository(DataTScopus::class);
-               $em2 = $emS->getRepository(DataReuters::class);
-               $eISSNT = $eISSN;
-               $eISSNS = $eISSN;
-               $pos = strpos($eISSN, "-");
-               $c_number = preg_match('/\\d/', $eISSN);
-               if ($c_number == 1) {
-                   $eISSN = str_ireplace(" ", "", $eISSN);
-                   if (strlen($eISSN) == 9 || strlen($eISSN) == 8) {
-                       if ($pos !== false) {
-                           $eISSNS = str_ireplace("-", "", $eISSN);
-
-                       } else {
-
-                           $eISSNT = substr_replace($eISSN, "-", 4, 0);
-                           $eISSNS = str_ireplace("-", "", $eISSN);
-                       }
-                       $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                       $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                $eISSN = $new_value;
 
 
-                       // necessite une méthode duplication pour suggerer
+                // fin de la modification
 
-                       if ($data_t_scopus != null) {
-                           $val_title = $data_t_scopus->getTitle();
-                           $pagination_slide = $this->journalFinder->similarResult($val_title);
+                $emS = $this->entityManager;
 
-                           // une fonction pour trouver les valeurs similaires
+                $em = $emS->getRepository(DataTScopus::class);
+                $em2 = $emS->getRepository(DataReuters::class);
+                $eISSNT = $eISSN;
+                $eISSNS = $eISSN;
+                $pos = strpos($eISSN, "-");
+                $c_number = preg_match('/\\d/', $eISSN);
+                if ($c_number == 1) {
+                    $eISSN = str_ireplace(" ", "", $eISSN);
+                    if (strlen($eISSN) == 9 || strlen($eISSN) == 8) {
+                        if ($pos !== false) {
+                            $eISSNS = str_ireplace("-", "", $eISSN);
 
+                        } else {
 
-                       }
-
-
-                       //
-
-
-                       if ($data_t_scopus == null && $data_reuters != null) {
-
-                           if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
-                           if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
-                           $eISSNSend = $eISSNS;
-                           $eISSNS = str_replace("-", "", $eISSNS);
-                           $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                       }
-                       if ($data_t_scopus != null && $data_reuters == null) {
-
-                           if ($data_t_scopus->getEISSN() == $eISSNS && $data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
-                           if ($data_t_scopus->getPrintISSN() == $eISSNS && $data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
-                           $eISSNSend = $eISSNT;
-                           $eISSNT = substr_replace($eISSNT, "-", 4, 0);
-                           $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-                           if ($data_reuters == null) {
-                               $eISSNT = $data_t_scopus->getTitle();
-                               $eISSNT = str_ireplace("&", "and", $eISSNT);
-                               $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
-                           }
-
-                       }
-
-                   }
-               } else {
-                   $data_t_scopus = $em->findScopusSeveralResultByTitle($eISSNS, $emS);
-                   if (sizeof($data_t_scopus) == 1) {
-                       $eISSNT = str_ireplace("&", "and", $eISSN);
-
-                       $data_t_scopus = $em->findInScopusByTitle($eISSNS, $emS);
-
-                       $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
-                       if ($data_t_scopus == null && $data_reuters != null) {
-
-                           if ($data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
-                           $eISSNS = str_ireplace("-", "", $eISSNS);
-                           $eISSNSend = $eISSNS;
-                           $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                           if ($data_t_scopus) {
-                               if ($data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
-                               $eISSNS = str_ireplace("-", "", $eISSNS);
-                               $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
-                           }
-                       }
-
-                       if ($data_t_scopus != null && $data_reuters == null) {
-                           if ($data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
-                           $eISSNT = substr_replace($eISSNT, "-", 4, 0);
-                           $eISSNSend = $eISSNT;
-                           $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-                           if ($data_reuters == null) {
-                               if ($data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
-                               $eISSNT = substr_replace($eISSNT, "-", 4, 0);
-                               $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
-                           }
-                           if ($data_reuters == null) {
-                               $eISSNT = $data_t_scopus->getTitle();
-                               $eISSNT = $eISSNT = str_ireplace("&", "and", $eISSN);
-                               $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
-                           }
-
-                       }
-
-                       // ajouter le 12/05/2020
+                            $eISSNT = substr_replace($eISSN, "-", 4, 0);
+                            $eISSNS = str_ireplace("-", "", $eISSN);
+                        }
+                        $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                        $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
 
 
-                       $val_title = $eISSNS;
-                       $pagination_slide = $this->journalFinder->similarResult($val_title);
+                        // necessite une méthode duplication pour suggerer
 
-                       // une fonction pour trouver les valeurs similaires
+                        if ($data_t_scopus != null) {
+                            $val_title = $data_t_scopus->getTitle();
+                            $pagination_slide = $this->journalFinder->similarResult($val_title);
 
-
-                       //fin ajout
-
-
-                   }
-                   // ajouter le 10/05/2020 pour inverser les valeurs
-                   if ($data_t_scopus == null) {
+                            // une fonction pour trouver les valeurs similaires
 
 
-                       // echo $new_value;
-                       $data_t_scopus = $this->journalFinder->similarResult($eISSNS);
-                       $pagination_slide = null;
-                       //echo sizeof($data_t_scopus);
+                        }
 
 
-                   }
-                   // fin ajout
-               }
-               $pagination = 0;
-               if (!is_null($data_t_scopus) && is_iterable($data_t_scopus)) {
-                   $pagination = $this->paginator->paginate(
-                       $data_t_scopus, /* query NOT result */
-                       $request->query->getInt('page', 1), /*page number*/
-                       5 /*limit per page*/
-                   );
-               }
-               //journal
-               $topjournallistScopus = $em->selectTopListScopus($emS);
-               $topjournallistWebofs = $em2->selectTopListWeb($emS);
-               //echo sizeof($publishers);
-               return $this->render('default/searchV.html.twig', [
-                   'form' => $form->createView(),
-                   'data_reuter' => $data_reuters,
-                   'data_t_scopus' => $data_t_scopus,
-                   'tpjlistScopus' => $topjournallistScopus,
-                   'tpjlistWebof' => $topjournallistWebofs,
-                   'eISSN' => $eISSNSend,
+                        //
 
-                   'pagination' => $pagination,
-                   'paginationR' => $pagination_slide
-               ]);
-           }
 
+                        if ($data_t_scopus == null && $data_reuters != null) {
+
+                            if ($data_reuters->getEISSN() == $eISSNT && $data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
+                            if ($data_reuters->getISSN() == $eISSNT && $data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
+                            $eISSNSend = $eISSNS;
+                            $eISSNS = str_replace("-", "", $eISSNS);
+                            $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                        }
+                        if ($data_t_scopus != null && $data_reuters == null) {
+
+                            if ($data_t_scopus->getEISSN() == $eISSNS && $data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
+                            if ($data_t_scopus->getPrintISSN() == $eISSNS && $data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
+                            $eISSNSend = $eISSNT;
+                            $eISSNT = substr_replace($eISSNT, "-", 4, 0);
+                            $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                            if ($data_reuters == null) {
+                                $eISSNT = $data_t_scopus->getTitle();
+                                $eISSNT = str_ireplace("&", "and", $eISSNT);
+                                $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                            }
+
+                        }
+
+                    }
+                } else {
+                    $data_t_scopus = $em->findScopusSeveralResultByTitle($eISSNS, $emS);
+                    if (sizeof($data_t_scopus) == 1) {
+                        $eISSNT = str_ireplace("&", "and", $eISSN);
+
+                        $data_t_scopus = $em->findInScopusByTitle($eISSNS, $emS);
+
+                        $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                        if ($data_t_scopus == null && $data_reuters != null) {
+
+                            if ($data_reuters->getISSN() != null) $eISSNS = $data_reuters->getISSN();
+                            $eISSNS = str_ireplace("-", "", $eISSNS);
+                            $eISSNSend = $eISSNS;
+                            $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                            if ($data_t_scopus) {
+                                if ($data_reuters->getEISSN() != null) $eISSNS = $data_reuters->getEISSN();
+                                $eISSNS = str_ireplace("-", "", $eISSNS);
+                                $data_t_scopus = $em->findInScopusByIssn($eISSNS, $emS);
+                            }
+                        }
+
+                        if ($data_t_scopus != null && $data_reuters == null) {
+                            if ($data_t_scopus->getPrintISSN() != null) $eISSNT = $data_t_scopus->getPrintISSN();
+                            $eISSNT = substr_replace($eISSNT, "-", 4, 0);
+                            $eISSNSend = $eISSNT;
+                            $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                            if ($data_reuters == null) {
+                                if ($data_t_scopus->getEISSN() != null) $eISSNT = $data_t_scopus->getEISSN();
+                                $eISSNT = substr_replace($eISSNT, "-", 4, 0);
+                                $data_reuters = $em2->findInThomsonByIssn($eISSNT, $emS);
+                            }
+                            if ($data_reuters == null) {
+                                $eISSNT = $data_t_scopus->getTitle();
+                                $eISSNT = $eISSNT = str_ireplace("&", "and", $eISSN);
+                                $data_reuters = $em2->findInThomsonByTitle($eISSNT, $emS);
+                            }
+
+                        }
+
+                        // ajouter le 12/05/2020
+
+
+                        $val_title = $eISSNS;
+                        $pagination_slide = $this->journalFinder->similarResult($val_title);
+
+                        // une fonction pour trouver les valeurs similaires
+
+
+                        //fin ajout
+
+
+                    }
+                    // ajouter le 10/05/2020 pour inverser les valeurs
+                    if ($data_t_scopus == null) {
+
+
+                        // echo $new_value;
+                        $data_t_scopus = $this->journalFinder->similarResult($eISSNS);
+                        $pagination_slide = null;
+                        //echo sizeof($data_t_scopus);
+
+
+                    }
+                    // fin ajout
+                }
+                $pagination = 0;
+                if (!is_null($data_t_scopus) && is_iterable($data_t_scopus)) {
+                    $pagination = $this->paginator->paginate(
+                        $data_t_scopus, /* query NOT result */
+                        $request->query->getInt('page', 1), /*page number*/
+                        5 /*limit per page*/
+                    );
+                }
+                //journal
+                $topjournallistScopus = $em->selectTopListScopus($emS);
+                $topjournallistWebofs = $em2->selectTopListWeb($emS);
+                //echo sizeof($publishers);
+                return $this->render('default/searchV.html.twig', [
+                    'form' => $form->createView(),
+                    'data_reuter' => $data_reuters,
+                    'data_t_scopus' => $data_t_scopus,
+                    'tpjlistScopus' => $topjournallistScopus,
+                    'tpjlistWebof' => $topjournallistWebofs,
+                    'eISSN' => $eISSNSend,
+
+                    'pagination' => $pagination,
+                    'paginationR' => $pagination_slide
+                ]);
             }
 
-       return $this->redirectToRoute('homepage');
-
         }
+
+        return $this->redirectToRoute('homepage');
+
+    }
+
 
     /**
      * Lists all data_t_scopus entities.
      *
-     * @Route("/journal/{eISSN}", name="data_t_scopus_results")
+     * @Route("/show-journal/{eISSN}", name="data_t_scopus_results")
      */
     public function findValue($eISSN, Request $request)
     {
@@ -550,14 +561,14 @@ class SearchController extends BaseController
 
 //echo $var_title;
         if($var_title!="")
-        $pagination_slide=$this->journalFinder->similarResult($var_title);
+            $pagination_slide=$this->journalFinder->similarResult($var_title);
 
-$topjournallistWebofs=$em2->selectTopListWeb($emS);
-$topjournallistScopus=$em->selectTopListScopus($emS);
+        $topjournallistWebofs=$em2->selectTopListWeb($emS);
+        $topjournallistScopus=$em->selectTopListScopus($emS);
 
 
 
-            //fin de modification 10/05
+        //fin de modification 10/05
         return $this->render('default/searchV.html.twig', [
             'form' => $form->createView(),
             'data_reuter' => $data_reuters,
@@ -679,21 +690,21 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
             $tab_qrtle[3]="Quartile 4";
         }
         $operation="op1";
-       if($request->get('sjr_r')=="option1")
-       {
+        if($request->get('sjr_r')=="option1")
+        {
 
-           $sjr_value=$request->get('sjr_sup');
-           $sjr_value=str_replace(".", ",", $sjr_value);
-           $operation="op1";
-       }
-       elseif($request->get('sjr_r')=="option2"){
-           $sjr_value=$request->get('sjr_inf');
-           $sjr_value=str_replace(".", ",", $sjr_value);
-           $operation="op2";
-       }
-       else {$sjr_value=0;
-       $operation="op1";
-       }
+            $sjr_value=$request->get('sjr_sup');
+            $sjr_value=str_replace(".", ",", $sjr_value);
+            $operation="op1";
+        }
+        elseif($request->get('sjr_r')=="option2"){
+            $sjr_value=$request->get('sjr_inf');
+            $sjr_value=str_replace(".", ",", $sjr_value);
+            $operation="op2";
+        }
+        else {$sjr_value=0;
+            $operation="op1";
+        }
         if($publisher=="All" && $subject_area=="All"){
             $data_t_advanced_scopus=$em->selectForAdvancesearchWithoutSubjectAndPublisher($emS, $tab_qrtle, $ta_openaccs, $sjr_value, $operation);
         }
@@ -733,9 +744,9 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
                 if ($journal->getPrintISSN() != null){ $eISSNTP = $journal->getPrintISSN();
 
 
-                $eISSNTP = substr_replace($eISSNTP, "-", 4, 0);
-                $journal_inst = $em2->findInThomsonByIssn($eISSNTP, $emS);
-                //echo $journal_inst;
+                    $eISSNTP = substr_replace($eISSNTP, "-", 4, 0);
+                    $journal_inst = $em2->findInThomsonByIssn($eISSNTP, $emS);
+                    //echo $journal_inst;
                 }
                 if ($journal_inst == null) {
                     if ($journal->getEISSN() != null) $eISSNTE = $journal->getEISSN();
@@ -752,7 +763,7 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
                             $data_intermediate[$i] = $journal;
                             $i = $i + 1;
                         }
-                }
+                    }
                     elseif ($request->get('jcr_r') == "option2"){
                         $jcr_value=$request->get('jcr_inf');
                         $jcr_value=str_replace(",", ".", $jcr_value);
@@ -764,7 +775,7 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
                 }
 
 
-    }
+            }
         }
 
         if($data_intermediate!=null)$data_t_advanced_scopus=$data_intermediate;
@@ -776,18 +787,18 @@ $topjournallistScopus=$em->selectTopListScopus($emS);
                 5 /*limit per page*/
             );
         }
-return $this->render('default/searchV.html.twig', [
+        return $this->render('default/searchV.html.twig', [
 
-    'data_reuter_advanced' => $data_advanced_reuters,
-    'data_t_scopus_advanced' => $data_t_advanced_scopus,
-    'data_reuter' => $data_reuters,
-    'data_t_scopus' => $data_t_scopus,
-    'listcategories'=>$categories,
-    'listpublishers'=>$publishers,
-    'pagination'=>$pagination,
-    'show_ad'=>$show_advanced
+            'data_reuter_advanced' => $data_advanced_reuters,
+            'data_t_scopus_advanced' => $data_t_advanced_scopus,
+            'data_reuter' => $data_reuters,
+            'data_t_scopus' => $data_t_scopus,
+            'listcategories'=>$categories,
+            'listpublishers'=>$publishers,
+            'pagination'=>$pagination,
+            'show_ad'=>$show_advanced
 
-]);
+        ]);
     }
 
     /**
@@ -821,14 +832,14 @@ return $this->render('default/searchV.html.twig', [
             $data_t_scopus = $em->selectonepublisher($emS, $val);}
 
 
-            $pagination=0;
-            if(!is_null($data_t_scopus) && is_iterable($data_t_scopus)){
-                $pagination = $this->paginator->paginate(
-                    $data_t_scopus, /* query NOT result */
-                    $request->query->getInt('page', 1), /*page number*/
-                    5 /*limit per page*/
-                );
-            }
+        $pagination=0;
+        if(!is_null($data_t_scopus) && is_iterable($data_t_scopus)){
+            $pagination = $this->paginator->paginate(
+                $data_t_scopus, /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+                5 /*limit per page*/
+            );
+        }
 
 
         return $this->render('default/searchV.html.twig', [
@@ -840,4 +851,5 @@ return $this->render('default/searchV.html.twig', [
 
         ]);
     }
+
 }

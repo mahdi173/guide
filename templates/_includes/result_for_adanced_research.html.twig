@@ -1,0 +1,276 @@
+{% set test=0 %}
+        {% set tests=0 %}
+<div class="row search-journals-result" >
+    <div class="col-md-2 col-sm-2"></div>
+    <div class="col-md-8">
+        <h3 align="center" class="text-uppercase"><b>The following title(s) matched your request</b></h3>
+        <div class="row" style="height: 92px; width: 869px; text-align: center; margin-left: 2px">
+            <div class="col-sm-12">
+                <!-- /21831250958/AdManager_S_results_1 -->
+
+                <!-- Several_result -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:728px;height:90px"
+                     data-ad-client="ca-pub-9897811061542650"
+                     data-ad-slot="7447259618"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-2"></div>
+</div>
+<div class="row search-journals-result advanced-table">
+    <div class="col-md-2">
+
+        <!-- horizontal_several_results1 -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-9897811061542650"
+             data-ad-slot="4672373720"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <!-- several_resulta_slide_gauche -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-9897811061542650"
+             data-ad-slot="4356067545"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    <div class="col-md-8">
+        <table class="table mb-5">
+            <thead>
+            <tr>
+                <th scope="col" class="th-journal">JOURNAL NAME</th>
+                <th scope="col">PUBLISHER</th>
+                <th scope="col">OPEN ACCESS </th>
+                <th scope="col">E-ISSN</th>
+                <th scope="col">Quartile</th>
+            </tr>
+            </thead>
+            <tbody>
+                  {% for t in pagination %}
+            {% set compteur=compteur+1 %}
+            {% if (t.eISSN) =="" %}
+                {% set issn=t.printISSN %}
+            {% elseif(t.eISSN) !="" %}
+                {% set issn=t.eISSN %}
+            {% endif %}
+
+            <tr class="table-data">
+                <th scope="row" class="jounal-title">
+                    <a href="{{ path('data_t_scopus_results', {'eISSN': issn}) }}" target="_blank">
+                        {#                            <a href="{{ path('data_t_scopus_results', {'eISSN': journal.eissn}) }}" target="_blank">#}
+                        {{ t.title }}</a>
+                </th>
+                <td>   {% if t.publisher %}{{ t.publisher  }} {% endif %}</td>
+                <td> {{ t.openAccess ? 'YES' : 'NO' }}</td>
+                <td>{% if t.printISSN %}{{ t.printISSN }}{% endif %}</td>
+                <td>{% if t.quartile %}{{ t.quartile }}{% endif %}</td>
+            </tr>
+            <!-- multiple results-->
+{#            <div class="card mb-3" >#}
+{#                <div class="row no-gutters">#}
+{#                    <div class="col-md-1" style="padding: 10px">#}
+{#                        <img src="{{ asset('assets/images/jprofile.jpg') }}" width="70px" height="70px" class="rounded btn-outline-primary" alt="Journal Profile">#}
+{#                    </div>#}
+{#                    <div class="col-md-9" >#}
+{#                        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">#}
+{#                            <h4><b><a href={{ path('data_t_scopus_results', {'eISSN': issn})}} target="_blank">{{ t.title }}</a> </b></h4>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded" >Publisher : </span>#}
+{#                                        <span >{{ t.publisher }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-warning rounded" >Quartile : </span>#}
+{#                                        <span >{{ t.quartile }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+{#                            <div class="row">#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class=" badge-dark rounded" >Open Access : </span>#}
+{#                                        <span >{{ t.openAccess }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <h6 >#}
+{#                                        <span class="badge-info rounded" >P-ISSN & E-ISSN : </span>#}
+{#                                        <span >{{ t.printISSN }}, {{ t.eISSN }}</span>#}
+{#                                    </h6>#}
+{#                                </div>#}
+
+{#                            </div>#}
+
+
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-md-2" align="center" style="margin-top: 50px; color: white">#}
+{#                        <a  class="btn btn-primary" href={{ path('data_t_scopus_results', {'eISSN': issn})}} target="_blank">More details</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <!-- fin mutiple results-->
+        {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+<div class="row search-journals-result card-search">
+<div class="offset-md-2 col-md-8 " >
+
+    <!-- annonce_after_quartile -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9897811061542650"
+         data-ad-slot="9664234542"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <div class="row plus-search" >
+        <div class="col-md-6" >
+    <div class="card mb-3" >
+        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
+            <h5 class="text-info"><b>Search journals by Quartile</b> </h5>
+            <div class="row" style="text-align: center;">
+                <div class="col-md-6">
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 1'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 1</span>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-md-6">
+
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 2'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 2</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row" style="text-align: center; margin-top: 5px">
+                <div class="col-md-6">
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 3'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 3</span>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-md-6" style="text-align: center">
+
+                    <a href={{ path('search_journals_for_scopus', {'quartile': 'Quartile 4'})}}>
+                        <div class="badge btn-outline-warning" style="height: 100%; ">
+                            <span class="badge badge-secondary rounded text-warning" style="font-size: 15px">Quartile 4</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    <hr>
+        <div class="col-md-6 " >
+    <div class="card mb-3 card-publisher" >
+        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px; width: 100%">
+            <h5 class="text-info"><b>Search journals by Publisher </b></h5>
+            {% for t in pagination %}
+
+                {% if t.publisher | length>= 51 %}
+                    <a class="badge badge-secondary text-warning"  style="font-size: 10px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
+<span style="width: 70%">
+                                   {{t.publisher}}</span>
+
+                    </a>
+
+                {% elseif t.publisher | length>= 45 %}
+                    <a class="badge badge-secondary text-warning"  style="font-size: 11px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
+<span style="width: 70%">
+                                   {{t.publisher}}</span>
+
+                    </a>
+
+                {% else %}
+                    <a class="badge badge-secondary text-warning"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'publisher': t.publisher})}}>
+<span style="width: 70%">
+                                   {{t.publisher}}</span>
+
+                    </a>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+        </div>
+        <div class="col-md-12" >
+
+    <div class="card mb-3" >
+        <div class="card-body" style="margin-top: -15px; margin-bottom: -15px">
+
+            <h5 class="text-info"><b>Search journals by Subject Area </b></h5>
+            {% for t in pagination %}
+
+                {% if t.scopussubsubjectarea | length>= 51 %}
+                    <a class="badge badge-secondary text-info"  style="font-size: 10px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+<span style="width: 70%">
+                                   {{t.scopussubsubjectarea}}</span>
+
+                    </a>
+
+                {% elseif t.scopussubsubjectarea | length> 45 %}
+                    <a class="badge badge-secondary text-info"  style="font-size: 11px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+<span style="width: 70%">
+                                   {{t.scopussubsubjectarea}}</span>
+
+                    </a>
+
+                {% else %}
+                    <a class="badge badge-secondary text-info"  style="font-size: 12px; " href={{ path('search_journals_for_scopus', {'subject_area': t.scopussubsubjectarea})}}>
+<span style="width: 70%">
+                                   {{t.scopussubsubjectarea}}</span>
+
+                    </a>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+        </div>
+        <div class="navigation" style="margin-left: 35%;">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    <!-- annonce_after_subject_area -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9897811061542650"
+         data-ad-slot="1022848266"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+</div>
+</div>

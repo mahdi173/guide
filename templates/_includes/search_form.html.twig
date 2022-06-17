@@ -9,39 +9,41 @@
 {#        </form>#}
 {#    </div>#}
 {#</div>#}
-
-<form method="get" action="{{ url('data_search_by_several_values') }}">
+<div class="container container-home">
+  {% include 'pages/parts/form-search.html.twig' %}
+</div>
+{#<form method="get" action="{{ url('data_search_by_several_values') }}">#}
 {#    <h2 class="text-primary"><b>Find the best journal for your research</b></h2>#}
-    <h2 class="text-primary text-center mb-2"><b>Find Journals or Authors</b></h2>
-    <h6 class="text-exp text-justify font-italic text-secondary">
-        Find the most appropriate <b>journal</b> according to various criteria , or  <b>authors</b> with their published articles and corresponding journals
+{#    <h2 class="text-primary text-center mb-2"><b>Find Journals or Authors</b></h2>#}
+{#    <h6 class="text-exp text-justify font-italic text-secondary">#}
+{#        Find the most appropriate <b>journal</b> according to various criteria , or  <b>authors</b> with their published articles and corresponding journals#}
 
 
-    </h6>
-    <div class="input-group-prepend mb-3 input-search" >
-        <select id="valeselect" name="searchOption" class="form-control">
-            <option value="journal">Journal</option>
-            <option value="author">Author</option>
-        </select>
+{#    </h6>#}
+{#    <div class="input-group-prepend mb-3 input-search" >#}
+{#        <select id="valeselect" name="searchOption" class="form-control">#}
+{#            <option value="journal">Journal</option>#}
+{#            <option value="author">Author</option>#}
+{#        </select>#}
 
 
-        <input type="text" id="searchValue" name="searchValue"  style="height: 40px; font-size: large" class="form-control searchValue" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">
-        <button type="submit" class="icon-search" style="border: none; border-radius:0 50% 50% 0 ">
-            <i class="fa fa-search"></i>
-        </button>
+{#        <input type="text" id="searchValue" name="searchValue"  style="height: 40px; font-size: large" class="form-control searchValue" placeholder="Full title, words, ISSN" aria-label="Title, word, ISSN" aria-describedby="texte-bouton">#}
+{#        <button type="submit" class="icon-search" style="border: none; border-radius:0 50% 50% 0 ">#}
+{#            <i class="fa fa-search"></i>#}
+{#        </button>#}
 
 {#            <button class="btn btn-outline-info" type="submit" id="texte-bouton" style="width: 130px;height: 40px"><i class="fa fa-search"></i> Search</button>#}
-        </div>
+{#        </div>#}
 
 
-    <div class="row">
+{#    <div class="row">#}
 
-        <div class=" {% if (tpjlistScopus is defined and tpjlistScopus|length>0) or (data_t_scopus  is defined  and data_t_scopus|length>0) or (tpjlistWebof is defined and tpjlistWebof|length>0) %}col-sm-9{% else %}col-sm-11{% endif %}" style="text-align: right; margin-top: -15px;">
-        <a href="{{ path('advanced_search_scopus_web_ofs') }}" class="advanced-search"> <b>Advanced search ?</b></a>
-        </div>
-    </div>
+{#        <div class=" {% if (tpjlistScopus is defined and tpjlistScopus|length>0) or (data_t_scopus  is defined  and data_t_scopus|length>0) or (tpjlistWebof is defined and tpjlistWebof|length>0) %}col-sm-9{% else %}col-sm-11{% endif %}" style="text-align: right; margin-top: -15px;">#}
+{#        <a href="{{ path('advanced_search_scopus_web_ofs') }}" class="advanced-search"> <b>Advanced search ?</b></a>#}
+{#        </div>#}
+{#    </div>#}
 
-</form>
+{#</form>#}
 
 <script>
     $(function(){

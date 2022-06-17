@@ -26,7 +26,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/", name="homepage")
+     * @Route("/_", name="homepage")
      */
     public function homepage(EntityManagerInterface $entityManager)
     {
@@ -39,6 +39,7 @@ class DefaultController extends AbstractController
             ]
         );
     }
+
     /**
      * @Route("/graphic-data", name="graphic_data")
      */

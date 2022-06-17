@@ -7,7 +7,7 @@
     <key>homepage</key>
 
     <view>pages/homepage</view>
-    <controller>Sulu\Bundle\WebsiteBundle\Controller\DefaultController::indexAction</controller>
+    <controller>App\Controller\Website\DefaultController::indexAction</controller>
     <cacheLifetime>86400</cacheLifetime>
 
     <meta>
@@ -39,6 +39,28 @@
             </meta>
 
             <tag name="sulu.rlp"/>
+        </property>
+
+
+        <property name="featured_articles" type="smart_content">
+            <meta>
+                <title lang="en">Featured articles</title>
+                <title lang="fr">Articles à la une</title>
+            </meta>
+
+            <params>
+                <param name="properties" type="collection">
+                    <param name="article" value="article"/>
+                    <param name="excerptTitle" value="excerpt.title"/>
+                    <param name="cover_image" value="cover_image"/>
+                    <param name="excerptTags" value="excerpt.tags"/>
+                    <param name="excerptDescription" value="excerpt.description"/>
+                </param>
+
+                <param name="provider" value="pages"/>
+                <param name="max_per_page" value="6"/>
+                <param name="page_parameter" value="p"/>
+            </params>
         </property>
     </properties>
 </template>

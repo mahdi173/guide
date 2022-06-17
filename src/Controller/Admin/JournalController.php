@@ -8,6 +8,8 @@ use App\Repository\JournalRepository;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Psr\Container\ContainerInterface;
+use Sulu\Bundle\ContactBundle\Entity\ContactRepositoryInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\Doctrine\DoctrineListBuilderFactoryInterface;
 use Sulu\Component\Rest\ListBuilder\Metadata\FieldDescriptorFactoryInterface;
@@ -43,18 +45,24 @@ class JournalController extends AbstractRestController implements ClassResourceI
     /** @var JournalRepository */
     private $repository;
 
+
+    /** @var ContactRepositoryInterface */
+    private $contactRepository;
+
     public function __construct(
         ViewHandlerInterface $viewHandler,
         FieldDescriptorFactoryInterface $fieldDescriptorFactory,
         DoctrineListBuilderFactoryInterface $listBuilderFactory,
         RestHelperInterface $restHelper,
-        JournalRepository $repository
+        JournalRepository $repository,
+        ContainerInterface $container
     ) {
         $this->viewHandler = $viewHandler;
         $this->fieldDescriptorFactory = $fieldDescriptorFactory;
         $this->listBuilderFactory = $listBuilderFactory;
         $this->restHelper = $restHelper;
         $this->repository = $repository;
+        $this->contactRepository = $container->get('sulu.repository.contact');
 
         parent::__construct($this->viewHandler);
     }
@@ -94,10 +102,9 @@ class JournalController extends AbstractRestController implements ClassResourceI
         $entity->setTitle($data['title']);
         $entity->setPublisher($data['publisher']);
         $entity->setEjr($data['ejr']);
-        $entity->setOpenaccess($data['openaccess']);
-        $entity->setPrintissn($data['printissn']);
-        $entity->setEissn($data['eissn']);
-        $entity->setRank($data['rank']);
+        if ($data['contributor']) {
+            $entity->setContributor($this->contactRepository->find($data['contributor']));
+        }
 
         $this->repository->save($entity);
 
@@ -117,10 +124,9 @@ class JournalController extends AbstractRestController implements ClassResourceI
         $entity->setTitle($data['title']);
         $entity->setPublisher($data['publisher']);
         $entity->setEjr($data['ejr']);
-        $entity->setOpenaccess($data['openaccess']);
-        $entity->setPrintissn($data['printissn']);
-        $entity->setEissn($data['eissn']);
-        $entity->setRank($data['rank']);
+        if ($data['contributor']) {
+            $entity->setContributor($this->contactRepository->find($data['contributor']['id']));
+        }
 
         $this->repository->save($entity);
 

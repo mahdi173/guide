@@ -3,16 +3,23 @@
 namespace App\Service;
 
 use App\Entity\DataTScopus;
-
-
+use App\Repository\JournalRepository;
 use Doctrine\ORM\EntityManagerInterface;
-class ServiceForJournalFinder{
+
+class ServiceForJournalFinder
+{
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
+
+    /** @var JournalRepository */
+    private $journalRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, JournalRepository $journalRepository)
     {
         $this->entityManager = $entityManager;
+        $this->journalRepository = $journalRepository;
     }
-    function similarResult($val_title){
+
+    public function similarResult($val_title){
         $emS = $this->entityManager;
         $em = $this->entityManager->getRepository(DataTScopus::class);
 
@@ -83,5 +90,7 @@ class ServiceForJournalFinder{
         return $pagination_slide;
     }
 
+    public function search(string $term)
+    {
+    }
 }
-
