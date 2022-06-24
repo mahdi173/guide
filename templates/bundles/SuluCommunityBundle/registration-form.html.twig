@@ -49,28 +49,30 @@
         <div class="col-sm-6 bg-white text-white"><div class="paragraphe">
                 Rejoignez {{appName | replace({'\"':''})}} dès aujourd'hui. 
             </div>
-            <button type="button" class="btn btn-primary btn-lg btn-block" style="background: #007BB6; font-weight: 200;"><img class='image_style' src="{{ asset('/assets/images/svg/fb2.svg') }}" >S’inscrire avec facebook</button>
-            <button type="button" class="btn btn-default btn-lg btn-block" style="font-weight: 200; border-color: #DBDFFD;"><img class='image_style' src="{{ asset('/assets/images/svg/google.svg') }}" >S’inscrire avec google</button>
-            <button type="button" class="btn btn-default btn-lg btn-block" style="background: #0A66C2; font-weight: 200; color: white;"><img class='image_style' src="{{ asset('/assets/images/svg/linkedIn.svg') }}" >S’inscrire avec linkedIn</button>
+            <button type="button" class="btn btn-primary btn-lg" style="background: #007BB6; font-weight: 200;margin-top:33%;margin-left:6%; width:90%"><img class='image_style' src="{{ asset('/assets/images/svg/fb2.svg') }}" >S’inscrire avec facebook</button>
+            <button type="button" class="btn btn-default btn-lg" style="margin-left:6%; width:90%; font-weight: 200; border-color: #DBDFFD;"><img class='image_style' src="{{ asset('/assets/images/svg/google.svg') }}" >S’inscrire avec google</button>
+            <button type="button" class="btn btn-default btn-lg" style="margin-left:6%; width:90%; background: #0A66C2; font-weight: 200; color: white;"><img class='image_style' src="{{ asset('/assets/images/svg/linkedIn.svg') }}" >S’inscrire avec linkedIn</button>
 
 
             <button type="button"  data-toggle="modal" data-target="#exampleModalCenter"  onclick="document.getElementById('idMRegistre').style.display='block'" 
-                class="btn btn-primary btn-lg btn-block" style="background: #802549; font-weight: bold; border-color: #802549;">
+                class="btn btn-primary btn-lg" style="margin-left:6%; width:90%;background: #802549; font-weight: bold; border-color: #802549;margin-top:13%">
                 Créer votre compte
             </button>
             <div class='cond'>
                 En vous inscrivant, vous acceptez les Conditions d'Utilisationt la <a href='#'>Politique de Confidentialité</a>, incluant <a href='#'>l'Utilisation de Cookies</a>.
             </div>
 
-             {#test#}
+             {#test
                 <p  class='mdp'><a  onclick="document.getElementById('idMPwdFroget').style.display='block'"  style='all: unset;' href="#" >Mot de passe oublié ?</a></p>
-            
-            <div class='dejaInscrit'>
-                Vous avez déjà un compte ?
-            </div>
-            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary btn-lg btn-block"
-                    class='seconnecter' onclick="document.getElementById('id01').style.display='block'"  style='background-color: #C14334; font-weight: bold; border-color: #C14334;'>Se connecter</button>
+            #}
 
+            <div style="margin-top:8%">
+                <p class='dejaInscrit'>
+                    Vous avez déjà un compte ?
+                </p>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary btn-lg"
+                        class='seconnecter' onclick="document.getElementById('id01').style.display='block'"  style='margin-left:6%; width:90%;background-color: #C14334; font-weight: bold; border-color: #C14334;margin-top:9%'>Se connecter</button>
+            </div>
 
 
         </div>

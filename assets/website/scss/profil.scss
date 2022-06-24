@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .test{
+    color: red;
+    
+  }
+
+  .header-nav{
+    display:grid;
+    grid-template-columns: 1fr 50px 50px 70px;
+  }
+
+ 
+
+  .header-profilDropDown {
+    grid-column: 4;
+}
+
+.content-row1{
+  display:grid;
+  grid-template-columns: 1fr 40% 30% ;
+  row-gap:30%;
+}
+
+.content-row2{
+  display:grid;
+  grid-template-columns: 1fr 40% 30% ;
+}

@@ -590,4 +590,12 @@ class BaseController extends AbstractController
     }
 
 
+    /**
+     * @Route("/profil-test", name="profilTest", methods={"GET"})
+     */
+    //test pour afficher l'interface du profil
+    public function profil()
+    {
+        return $this->render('Profile/profil-publications.html.twig');
+    }
 }
